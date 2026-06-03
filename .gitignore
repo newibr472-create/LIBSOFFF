@@ -1,0 +1,9 @@
+*.so
+*.apk
+*.dex
+*.otf
+*.nn
+*.bin
+*.proto
+*.cfg
+ghidra_project/

@@ -1,0 +1,73 @@
+=== GHIDRA FINAL DECOMPILATION ===
+
+============================================================
+  FUNCTION: ROOT_CHECK @ 0x25979C
+============================================================
+  Creating function at 0x25979C
+  Name: FUN_0025979c
+  Entry: 0x25979C
+  Size: 1 bytes
+
+  --- DECOMPILED C ---
+  
+  void FUN_0025979c(void)
+  
+  {
+    code *pcVar1;
+    
+                      /* WARNING: Does not return */
+    pcVar1 = (code *)UndefinedInstructionException(0x10,0x25979c);
+    (*pcVar1)();
+  }
+
+============================================================
+  FUNCTION: DEBUGGER_DETECT @ 0x2BF850
+============================================================
+  Creating function at 0x2BF850
+  Name: FUN_002bf850
+  Entry: 0x2BF850
+  Size: 1 bytes
+
+  --- DECOMPILED C ---
+  
+  /* WARNING: Control flow encountered bad instruction data */
+  
+  void FUN_002bf850(void)
+  
+  {
+                      /* WARNING: Bad instruction - Truncating control flow here */
+    halt_baddata();
+  }
+
+============================================================
+  FUNCTION: SCAN_HOOK_DISPATCHER @ 0x378FF4
+============================================================
+  Creating function at 0x378FF4
+  Name: FUN_00378ff4
+  Entry: 0x378FF4
+  Size: 1 bytes
+
+  --- DECOMPILED C ---
+  
+  void FUN_00378ff4(undefined8 param_1)
+  
+  {
+    uint uVar1;
+    ulong uVar2;
+    long unaff_x29;
+    
+    func_0x0037ccb0(param_1,9);
+    uVar2 = func_0x00379158();
+    uVar1 = 5;
+    if ((uVar2 & 1) == 0) {
+      uVar1 = 9;
+    }
+    *(undefined4 *)(unaff_x29 + 0x18) = 0xbfc855f3;
+    *(undefined4 *)(unaff_x29 + 0x1c) = 0xbfc855fa;
+                      /* WARNING: Could not recover jumptable at 0x00379040. Too many branches */
+                      /* WARNING: Treating indirect jump as call */
+    (**(code **)((ulong)uVar1 * 8 + 0x641670))();
+    return;
+  }
+
+=== DONE ===

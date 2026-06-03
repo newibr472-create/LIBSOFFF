@@ -1,0 +1,168 @@
+================================================================================
+LIBSOFFF PROJECT - COMPLETE PROGRESS REPORT
+================================================================================
+Project: BGMI 4.4.0 (Battlegrounds Mobile India) Anti-Cheat Reverse Engineering
+Target Binaries: libanogs.so (5.4MB, AnoSDK anti-cheat) & libUE4.so (223MB, game engine)
+Goal: Discover, analyze, and create bypass hooks for anti-cheat detection systems
+================================================================================
+
+COMPLETED WORK:
+==============
+
+1. ENVIRONMENT SETUP
+   - Downloaded Ghidra 12.1 PUBLIC (headless analyzer)
+   - Installed Python analysis tools: Capstone 5.0.9, LIEF 0.17.6, pyelftools 0.33
+   - Downloaded BGMI 4.4.0 APK (bg.apk, 96.6MB) from MediaFire
+   - Extracted APK to bg_extracted/ directory
+
+2. BINARY OVERVIEW
+   - libanogs.so: 5.4MB ARM64 anti-cheat library (Tencent AnoSDK)
+     - 21 exported functions (JNI_OnLoad, AnoSDKInit, AnoSDKSetUserInfo, etc.)
+     - .text section: 3.5MB (0x1C1350 - 0x52DFD8)
+     - .rodata section: 501KB (0x9EF80 - 0x118ED8)
+     - Heavily obfuscated with Control Flow Flattening (CFF)
+
+   - libUE4.so: 223MB ARM64 game engine
+     - 26 game property string offsets mapped (PlayerName, Health, etc.)
+
+3. DETECTION STRINGS FOUND IN libanogs.so
+   - "debugger=%s", "debugger:%s", "debugger" (anti-debug)
+   - "ms_scan_start", "ms_set_inline_hook", "ms_mmap" (memory scanning)
+   - "inline_hook_opcode_dismatch", "set_inline_hook_error" (hook detection)
+   - "CertMD5" (integrity check)
+   - "ReportComplaint", "tdm_report", "REPORT", "COREREPORT" (reporting)
+   - "ChkSetGameStatus{", "ChkLogout{", "status_info->game_status_:%d" (status)
+   - "|emulator_name=" (emulator detection)
+   - "mmap_fialed" (memory protection)
+   - Source paths: "/Users/bkdevops/tpmobile/workspace/p-74fc7d317ebc4e7c912d0c9ffff18edf/"
+
+4. PREVIOUSLY ANALYZED FUNCTIONS (DO NOT REUSE)
+   a) MemoryBranch @ 0x31DCB0
+      - Memory integrity scanner dispatcher
+      - Flag-based: [a2+0x44] selects aggressive vs light scan path
+      - Hook: ScanTriggerHook.h created
+
+   b) ScanTrigger @ 0x369658
+      - Scan trigger controller
+      - Flag-based: [a1+0x38] controls scan vs skip
+      - Hook: ScanTriggerHook.h created
+
+5. WISDOM SRC OFFSET VERIFICATION (20 offsets)
+   - Verified 17 real offsets, 3 fake (PLT stubs x2, zero padding x1)
+   - 3/4 code snippets were UDF (wrong BGMI version)
+   - File: WisdomBypass.h
+
+6. INDEPENDENT HOOK DISCOVERY (NEW - Current Work)
+   - Created custom Python analysis script (fast_hook_hunter.py)
+   - Method: ELF parsing + ADRP cross-reference scanning
+   - No Ghidra, no IDA, no prior offset lists used
+   - Results:
+     * 41 detection strings extracted from .rodata
+     * 2950 ADRP instructions targeting string pages found
+     * 44 string cross-references resolved
+     * 43 function regions identified
+     * All functions scored and ranked
+
+7. PHANTOM TRACE HOOK (NEWLY CREATED)
+   - Target: libanogs.so @ 0x2BFCF0
+   - Type: HOOK_LIB (function hook)
+   - Function: AntiCheat_DebugEmulatorCheck(void* this_ptr)
+   - Category: ANTI_DEBUG + EMULATOR DETECTION
+   - Size: ~944 bytes, 236 instructions
+   - Obfuscation: CFF (Control Flow Flattening) with XOR dispatch
+   - Guard flag: [this_ptr + 0x50] (one-time execution byte)
+
+   What it blocks:
+     1. TracerPid detection (debugger/frida/gdb attachment)
+     2. /proc/self/status file reading and analysis
+     3. Emulator detection (QEMU, BlueStacks, etc.)
+     4. Detection result formatting and logging
+
+   Bypass strategy:
+     Set [this_ptr + 0x50] = 1 to trigger one-time guard,
+     then return immediately without executing any checks.
+
+   File: hooks/PhantomTrace.h
+
+TOP DISCOVERY CANDIDATES (for future hooks):
+===========================================
+ #  Offset    Score  Category           Description
+ -  -------   -----  ------------------  --------------------------
+ 1  0x37A450   117  MEMORY_PROTECT      mmap failure handler
+ 2  0x37A524   117  MEMORY_PROTECT      ms_mmap handler
+ 3  0x379CA4   112  HOOK_DETECT         set_inline_hook_error
+ 4  0x379D78   112  MEMORY_SCAN         ms_set_inline_hook
+ 5  0x379DEC   112  HOOK_DETECT         inline_hook_opcode_dismatch
+ 6  0x37A0AC   112  MEMORY_SCAN         ms_scan_start
+ 7  0x1D0F60   102  REPORT              ReportComplaint
+ 8  0x37A064    92  (unknown)           fc_thread_start_failed
+12  0x2BFB34    91  ANTI_DEBUG          debugger detection [HOOKED]
+15  0x1C8FE0    87  EMULATOR            emulator_name check
+
+================================================================================
+WHAT TO DO NEXT (CONTINUE FROM HERE):
+================================================================================
+
+PRIORITY 1 - CREATE MORE HOOKS:
+  [ ] Hook #7 ReportComplaint @ 0x1D0F60 (blocks violation reports to server)
+  [ ] Hook #3 set_inline_hook_error @ 0x379CA4 (blocks hook detection)
+  [ ] Hook #6 ms_scan_start @ 0x37A0AC (blocks memory scanning)
+  [ ] Hook #15 emulator_name @ 0x1C8FE0 (blocks emulator detection)
+
+PRIORITY 2 - DEEPER ANALYSIS:
+  [ ] Run full Ghidra analysis in Codespace (Java 21 + Ghidra headless)
+  [ ] Decompile top 10 candidates with Ghidra decompiler for better understanding
+  [ ] Map the complete call graph of AnoSDK detection system
+  [ ] Find the main dispatch function that calls all detection checks
+  [ ] Identify the network reporting function (sends violations to Tencent server)
+
+PRIORITY 3 - ADVANCED BYPASS:
+  [ ] Analyze the BSS area at 0x54A000 (flag bytes for all one-time guards)
+  [ ] Create a universal flag-setter that disables ALL one-time checks at once
+  [ ] Analyze the encryption/XOR patterns used in string obfuscation
+  [ ] Map the CFF jump table at 0x548500 to understand full control flow
+  [ ] Find the heartbeat/keepalive function (periodic scanning trigger)
+
+PRIORITY 4 - GAME ENGINE HOOKS:
+  [ ] Analyze libUE4.so for memory property offsets
+  [ ] Create game-specific hooks (ESP, aimbot data, etc.)
+  [ ] Map the UWorld, GNames, GObjects structures
+
+TOOLS AND SCRIPTS AVAILABLE:
+  - scripts/fast_hook_hunter.py  - Main discovery script (ADRP scanning)
+  - scripts/new_hook_hunter.py   - Alternative discovery (full .text disasm)
+  - scripts/ghidra_scripts/      - Ghidra headless Java scripts
+  - scripts/analyze_ghidra.py    - (not created yet - placeholder)
+
+IMPORTANT NOTES:
+  - BGMI version: 4.4.0
+  - Architecture: ARM64 (AArch64)
+  - Anti-cheat: Tencent AnoSDK (libanogs.so)
+  - All hooks use Xynnacore macro framework
+  - FULL_PATCH = NOP entire function
+  - PARTIAL_PATCH = NOP specific bytes
+  - HOOK_LIB = function hook with return value control
+
+REPO STRUCTURE:
+  LIBSOFFF/
+    hooks/              - Xynnacore hook header files
+      PhantomTrace.h    - NEW: Anti-debug/emulator bypass
+      ScanTriggerHook.h - Memory scan trigger bypass
+      WisdomBypass.h    - Verified WISDOM SRC offsets
+    analysis/
+      strings/          - String dumps from all .so files
+    scripts/
+      fast_hook_hunter.py   - ADRP-based hook discovery
+      new_hook_hunter.py    - Full text scan discovery
+      ghidra_scripts/       - Ghidra headless Java scripts
+    reports/
+      fast_hook_report.txt  - Detailed discovery report (8510 lines)
+      ghidra_final.txt      - Previous Ghidra analysis
+      ghidra_*.log          - Analysis logs
+    .devcontainer/
+      devcontainer.json     - GitHub Codespace config (Java 21 + Python)
+    prompt.txt              - THIS FILE
+
+================================================================================
+END OF PROGRESS REPORT
+================================================================================

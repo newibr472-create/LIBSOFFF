@@ -1,0 +1,28 @@
+{
+  "name": "BGMI RE Workshop",
+  "image": "mcr.microsoft.com/devcontainers/universal:latest",
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "21",
+      "installGradle": false,
+      "installMaven": false
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.13"
+    },
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+  "postCreateCommand": "pip install --break-system-packages capstone lief pyelftools && echo 'Ghidra setup: Download from https://github.com/NationalSecurityAgency/ghidra/releases and extract to /workspaces/LIBSOFFF/tools/ghidra/'",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "vscjava.vscode-java-pack",
+        "tomoki1207.pdf",
+        "hexgun.hexeditor"
+      ]
+    }
+  },
+  "forwardPorts": [3000],
+  "remoteUser": "vscode"
+}

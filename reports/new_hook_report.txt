@@ -1,0 +1,403 @@
+======================================================================
+INDEPENDENT ANTI-CHEAT HOOK DISCOVERY REPORT
+Target: libanogs.so (BGMI 4.4.0)
+Method: Pure ELF + Capstone analysis (NO prior offsets used)
+======================================================================
+
+Binary: /home/z/my-project/download/bg_extracted/lib/arm64-v8a/libanogs.so
+Image Base: 0x0
+Total Strings: 11929
+Detection Strings: 52
+Functions Detected: 23214
+Instructions Disassembled: 883066
+
+======================================================================
+SECTION A: ALL DETECTION STRINGS FOUND
+======================================================================
+
+  0x9F246 [MEMORY_SCAN] "ms_scan_start"
+  0x9F27C [PROC_ACCESS] "output buffer too small for in-memory compression"
+  0x9F45F [INTEGRITY] "CertMD5"
+  0x9FABE [PROC_ACCESS] "TotalMem"
+  0x9FAC7 [REPORT] "tdm_report"
+  0x9FD05 [ANTI_DEBUG] "debugger=%s"
+  0x9FD7A [REPORT] "send_data_to_game_pack_data_too_long"
+  0x9FF23 [REPORT] "REPORT"
+  0xA014B [HOOK_DETECT] "inline_hook_opcode_dismatch"
+  0xA0189 [MEMORY_PROTECT] "mmap_fialed"
+  0xA01A2 [REPORT] "send_data_push_game_data_failed"
+  0xA03DD [REPORT] "ReportComplaint"
+  0xA0592 [PROC_ACCESS] "Insufficient memory (case %d)"
+  0xA0949 [HOOK_DETECT] "set_inline_hook_error"
+  0xA0A70 [REPORT] "init_info->tss_sdk_send_data_to_svr:%p"
+  0xA0C80 [ANTI_DEBUG] "debugger:%s"
+  0xA0E00 [REPORT] "hello getreportdata3"
+  0xA12E9 [MEMORY_SCAN] "void __cxxabiv1::scan_eh_tab(scan_results &, _Unwind_Action, bool, _Unwind_Exception *, _Unwind_Context *)"
+  0xA17FA [ANTI_DEBUG] "debugger"
+  0xA2075 [REPORT] "send_data_to_game_data_remain_count"
+  0xA2881 [PROC_ACCESS] "uint64_t AVM::BopMemoryOperation::PmemRead(paddr_t, int)"
+  0xA28BA [PROC_ACCESS] "void AVM::BopMemoryOperation::PmemWrite(paddr_t, word_t, int)"
+  0xA2C25 [REPORT] "mrpcs_send_data_thread_start_failed!"
+  0xA2DA8 [REPORT] "COREREPORT"
+  0xA34ED [ANOSDK] "ano_%d"
+  0xA3507 [PROC_ACCESS] "ChkSetGameStatus{"
+  0xA37BB [MEMORY_PROTECT] "ms_mmap"
+  0xA3B87 [PROC_ACCESS] "/Users/bkdevops/tpmobile/workspace/p-74fc7d317ebc4e7c912d0c9ffff18edf/ano/mvm/source/VM/Memory/BopMemoryOperation.cpp"
+  0xA3C64 [PROC_ACCESS] "Invalid memory pool code %d"
+  0xA3D14 [PROC_ACCESS] "status_info->game_status_:%d"
+  0xA411A [THREAD] "Define Restart Interval %u"
+  0xA446F [PROC_ACCESS] "TotalMem:%d;FreeSpaceTDM:%d"
+  0xA478D [MEMORY_SCAN] "ms_set_inlie_hook"
+  0xA50DE [THREAD] "mrpcs_scan_thread_start_failed!"
+  0xA5381 [EMULATOR] "|emulator_name="
+  0xA572D [PROC_ACCESS] "status_info->size_:%d"
+  0xA5EC7 [REPORT] "__cxa_guard_acquire detected recursive initialization: do you have a function-local static variable whose initialization depends on that function?"
+  0xA66B6 [ANOSDK] "%s/ano_tmp/mpmc.dat"
+  0xA677B [PROC_ACCESS] "status_info:%p"
+  0xA678A [PROC_ACCESS] "ChkSetGameStatus}"
+  0xA6E72 [PROC_ACCESS] "JPEGMEM"
+  0xE3676 [PROC_ACCESS] "V8membuf/"
+  0xE54AC [PROC_ACCESS] "WWZ]W2*&*4/;; 0.q|~~cfd/?0/ 7+>C"
+  0x114531 [PROC_ACCESS] "yksRzaTckdmemz)nka\[\"
+  0x115598 [ENCRYPT] "RC4/0,"
+  0x1162D2 [PROC_ACCESS] ",4hEFD/5"
+  0x118083 [PROC_ACCESS] "N10__cxxabiv129__pointer_to_member_type_infoE"
+  0x118473 [PROC_ACCESS] "N12_GLOBAL__N_116itanium_demangle10MemberExprE"
+  0x118A8D [PROC_ACCESS] "N12_GLOBAL__N_116itanium_demangle29PointerToMemberConversionExprE"
+  0x118EAF [PROC_ACCESS] "N12_GLOBAL__N_116itanium_demangle20MemberLikeFriendNameE"
+  0x1193B2 [PROC_ACCESS] "N12_GLOBAL__N_116itanium_demangle19PointerToMemberTypeE"
+  0x573764 [REPORT] "_bAn4"
+
+======================================================================
+SECTION B: TOP 20 SCORED FUNCTIONS (BEST HOOK CANDIDATES)
+======================================================================
+
+============================================================
+  RANK #1 | Score: 31
+  Address: 0x3E80D0
+  Name: FUN_3E80D0
+  Size: 156 bytes
+  Detection string refs: 2
+  Detection categories: PROC_ACCESS
+  Category diversity: 1
+  External calls: 0
+  Callers: 0
+
+  --- String References ---
+    0xA3B87 [ADR+ADD] "/Users/bkdevops/tpmobile/workspace/p-74fc7d317ebc4e7c912d0c9ffff18edf/ano/mvm/so"
+    0xA2881 [ADR+ADD] "uint64_t AVM::BopMemoryOperation::PmemRead(paddr_t, int)"
+
+  --- External/PLT Calls ---
+    BL 0x520320 (0x520320)
+
+  --- Disassembly (first 32 instructions) ---
+    0x003E80D0  stp      x29, x30, [sp, #0x10]
+    0x003E80D4  add      x29, sp, #0x10
+    0x003E80D8  subs     w9, w2, #1
+    0x003E80DC  cmp      w9, #7
+    0x003E80E0  b.hi     #0x3e814c
+    0x003E80E4  ldr      x8, [x0, #8]
+    0x003E80E8  adrp     x10, #0xea000
+    0x003E80EC  add      x10, x10, #0x7bf
+    0x003E80F0  adr      x11, #0x3e8104
+    0x003E80F4  ldrb     w12, [x10, x9]
+    0x003E80F8  add      x11, x11, x12, lsl #2
+    0x003E80FC  mov      w9, w1
+    0x003E8100  br       x11
+    0x003E8104  ldrb     w0, [x8, x9]
+    0x003E8108  b        #0x3e8134
+    0x003E810C  ldr      x0, [x8, x9]
+    0x003E8110  mov      w8, #0x7039
+    0x003E8114  movk     w8, #0xf627, lsl #16
+    0x003E8118  add      w9, w8, #1
+    0x003E811C  stur     w9, [x29, #-4]
+    0x003E8120  str      w8, [sp, #8]
+    0x003E8124  b        #0x3e8140
+    0x003E8128  ldrh     w0, [x8, x9]
+    0x003E812C  b        #0x3e8134
+    0x003E8130  ldr      w0, [x8, x9]
+    0x003E8134  mov      w8, #3
+    0x003E8138  stur     w8, [x29, #-4]
+    0x003E813C  str      wzr, [sp, #8]
+    0x003E8140  ldp      x29, x30, [sp, #0x10]
+    0x003E8144  add      sp, sp, #0x20
+    0x003E8148  ret      
+    0x003E814C  adrp     x0, #0xa3000
+
+============================================================
+  RANK #2 | Score: 31
+  Address: 0x3E8170
+  Name: FUN_3E8170
+  Size: 188 bytes
+  Detection string refs: 2
+  Detection categories: PROC_ACCESS
+  Category diversity: 1
+  External calls: 0
+  Callers: 0
+
+  --- String References ---
+    0xA3B87 [ADR+ADD] "/Users/bkdevops/tpmobile/workspace/p-74fc7d317ebc4e7c912d0c9ffff18edf/ano/mvm/so"
+    0xA28BA [ADR+ADD] "void AVM::BopMemoryOperation::PmemWrite(paddr_t, word_t, int)"
+
+  --- External/PLT Calls ---
+    BL 0x520320 (0x520320)
+
+  --- Disassembly (first 32 instructions) ---
+    0x003E8170  stp      x29, x30, [sp, #0x10]
+    0x003E8174  add      x29, sp, #0x10
+    0x003E8178  subs     w9, w3, #1
+    0x003E817C  cmp      w9, #7
+    0x003E8180  b.hi     #0x3e81f0
+    0x003E8184  ldr      x8, [x0, #8]
+    0x003E8188  adrp     x10, #0xea000
+    0x003E818C  add      x10, x10, #0x7c7
+    0x003E8190  adr      x11, #0x3e81a4
+    0x003E8194  ldrb     w12, [x10, x9]
+    0x003E8198  add      x11, x11, x12, lsl #2
+    0x003E819C  mov      w9, w1
+    0x003E81A0  br       x11
+    0x003E81A4  strb     w2, [x8, x9]
+    0x003E81A8  b        #0x3e81d4
+    0x003E81AC  str      x2, [x8, x9]
+    0x003E81B0  b        #0x3e81d4
+    0x003E81B4  strh     w2, [x8, x9]
+    0x003E81B8  mov      w8, #0x8d6
+    0x003E81BC  movk     w8, #0xab46, lsl #16
+    0x003E81C0  stur     w8, [x29, #-4]
+    0x003E81C4  orr      w8, w8, #1
+    0x003E81C8  str      w8, [sp, #8]
+    0x003E81CC  b        #0x3e81e0
+    0x003E81D0  str      w2, [x8, x9]
+    0x003E81D4  mov      w8, #1
+    0x003E81D8  stur     w8, [x29, #-4]
+    0x003E81DC  str      wzr, [sp, #8]
+    0x003E81E0  ldp      x29, x30, [sp, #0x10]
+    0x003E81E4  mov      w0, #1
+    0x003E81E8  add      sp, sp, #0x20
+    0x003E81EC  ret      
+
+======================================================================
+SECTION C: ALL FUNCTIONS WITH DETECTION STRING REFS (COMPLETE LIST)
+======================================================================
+
+
+======================================================================
+SECTION D: SVC (SYSCALL) LOCATIONS
+======================================================================
+
+  Total SVC instructions: 52
+
+    0x001C9D04  svc      #0  (in FUN_1C9CC0)
+    0x001CC0E8  svc      #0  (in FUN_1CC098)
+    0x001DD904  svc      #0  (in FUN_1DD7D0)
+    0x002598AC  svc      #0  (in FUN_259858)
+    0x0028CEDC  svc      #0  (in FUN_28CE90)
+    0x002BF90C  svc      #0  (in FUN_2BF8C0)
+    0x003AFE64  svc      #0  (in FUN_3AFDFC)
+    0x003AFE84  svc      #0  (in FUN_3AFDFC)
+    0x0040199C  svc      #0  (in FUN_4017B0)
+    0x004019DC  svc      #0  (in FUN_4017B0)
+    0x00404AD4  svc      #0  (in FUN_404604)
+    0x00404AF4  svc      #0  (in FUN_404604)
+    0x00404B2C  svc      #0  (in FUN_404604)
+    0x00404B44  svc      #0  (in FUN_404604)
+    0x00404B64  svc      #0  (in FUN_404604)
+    0x00404B84  svc      #0  (in FUN_404604)
+    0x00404BA4  svc      #0  (in FUN_404604)
+    0x00404BC4  svc      #0  (in FUN_404604)
+    0x00404BE4  svc      #0  (in FUN_404604)
+    0x004FEE6C  svc      #0  (in FUN_4FED30)
+    0x004FEED4  svc      #0  (in FUN_4FEE80)
+    0x004FEF4C  svc      #0  (in FUN_4FEEF0)
+    0x004FEFBC  svc      #0  (in FUN_4FEF60)
+    0x004FF02C  svc      #0  (in FUN_4FEFD0)
+    0x004FF09C  svc      #0  (in FUN_4FF040)
+    0x004FF10C  svc      #0  (in FUN_4FF0B0)
+    0x004FF17C  svc      #0  (in FUN_4FF120)
+    0x004FF1EC  svc      #0  (in FUN_4FF190)
+    0x004FF25C  svc      #0  (in FUN_4FF200)
+    0x004FF2CC  svc      #0  (in FUN_4FF270)
+    0x004FF33C  svc      #0  (in FUN_4FF2E0)
+    0x004FF3AC  svc      #0  (in FUN_4FF350)
+    0x004FF41C  svc      #0  (in FUN_4FF3C0)
+    0x004FF48C  svc      #0  (in FUN_4FF430)
+    0x004FF4FC  svc      #0  (in FUN_4FF4A0)
+    0x004FF56C  svc      #0  (in FUN_4FF510)
+    0x004FF5DC  svc      #0  (in FUN_4FF580)
+    0x004FF64C  svc      #0  (in FUN_4FF5F0)
+    0x004FF6BC  svc      #0  (in FUN_4FF660)
+    0x004FF72C  svc      #0  (in FUN_4FF6D0)
+    0x004FF79C  svc      #0  (in FUN_4FF740)
+    0x004FF80C  svc      #0  (in FUN_4FF7B0)
+    0x004FF87C  svc      #0  (in FUN_4FF820)
+    0x004FF8EC  svc      #0  (in FUN_4FF890)
+    0x004FF95C  svc      #0  (in FUN_4FF900)
+    0x004FF9CC  svc      #0  (in FUN_4FF970)
+    0x004FFA3C  svc      #0  (in FUN_4FF9E0)
+    0x004FFAAC  svc      #0  (in FUN_4FFA50)
+    0x004FFB1C  svc      #0  (in FUN_4FFAC0)
+    0x004FFB8C  svc      #0  (in FUN_4FFB30)
+    0x004FFBFC  svc      #0  (in FUN_4FFBA0)
+    0x004FFC6C  svc      #0  (in FUN_4FFC10)
+
+======================================================================
+SECTION E: INTERESTING EXTERNAL IMPORTS & THEIR USAGE COUNT
+======================================================================
+
+
+======================================================================
+SECTION F: EXPORTED FUNCTIONS
+======================================================================
+
+  0x1D3814  AnoSDKInit
+  0x1D7938  AnoSDKGetReportData3
+  0x1D551C  AnoSDKGetReportData
+  0x1D624C  AnoSDKOnRecvData
+  0x1D6598  AnoSDKIoctlOld
+  0x1D6EA8  AnoSDKIoctl
+  0x1D79A4  AnoSDKDelReportData3
+  0x1D7FC4  AnoSDKGetReportData4
+  0x1D88EC  AnoSDKOnRecvSignature
+  0x1D3B40  AnoSDKInitEx
+  0x1D417C  AnoSDKSetUserInfo
+  0x1D5A88  AnoSDKDelReportData
+  0x1D82CC  AnoSDKDelReportData4
+  0x1D4580  AnoSDKSetUserInfoWithLicense
+  0x1D7398  AnoSDKFree
+  0x1D9024  AnoSDKForExport
+  0x1DB894  JNI_OnLoad
+  0x1D4C0C  AnoSDKOnPause
+  0x1D5030  AnoSDKOnResume
+  0x1D78CC  AnoSDKGetReportData2
+  0x1D8C74  AnoSDKRegistInfoListener
+
+======================================================================
+SECTION G: .init_array (CONSTRUCTOR FUNCTIONS)
+======================================================================
+
+  [ 0] 0x0  (FUN_0)
+
+  [ 1] 0x0  (FUN_0)
+
+  [ 2] 0x0  (FUN_0)
+
+  [ 3] 0x0  (FUN_0)
+
+  [ 4] 0x0  (FUN_0)
+
+  [ 5] 0x0  (FUN_0)
+
+  [ 6] 0x0  (FUN_0)
+
+  [ 7] 0x0  (FUN_0)
+
+  [ 8] 0x0  (FUN_0)
+
+  [ 9] 0x0  (FUN_0)
+
+  [10] 0x0  (FUN_0)
+
+  [11] 0x0  (FUN_0)
+
+  [12] 0x0  (FUN_0)
+
+  [13] 0x0  (FUN_0)
+
+  [14] 0x0  (FUN_0)
+
+  [15] 0x0  (FUN_0)
+
+  [16] 0x0  (FUN_0)
+
+  [17] 0x0  (FUN_0)
+
+  [18] 0x0  (FUN_0)
+
+  [19] 0x0  (FUN_0)
+
+  [20] 0x0  (FUN_0)
+
+  [21] 0x0  (FUN_0)
+
+  [22] 0x0  (FUN_0)
+
+  [23] 0x0  (FUN_0)
+
+  [24] 0x0  (FUN_0)
+
+  [25] 0x0  (FUN_0)
+
+  [26] 0x0  (FUN_0)
+
+  [27] 0x0  (FUN_0)
+
+  [28] 0x0  (FUN_0)
+
+  [29] 0x0  (FUN_0)
+
+  [30] 0x0  (FUN_0)
+
+  [31] 0x0  (FUN_0)
+
+  [32] 0x0  (FUN_0)
+
+  [33] 0x0  (FUN_0)
+
+  [34] 0x0  (FUN_0)
+
+  [35] 0x0  (FUN_0)
+
+  [36] 0x0  (FUN_0)
+
+  [37] 0x0  (FUN_0)
+
+  [38] 0x0  (FUN_0)
+
+  [39] 0x0  (FUN_0)
+
+  [40] 0x0  (FUN_0)
+
+  [41] 0x0  (FUN_0)
+
+  [42] 0x0  (FUN_0)
+
+  [43] 0x0  (FUN_0)
+
+  [44] 0x0  (FUN_0)
+
+  [45] 0x0  (FUN_0)
+
+  [46] 0x0  (FUN_0)
+
+  [47] 0x0  (FUN_0)
+
+  [48] 0x0  (FUN_0)
+
+  [49] 0x0  (FUN_0)
+
+  [50] 0x0  (FUN_0)
+
+  [51] 0x0  (FUN_0)
+
+  [52] 0x0  (FUN_0)
+
+  [53] 0x0  (FUN_0)
+
+  [54] 0x0  (FUN_0)
+
+  [55] 0x0  (FUN_0)
+
+  [56] 0x0  (FUN_0)
+
+  [57] 0x0  (FUN_0)
+
+  [58] 0x0  (FUN_0)
+
+  [59] 0x0  (FUN_0)
+
+  [60] 0x0  (FUN_0)
+
+  [61] 0x0  (FUN_0)
+
+  [62] 0x0  (FUN_0)
+
