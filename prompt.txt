@@ -20,8 +20,8 @@ STATUS: Active Development
 - OS: Linux container (no GUI)
 - Python 3.x + LIEF 0.17.6 + Capstone 5.0.9
 - Ghidra NOT available locally (no JDK) - use Codespace instead
-- GitHub PAT: PAT_REMOVED
 - GitHub User: newibr472-create
+- GitHub PAT: stored securely, not in this file (check .devcontainer for Codespace setup)
 - Repo: LIBSOFFF (PUBLIC)
 - Codespace: .devcontainer/devcontainer.json (Java 21 + Python 3.13 + pip)
 
