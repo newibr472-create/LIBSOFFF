@@ -1,6 +1,5 @@
-# Large files
-libUE4.so
-*.apk
+# Large files (>100MB)
+# libUE4.so is inside the APK
 
 # Python cache
 __pycache__/
