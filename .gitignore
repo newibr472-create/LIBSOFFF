@@ -1,9 +1,11 @@
-*.so
+# Large files
+libUE4.so
 *.apk
-*.dex
-*.otf
-*.nn
-*.bin
-*.proto
-*.cfg
-ghidra_project/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Ghidra temp
+ghidra_projects/
+*.rep
