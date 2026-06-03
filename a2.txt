@@ -59,3 +59,9 @@ NEXT STEPS:
   [ ] Trace report network path (0x4B5E78 -> socket?)
   [ ] Find main CFF dispatcher entry for universal hook
   [ ] Test patches in emulator
+
+[14:00] libUE4.so extracted from bg.apk (224MB, arm64-v8a)
+[14:05] Pushed to GitHub via Git LFS
+[14:10] Java 21 installed, Ghidra import SUCCESS
+[14:15] Strings CONFIRMED: RecoilKickADS@0x3C7B763, CameraShakeInnerRadius@0x3E1D961
+[14:20] Full analysis needs hours (110MB .text). Codespace stuck.
