@@ -84,6 +84,49 @@ COMPLETED WORK:
 
    File: hooks/PhantomTrace.h
 
+8. HYPERFRAME 120FPS UNLOCK (NEWLY CREATED)
+   - Target: libUE4.so @ 0xBC2C054
+   - Type: FULL_PATCH (NOP the nanosleep call)
+   - Method: nanosleep call trace across 116MB .text section
+
+   Discovery process:
+     a) Identified nanosleep import (PLT @ 0xC4E2170, GOT @ 0xDD94B28)
+     b) Scanned ALL 116MB of .text for BL instructions targeting nanosleep
+     c) Found EXACTLY ONE call at 0xBC2C054 in the entire 223MB binary
+     d) Traced surrounding function: 0xBC2BF38 - 0xBC2C074 (324 bytes)
+     e) Identified as UE4 Frame Rate Limiter (frame pacing with EINTR handling)
+
+   Frame Rate Limiter structure:
+     - Prologue: 0xBC2BF38 (STP X29, X30, [SP, #-0x50]!)
+     - Gets current timestamp via helper function at 0xAF01D24
+     - Calculates sleep duration (frame time - elapsed time)
+     - Stores timespec structs on stack (SP+0x28, SP+0x38)
+     - Calls nanosleep(requested_time, remaining_time) at 0xBC2C054
+     - Handles EINTR with loop (B.NE back to recalculate)
+     - Returns 0 on success, epilogue + RET at 0xBC2C074
+
+   FPS strings found in libUE4.so:
+     GetFrameRateLimit, SetFrameRateLimit, CurrentMaxFPS,
+     SetMaxFpsFromDevice, bUseFpsLock, GetExpandDeviceMaxFPSByDeviceLevel,
+     GetExpandMaxFPSConfigByQuality, bLowDeviceFrameRateLimitEnabled,
+     FixedFrameRate, TargetFrameRate, targetFPS (13 total)
+
+   What it does:
+     Removes UE4 engine frame rate limiting. Game runs at device's
+     maximum refresh rate (90/120/144 FPS depending on hardware).
+
+   File: hooks/HyperFrame.h
+
+HOOKS SUMMARY:
+===============
+| Hook         | Library     | Offset    | Type        | What it Blocks          |
+|-------------|-------------|-----------|-------------|--------------------------|
+| PhantomTrace | libanogs.so | 0x2BFCF0  | HOOK_LIB    | Anti-Debug + Emulator    |
+| HyperFrame   | libUE4.so   | 0xBC2C054  | FULL_PATCH  | 120FPS Frame Rate Cap   |
+| ScanTrigger  | libanogs.so | 0x369658  | HOOK_LIB    | Memory Scan Trigger      |
+| MemoryBranch | libanogs.so | 0x31DCB0  | HOOK_LIB    | Memory Scanner Dispatch  |
+| WisdomBypass | libanogs.so | 20 offsets | Verified    | Multiple AC Functions    |
+
 TOP DISCOVERY CANDIDATES (for future hooks):
 ===========================================
  #  Offset    Score  Category           Description
