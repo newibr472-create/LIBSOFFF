@@ -1,0 +1,61 @@
+================================================================================
+AGENT 2 PROGRESS LOG (a2.txt)
+================================================================================
+Session: 2026-06-03
+Environment: Ghidra 11.2.1 + Python/Capstone + IDA Pro 9.3
+================================================================================
+
+[13:00] Started. Read prompt.txt (Agent 1 progress).
+[13:05] Repo: newibr472-create/LIBSOFFF. Cloned locally.
+[13:10] Ghidra found at /opt/ghidra_11.2.1_PUBLIC (Java 17)
+[13:12] Ghidra stuck on LaunchSupport JDK detection. Killed.
+[13:15] Switched to Python+Capstone for disassembly.
+[13:20] Disassembled all 6 priority targets:
+        - ReportComplaint @ 0x1D0F60 (CFF obfuscated)
+        - set_inline_hook_error @ 0x379CA4 (CFF)
+        - ms_scan_start @ 0x37A0AC (CFF)
+        - emulator_name @ 0x1C8FE0 (CFF)
+        - mmap_failure @ 0x37A450 (CFF)
+        - ms_mmap @ 0x37A524 (CFF)
+
+[13:25] KEY FINDING: All targets are CFF mid-function blocks.
+        No prologues. Cannot use HOOK_LIB. Must use PATCH_LIB.
+
+[13:30] DISCOVERY: 25 BSS guard flags at 0x54A000
+        Main: +0x3C8
+        Detection guards: +0xBBC through +0xBD3 (24 bytes)
+        Pattern: ADRP X8,0x54A000 -> LDRB W9,[X8,#off] -> TBZ W9,#0,skip
+        When flag=0, scan is ALWAYS skipped.
+
+[13:35] Created 5 new hook files (PATCH_LIB format):
+        hooks/GuardFlagKiller.h  - Zero all 25 guard flags
+        hooks/ReportBlocker.h    - NOP report BL calls
+        hooks/HookDetectBypass.h - NOP hook verification
+        hooks/MemScanBypass.h    - Force guard=0 + NOP scan
+        hooks/EmulatorBypass.h   - NOP emulator comparison
+
+[13:40] Key function mappings discovered:
+        0x379220 = scan executor (called from CFF blocks)
+        0x4B39E0 = string builder (report construction)
+        0x4B5E78 = report submission to server
+        0x4B60D4 = string comparison (emulator matching)
+        0x5201E0 = hook integrity verify (short)
+        0x5201F0 = hook integrity verify (extended)
+        0x2E3A58 = mutex acquire
+        0x2FF574 = flag setter
+
+[13:45] Also verified existing hook: libanogs.so 0x2BA008 (memory scanner)
+        - Function handles scan types 1,2,5,6
+        - The GALVNIC_BYPASS hook blocks ALL scans (return 0)
+        - Condition (a6 > a1+8) is ALWAYS FALSE (32bit vs 64bit ptr)
+
+CODESPACE: laughing-space-tribble-xr5vj64pr654cv6vg
+  State: Provisioning (waiting for setup)
+  Plan: Run Ghidra there for full decompilation
+
+NEXT STEPS:
+  [ ] Wait for Codespace -> run full Ghidra analysis
+  [ ] Decompile 0x379220 (scan executor) for deeper patches
+  [ ] Trace report network path (0x4B5E78 -> socket?)
+  [ ] Find main CFF dispatcher entry for universal hook
+  [ ] Test patches in emulator
