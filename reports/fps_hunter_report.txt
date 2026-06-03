@@ -1,0 +1,1842 @@
+======================================================================
+120FPS UNLOCK HUNTER - libUE4.so (BGMI 4.4.0)
+======================================================================
+
+Total FPS strings: 1122
+FPS Limit strings: 7
+ADRP hits: 8844
+Resolved xrefs: 74
+FPS functions: 51
+
+======================================================================
+SECTION A: ALL FPS-RELATED STRINGS
+======================================================================
+  0x3BF5B7D: "DrawOutline"
+  0x3BF5B89: "UnRegisterTick"
+  0x3BF5BAA: "IsDrawOutline"
+  0x3BF60D8: "TickInterval"
+  0x3BF6867: "DrawWeaponCrosshairInner"
+  0x3BF6E52: "InterruptDriverEmoteTick"
+  0x3BF7255: "HandleTickViewLocationList"
+  0x3BF751B: "FPS_AnimMontage_Vehicle"
+  0x3BF7701: "LocalDrawWeaponCrosshair"
+  0x3BF7816: "TickUpdateReturnActivityRandPose"
+  0x3BF8071: "bEnableTick"
+  0x3BF9DC2: "bIsUseFpsVault"
+  0x3BFA1E2: "GetEnableLowFPSRender"
+  0x3BFA4C6: "DrawAirplaneRouteInMiniMap"
+  0x3BFA9A0: "JoystickTriggerSprint"
+  0x3BFABA7: "SetJoyStickInteractionSize"
+  0x3BFABD4: "SetVirtualStickVisibility"
+  0x3BFB46F: "CanOptimizeTick"
+  0x3BFB499: "ComponentTickRegistered"
+  0x3BFB60B: "TickEnterSphereAsyncLoadResInterval"
+  0x3BFB81B: "TickIndicator"
+  0x3BFB887: "DrawCircleUFunction"
+  0x3BFB9AD: "TickListItem"
+  0x3BFC5B6: "DrawGuidForActor"
+  0x3BFCDA5: "ETickOptimizationAnimUROMode"
+  0x3BFCE17: "EnginePreTick__DelegateSignature"
+  0x3BFCF2A: "Client_BackendHUDTick"
+  0x3BFD223: "WebView-OnGetTicket callback %d , retMsg = %s"
+  0x3BFD3D4: "fLaggingFrameTimeThresholdMax"
+  0x3BFEB75: "PreTickTime"
+  0x3BFF69C: "bForceTickOptimization"
+  0x3BFFBC8: "bTickHasSendRequest"
+  0x3C004DE: "AnimMontageTypeAndPosture::FPS_Stand"
+  0x3C00FF4: "bDrawEyeFirsg"
+  0x3C061BA: "DrawDebugStuff"
+  0x3C06322: "EnableTickLOD"
+  0x3C079F7: "DrawSmallTriangles"
+  0x3C07A0A: "DrawVoxelCells"
+  0x3C07CC6: "AutoTestDrawBox"
+  0x3C08633: "PrePhysicsTick"
+  0x3C09901: "F:\Release4.4.0\AS\Survive\Source\ShadowTrackerExtra\Utility\TickControlComponent.cpp"
+  0x3C09C27: "TickShowDebugInfoDeltaTime"
+  0x3C0BB14: "GlobalFramingTickConfig"
+  0x3C0BF88: "DrawTexture"
+  0x3C0BF94: "ShouldDraw"
+  0x3C0C349: "DrawAutoExplodeSphereThickness"
+  0x3C0D606: "CloseFPSCheck"
+  0x3C0D776: "bDrawCrosshairWhenScope"
+  0x3C0D8AD: "bOpenDebugDraw"
+  0x3C0DA3E: "OnRegisterEntityTick"
+  0x3C0E122: "b_C_PeekFrameRateNEQ0_AND_C_IsPistolPeekAim"
+  0x3C0E2BD: "bStopCharacterTick"
+  0x3C0E2E3: "BP_GetWeaponSyncTicket"
+  0x3C0E7C2: "DrawVisibleTraceDebugLine"
+  0x3C0E8AF: "OnWidgetToRenderTargetDrawn"
+  0x3C0EB37: "NumperTick"
+  0x3C0EB90: "ClientDrawDebugArrow"
+  0x3C0EBA5: "ClientDrawDebugLine"
+  0x3C0FD7A: "EnableTickEnterSphereAsyncLoadRes"
+  0x3C10084: "SurviveHudDrawDelegate__DelegateSignature"
+  0x3C10267: "ECustomTickRoleType::ECTR_All"
+  0x3C10409: "DrawClickingWidgetOutline"
+  0x3C106CA: "TickHandleSimpleCharacterOverlap"
+  0x3C16919: "bAllowReceiveTickEventOnDedicatedServer"
+  0x3C16D63: "DrawFrustum"
+  0x3C16D6F: "PUBGDeviceFPSLowExpand"
+  0x3C17840: "bDrawOnLevelStatusMap"
+  0x3C17DC7: "b3DDrawMode"
+  0x3C181FC: "bDrawOctree"
+  0x3C1882B: "bUseOverrideDrawDistance"
+  0x3C189C6: "#ifdef GL_EXT_draw_instanced"
+  0x3C1AB92: "bDrawTriangles"
+  0x3C1B888: "UEnums.ESlateTickType = {TimeOnly = 0,All = 1,}"
+  0x3C1CCF4: "OnGetTicketRawParse raw data result = %s"
+  0x3C1EF28: "CheckComponentTick"
+  0x3C1F6DA: "DefaultDrawColor"
+  0x3C1F857: "TickPlayStormSoundInterval"
+  0x3C1F882: "DrawDebugLocation"
+  0x3C1FA2E: "SetComponentTickDirectly"
+  0x3C20205: "DrawOffset"
+  0x3C2551E: "ESyncTicketStatus"
+  0x3C25AF1: "TickOptimizationTickSettings"
+  0x3C25B0E: "bInComponentsTickControl"
+  0x3C25B27: "bActorTickChange"
+  0x3C25D31: "TMFPStartRichTapWithData"
+  0x3C25D4A: "TMFPStartRichTap"
+  0x3C298E4: "bDebugBuildDraw"
+  0x3C29A07: "MotionController_Left_Thumbstick_Down"
+  0x3C29A2D: "MotionController_Left_Thumbstick_Right"
+  0x3C29A77: "MotionController_Right_Thumbstick"
+  0x3C2AB11: "EArithmeticKeyOperation::Greater"
+  0x3C2AFCF: "F:\Release4.4.0\AS\UE4181\Engine\Source\Runtime\Engine\Private\LevelTick.cpp"
+  0x3C2B2E6: "bTickableWhenPaused"
+  0x3C2B48B: "Received_NotifyTick"
+  0x3C2B892: "PUBGDeviceFPSUltimateHighExpand"
+  0x3C2BF77: "BeginDrawCanvasToRenderTarget"
+  0x3C2BFE6: "DrawDebugCylinder"
+  0x3C2C7E6: "ClearJoystick"
+  0x3C2C8BD: "SetDrawDyeing"
+  0x3C2C8FE: "bNewDrawHighlight"
+  0x3C2CD0F: "LastPoseTickFrame"
+  0x3C2CD36: "bOnlyAllowAutonomousTickPose"
+  0x3C2CE76: "DrawCaptureRadius"
+  0x3C2F47D: "EParticleDrawEffect::None"
+  0x3C2FC75: "WaitForAbilityActivateWithTagRequirementsInTick"
+  0x3C356C5: "bNeedDrawCircleGuideLineC"
+  0x3C35772: "TickStride_MoveToWall"
+  0x3C35B46: "DrawDebugGraphicsOffset"
+  0x3C365E3: "TickCorrectRateTimeDelta"
+  0x3C368D0: "OnFPSMonitorConfigSwitchRecv"
+  0x3C36E96: "TickDamageFields"
+  0x3C3727A: "bNeedTickSearch"
+  0x3C382AF: "SetEnableStandalonePickUpTick"
+  0x3C38524: "GetCurFPS"
+  0x3C39587: "HitToDyingDrawColor"
+  0x3C3959B: "DrawPickupInfo"
+  0x3C3A37B: "DrawGuidForUI"
+  0x3C3A679: "DrawSubLevelManageCompTime"
+  0x3C3AA82: "Tick2"
+  0x3C3AC23: "ETickOptimizationDistanceMode::Sphere"
+  0x3C3AC49: "bForceExecuteFirstTick"
+  0x3C3B3F8: "FpsForWindowClient"
+  0x3C3B4D2: "ProductIdRaw"
+  0x3C3B585: "EnableDrawDebugBox"
+  0x3C3C9C5: "DebugDrawPath"
+  0x3C3D75C: "PostPhysicsTickFunction"
+  0x3C3DD93: "bTickCheckClearIllegalVelocity"
+  0x3C3E5B8: "ClientTickInterval"
+  0x3C3E7E9: "CurrentTickDeltaTime"
+  0x3C3EA8C: "DrawShape_Capsule"
+  0x3C3EA9E: "VisualDraw"
+  0x3C3EAA9: "NetMulticast_DrawDebug_Line"
+  0x3C3EBD9: "Gamepad_LeftStick_Down"
+  0x3C3EFFD: "ESlateBrushDrawType::NoDrawType"
+  0x3C3FC94: "TickingTasks"
+  0x3C3FDDE: "EArithmeticKeyOperation::LessOrEqual"
+  0x3C40426: "GetActorTickInterval"
+  0x3C409AE: "DrawFont"
+  0x3C40F71: "SetFrameRate"
+  0x3C45CB3: "DrawGridCell"
+  0x3C46056: "DebugDrawDuration"
+  0x3C46B13: "SpriteDrawCallRecord"
+  0x3C46CD0: "SpotDrawThickness"
+  0x3C48FAA: "TickFrequency"
+  0x3C497E5: "DrawDebugCrossHairCircleAreaSteps"
+  0x3C4983F: "ClientStickGroundFrames"
+  0x3C49A1E: "TickUpdateCacheInterval"
+  0x3C49E80: "TickImpl"
+  0x3C4A7BA: "TickUpdateLookAt"
+  0x3C4A901: "bNeedDrawWhiteCircleC"
+  0x3C4A9A7: "TickIntervalOverrideDS"
+  0x3C4AD4C: "bUseHUDTick"
+  0x3C4AF7E: "bDrawDebugSearchedPutDownPointsSphere"
+  0x3C4B14E: "StartEmoteTick"
+  0x3C4C13A: "CorrectTickInterval"
+  0x3C4C32E: "AIDSTickDistanceInternal"
+  0x3C4C935: "BP_CheckWeaponSyncTicket"
+  0x3C4CC31: "bStopTick"
+  0x3C4D238: "bDrawAxis"
+  0x3C4D4A6: "DrawGuideLine"
+  0x3C4D955: "SetJoyStickCenter"
+  0x3C4DBCD: "bMovementCompTick"
+  0x3C4E5F5: "HitToDeathDrawColor"
+  0x3C4E71F: "ECustomTickRoleType::ECTR_Authority"
+  0x3C4F17E: "VehicleSyncPostPhysxTick"
+  0x3C4F5B7: "ESyncTicketStatus::ETimeOut"
+  0x3C4F83D: "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationSubsystem.cpp"
+  0x3C4F894: "TickOptimization"
+  0x3C4FB32: "SetForceExecuteFirstTick"
+  0x3C4FB4B: "SetTickSettings"
+  0x3C4FDA7: "TMFPSwitchRichTapMode"
+  0x3C4FDBD: "TMFPStopRichTap"
+  0x3C5513C: "QuadOverdraw"
+  0x3C5523C: "SetTickableWhenPaused"
+  0x3C5569E: "K2_DrawBorder"
+  0x3C559D1: "bSmoothFrameRate" *** LIMIT/CAP ***
+  0x3C566AB: "WarmupTickRate"
+  0x3C56908: "bDrawTileBounds"
+  0x3C56918: "bDrawNavMeshEdges"
+  0x3C56BD4: "bDrawOnlyIfSelected"
+  0x3C57851: "DrawTypeInt"
+  0x3C57D1A: "DrawDebugWeaponCrossHair"
+  0x3C59484: "EParticleDrawEffect::NoBlending"
+  0x3C594A4: "EParticleDrawEffect::NoGamma"
+  0x3C5B463: "DrawGrids"
+  0x3C5BE0A: "AutoTestEnableTickOrVisibilityByActorName"
+  0x3C5C2F9: "bPickLocationDebugDraw"
+  0x3C5D737: "EVENTID_INGAME_SHOW_LOW_FPS_WARNING"
+  0x3C5D9F0: "VehicleProtection_TickPreventPenetration"
+  0x3C5DD6B: "TickCloseToTarget"
+  0x3C5E950: "DivisionTick"
+  0x3C5F306: "StickGroundHeightCheckOffset"
+  0x3C5F3E1: "BodyDrawOutlineColor"
+  0x3C5FA81: "ChangeDSFps"
+  0x3C5FDDD: "DrawMaterial"
+  0x3C60273: "bIsCanTick"
+  0x3C60326: "TickRate_Internal"
+  0x3C60916: "bEnableMoveTickOptimize"
+  0x3C60FEF: "EnableDrawOutlineydoHjx"
+  0x3C65749: "GetWebViewTicket"
+  0x3C6710A: "ECoronaClientData::MinUndilatedFrameTime"
+  0x3C6929C: "RPC_DrawDebug_Capsule"
+  0x3C6A1A9: "CaptureJoystick"
+  0x3C6A1B9: "bInAllJoysticks"
+  0x3C6AF7A: "TickedPoseOffestTime"
+  0x3C6B11F: "GetFrameRateLimit"
+  0x3C6B399: "EDrawDebugTrace::None"
+  0x3C6B3AF: "EDrawDebugTrace"
+  0x3C6BE19: "DefaultDrawDistance"
+  0x3C6C54D: "MinUndilatedFrameTime"
+  0x3C6D2F5: "ticket"
+  0x3C6E84E: "UpdateEveryTick"
+  0x3C6E89E: "bDrawUsedTriangles"
+  0x3C6F43D: "UEnums.ETickState = {Disabled = 0,Enabled = 1,CoolingDown = 2,}"
+  0x3C6F47D: "UEnums.EViewModeIndex = {VMI_BrushWireframe = 0,VMI_Wireframe = 1,VMI_Unlit = 2,VMI_Lit = 3,VMI_Lit_"
+  0x3C709AE: "AIGCAnimFrameRate"
+  0x3C75A4E: "FPSMonitorConfigSwitch"
+  0x3C7611A: "GetLastTickFrameCounter"
+  0x3C7782C: "SetJoyStickPtrFireMode"
+  0x3C7789E: "TryShowJoystick"
+  0x3C778F0: "bAddMovementTickInSpect"
+  0x3C779E7: "JoystickTriggerSprintDuration"
+  0x3C7858F: "CustomTickType"
+  0x3C786DF: "BPSetTickMode"
+  0x3C798D6: "Tick"
+  0x3C79E58: "PostGameStatusToTMFPSMap"
+  0x3C79EC0: "{"isneedticket":false,"showHorizontalScrollBar":false,"showVerticalScrollBar":false,"isx5work":false"
+  0x3C7B2F7: "bDrawDebugPath"
+  0x3C7BC79: "DebugDrawSize"
+  0x3C7BDAA: "FPSLimit"
+  0x3C7CE49: "TickRate"
+  0x3C7D175: "bTickSyncMontageTime"
+  0x3C7E4D8: "bCallTickOnSearchStart"
+  0x3C7E732: "Net_Tick_Time"
+  0x3C7E9D6: "bAllowTickBeforeBeginPlay"
+  0x3C7E9F9: "bSupportSuspendTick"
+  0x3C7EA0D: "PrimaryActorTick"
+  0x3C7EA1E: "SetComponentTickEnabled"
+  0x3C7EB65: "EDrawDebugItemType::CoordinateSystem"
+  0x3C7F0B0: "ECustomTickIntervel::Intervel_60FPS"
+  0x3C7F0D4: "ECustomTickIntervel::Intervel_5FPS"
+  0x3C7F0F7: "bTickEvenWhenPaused"
+  0x3C7F4C1: "DrawMaterialTriangle"
+  0x3C7F6AC: "DrawMaterialToRenderTarget"
+  0x3C7FDE9: "MaxDrawCount"
+  0x3C7FEB1: "NoTickMiddleDevices"
+  0x3C80118: "SetDrawHighlight"
+  0x3C80129: "SetDrawIdeaOutline"
+  0x3C8023D: "bDrawPolygonLabels"
+  0x3C80250: "bDrawTileLabels"
+  0x3C80519: "ESkeletaTickMode::TICK_NONE"
+  0x3C805AA: "EMeshComponentUpdateFlag::OnlyTickMontagesWhenNotRendered"
+  0x3C80B53: "glDrawElementsInstanced"
+  0x3C860A7: "F:\Release4.4.0\AS\Survive\Source\ShadowTrackerExtra\BackPack\EmoteAction\EmoteAction_TickMatParam.c"
+  0x3C87BF3: "CheckCloseDSTick"
+  0x3C8819B: "bDrawDebugSpreadCircleArea"
+  0x3C88232: "StickGroundStartHeightOffset"
+  0x3C88345: "BodyDrawColor"
+  0x3C8895D: "SetOnlyTickWhenRenderFlag"
+  0x3C88B4E: "FrameTimeSwitcher"
+  0x3C88FCD: "DrawColor"
+  0x3C89418: "DefaultHideAvatarTickCount"
+  0x3C8A89D: "LowFPSWarningTipsLastTime"
+  0x3C8BD47: "debugDraw"
+  0x3C8BFDB: "LowFPSRenderSettingProfileHigh"
+  0x3C8C049: "ClientDrawDebugSweptBox"
+  0x3C8C897: "DisplayGameTipForLowFPSWarning"
+  0x3C8C8D2: "GetStatDrawCalls"
+  0x3C8C9A3: "RPC_DrawDebug_Box_WithRotation"
+  0x3C8CA69: "SetJoystickOperatingMode"
+  0x3C8CC68: "JoystickSprintBtnHeight"
+  0x3C8CC80: "JoystickSprintDisThresholdNew"
+  0x3C8D3E9: "ResetJoystickMove"
+  0x3C8D4F7: "TickEnterCullWaterSphereInterval"
+  0x3C8D788: "bDrawCrosshair"
+  0x3C8D8C4: "ECustomTickRoleType::ECTR_SimulatedAndAutonomous"
+  0x3C8E0E9: "ESTExtraVehicleType::VT_Reserved_90"
+  0x3C8E577: "NearVehicleTickRate"
+  0x3C8E888: "ESyncTicketStatus::EMatch"
+  0x3C8EAF2: "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationTargetComponent.cpp"
+  0x3C8ECF8: "ETickOptimizationDistanceMode"
+  0x3C8EE9D: "ReadManagedTickMapSwitchers"
+  0x3C9543C: "LODDrawDistance"
+  0x3C959A2: "bSupported3DDrawMode"
+  0x3C96E9F: "DrawType"
+  0x3C971DE: "GMDrawLine"
+  0x3C996CC: "UEnums.EBufferUsageFlags = {BUF_None = 0,BUF_Static = 1,BUF_Dynamic = 2,BUF_Volatile = 4,BUF_Unorder"
+  0x3C9AB46: "ENiagaraRibbonDrawDirection::BackToFront"
+  0x3C9CCE9: "DrawDebugInfo"
+  0x3C9D3B6: "DSTickRateOptimize"
+  0x3C9DB45: "DrawDebugPointEnd"
+  0x3C9DB8A: "bSingleTick"
+  0x3C9ED47: "DrawTargetTraceLockSphereRadius"
+  0x3C9EF74: "TickWallClimb"
+  0x3C9FCF8: "EnableRedrawPredictLine"
+  0x3C9FE1C: "DrawDebug"
+  0x3CA0085: "bCanEverTick"
+  0x3CA01A1: "FPSCollectInternal"
+  0x3CA01B4: "OnFPSLowWarning"
+  0x3CA0B86: "SimulatedNearTickIntervalAtClient"
+  0x3CA56CE: "IsTickHouse"
+  0x3CA6D3F: "UpdateAOTickInterval"
+  0x3CA6DFE: "LowerboundTickReportIntervalSeconds"
+  0x3CA70ED: "TickComponentInner"
+  0x3CA7DFB: "MotionController_Left_Thumbstick_Left"
+  0x3CA8B04: "bDrawDebugTrackingFocusPoint"
+  0x3CA8DDD: "EArithmeticKeyOperation::Less"
+  0x3CA99E1: "K2_DrawMaterialTriangle"
+  0x3CA9DBE: "ECustomTickIntervel::Type"
+  0x3CAA197: "StickY"
+  0x3CAA730: "GetDrawStyle"
+  0x3CAAF08: "bDrawHighlight"
+  0x3CAAF17: "MaxDrawDistanceOffset"
+  0x3CAAF77: "bDrawNavMesh"
+  0x3CAB379: "LastPoseTickTime"
+  0x3CAB810: "glDrawArraysInstanced"
+  0x3CAC353: "0001020304050607080910111213141516171819202122232425262728293031323334353637383940414243444546474849"
+  0x3CAD455: "SSL3_GET_NEW_SESSION_TICKET"
+  0x3CADA06: "DrawDebugPoints"
+  0x3CADA16: "bDrawSubtriangles"
+  0x3CAF570: "DebugDrawOccupiedAreas"
+  0x3CB03DD: "DefaultFps"
+  0x3CB5B8E: "DrawDebugFan"
+  0x3CB60B7: "FpsPawnVaultToAll"
+  0x3CB653D: "DrawHeight"
+  0x3CB688F: "GetDeviceFPSHDR"
+  0x3CB6C8D: "IsNeedDrawGuideLine"
+  0x3CB7097: "GetJoyStickOpacity"
+  0x3CB70B8: "HideGameTipForLowFPSWarning"
+  0x3CB72C5: "WeaponSyncTicket"
+  0x3CB7685: "ConditionAddTickPrerequisite"
+  0x3CB80C4: "bTickBeforeOwner"
+  0x3CB9753: "RemoveComponentTickControl"
+  0x3CB9BD4: "fLaggingFrameTimeThresholdMin"
+  0x3CBBC60: "DSTickInternal"
+  0x3CBD650: "MotionController_Right_Thumbstick_X"
+  0x3CBE085: "bEnableDebugDraw"
+  0x3CBE719: "GetDrawSize"
+  0x3CBEB94: "bTickDuringGame"
+  0x3CBF4D4: "DrawDistance"
+  0x3CBF706: "EDrawDyeingMode::EDDM_WHOLE"
+  0x3CBFE38: "DrawDebugFrustum"
+  0x3CBFE49: "DrawDebugString"
+  0x3CC0002: "bSupportTick"
+  0x3CC0979: "bDistinctlyDrawTilesBeingBuilt"
+  0x3CC68B3: "VehicleAirdrop_TickDamping"
+  0x3CC6C10: "CurTickShowDebugInfoTime"
+  0x3CC7AD8: "OnEnableEffectTickChanged__DelegateSignature"
+  0x3CC7E34: "DrawCircleItemData"
+  0x3CC7ED8: "bUseStickGravity"
+  0x3CC7F9F: "HeadDrawOutlineColor"
+  0x3CC835F: "DormantTickComponents"
+  0x3CC84B7: "UnStickyFromActor"
+  0x3CC8702: "IsGlobalDebugLineTraceDrawn"
+  0x3CC8EF7: "TickUpdateClothesWeaponIdle"
+  0x3CC8FA2: "PostTickFunction"
+  0x3CC9092: "RedrawAllMapMarkC"
+  0x3CC92A1: "MinSpeedForAirTick"
+  0x3CC9DC6: "DefaultUpdatePredictLineFPS"
+  0x3CCA604: "ComponentTickInterval"
+  0x3CCA874: "DrawVehicleDebugString"
+  0x3CCAAA1: "SimulatedFarTickIntervalAtClient"
+  0x3CCAB9A: "bResetTickTimeOnConditionFailed"
+  0x3CCABEF: "ResumeTickSearch"
+  0x3CCB829: "GetExpandDeviceMaxFPSByDeviceLevel" *** LIMIT/CAP ***
+  0x3CCB889: "LowFPSBackupRenderSettings"
+  0x3CCBC36: "DrawGuideLineEntireMap"
+  0x3CCBFD5: "GetJoyStickVisualSize"
+  0x3CCC263: "IsJoystickTriggerSprint"
+  0x3CCC3A7: "EVirtualJoystickState"
+  0x3CCE68A: "OnTickChange__DelegateSignature"
+  0x3CCE6B9: "AvgTickDelta"
+  0x3CCF9FC: "IsStickToTheGround"
+  0x3CD63D8: "DrawTopDelta"
+  0x3CD82F2: "UEnums.EUnrealEngineObjectUE4Version = {VER_UE4_OLDEST_LOADABLE_PACKAGE = 214,VER_UE4_BLUEPRINT_VARS"
+  0x3CDD5B1: "OnAdPieXLoadRawParse raw data result = %s"
+  0x3CE08AF: "GetDrawColor"
+  0x3CE525F: "bOptimizeTick"
+  0x3CE526D: "WeakTickDoSomethingDuration"
+  0x3CE546D: "OnWeaponDrawHUD__DelegateSignature"
+  0x3CE585D: "ECustomTickType::OwnerTick"
+  0x3CE618D: "EnableTickRespawn"
+  0x3CE634C: "PostPhysxComponentTick"
+  0x3CE6C3A: "FirstTickStartTime"
+  0x3CE7289: "fLaggingFrameTimeThreshold"
+  0x3CE73DF: "DrawRT"
+  0x3CE7777: "SetTickNetMsgMaxTime"
+  0x3CEA395: "NeedTick"
+  0x3CEA3F9: "bTickUpdateTargetLocation"
+  0x3CEA636: "DrawShape_Line"
+  0x3CEA645: "NetMulticast_DrawDebug_Sphere"
+  0x3CEABAA: "DrawAs"
+  0x3CEBA98: "StepToDebugDraw"
+  0x3CEBF42: "SVirtualJoystick"
+  0x3CEC014: "IsActorTickEnabled"
+  0x3CEC1F4: "EDrawDebugItemType"
+  0x3CEC2DA: "EMontageNotifyTickType::Type"
+  0x3CEC63B: "PUBGDeviceFPSVerySmoothExpand"
+  0x3CED696: "bDrawIdeaOutline"
+  0x3CED928: "ESkeletaTickMode::TICK_ALL"
+  0x3CED943: "ESkeletaTickMode::TICK_LOD_NOT_ANI"
+  0x3CEE9CE: "GMDrawDebugSphere"
+  0x3CEEA51: "FrameRateLock"
+  0x3CF05E4: "InterpolationTickMultiplier"
+  0x3CF5568: "ResetTickDelay"
+  0x3CF5577: "bEnableTickDelayForOneFrame"
+  0x3CF5E5B: "bTickEnable"
+  0x3CF5F53: "STickInterval"
+  0x3CF6047: "TickChangeMaterial"
+  0x3CF64CD: "MaxDeleteNumPerTick"
+  0x3CF6A9D: "NativeTickInterval"
+  0x3CF6BB3: "BTickAdjustMapPostion"
+  0x3CF6BC9: "TickWallJump_Turn"
+  0x3CF7F19: "bLock90DirWhenPitchAbove75"
+  0x3CF840A: "TickState"
+  0x3CF8667: "bEnableLowDeviceSkipTick"
+  0x3CF8680: "SimulatedMiddleTickIntervalAtClient"
+  0x3CF8E14: "UpdateCurrentShootWeaponTick"
+  0x3CF907C: "DrawTextToTextureRenderTarget2DAsync"
+  0x3CF9398: "f_C_CharacterYawRotateRate_90"
+  0x3CF9B57: "HideJoystickWithTag"
+  0x3CF9E54: "bUseOldMethodForJoystickTriggerSprint"
+  0x3CFA2B6: "DsActorTickInterval"
+  0x3CFA998: "ECustomTickRoleType"
+  0x3CFB364: "SetVehWeaponTickEnabled"
+  0x3CFB508: "OptimizeVehicleSyncTick"
+  0x3CFB972: "bDrawSubLevelManageComp"
+  0x3CFBEE7: "bEnableAutoTickDeltaThreshold"
+  0x3CFC100: "ResetAllSlateTickEveryFrame"
+  0x3CFDA75: "TickCheckMovePose"
+  0x3CFDDEB: "EnableTickEncrypt"
+  0x3CFF947: "AnimMontageTypeAndPosture::FPS_Vehicle"
+  0x3CFFBC2: "RPC_DrawDebug_MultiShapes"
+  0x3CFFBDC: "RPC_DrawDebug_StopMultiShapes"
+  0x3CFFD13: "MotionController_Right_Thumbstick_Up"
+  0x3CFFD38: "MotionController_Right_Thumbstick_Right"
+  0x3D001AE: "ESlateBrushDrawType::Box"
+  0x3D00496: "Runtime/Renderer/Private/StaticMeshDrawList.inl"
+  0x3D06759: "callLuaTick cast fail: %s. if obj implement ILuaOverriderInterface in BP, change to c++ instead."
+  0x3D06F37: "CheckTickFrame"
+  0x3D091F1: "LimitSpawnNumPerTick"
+  0x3D0A38E: "FadeJoyStick"
+  0x3D0A595: "EnableEffectTick"
+  0x3D0A9B9: "bDrawDebugCrossHairCircleArea"
+  0x3D0B14D: "bIsTickForceSync"
+  0x3D0B18B: "TickWidget"
+  0x3D0B3E6: "NavTickInterval"
+  0x3D0BD59: "TickDynamicScaleC"
+  0x3D0BD76: "TickWallClimb_ClimbUp"
+  0x3D0BF22: "DebugDrawLine"
+  0x3D0BFCB: "CPPNavigatorTickRate"
+  0x3D0D156: "OnFPSLowWarning__DelegateSignature"
+  0x3D0D622: "RegisterEntityTick"
+  0x3D0D7D5: "StepsPerTick"
+  0x3D0D998: "TickInternal"
+  0x3D0D9F6: "MoveSkipTickCheckLODIndex"
+  0x3D0DEC3: "OnJoyStickInteruptDelegate__DelegateSignature"
+  0x3D0ECDA: "fTickDuration"
+  0x3D0F03B: "SetVirtualJoystickWidgetRender"
+  0x3D0FA5E: "SetJoystickMoveVelocity"
+  0x3D0FC89: "OnWeaponDrawHUDDelegate"
+  0x3D0FF22: "bEnableWorldTickTime"
+  0x3D0FF83: "EffectTickInterval"
+  0x3D10545: "EVehicleExceptionType::IsTickEnabled"
+  0x3D15C75: "StartPlayingNextTick"
+  0x3D1633B: "EArithmeticKeyOperation::Equal"
+  0x3D1635A: "EArithmeticKeyOperation::NotEqual"
+  0x3D169E9: "AddTickPrerequisiteActor"
+  0x3D16D4C: "EMontageNotifyTickType::Queued"
+  0x3D17012: "PUBGDeviceFPSLow"
+  0x3D17BE0: "InMaxDrawDistance"
+  0x3D17FC7: "MinTimeBetweenTicks"
+  0x3D18292: "LDMaxDrawDistance"
+  0x3D1958C: "BoxDrawLineLength"
+  0x3D195C2: "GMSetJoystickActivatedRange"
+  0x3D1B71E: "UEnums.ESlateBatchDrawFlag = {None = 0,NoBlending = 1,PreMultipliedAlpha = 2,NoGamma = 4,InvertAlpha"
+  0x3D1B9C1: "UEnums.EDrawRectangleFlags = {EDRF_Default = 0,EDRF_UseTriangleOptimization = 1,EDRF_UseTesselatedIn"
+  0x3D1F8FF: "ScopeZoomTick"
+  0x3D206DD: "bOnlyTickWhenRender"
+  0x3D20914: "TickReportTimer"
+  0x3D20B83: "SetStateNextTick"
+  0x3D25C44: "bTickAkComp"
+  0x3D25CC2: "IsTickEnabled"
+  0x3D263D1: "FTimeTicker"
+  0x3D26857: "AutoTickDeltaThresholdFactor"
+  0x3D27470: "bTickOnDedicatedServer"
+  0x3D28D5A: "IsComponentTickLocked"
+  0x3D2936B: "SimulateTickStep"
+  0x3D29F5F: "StickyFrictionOn"
+  0x3D2A4BE: "DrawShape_Text"
+  0x3D2ADC7: "DrawScale"
+  0x3D2B464: "EWidgetTickFrequency"
+  0x3D2B509: "ReleaseJoystickCapture"
+  0x3D2B565: "bDrawDebugFocusPlane"
+  0x3D2B7E9: "EArithmeticKeyOperation::GreaterOrEqual"
+  0x3D2BB98: "RedrawViewports"
+  0x3D2BC42: "F:\Release4.4.0\AS\UE4181\Engine\Source\Runtime\Engine\Private\PhysicsEngine\PhysDrawing.cpp"
+  0x3D2C36C: "bStartWithTickEnabled"
+  0x3D2C525: "EDrawStyleMode"
+  0x3D2C800: "StickX"
+  0x3D2D021: "ParticleSimulatedProxyTickMethod"
+  0x3D2D2C1: "bDrawTriangleEdges"
+  0x3D2E3FE: "GetVideoTrackFrameRates"
+  0x3D30463: "UEnums.EFunctionFlags = {FUNC_None = 0,FUNC_Final = 1,FUNC_RequiredAPI = 2,FUNC_BlueprintAuthorityOn"
+  0x3D30827: "UEnums.ETextureCreateFlags = {TexCreate_None = 0,TexCreate_RenderTargetable = 1,TexCreate_ResolveTar"
+  0x3D350B4: "EComponentDormantType::DormantTick"
+  0x3D350D7: "DormantTickComponents_Key"
+  0x3D363EA: "DrawDebugGraphics"
+  0x3D36A26: "TickOverlapCheck"
+  0x3D36AA8: "ServerCheckMaxTickTime"
+  0x3D36B3A: "TickRevival"
+  0x3D37CC3: "PeekFrameRate"
+  0x3D3808E: "RPC_Client_DrawDebugLine"
+  0x3D386BF: "RefuseRenderForLowFPS"
+  0x3D38BE1: "RefreshBearerFramingTick"
+  0x3D38EE8: "HandleVirtualJoystickTouchedStartInArea"
+  0x3D392DC: "ConditionDrawRelpayHitData"
+  0x3D398C9: "TickedComponents"
+  0x3D398F6: "DisableTickVehicleJump"
+  0x3D39A79: "MulticastDrawAvoidanceDebugBoxTraceSingle"
+  0x3D39B65: "TickSpoilers"
+  0x3D39CB9: "SetNeedHUDTick"
+  0x3D39DC5: "GenerateSpotCountPerTick"
+  0x3D3CBE7: "DrawSegments"
+  0x3D3E99B: "EnergyTickInterval"
+  0x3D3ECCE: "bDrawParabolaDebug"
+  0x3D3EEBD: "TickGainNitroEnergy"
+  0x3D3EF3E: "DrawCylinder"
+  0x3D3F175: "MotionController_Right_Thumbstick_Down"
+  0x3D3F43F: "ESlateBrushDrawType::Border"
+  0x3D3FE75: "RedrawTime"
+  0x3D40408: "Engine.Joystick.Image2"
+  0x3D4060F: "AddTickPrerequisiteComponent"
+  0x3D44FE5: "+6+=>>8='HGJXXTHdf{bgnoMydfBlueprint = 262144,CLASS_MinimalAPI = 524288,CLASS_RequiredAPI = 1048576,"
+  0x3D451BB: "UEnums.EInternalObjectFlags = {None = 0,ReachableInCluster = 8388608,ClusterRoot = 16777216,Native ="
+  0x3D45347: "UEnums.EGCArrayInfoPlaceholder = {E_GCSkipIndexPlaceholder = -559039810,}"
+  0x3D45B7C: "UEnums.ECanvasDrawMode = {CDM_DeferDrawing = 0,CDM_ImmediateDrawing = 1,}"
+  0x3D462B8: "RPCReplicatInstanceContainerTickCheckCD"
+  0x3D48CE6: "EntityTickList"
+  0x3D495DD: "bDisableDsTick"
+  0x3D49B25: "CurStickGravityLastFrames"
+  0x3D49B4C: "TickPain"
+  0x3D4A14C: "TickMileStoneMat"
+  0x3D4A366: "ConfigTickReportTimer"
+  0x3D4AD76: "TickWallJump"
+  0x3D4B1B6: "OptimizeTickRange"
+  0x3D4B6E7: "TickCoopVault"
+  0x3D4B734: "ServerTickCoopVaultOffset"
+  0x3D4BC00: "UpdatePredictLineFPSForDeviceLevel_Key"
+  0x3D4BEA1: "ReceiveTick"
+  0x3D4BFF8: "targetFPS"
+  0x3D4C002: "FPSCollectCountForGroup"
+  0x3D4C01A: "bFPSMonitor"
+  0x3D4E911: "RegisterComponentTick"
+  0x3D4EA5C: "bEnableAutoMoveForJoystick"
+  0x3D4F6F0: "GetDrawValidTransformValue"
+  0x3D502A1: "EnableTickOptimization"
+  0x3D502CA: "TickZone"
+  0x3D50630: "IsOpenAOS120FPSConfig"
+  0x3D50872: "Ticket"
+  0x3D55797: "SetActorTickInterval"
+  0x3D55CED: "TickCycles"
+  0x3D5643B: "DrawDebugFloatHistoryTransform"
+  0x3D56BD5: "UpdateTime_FPS"
+  0x3D56CC0: "Fps"
+  0x3D56CE0: "InitialAverageFrameRate"
+  0x3D56E91: "CachedMaxDrawDistance"
+  0x3D5716B: "ESkeletaTickMode::TICK_ANI_NOT_LOD"
+  0x3D58FAA: "privilegeWithdrawn"
+  0x3D59AD4: "DrawDebugSeaLevel"
+  0x3D59B75: "EParticleDrawEffect::NoPixelSnapping"
+  0x3D5B29D: "GameModeLiteComponentTickFunction"
+  0x3D5BB9D: "TargetFrameRate"
+  0x3D5C0B6: "OnFriendRawParse raw data result = %s"
+  0x3D5C11A: "OnLoadRawParse raw data result = %s"
+  0x3D5C47B: "SetDrawOrderThreshold"
+  0x3D5D1DE: "InitialAnimFrameRate"
+  0x3D5DD67: "ActiveComponentTickable"
+  0x3D5F177: "OnDrawComplete"
+  0x3D5F81B: "bIsDrawAirDropFlightPathBackup"
+  0x3D5F8C4: "TickCheckPeriod"
+  0x3D6099D: "FPSLowActionType"
+  0x3D609AE: "bLocalSwitcherFPSLowWarning"
+  0x3D66E70: "bEnableTickOptimization"
+  0x3D67127: "TickNearbyCharacterTimeAccumulate"
+  0x3D67BC3: "bForceUseOnlyTickWhenRenderFlagForSkelet"
+  0x3D69C93: "bDrawLabels"
+  0x3D6A2A4: "SetTickGroup"
+  0x3D6AD21: "SetFrameRateLimit"
+  0x3D6ADBA: "EControllerAnalogStick::CAS_RightStick"
+  0x3D6B934: "bNewDrawOutline"
+  0x3D6BC77: "EMeshComponentUpdateFlag::OnlyTickPoseWhenRendered"
+  0x3D6CBD3: "GMIOSFrameRateLock"
+  0x3D6DFCF: "OnTickVisualInfo"
+  0x3D6E011: "DrawSecondOrderReflections"
+  0x3D6E1BC: "DrawEffect"
+  0x3D6F726: "UEnums.EParticleSystemInsignificanceReaction = {Auto = 0,Complete = 1,DisableTick = 2,DisableTickAnd"
+  0x3D70223: "TickUpdateBatchInterval"
+  0x3D703F5: "TickLua"
+  0x3D704A7: "NeedTickStreamingDistanceScale"
+  0x3D70D45: "getTicket"
+  0x3D7532B: "UpdatePredictLineFPSForDeviceLevel"
+  0x3D76796: "b_C_PeekFrameRate_NEQ_0_OR_C_IsPeeking"
+  0x3D774F9: "TickWingmanAnimation"
+  0x3D77CF2: "bDebugDrawHUDCrossLine"
+  0x3D77DD3: "HideJoystickWidgetTagArray"
+  0x3D783CC: "bClearComponentTick"
+  0x3D787C3: "MulticastDrawAvoidanceDebugLineTraceMulti"
+  0x3D78946: "DateDrawOffsetX"
+  0x3D78A01: "ECustomTickType"
+  0x3D78AA5: "GenerateItemSpawnClassByTickNoRandom"
+  0x3D796E1: "bDrawDebugDots"
+  0x3D79F36: "OnTick"
+  0x3D79F3D: "ConditionTickInterval"
+  0x3D79FC2: "OnTickChanged"
+  0x3D7A4B0: "HandleOnGetTicket__DelegateSignature"
+  0x3D7A556: "NativeHUDTickList"
+  0x3D7ABB6: "GenerateSpotOnTick"
+  0x3D7BC13: "DrawRadius"
+  0x3D7C9E8: "TickNearbyCharacterInterval"
+  0x3D7CAF9: "TickSyncCameraInfo"
+  0x3D7D4EA: "SprintDodgeJoystickY"
+  0x3D7DCF7: "DrawShape_Box"
+  0x3D7DD05: "DrawBox"
+  0x3D7DD0D: "DrawLine"
+  0x3D7DD16: "NetMulticast_DrawDebug_Box"
+  0x3D7DD31: "MaxDrawTimePerTask"
+  0x3D7DED4: "Gamepad_RightStick_Up"
+  0x3D7E02D: "F:\Release4.4.0\AS\UE4181\Engine\Source\Runtime\SlateCore\Private\Rendering\DrawElements.cpp"
+  0x3D7F4E3: "Engine.Joystick.Image1"
+  0x3D7F61E: "RemoveTickPrerequisiteActor"
+  0x3D7FBEB: "PUBGDeviceFPSMidExpand"
+  0x3D7FDEA: "ECustomTickIntervel::Intervel_MAX"
+  0x3D7FE0C: "TickFunction"
+  0x3D80295: "DrawDebugBox"
+  0x3D80317: "DrawLocation"
+  0x3D806C1: "EnableDebugDrawing"
+  0x3D80C45: "EAutoDormancyType::ComponentsTickClient"
+  0x3D853F0: "ENiagaraAgeUpdateMode::TickDeltaTime"
+  0x3D85DEC: "TickFreq"
+  0x3D8620B: "PrimitivesDrawnNumber"
+  0x3D8629C: "vkCmdDrawIndexedIndirect"
+  0x3D8837B: "OnEnableEffectTickChanged"
+  0x3D88465: "TickParachuteComponent"
+  0x3D88E30: "IsEnableDelayedRefreshVisualInfoEventInTick"
+  0x3D88F66: "bDrawDebugFlyPath"
+  0x3D89A30: "TickWallClimb_Turn"
+  0x3D89C32: "bDrawOriginPath"
+  0x3D8B2A0: "DSMoveSpeedLimitLowFPSRate"
+  0x3D8C087: "ClientDrawDebugBox"
+  0x3D8C728: "DisplayLowFPSCountingDown"
+  0x3D8C7EA: "RPC_DrawDebug_Line"
+  0x3D8CBC6: "FPSAfterAdapt"
+  0x3D8D100: "RegisterComponentWeakTick"
+  0x3D8D14F: "TickEnableAvatarOutline"
+  0x3D8D3A5: "MulticastDrawNavigationDebug"
+  0x3D8D4DC: "HitBodyDrawColor"
+  0x3D8D665: "ECustomTickRoleType::ECTR_Autonomous"
+  0x3D8D68A: "ECustomTickType::ComponentTick"
+  0x3D8E522: "IsWeaponLogicComponentTickEnabled"
+  0x3D8F5ED: "ClearDrawRT"
+  0x3D8F6F7: "ActivePufferTick"
+  0x3D90394: "bEnableDSTickLua"
+  0x3D951B5: "InDrawStyle"
+  0x3D9549F: "NoTickLowDevices"
+  0x3D954FF: "SimulatedProxyTickMethod"
+  0x3D9585E: "bDrawDyeing"
+  0x3D96050: "glDrawBuffers"
+  0x3D969B7: "CallTick"
+  0x3D96B1A: "ListWrapperDrawLineLength"
+  0x3D96B76: "GMDrawDebugSphere2"
+  0x3D9830D: "bDrawForceArrows"
+  0x3D98383: "EParticleDrawEffect::ReverseGamma"
+  0x3D98658: "bDrawLines"
+  0x3D98BA4: "UEnums.EUniformBufferUsage = {UniformBuffer_SingleDraw = 0,UniformBuffer_SingleFrame = 1,UniformBuff"
+  0x3D9A925: "LiteComponentActorTick"
+  0x3D9B8D2: "GetDrawOrderThreshold"
+  0x3D9BBE8: "DrawCallNumber"
+  0x3D9BC71: "vkCmdDraw"
+  0x3D9BC7B: "vkCmdDrawIndirect"
+  0x3D9C5A0: "F:\Release4.4.0\AS\Survive\Source\ShadowTrackerExtra\UI\Widget\PolygonDrawWidget.cpp"
+  0x3D9D1B1: "DrawDebugTraceLine"
+  0x3D9DC89: "bIsPauseTick"
+  0x3D9DFB5: "StickGravityScale"
+  0x3D9DFC7: "bEnableClientStickGround"
+  0x3D9ED09: "bDrawOutline"
+  0x3D9F0DC: "TickUpdateClothSpecialIdle"
+  0x3D9F0F7: "TickUpdateHoldingWeaponDurationTime"
+  0x3D9F6A2: "ExternalTickComponent"
+  0x3D9F6B8: "bUseOptimizeTick"
+  0x3D9FA8C: "DrawCooperationVaultDebug"
+  0x3DA0046: "bDrawWhiteCircle"
+  0x3DA54AC: "RemoveGeneratedItemPerTick"
+  0x3DA6DBB: "SoundTickInterval"
+  0x3DA84B2: "DrawShape_Cylinder"
+  0x3DA84CE: "StopDrawContinuous"
+  0x3DA863C: "Gamepad_RightStick_Left"
+  0x3DA8677: "MotionController_Right_Thumbstick_Y"
+  0x3DA89DB: "ESlateBrushDrawType::Image"
+  0x3DAA13D: "SetComponentTickInterval"
+  0x3DAA5B4: "PUBGDeviceFPSVerySmooth"
+  0x3DAA782: "EndTickGroup"
+  0x3DAAC23: "EDrawDebugTrace::Type"
+  0x3DAB10F: "NetServerMaxTickRate"
+  0x3DAB69F: "bDrawPathCollidingGeometry"
+  0x3DABFC6: "DrawArraysIndirect"
+  0x3DAC36C: "bKeepTickState"
+  0x3DAE0DF: "EParticleDrawEffect"
+  0x3DB59C2: "TickVehicleTime"
+  0x3DB5F57: "OnMoveSkipTickError"
+  0x3DB5F88: "SkilAirJumpJoystickForceSize"
+  0x3DB614D: "TickAsHelper"
+  0x3DB6EBA: "ClientDrawDebugCapsule"
+  0x3DB6ED1: "ClientDrawDebugMesh"
+  0x3DB6FDB: "CurrentMaxFPS" *** LIMIT/CAP ***
+  0x3DB7731: "SetVirtualStickAutoSprintStatus"
+  0x3DB812E: "WeakTickedComponents"
+  0x3DB817B: "MeshAlwaysTickPoseAndRefreshBones"
+  0x3DB8821: "bNeedDebugDraw"
+  0x3DB9959: "SetComponentsTickControl"
+  0x3DB9AC3: "RefershAllManagedTickConfigWhenFPSChanged"
+  0x3DB9EB2: "TickUdpCollector"
+  0x3DB9F35: "LuaTickTime"
+  0x3DBC1F8: "CurrentSoundTickTime"
+  0x3DBC875: "ServerConstantFrameRate"
+  0x3DBD00C: "MyriapodVehicleMovementComponentPostPhysicsTickFunction"
+  0x3DBD42A: "bTickMuteOverlappedPhysVH"
+  0x3DBD4DB: "MultiPosSoundTickInterval"
+  0x3DBD53E: "DrawShape_Sphere"
+  0x3DBD7D3: "TickAsyncLoading_GT"
+  0x3DBF121: "EMontageNotifyTickType::BranchingPoint"
+  0x3DBF3F9: "SetNavDrawDistance"
+  0x3DBF4DC: "PUBGDeviceFPSHighExpand"
+  0x3DBF5DC: "MinDesiredFrameRate"
+  0x3DBF653: "VMI_ShaderComplexityWithQuadOverdraw"
+  0x3DBF6CE: "EDrawDyeingMode"
+  0x3DBF991: "GetControllerAnalogStickState"
+  0x3DBFBB6: "DrawDebugCircle"
+  0x3DBFBC6: "DrawDebugFloatHistoryLocation"
+  0x3DC00FE: "bDrawDistanceToWall"
+  0x3DC0227: "EParticleSystemInsignificanceReaction::DisableTickAndKill"
+  0x3DC05AD: "SetDrawDyeingMode"
+  0x3DC0A28: "bIsAutonomousTickPose"
+  0x3DC0DD2: "CanvasForDrawMaterialToRenderTarget"
+  0x3DC58BB: "RegistLuaTick"
+  0x3DC6580: "TickTimeDelta"
+  0x3DC6F73: "fps"
+  0x3DC6F95: "draworder"
+  0x3DC71EC: "NativeWindowRedrawNeeded: %p -- %p"
+  0x3DC81F6: "AIGCAnimationFrameRate"
+  0x3DC8AC8: "BPTickAnimation"
+  0x3DC8EE3: "OutDivisionTick"
+  0x3DC90D0: "DSTickRateOptimizeConfig"
+  0x3DC967F: "DrawDebugSpreadCircleAreaSteps"
+  0x3DC96BD: "bPauseTick"
+  0x3DC9C69: "bOpenStickyMode"
+  0x3DCA5DF: "FPS_AnimMontage_Prone"
+  0x3DCACD5: "CloseGliderTick"
+  0x3DCBCB3: "DrawWhiteCircle"
+  0x3DCC612: "MaxServerBurstMoveFrameTime"
+  0x3DCC7ED: "ResetTickCheckTime"
+  0x3DCD342: "LowFPSRenderSettingProfileMid"
+  0x3DCD760: "bDrawBoxEarBulletOverlapRay"
+  0x3DCDB94: "SetJoyStickScale"
+  0x3DCDCB6: "bVirtualstickAutoSprint"
+  0x3DCDCD9: "DisableJoystickMultiControl"
+  0x3DCE76C: "MulticastDrawAvoidanceDebugBoxTraceMulti"
+  0x3DCE9D2: "NeedTickComponentList"
+  0x3DCF8AD: "MarkWeaponLogicComponentTickRoleEnable"
+  0x3DD0026: "ETickOptimizationDistanceMode::None"
+  0x3DD004A: "bComponentsTickControl"
+  0x3DD01E8: "ResetSlateTickEveryFrame"
+  0x3DD069C: "GetFPSReportInfo"
+  0x3DD06B3: "fLaggingFPSDiffThreshold"
+  0x3DD57C2: "RemoveTickPrerequisiteComponent"
+  0x3DD5C81: "DrawXL"
+  0x3DD5E8F: "bCanBlueprintsTickByDefault"
+  0x3DD5F18: "TickPrerequisite"
+  0x3DD65D2: "DrawDebugPlane"
+  0x3DD6763: "MaxDrawDistance"
+  0x3DD6792: "bUseAsDrawToRenderTarget"
+  0x3DD6ED4: "GetInputAnalogStickState"
+  0x3DD704D: "bDrawPolyEdges"
+  0x3DD73A8: "EMeshComponentUpdateFlag::AlwaysTickPoseAndRefreshBones"
+  0x3DD78DD: "bEnableBlueprintTick"
+  0x3DD985C: "bDrawWaterline"
+  0x3DDA14A: "UEnums.ERootMotionSourceSettingsFlags = {UseSensitiveLiftoffCheck = 1,DisablePartialEndTick = 2,}"
+  0x3DDB6B4: "iTOPWebViewTicketResult"
+  0x3DDB6FC: "GetFlipbookFramerate"
+  0x3DDB95D: "SpotDrawFlag"
+  0x3DDBBC8: "TickWhenPaused"
+  0x3DDD8D9: "DrawSize"
+  0x3DDDBEA: "DrawPlayerOutline"
+  0x3DDDC14: "bEnableEnemyDrawOutline"
+  0x3DDDFAB: "TickCheckInterval"
+  0x3DDE6DC: "TickIntervalOverride"
+  0x3DDE714: "StickyActor"
+  0x3DDE83D: "TickIntervalSeconds"
+  0x3DDE93A: "FramingTickConfig"
+  0x3DDED57: "Draw"
+  0x3DDF8B7: "HandleEmoteTick"
+  0x3DDFBF5: "ServerTickCheckOffset"
+  0x3DE0465: "TickRoleType"
+  0x3DE0472: "MakeLowFPSWarningEx"
+  0x3DE091A: "MovementTickInterval"
+  0x3DE0AF1: "MoveSkipTickErrorDelegate__DelegateSignature"
+  0x3DE0BCD: "SetLastTickFrameCounter"
+  0x3DE0BF2: "MoveSkipTickContinueCount"
+  0x3DE564F: "RandomSpotCountPerTick"
+  0x3DE5666: "ReceiveTickAI"
+  0x3DE8C3F: "bLowDeviceFrameRateLimitEnabled"
+  0x3DE914F: "SetDrawSize"
+  0x3DE9B18: "ResampledFramerate"
+  0x3DEA276: "FixedFrameRate" *** LIMIT/CAP ***
+  0x3DEA3A2: "ETickingGroup"
+  0x3DEB45C: "bDrawNavLinks"
+  0x3DEBAEC: "StartPhysicsTickFunction"
+  0x3DED6A1: "Newsession Ticket"
+  0x3DED8AC: "SSL_set_session_ticket_ext"
+  0x3DEE16F: "UpdateTickRate"
+  0x3DEE7B6: "UEnums.EShowFlag = {SF_PostProcessing = 0,SF_Bloom = 1,SF_Tonemapper = 2,SF_AntiAliasing = 3,SF_Temp"
+  0x3DEF694: "UEnums.EBasePassDrawListType = {EBasePass_Default = 0,EBasePass_Masked = 1,EBasePass_MAX = 2,}"
+  0x3DF0191: "EditorObjectLiteComponentTickFunction"
+  0x3DF0782: "AutoTestGetDrawCallDetail"
+  0x3DF50A4: "NetTickFlushCallback"
+  0x3DF54DB: "DrawTime"
+  0x3DF61C3: "bNeedDrawUI"
+  0x3DF6CF3: "bAlwaysDrawDebug"
+  0x3DF712F: "CanDrawWeaponCrossHair"
+  0x3DF78C9: "GetDeviceFPSHigh"
+  0x3DF78FE: "IsPartlyImproveFPSInVerySmooth"
+  0x3DF809A: "HandleVirtualJoystickActive"
+  0x3DF8AA7: "ClearAllComponentWeakTick"
+  0x3DF90FC: "ECustomTickRoleType::ECTR_AutonomousAndAuthority"
+  0x3DF9290: "InTickMode"
+  0x3DFA4AA: "ESkillPropSubType_1201"
+  0x3DFA534: "IsNeedTick"
+  0x3DFA60B: "GetTickZone"
+  0x3DFA617: "IsActorTickControl"
+  0x3DFA8DC: "ShrinkDrawBuffer"
+  0x3DFA97E: "GetExpandMaxFPSConfigByQuality" *** LIMIT/CAP ***
+  0x3DFAA4F: "{"isneedticket":true,"showHorizontalScrollBar":false,"showVerticalScrollBar":false,"isx5work":false,"
+  0x3DFAD03: "fLaggingFPSDiffThresholdMax"
+  0x3DFD14F: "ParticleTickDelta"
+  0x3DFE2AA: "NetMulticast_DrawDebug_Cylinder"
+  0x3DFE48F: "MotionController_Left_Thumbstick_Up"
+  0x3DFF10F: "GetTickSpaceGeometry"
+  0x3DFFA30: "ShaderComplexityWithQuadOverdraw"
+  0x3DFFC6E: "EDrawDebugItemType::Sphere"
+  0x3DFFC89: "EDrawDebugItemType::Line"
+  0x3E002E8: "bAllowTickOnDedicatedServer"
+  0x3E005C9: "DrawMaterialSimple"
+  0x3E00AFD: "bAutoUpdateTickRegistration"
+  0x3E05772: "TickDeltaSeconds"
+  0x3E05813: "ENiagaraRibbonDrawDirection::FrontToBack"
+  0x3E0773F: "DrawOutlineEffect"
+  0x3E08293: "bDrawDebug"
+  0x3E08A27: "TickOBPlayerCD"
+  0x3E08AB0: "DenyStickyTargetsClass"
+  0x3E08C87: "StartDriverEmoteTick"
+  0x3E08CD6: "IsEnableDelayedMapResizeEventInTick"
+  0x3E08DAD: "bDisableTickMoveInputStateWhenNoRequestV"
+  0x3E08E61: "GlobalFramingTickConfigs"
+  0x3E09331: "FPS_AnimMontage_Stand"
+  0x3E09682: "LobbyPlayEmoteComponentTickFunction"
+  0x3E09BE9: "SyncTicket"
+  0x3E0A9F2: "currentFPS"
+  0x3E0B25B: "bDebugDrawOthersCacheMove"
+  0x3E0B912: "RPC_Client_DrawDebugSphere"
+  0x3E0C369: "DrawGuideLineMiniMap"
+  0x3E0C676: "HandleVirtualJoystickInput"
+  0x3E0C918: "HideJoystickTagArray"
+  0x3E0C95E: "JoystickSprintSensitity"
+  0x3E0CF8B: "SleepVehicleTickTime"
+  0x3E0D76C: "NeedTickModifyMatParam"
+  0x3E0EBA7: "ReleaseSlateTickEveryFrame"
+  0x3E0EBDD: "SetActivePufferTick"
+  0x3E0ED17: "GetFPS"
+  0x3E152F0: "bDrawClusters"
+  0x3E1576A: "SetDrawDebug"
+  0x3E161CA: "DrawBottomDelta"
+  0x3E165EC: "GMDrawDirLine"
+  0x3E17991: "DrawHigherOrderReflections"
+  0x3E17C60: "DistSquaredToTickInterval"
+  0x3E17E0D: "MaxTickRate"
+  0x3E1C3F7: "bEnableDSAITickRateOptimize"
+  0x3E1C413: "bEnableDSAITickDistanceOptimize"
+  0x3E1D1B0: "bTick"
+  0x3E1D4A4: "TickRotation"
+  0x3E1D9CB: "DrawAllRenderObjects"
+  0x3E1E021: "TickWallClimb_ClimbToStand"
+  0x3E1E1E5: "EnableJoyStickListener"
+  0x3E1F150: "FPSThreshold"
+  0x3E1F15D: "FPSLowWarningSDKMatch"
+  0x3E1F816: "ControlByJoyTick"
+  0x3E1F9FA: "StopTick"
+  0x3E206FC: "b_C_MoveVelocityX_Bigger_290"
+  0x3E2079F: "DrawDebugPrimitiveComponent"
+  0x3E20E8B: "HideJoystickWidgetWithTag"
+  0x3E20F0D: "RecoverJoystick"
+  0x3E2606D: "CliffAvoidingTickFrequency"
+  0x3E262EE: "bEnableSyncMovementTick"
+  0x3E284E1: "TickableTickTime"
+  0x3E286AA: "NewTickGroup"
+  0x3E28A3B: "K2_DrawMaterial"
+  0x3E28A4B: "K2_DrawTexture"
+  0x3E28ABC: "DrawYL"
+  0x3E28E5B: "ECustomTickIntervel::Intervel_1FPS"
+  0x3E2913D: "DrawDebugTime"
+  0x3E29B3B: "bShouldPerformFullTickWhenPaused"
+  0x3E29CC6: "bDrawLabelsOnPathNodes"
+  0x3E2A32A: "OverrideDrawDistance"
+  0x3E2C73C: "bDrawHeightmap"
+  0x3E2E61F: "TickCount"
+  0x3E2EEAD: "DrawOrder"
+  0x3E35DCC: "ClearAllComponentTick"
+  0x3E36005: "MulticastDrawAvoidanceDebugLineTraceSingle"
+  0x3E360A1: "OnJoystickTouchEvent"
+  0x3E36DCD: "Server_JoystickCenterClickHandler"
+  0x3E36E7B: "DrawSuspensionTrace"
+  0x3E36F33: "BPDrawDebugInfo"
+  0x3E371B7: "OnWidgetToRenderTargetDrawn__DelegateSignature"
+  0x3E373B4: "SetTickFunction"
+  0x3E37697: "OnTickEnabledChange__DelegateSignature"
+  0x3E376CD: "InTickSettings"
+  0x3E376DC: "OnTickZoneChanged"
+  0x3E37AB7: "bDraw"
+  0x3E37B77: "bCallLuaTick"
+  0x3E37B91: "OnGetTicketNotifyDelegate"
+  0x3E384A6: "RegisterSpotComponentToTick"
+  0x3E39FC1: "LockComponentTick"
+  0x3E3A6EA: "TickCollisionTimeForWeekness"
+  0x3E3A86F: "ObstacleAvoidingTickFrequency"
+  0x3E3AF9D: "bDebugDrawTrace"
+  0x3E3B13B: "BroadCastClientDrawSphere"
+  0x3E3B4C7: "DrawString"
+  0x3E3B649: "MotionController_Left_Thumbstick_X"
+  0x3E3BB0E: "90818587f79c29ef912ac927e339356145368f03"
+  0x3E3C638: "EArithmeticKeyOperation::Type"
+  0x3E3CDB3: "EMontageNotifyTickType"
+  0x3E3D0D9: "K2_DrawBox"
+  0x3E3D2C2: "NetClientTicksPerSecond"
+  0x3E3D78C: "WhichStick"
+  0x3E3D98D: "EndDrawCanvasToRenderTarget"
+  0x3E3DA20: "DrawTransform"
+  0x3E3DDCB: "ChannelsToTick"
+  0x3E3DE17: "bClampListenServerTickRate"
+  0x3E3E0D8: "bSkipUpdateDynamicDataDuringTick"
+  0x3E3E421: "ERootMotionSourceSettingsFlags::DisablePartialEndTick"
+  0x3E3EDC3: "glDrawElementsIndirect"
+  0x3E3F880: "SetMaxFpsFromDevice" *** LIMIT/CAP ***
+  0x3E40400: "Privilege Withdrawn"
+  0x3E40C6D: "DrawFirstOrderReflections"
+  0x3E40DF7: "EParticleDrawEffect::InvertAlpha"
+  0x3E47675: "DrawAutoExplodeSphereLifeTime"
+  0x3E47B2A: "GetTickComponent"
+  0x3E4833C: "bServerTickCoopVaultCrossWall"
+  0x3E4835A: "ServerTickFallingVaultOffset"
+  0x3E486C6: "RedrawCounter"
+  0x3E49AAD: "RPC_Client_DrawBoundBox"
+  0x3E49CB2: "TickCanDriveSnowBoardInterval"
+  0x3E4A63F: "NotifyBpDrawDebugLineChange"
+  0x3E4A724: "GetFramingTickState"
+  0x3E4AA32: "GetJoyStickCenter"
+  0x3E4AB15: "SetJoyStickOpacityNotUpdate"
+  0x3E4ADB1: "EVCType_SingleJoystick"
+  0x3E4B5BB: "UnregisterComponentTick"
+  0x3E4B688: "bUseReverseJoystickPauseAutoForward"
+  0x3E4B751: "TickEnterSphereInterval"
+  0x3E4B794: "bDebugDrawEnterVehicle"
+  0x3E4B9DD: "bShouldFramingTick"
+  0x3E4BA67: "DrawScreenString"
+  0x3E4BA78: "IsDrawDisableIcon"
+  0x3E4CB68: "ReceivePostDrawTextToTextureRenderTarget2DAsync"
+  0x3E4CB98: "ReceivePreDrawTextToTextureRenderTarget2DAsync"
+  0x3E4CE17: "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationAnimComponent.cpp"
+  0x3E4D0CA: "AddComponentTickControl"
+  0x3E4D0E2: "GetTickSettings"
+  0x3E4D0F2: "OnTickEnabledChanged"
+  0x3E4D12F: "AutoStat_AvgTickDeltaThreshold"
+  0x3E4DC85: "OnGetTicketNotifyDelegate__DelegateSignature"
+  0x3E4E1E9: "RemoveDropGroundItemPerTick"
+  0x3E4F4B6: "bEnableLuaTick"
+  0x3E4F83F: "FocusingCharacterPeekingFrameRate"
+  0x3E4FA02: "bUseFpsLock"
+  0x3E4FE5E: "MulticastDrawDebugBox"
+  0x3E50921: "AnimMontageTypeAndPosture::FPS_Prone"
+  0x3E50CAF: "OnNitroBoostTick"
+  0x3E50D56: "DrawCapsule"
+  0x3E50F0B: "Gamepad_LeftStick_Right"
+  0x3E565AD: "ConfigTickLODInfo"
+  0x3E56E49: "UEnums.EPropertyPortFlags = {PPF_None = 0,PPF_Delimited = 2,PPF_CheckReferences = 4,PPF_ExportsNotFu"
+  0x3E5864A: "DrawDirection"
+  0x3E58667: "WarmupTickCount"
+  0x3E58E34: "TickingSpawnerThreshold"
+  0x3E5919D: "AverageFPS"
+  0x3E5BAB4: "DormantTickForDebug"
+  0x3E5C074: "MaxAsyncNumPerTick"
+  0x3E5C3EE: "FPS_AnimMontage_Crouch"
+  0x3E5C7D6: "bNeedDrawSelfGuideLineC"
+  0x3E5D9D4: "MakeLowFPSWarning"
+  0x3E5E240: "CharacterDistanceSquareTickInternal"
+  0x3E5F043: "DrawWidth"
+  0x3E5FA9D: "ShowJoystickWithTag"
+  0x3E6060A: "SetDrawDisableIcon"
+  0x3E606BA: "ShouldDrawTrajectory"
+  0x3E606F0: "NeedTickComponentClassList"
+  0x3E60DEB: "EVehicleOpMode::Joystick"
+  0x3E65AF7: "EJoystickOperatingMode"
+  0x3E66321: "EWidgetTickFrequency::Never"
+  0x3E6637B: "bClassRequiresNativeTick"
+  0x3E663D8: "bDrawAtDesiredSize"
+  0x3E66C96: "GetComponentTickInterval"
+  0x3E66D5C: "EDrawDebugItemType::DirectionalArrow"
+  0x3E67382: "ECustomTickIntervel"
+  0x3E673BC: "ActorTickFunction"
+  0x3E679CB: "DrawDebugCoordinateSystem"
+  0x3E67E33: "bEnableDrawing"
+  0x3E68460: "bDrawFailedNavLinks"
+  0x3E68474: "bDrawFilledPolys"
+  0x3E68779: "SkeletalMeshComponentClothTickFunction"
+  0x3E687A0: "SetTickMode"
+  0x3E687C7: "TickMode"
+  0x3E687FF: "EMeshComponentUpdateFlag::AlwaysTickPose"
+  0x3E69B0E: "BoxDrawSize"
+  0x3E6B1AB: "OnTickOfflineVisualInfo"
+  0x3E6B300: "EParticleDrawEffect::PreMultipliedAlpha"
+  0x3E6B68F: "AlwaysTickFalloffAggression"
+  0x3E6BBB6: "UEnums.EPackageFlags = {PKG_None = 0,PKG_NewlyCreated = 1,PKG_ClientOptional = 2,PKG_ServerSideOnly "
+  0x3E6BD94: "UEnums.EStructFlags = {STRUCT_NoFlags = 0,STRUCT_Native = 1,STRUCT_IdenticalNative = 2,STRUCT_HasIns"
+  0x3E6C127: "UEnums.ETickingGroup = {TG_PrePhysics = 0,TG_StartPhysics = 1,TG_DuringPhysics = 2,TG_EndPhysics = 3"
+  0x3E6C915: "UnRegistLuaTick"
+  0x3E6CFE2: "DebugDrawOccupiedAreasForUserID"
+  0x3E6D40B: "ENiagaraRibbonDrawDirection"
+  0x3E6DBC9: "GetTickEnable"
+  0x3E6DC96: "drawOrderThreshold"
+  0x3E702E0: "bOpenTick"
+  0x3E70454: "bEnableTickInClient"
+  0x3E7083B: "bDisableReadyGameStateWeatherTick"
+  0x3E70A6B: "TickZLocation"
+  0x3E70A8B: "EndDriverEmoteTick"
+  0x3E7500B: "IsDriverAlwaysDrawCrossHair"
+  0x3E75764: "bTickUpdateAll"
+  0x3E76B85: "ETickOptimizationAnimUROMode::LOD"
+  0x3E76BF0: "OnTickZoneChange__DelegateSignature"
+  0x3E76C24: "ShouldForceExecuteFirstTick"
+  0x3E76C47: "bActorTickControl"
+  0x3E76C59: "TickControlledComponents"
+  0x3E772A4: "EnableFPSAndMemoryLog"
+  0x3E77574: "TickUDPPing"
+  0x3E77AC5: "EEventCounterDefine::PlayerDestroyPaperWallWithStickyBombCount"
+  0x3E785B2: "bCheckInTick"
+  0x3E79A67: "MulticastDrawDebugArrow"
+  0x3E7A600: "AnimMontageTypeAndPosture::FPS_Max"
+  0x3E7A9BE: "Gamepad_RightStick_Right"
+  0x3E7C390: "CharacterMovementComponentPostPhysicsTickFunction"
+  0x3E7C462: "PUBGDeviceFPSUltralHigh"
+  0x3E7C47A: "PUBGDeviceFPSHDR"
+  0x3E7C48B: "PUBGDeviceFPSDef"
+  0x3E7C5A2: "bUseFixedFrameRate" *** LIMIT/CAP ***
+  0x3E7C624: "VMI_QuadOverdraw"
+  0x3E7C677: "PrimitiveComponentPostPhysicsTickFunction"
+  0x3E7C949: "DrawTextureSimple"
+  0x3E7C96F: "EControllerAnalogStick::CAS_LeftStick"
+  0x3E7CBA9: "EDrawDebugTrace::ForOneFrame"
+  0x3E7CBDD: "DrawDebugCone"
+  0x3E7CBEB: "DrawDebugConeInDegrees"
+  0x3E7CD2B: "bDissolveDrawStyleOpenShadow"
+  0x3E7CD60: "DrawStyles"
+  0x3E7D47F: "MinDrawDistance"
+  0x3E7D4AA: "EAutoDormancyType::ActorTickServer"
+  0x3E7E81B: "DebugEnableFerrisWheelTick"
+  0x3E80048: "EParticleDrawEffect::IgnoreTextureAlpha"
+  0x3E8586E: "DrawSpreadEnd"
+  0x3E858DB: "ClientCheckStickGround"
+  0x3E85E40: "CurTickAdd"
+  0x3E85E82: "UnStickyFromComp"
+  0x3E85FE9: "bUseTickPose"
+  0x3E8664A: "ReceiveJoystickInput"
+  0x3E870E8: "DebugDrawHitPosTime"
+  0x3E870FC: "bDebugDrawHitPos"
+  0x3E873A3: "MaxAllowVehicleTimeSpeedRawTime"
+  0x3E87487: "bServerTickCheckCrossWall"
+  0x3E87D01: "TickVehicles"
+  0x3E88076: "JoystickTouchBeginHandler"
+  0x3E88F87: "CurFps"
+  0x3E89008: "ClientDrawDebugCoordinateSystem"
+  0x3E89929: "JoystickSprintDisThreshold"
+  0x3E8A656: "DebugDraw"
+  0x3E8A744: "ECustomTickRoleType::ECTR_SimulatedAndAuthority"
+  0x3E8AFA3: "SetTickEnabled"
+  0x3E8BB60: "NetTickFlushPostDelegate__DelegateSignature"
+  0x3E8BCE3: "RequireSlateTickEveryFrameBeforeTargetFrame"
+  0x3E8C106: "GetTicketInfoWrapper"
+  0x3E8C268: "fFPSReportInterval"
+  0x3E8C393: "TickAndRefreshBoneForGivenSkMeshComp"
+  0x3E8C928: "AllSpotsToTick"
+  0x3E8D136: "IsUseFpsVault"
+  0x3E8D953: "TickStrategy"
+  0x3E8DFCB: "VehicleProtectionComponentBall_TickPreventFly"
+  0x3E8ECDD: "bServerUseConstantTickInterval"
+  0x3E8F6CA: "DrawSphere"
+  0x3E8F78F: "Gamepad_LeftThumbstick"
+  0x3E8F7BD: "Gamepad_LeftStick_Left"
+  0x3E907FA: "EArithmeticKeyOperation"
+  0x3E90D43: "PrimaryComponentTick"
+  0x3E90F07: "MontageTickType"
+  0x3E964A1: "LuaTick"
+  0x3E97D25: "DrawOrderTimeline"
+  0x3E9EAEC: "T90"
+  0x3EC75F8: "StickyTireConstraintData"
+  0x3EC8618: "mStickyTireForwardData"
+  0x3EE1E5A: "}jyrbel+cblc{+}nh?+_nsHddyo90"
+  0x3EE2154: "}jyrbel+cblc{+}nh?+_nsHddyo90"
+  0x3F19293: "drawing"
+  0x3F1B97D: "Box_Drawing"
+  0x3F1B989: "Box_Drawing"
+  0x3F33B97: "fPSV"
+  0x3F5465E: "%0X+90Ig>0"
+  0x3F73854: "0G_V)90"
+  0x3F93D83: "69044"
+  0x3FA6B35: "DrawCylinder"
+
+======================================================================
+SECTION B: FPS VALUE CONSTANTS (MOV Wn, #N)
+======================================================================
+  #30: 85 occurrences
+    0x565CDC8
+    0x56B8E90
+    0x56BB828
+    0x56BF7F4
+    0x56C1E08
+    0x56DDA2C
+    0x56F04F4
+    0x570CDE8
+    0x570DDDC
+    0x573C38C
+    ... and 75 more
+  #60: 65 occurrences
+    0x560CA6C
+    0x560CC64
+    0x563389C
+    0x5633900
+    0x5633964
+    0x56339C8
+    0x5633A2C
+    0x5641F80
+    0x56BB868
+    0x570DE0C
+    ... and 55 more
+  #90: 10 occurrences
+    0x577BD64
+    0x59304C4
+    0x59F0360
+    0x5C0D64C
+    0x5D1A454
+    0x5E38D40
+    0x5E3F398
+    0x5E9C9AC
+    0x5ECE884
+    0x5F4FBD8
+  #120: 45 occurrences
+    0x567818C
+    0x5678424
+    0x56786B8
+    0x5678CF4
+    0x567A4A0
+    0x573C660
+    0x57809F0
+    0x5859DCC
+    0x5A78730
+    0x5A78884
+    ... and 35 more
+  #144: 260 occurrences
+    0x5672B04
+    0x56934C0
+    0x5693564
+    0x56935F0
+    0x56936BC
+    0x5693790
+    0x5693858
+    0x5693920
+    0x56939F8
+    0x56F00D8
+    ... and 250 more
+  #240: 21 occurrences
+    0x583F590
+    0x5862844
+    0x5862874
+    0x5863568
+    0x589CDF8
+    0x589CFB0
+    0x589D07C
+    0x589D090
+    0x589D0A4
+    0x589D0DC
+    ... and 11 more
+
+======================================================================
+SECTION C: ALL FPS STRING CROSS-REFERENCES
+======================================================================
+  @0x5620354 [ADR+ADD] -> 0x3E5919D "AverageFPS"
+  @0x5620484 [ADR+ADD] -> 0x3D9BBE8 "DrawCallNumber"
+  @0x56204A8 [ADR+ADD] -> 0x3D8620B "PrimitivesDrawnNumber"
+  @0x56325B8 [ADR+ADD] -> 0x3DC71EC "NativeWindowRedrawNeeded: %p -- %p"
+  @0x592D9F0 [ADR+ADD] -> 0x3C860A7 "F:\Release4.4.0\AS\Survive\Source\ShadowTrackerExtra\BackPack\EmoteAction\EmoteA"
+  @0x592DBB4 [ADR+ADD] -> 0x3C860A7 "F:\Release4.4.0\AS\Survive\Source\ShadowTrackerExtra\BackPack\EmoteAction\EmoteA"
+  @0x592DBF0 [ADR+ADD] -> 0x3C860A7 "F:\Release4.4.0\AS\Survive\Source\ShadowTrackerExtra\BackPack\EmoteAction\EmoteA"
+  @0x592E1E0 [ADR+ADD] -> 0x3C860A7 "F:\Release4.4.0\AS\Survive\Source\ShadowTrackerExtra\BackPack\EmoteAction\EmoteA"
+  @0x592F3F8 [ADR+ADD] -> 0x3C860A7 "F:\Release4.4.0\AS\Survive\Source\ShadowTrackerExtra\BackPack\EmoteAction\EmoteA"
+  @0x6561B5C [ADR+ADD] -> 0x3D9C5A0 "F:\Release4.4.0\AS\Survive\Source\ShadowTrackerExtra\UI\Widget\PolygonDrawWidget"
+  @0x661E920 [ADR+ADD] -> 0x3C09901 "F:\Release4.4.0\AS\Survive\Source\ShadowTrackerExtra\Utility\TickControlComponen"
+  @0x66B2A88 [ADR+ADD] -> 0x3C5D9F0 "VehicleProtection_TickPreventPenetration"
+  @0x72126BC [ADR+ADD] -> 0x3D263D1 "FTimeTicker"
+  @0x72126D8 [ADR+ADD] -> 0x3E373B4 "SetTickFunction"
+  @0x7212710 [ADR+ADD] -> 0x3C798D6 "Tick"
+  @0x7212734 [ADR+ADD] -> 0x3D263D1 "FTimeTicker"
+  @0x72BCA5C [ADR+ADD] -> 0x3C4F83D "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationSubsyst"
+  @0x72BCD54 [ADR+ADD] -> 0x3E4CE17 "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationAnimCom"
+  @0x72BD13C [ADR+ADD] -> 0x3E4CE17 "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationAnimCom"
+  @0x72BD24C [ADR+ADD] -> 0x3E4CE17 "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationAnimCom"
+  @0x72BD2C8 [ADR+ADD] -> 0x3E4CE17 "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationAnimCom"
+  @0x72BD344 [ADR+ADD] -> 0x3E4CE17 "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationAnimCom"
+  @0x72BD400 [ADR+ADD] -> 0x3E4CE17 "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationAnimCom"
+  @0x72BD4D4 [ADR+ADD] -> 0x3E4CE17 "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationAnimCom"
+  @0x72BD56C [ADR+ADD] -> 0x3E4CE17 "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationAnimCom"
+  @0x72BDA80 [ADR+ADD] -> 0x3C4F83D "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationSubsyst"
+  @0x72BDAD8 [ADR+ADD] -> 0x3C4F83D "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationSubsyst"
+  @0x72BDEAC [ADR+ADD] -> 0x3C4F83D "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationSubsyst"
+  @0x72BDF30 [ADR+ADD] -> 0x3C4F83D "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationSubsyst"
+  @0x72BF390 [ADR+ADD] -> 0x3C4F83D "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationSubsyst"
+  @0x72BF4C4 [ADR+ADD] -> 0x3C8EAF2 "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationTargetC"
+  @0x72BFA58 [ADR+ADD] -> 0x3C4F894 "TickOptimization"
+  @0x72BFAD4 [ADR+ADD] -> 0x3C8EAF2 "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationTargetC"
+  @0x72BFBDC [ADR+ADD] -> 0x3C8EAF2 "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationTargetC"
+  @0x72BFC24 [ADR+ADD] -> 0x3C8EAF2 "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationTargetC"
+  @0x72BFED4 [ADR+ADD] -> 0x3C8EAF2 "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationTargetC"
+  @0x72BFF50 [ADR+ADD] -> 0x3C8EAF2 "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationTargetC"
+  @0x72BFFCC [ADR+ADD] -> 0x3C8EAF2 "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationTargetC"
+  @0x72C0088 [ADR+ADD] -> 0x3C8EAF2 "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationTargetC"
+  @0x72C014C [ADR+ADD] -> 0x3C8EAF2 "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationTargetC"
+  @0x72C0344 [ADR+ADD] -> 0x3C8EAF2 "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationTargetC"
+  @0x72C0518 [ADR+ADD] -> 0x3C8EAF2 "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationTargetC"
+  @0x72C05D4 [ADR+ADD] -> 0x3C8EAF2 "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationTargetC"
+  @0x72C06E0 [ADR+ADD] -> 0x3C8EAF2 "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationTargetC"
+  @0x72C0798 [ADR+ADD] -> 0x3C8EAF2 "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationTargetC"
+  @0x72C08A0 [ADR+ADD] -> 0x3C8EAF2 "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationTargetC"
+  @0x73B8F04 [ADR+ADD] -> 0x3BFCF2A "Client_BackendHUDTick"
+  @0x73B8F24 [ADR+ADD] -> 0x3BFCF2A "Client_BackendHUDTick"
+  @0x73B8F4C [ADR+ADD] -> 0x3BFCF2A "Client_BackendHUDTick"
+  @0x74DBDC0 [ADR+ADD] -> 0x3BFD223 "WebView-OnGetTicket callback %d , retMsg = %s"
+  @0x74DD620 [ADR+ADD] -> 0x3DFAA4F "{"isneedticket":true,"showHorizontalScrollBar":false,"showVerticalScrollBar":fal"
+  @0x74DE1DC [ADR+ADD] -> 0x3C79EC0 "{"isneedticket":false,"showHorizontalScrollBar":false,"showVerticalScrollBar":fa"
+  @0x7F51808 [ADR+ADD] -> 0x3E8DFCB "VehicleProtectionComponentBall_TickPreventFly"
+  @0x846C564 [ADR+ADD] -> 0x3E8F78F "Gamepad_LeftThumbstick"
+  @0x846C72C [ADR+ADD] -> 0x3C3EBD9 "Gamepad_LeftStick_Down"
+  @0x846C744 [ADR+ADD] -> 0x3E50F0B "Gamepad_LeftStick_Right"
+  @0x846C75C [ADR+ADD] -> 0x3E8F7BD "Gamepad_LeftStick_Left"
+  @0x846C774 [ADR+ADD] -> 0x3D7DED4 "Gamepad_RightStick_Up"
+  @0x846C7A4 [ADR+ADD] -> 0x3E7A9BE "Gamepad_RightStick_Right"
+  @0x846C7BC [ADR+ADD] -> 0x3DA863C "Gamepad_RightStick_Left"
+  @0x846C90C [ADR+ADD] -> 0x3DFE48F "MotionController_Left_Thumbstick_Up"
+  @0x846C924 [ADR+ADD] -> 0x3C29A07 "MotionController_Left_Thumbstick_Down"
+  @0x846C93C [ADR+ADD] -> 0x3CA7DFB "MotionController_Left_Thumbstick_Left"
+  @0x846C954 [ADR+ADD] -> 0x3C29A2D "MotionController_Left_Thumbstick_Right"
+  @0x846CA8C [ADR+ADD] -> 0x3C29A77 "MotionController_Right_Thumbstick"
+  @0x846CAA4 [ADR+ADD] -> 0x3CFFD13 "MotionController_Right_Thumbstick_Up"
+  @0x846CABC [ADR+ADD] -> 0x3D3F175 "MotionController_Right_Thumbstick_Down"
+  @0x846CAEC [ADR+ADD] -> 0x3CFFD38 "MotionController_Right_Thumbstick_Right"
+  @0x846CB04 [ADR+ADD] -> 0x3E3B649 "MotionController_Left_Thumbstick_X"
+  @0x846CB7C [ADR+ADD] -> 0x3CBD650 "MotionController_Right_Thumbstick_X"
+  @0x846CB94 [ADR+ADD] -> 0x3DA8677 "MotionController_Right_Thumbstick_Y"
+  @0x84B3520 [ADR+ADD] -> 0x3DBD7D3 "TickAsyncLoading_GT"
+  @0x84B3730 [ADR+ADD] -> 0x3DBD7D3 "TickAsyncLoading_GT"
+  @0x84B383C [ADR+ADD] -> 0x3DBD7D3 "TickAsyncLoading_GT"
+
+======================================================================
+SECTION D: TOP 15 FPS FUNCTIONS (FULL DISASSEMBLY)
+======================================================================
+
+============================================================
+FPS RANK #1 | Score: 30
+Address: 0x72BD2F0
+Size: 548 bytes (137 instructions)
+FPS string refs: 3 (limit-related: 0)
+
+--- String References ---
+  0x3E4CE17 [ADR+ADD] "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationAnimComponent.cpp"
+  0x3E4CE17 [ADR+ADD] "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationAnimComponent.cpp"
+  0x3E4CE17 [ADR+ADD] "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationAnimComponent.cpp"
+
+--- Disassembly (first 64 instructions) ---
+  0x072BD2F0  sub      sp, sp, #0x20
+  0x072BD2F4  stp      x29, x30, [sp, #0x10]
+  0x072BD2F8  add      x29, sp, #0x10
+  0x072BD2FC  ldrb     w8, [x0, #0x12d]
+  0x072BD300  tbnz     w8, #1, #0x72bd314
+  0x072BD304  str      w1, [x0, #0x1a4]
+  0x072BD308  ldp      x29, x30, [sp, #0x10]
+  0x072BD30C  add      sp, sp, #0x20
+  0x072BD310  ret      
+  0x072BD314  adrp     x8, #0xdd82000
+  0x072BD318  ldr      x8, [x8, #0xe68]
+  0x072BD31C  ldr      w8, [x8]
+  0x072BD320  cbnz     w8, #0x72bd308
+  0x072BD324  adrp     x8, #0xdd86000
+  0x072BD328  ldr      x8, [x8, #0x58]
+  0x072BD32C  ldrb     w9, [x8]
+  0x072BD330  cmp      w9, #3
+  0x072BD334  b.lo     #0x72bd308
+  0x072BD338  ldr      x8, [x8, #8]
+  0x072BD33C  adrp     x0, #0x3e4c000
+  0x072BD340  adrp     x4, #0x3686000
+  0x072BD344  add      x0, x0, #0xe17
+  0x072BD348  add      x4, x4, #0xd3e
+  0x072BD34C  add      x2, sp, #8
+  0x072BD350  mov      w1, #0x68
+  0x072BD354  mov      w3, #3
+  0x072BD358  str      x8, [sp, #8]
+  0x072BD35C  bl       #0x82a8280
+  0x072BD360  ldp      x29, x30, [sp, #0x10]
+  0x072BD364  add      sp, sp, #0x20
+  0x072BD368  ret      
+  0x072BD36C  stp      x29, x30, [sp, #-0x30]!
+  0x072BD370  str      x21, [sp, #0x10]
+  0x072BD374  stp      x20, x19, [sp, #0x20]
+  0x072BD378  mov      x29, sp
+  0x072BD37C  ldrb     w8, [x0, #0x12d]
+  0x072BD380  tbnz     w8, #1, #0x72bd3d0
+  0x072BD384  add      x19, x0, #0x180
+  0x072BD388  cmp      x19, x1
+  0x072BD38C  b.eq     #0x72bd41c
+  0x072BD390  ldrsw    x20, [x1, #8]
+  0x072BD394  ldr      w2, [x0, #0x18c]
+  0x072BD398  ldr      x21, [x1]
+  0x072BD39C  str      w20, [x0, #0x188]
+  0x072BD3A0  orr      w8, w2, w20
+  0x072BD3A4  cbz      w8, #0x72bd42c
+  0x072BD3A8  mov      x0, x19
+  0x072BD3AC  mov      w1, w20
+  0x072BD3B0  bl       #0x56d39e0
+  0x072BD3B4  ldr      x0, [x19]
+  0x072BD3B8  lsl      x2, x20, #2
+  0x072BD3BC  mov      x1, x21
+  0x072BD3C0  ldp      x20, x19, [sp, #0x20]
+  0x072BD3C4  ldr      x21, [sp, #0x10]
+  0x072BD3C8  ldp      x29, x30, [sp], #0x30
+  0x072BD3CC  b        #0xc4dfba0
+  0x072BD3D0  adrp     x8, #0xdd82000
+  0x072BD3D4  ldr      x8, [x8, #0xe68]
+  0x072BD3D8  ldr      w8, [x8]
+  0x072BD3DC  cbnz     w8, #0x72bd41c
+  0x072BD3E0  adrp     x8, #0xdd86000
+  0x072BD3E4  ldr      x8, [x8, #0x58]
+  0x072BD3E8  ldrb     w9, [x8]
+  0x072BD3EC  cmp      w9, #3
+
+
+============================================================
+FPS RANK #2 | Score: 30
+Address: 0x72BFF78
+Size: 672 bytes (168 instructions)
+FPS string refs: 3 (limit-related: 0)
+
+--- String References ---
+  0x3C8EAF2 [ADR+ADD] "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationTargetComponent.cpp"
+  0x3C8EAF2 [ADR+ADD] "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationTargetComponent.cpp"
+  0x3C8EAF2 [ADR+ADD] "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationTargetComponent.cpp"
+
+--- Disassembly (first 64 instructions) ---
+  0x072BFF78  sub      sp, sp, #0x20
+  0x072BFF7C  stp      x29, x30, [sp, #0x10]
+  0x072BFF80  add      x29, sp, #0x10
+  0x072BFF84  ldrb     w8, [x0, #0x12d]
+  0x072BFF88  tbnz     w8, #1, #0x72bff9c
+  0x072BFF8C  str      s0, [x0, #0x3c8]
+  0x072BFF90  ldp      x29, x30, [sp, #0x10]
+  0x072BFF94  add      sp, sp, #0x20
+  0x072BFF98  ret      
+  0x072BFF9C  adrp     x8, #0xdd82000
+  0x072BFFA0  ldr      x8, [x8, #0xe68]
+  0x072BFFA4  ldr      w8, [x8]
+  0x072BFFA8  cbnz     w8, #0x72bff90
+  0x072BFFAC  adrp     x8, #0xdd86000
+  0x072BFFB0  ldr      x8, [x8, #0x58]
+  0x072BFFB4  ldrb     w9, [x8]
+  0x072BFFB8  cmp      w9, #3
+  0x072BFFBC  b.lo     #0x72bff90
+  0x072BFFC0  ldr      x8, [x8, #8]
+  0x072BFFC4  adrp     x0, #0x3c8e000
+  0x072BFFC8  adrp     x4, #0x381d000
+  0x072BFFCC  add      x0, x0, #0xaf2
+  0x072BFFD0  add      x4, x4, #0xf6e
+  0x072BFFD4  add      x2, sp, #8
+  0x072BFFD8  mov      w1, #0xc2
+  0x072BFFDC  mov      w3, #3
+  0x072BFFE0  str      x8, [sp, #8]
+  0x072BFFE4  bl       #0x82a8280
+  0x072BFFE8  ldp      x29, x30, [sp, #0x10]
+  0x072BFFEC  add      sp, sp, #0x20
+  0x072BFFF0  ret      
+  0x072BFFF4  stp      x29, x30, [sp, #-0x30]!
+  0x072BFFF8  str      x21, [sp, #0x10]
+  0x072BFFFC  stp      x20, x19, [sp, #0x20]
+  0x072C0000  mov      x29, sp
+  0x072C0004  ldrb     w8, [x0, #0x12d]
+  0x072C0008  tbnz     w8, #1, #0x72c0058
+  0x072C000C  add      x19, x0, #0x3d0
+  0x072C0010  cmp      x19, x1
+  0x072C0014  b.eq     #0x72c00a4
+  0x072C0018  ldrsw    x20, [x1, #8]
+  0x072C001C  ldr      w2, [x0, #0x3dc]
+  0x072C0020  ldr      x21, [x1]
+  0x072C0024  str      w20, [x0, #0x3d8]
+  0x072C0028  orr      w8, w2, w20
+  0x072C002C  cbz      w8, #0x72c00b4
+  0x072C0030  mov      x0, x19
+  0x072C0034  mov      w1, w20
+  0x072C0038  bl       #0x56d39e0
+  0x072C003C  ldr      x0, [x19]
+  0x072C0040  lsl      x2, x20, #2
+  0x072C0044  mov      x1, x21
+  0x072C0048  ldp      x20, x19, [sp, #0x20]
+  0x072C004C  ldr      x21, [sp, #0x10]
+  0x072C0050  ldp      x29, x30, [sp], #0x30
+  0x072C0054  b        #0xc4dfba0
+  0x072C0058  adrp     x8, #0xdd82000
+  0x072C005C  ldr      x8, [x8, #0xe68]
+  0x072C0060  ldr      w8, [x8]
+  0x072C0064  cbnz     w8, #0x72c00a4
+  0x072C0068  adrp     x8, #0xdd86000
+  0x072C006C  ldr      x8, [x8, #0x58]
+  0x072C0070  ldrb     w9, [x8]
+  0x072C0074  cmp      w9, #3
+
+
+============================================================
+FPS RANK #3 | Score: 30
+Address: 0x72BD1F8
+Size: 124 bytes (31 instructions)
+FPS string refs: 1 (limit-related: 0)
+
+--- String References ---
+  0x3E4CE17 [ADR+ADD] "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationAnimComponent.cpp"
+
+--- Disassembly (first 64 instructions) ---
+  0x072BD1F8  sub      sp, sp, #0x20
+  0x072BD1FC  stp      x29, x30, [sp, #0x10]
+  0x072BD200  add      x29, sp, #0x10
+  0x072BD204  ldrb     w8, [x0, #0x12d]
+  0x072BD208  tbnz     w8, #1, #0x72bd21c
+  0x072BD20C  strb     w1, [x0, #0x179]
+  0x072BD210  ldp      x29, x30, [sp, #0x10]
+  0x072BD214  add      sp, sp, #0x20
+  0x072BD218  ret      
+  0x072BD21C  adrp     x8, #0xdd82000
+  0x072BD220  ldr      x8, [x8, #0xe68]
+  0x072BD224  ldr      w8, [x8]
+  0x072BD228  cbnz     w8, #0x72bd210
+  0x072BD22C  adrp     x8, #0xdd86000
+  0x072BD230  ldr      x8, [x8, #0x58]
+  0x072BD234  ldrb     w9, [x8]
+  0x072BD238  cmp      w9, #3
+  0x072BD23C  b.lo     #0x72bd210
+  0x072BD240  ldr      x8, [x8, #8]
+  0x072BD244  adrp     x0, #0x3e4c000
+  0x072BD248  adrp     x4, #0x3895000
+  0x072BD24C  add      x0, x0, #0xe17
+  0x072BD250  add      x4, x4, #0x236
+  0x072BD254  add      x2, sp, #8
+  0x072BD258  mov      w1, #0x50
+  0x072BD25C  mov      w3, #3
+  0x072BD260  str      x8, [sp, #8]
+  0x072BD264  bl       #0x82a8280
+  0x072BD268  ldp      x29, x30, [sp, #0x10]
+  0x072BD26C  add      sp, sp, #0x20
+  0x072BD270  ret      
+
+
+============================================================
+FPS RANK #4 | Score: 30
+Address: 0x72BD274
+Size: 124 bytes (31 instructions)
+FPS string refs: 1 (limit-related: 0)
+
+--- String References ---
+  0x3E4CE17 [ADR+ADD] "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationAnimComponent.cpp"
+
+--- Disassembly (first 64 instructions) ---
+  0x072BD274  sub      sp, sp, #0x20
+  0x072BD278  stp      x29, x30, [sp, #0x10]
+  0x072BD27C  add      x29, sp, #0x10
+  0x072BD280  ldrb     w8, [x0, #0x12d]
+  0x072BD284  tbnz     w8, #1, #0x72bd298
+  0x072BD288  str      w1, [x0, #0x1a0]
+  0x072BD28C  ldp      x29, x30, [sp, #0x10]
+  0x072BD290  add      sp, sp, #0x20
+  0x072BD294  ret      
+  0x072BD298  adrp     x8, #0xdd82000
+  0x072BD29C  ldr      x8, [x8, #0xe68]
+  0x072BD2A0  ldr      w8, [x8]
+  0x072BD2A4  cbnz     w8, #0x72bd28c
+  0x072BD2A8  adrp     x8, #0xdd86000
+  0x072BD2AC  ldr      x8, [x8, #0x58]
+  0x072BD2B0  ldrb     w9, [x8]
+  0x072BD2B4  cmp      w9, #3
+  0x072BD2B8  b.lo     #0x72bd28c
+  0x072BD2BC  ldr      x8, [x8, #8]
+  0x072BD2C0  adrp     x0, #0x3e4c000
+  0x072BD2C4  adrp     x4, #0x36f9000
+  0x072BD2C8  add      x0, x0, #0xe17
+  0x072BD2CC  add      x4, x4, #0x246
+  0x072BD2D0  add      x2, sp, #8
+  0x072BD2D4  mov      w1, #0x5c
+  0x072BD2D8  mov      w3, #3
+  0x072BD2DC  str      x8, [sp, #8]
+  0x072BD2E0  bl       #0x82a8280
+  0x072BD2E4  ldp      x29, x30, [sp, #0x10]
+  0x072BD2E8  add      sp, sp, #0x20
+  0x072BD2EC  ret      
+
+
+============================================================
+FPS RANK #5 | Score: 30
+Address: 0x72BFE80
+Size: 124 bytes (31 instructions)
+FPS string refs: 1 (limit-related: 0)
+
+--- String References ---
+  0x3C8EAF2 [ADR+ADD] "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationTargetComponent.cpp"
+
+--- Disassembly (first 64 instructions) ---
+  0x072BFE80  sub      sp, sp, #0x20
+  0x072BFE84  stp      x29, x30, [sp, #0x10]
+  0x072BFE88  add      x29, sp, #0x10
+  0x072BFE8C  ldrb     w8, [x0, #0x12d]
+  0x072BFE90  tbnz     w8, #1, #0x72bfea4
+  0x072BFE94  strb     w1, [x0, #0x3c1]
+  0x072BFE98  ldp      x29, x30, [sp, #0x10]
+  0x072BFE9C  add      sp, sp, #0x20
+  0x072BFEA0  ret      
+  0x072BFEA4  adrp     x8, #0xdd82000
+  0x072BFEA8  ldr      x8, [x8, #0xe68]
+  0x072BFEAC  ldr      w8, [x8]
+  0x072BFEB0  cbnz     w8, #0x72bfe98
+  0x072BFEB4  adrp     x8, #0xdd86000
+  0x072BFEB8  ldr      x8, [x8, #0x58]
+  0x072BFEBC  ldrb     w9, [x8]
+  0x072BFEC0  cmp      w9, #3
+  0x072BFEC4  b.lo     #0x72bfe98
+  0x072BFEC8  ldr      x8, [x8, #8]
+  0x072BFECC  adrp     x0, #0x3c8e000
+  0x072BFED0  adrp     x4, #0x376f000
+  0x072BFED4  add      x0, x0, #0xaf2
+  0x072BFED8  add      x4, x4, #0xc2
+  0x072BFEDC  add      x2, sp, #8
+  0x072BFEE0  mov      w1, #0xaa
+  0x072BFEE4  mov      w3, #3
+  0x072BFEE8  str      x8, [sp, #8]
+  0x072BFEEC  bl       #0x82a8280
+  0x072BFEF0  ldp      x29, x30, [sp, #0x10]
+  0x072BFEF4  add      sp, sp, #0x20
+  0x072BFEF8  ret      
+
+
+============================================================
+FPS RANK #6 | Score: 30
+Address: 0x72BFEFC
+Size: 124 bytes (31 instructions)
+FPS string refs: 1 (limit-related: 0)
+
+--- String References ---
+  0x3C8EAF2 [ADR+ADD] "F:\Release4.4.0\AS\Survive\Source\Basic\TickOptimization\TickOptimizationTargetComponent.cpp"
+
+--- Disassembly (first 64 instructions) ---
+  0x072BFEFC  sub      sp, sp, #0x20
+  0x072BFF00  stp      x29, x30, [sp, #0x10]
+  0x072BFF04  add      x29, sp, #0x10
+  0x072BFF08  ldrb     w8, [x0, #0x12d]
+  0x072BFF0C  tbnz     w8, #1, #0x72bff20
+  0x072BFF10  str      s0, [x0, #0x3c4]
+  0x072BFF14  ldp      x29, x30, [sp, #0x10]
+  0x072BFF18  add      sp, sp, #0x20
+  0x072BFF1C  ret      
+  0x072BFF20  adrp     x8, #0xdd82000
+  0x072BFF24  ldr      x8, [x8, #0xe68]
+  0x072BFF28  ldr      w8, [x8]
+  0x072BFF2C  cbnz     w8, #0x72bff14
+  0x072BFF30  adrp     x8, #0xdd86000
+  0x072BFF34  ldr      x8, [x8, #0x58]
+  0x072BFF38  ldrb     w9, [x8]
+  0x072BFF3C  cmp      w9, #3
+  0x072BFF40  b.lo     #0x72bff14
+  0x072BFF44  ldr      x8, [x8, #8]
+  0x072BFF48  adrp     x0, #0x3c8e000
+  0x072BFF4C  adrp     x4, #0x376f000
+  0x072BFF50  add      x0, x0, #0xaf2
+  0x072BFF54  add      x4, x4, #0x12a
+  0x072BFF58  add      x2, sp, #8
+  0x072BFF5C  mov      w1, #0xb6
+  0x072BFF60  mov      w3, #3
+  0x072BFF64  str      x8, [sp, #8]
+  0x072BFF68  bl       #0x82a8280
+  0x072BFF6C  ldp      x29, x30, [sp, #0x10]
+  0x072BFF70  add      sp, sp, #0x20
+  0x072BFF74  ret      
+
+
+============================================================
+FPS RANK #7 | Score: 30
+Address: 0x846C72C
+Size: 24 bytes (6 instructions)
+FPS string refs: 1 (limit-related: 0)
+
+--- String References ---
+  0x3C3EBD9 [ADR+ADD] "Gamepad_LeftStick_Down"
+
+--- Disassembly (first 64 instructions) ---
+  0x0846C72C  add      x1, x1, #0xbd9
+  0x0846C730  mov      w2, #1
+  0x0846C734  bl       #0x8395130
+  0x0846C738  adrp     x0, #0xe226000
+  0x0846C73C  adrp     x1, #0x3e50000
+  0x0846C740  add      x0, x0, #0xde0
+
+
+============================================================
+FPS RANK #8 | Score: 30
+Address: 0x846C744
+Size: 24 bytes (6 instructions)
+FPS string refs: 1 (limit-related: 0)
+
+--- String References ---
+  0x3E50F0B [ADR+ADD] "Gamepad_LeftStick_Right"
+
+--- Disassembly (first 64 instructions) ---
+  0x0846C744  add      x1, x1, #0xf0b
+  0x0846C748  mov      w2, #1
+  0x0846C74C  bl       #0x8395130
+  0x0846C750  adrp     x0, #0xe226000
+  0x0846C754  adrp     x1, #0x3e8f000
+  0x0846C758  add      x0, x0, #0xde8
+
+
+============================================================
+FPS RANK #9 | Score: 30
+Address: 0x846C75C
+Size: 24 bytes (6 instructions)
+FPS string refs: 1 (limit-related: 0)
+
+--- String References ---
+  0x3E8F7BD [ADR+ADD] "Gamepad_LeftStick_Left"
+
+--- Disassembly (first 64 instructions) ---
+  0x0846C75C  add      x1, x1, #0x7bd
+  0x0846C760  mov      w2, #1
+  0x0846C764  bl       #0x8395130
+  0x0846C768  adrp     x0, #0xe226000
+  0x0846C76C  adrp     x1, #0x3d7d000
+  0x0846C770  add      x0, x0, #0xdf0
+
+
+============================================================
+FPS RANK #10 | Score: 30
+Address: 0x846C774
+Size: 48 bytes (12 instructions)
+FPS string refs: 1 (limit-related: 0)
+
+--- String References ---
+  0x3D7DED4 [ADR+ADD] "Gamepad_RightStick_Up"
+
+--- Disassembly (first 64 instructions) ---
+  0x0846C774  add      x1, x1, #0xed4
+  0x0846C778  mov      w2, #1
+  0x0846C77C  bl       #0x8395130
+  0x0846C780  adrp     x0, #0xe226000
+  0x0846C784  adrp     x1, #0x3d92000
+  0x0846C788  add      x0, x0, #0xdf8
+  0x0846C78C  add      x1, x1, #0x97a
+  0x0846C790  mov      w2, #1
+  0x0846C794  bl       #0x8395130
+  0x0846C798  adrp     x0, #0xe226000
+  0x0846C79C  adrp     x1, #0x3e7a000
+  0x0846C7A0  add      x0, x0, #0xe00
+
+
+============================================================
+FPS RANK #11 | Score: 30
+Address: 0x846C7A4
+Size: 24 bytes (6 instructions)
+FPS string refs: 1 (limit-related: 0)
+
+--- String References ---
+  0x3E7A9BE [ADR+ADD] "Gamepad_RightStick_Right"
+
+--- Disassembly (first 64 instructions) ---
+  0x0846C7A4  add      x1, x1, #0x9be
+  0x0846C7A8  mov      w2, #1
+  0x0846C7AC  bl       #0x8395130
+  0x0846C7B0  adrp     x0, #0xe226000
+  0x0846C7B4  adrp     x1, #0x3da8000
+  0x0846C7B8  add      x0, x0, #0xe08
+
+
+============================================================
+FPS RANK #12 | Score: 30
+Address: 0x846C90C
+Size: 24 bytes (6 instructions)
+FPS string refs: 1 (limit-related: 0)
+
+--- String References ---
+  0x3DFE48F [ADR+ADD] "MotionController_Left_Thumbstick_Up"
+
+--- Disassembly (first 64 instructions) ---
+  0x0846C90C  add      x1, x1, #0x48f
+  0x0846C910  mov      w2, #1
+  0x0846C914  bl       #0x8395130
+  0x0846C918  adrp     x0, #0xe226000
+  0x0846C91C  adrp     x1, #0x3c29000
+  0x0846C920  add      x0, x0, #0xe80
+
+
+============================================================
+FPS RANK #13 | Score: 30
+Address: 0x846C924
+Size: 24 bytes (6 instructions)
+FPS string refs: 1 (limit-related: 0)
+
+--- String References ---
+  0x3C29A07 [ADR+ADD] "MotionController_Left_Thumbstick_Down"
+
+--- Disassembly (first 64 instructions) ---
+  0x0846C924  add      x1, x1, #0xa07
+  0x0846C928  mov      w2, #1
+  0x0846C92C  bl       #0x8395130
+  0x0846C930  adrp     x0, #0xe226000
+  0x0846C934  adrp     x1, #0x3ca7000
+  0x0846C938  add      x0, x0, #0xe88
+
+
+============================================================
+FPS RANK #14 | Score: 30
+Address: 0x846C93C
+Size: 24 bytes (6 instructions)
+FPS string refs: 1 (limit-related: 0)
+
+--- String References ---
+  0x3CA7DFB [ADR+ADD] "MotionController_Left_Thumbstick_Left"
+
+--- Disassembly (first 64 instructions) ---
+  0x0846C93C  add      x1, x1, #0xdfb
+  0x0846C940  mov      w2, #1
+  0x0846C944  bl       #0x8395130
+  0x0846C948  adrp     x0, #0xe226000
+  0x0846C94C  adrp     x1, #0x3c29000
+  0x0846C950  add      x0, x0, #0xe90
+
+
+============================================================
+FPS RANK #15 | Score: 30
+Address: 0x846CA8C
+Size: 24 bytes (6 instructions)
+FPS string refs: 1 (limit-related: 0)
+
+--- String References ---
+  0x3C29A77 [ADR+ADD] "MotionController_Right_Thumbstick"
+
+--- Disassembly (first 64 instructions) ---
+  0x0846CA8C  add      x1, x1, #0xa77
+  0x0846CA90  mov      w2, #1
+  0x0846CA94  bl       #0x8395130
+  0x0846CA98  adrp     x0, #0xe226000
+  0x0846CA9C  adrp     x1, #0x3cff000
+  0x0846CAA0  add      x0, x0, #0xf00
+
+======================================================================
+SECTION E: COMPLETE FPS FUNCTION RANKING
+======================================================================
+  # 1 score= 30 | 0x72BD2F0 |   548B | refs=3 limit=0 | F:\Release4.4.0\AS\Survive\Sou; F:\Release4.4.0\AS\Survive\Sou
+  # 2 score= 30 | 0x72BFF78 |   672B | refs=3 limit=0 | F:\Release4.4.0\AS\Survive\Sou; F:\Release4.4.0\AS\Survive\Sou
+  # 3 score= 30 | 0x72BD1F8 |   124B | refs=1 limit=0 | F:\Release4.4.0\AS\Survive\Sou
+  # 4 score= 30 | 0x72BD274 |   124B | refs=1 limit=0 | F:\Release4.4.0\AS\Survive\Sou
+  # 5 score= 30 | 0x72BFE80 |   124B | refs=1 limit=0 | F:\Release4.4.0\AS\Survive\Sou
+  # 6 score= 30 | 0x72BFEFC |   124B | refs=1 limit=0 | F:\Release4.4.0\AS\Survive\Sou
+  # 7 score= 30 | 0x846C72C |    24B | refs=1 limit=0 | Gamepad_LeftStick_Down
+  # 8 score= 30 | 0x846C744 |    24B | refs=1 limit=0 | Gamepad_LeftStick_Right
+  # 9 score= 30 | 0x846C75C |    24B | refs=1 limit=0 | Gamepad_LeftStick_Left
+  #10 score= 30 | 0x846C774 |    48B | refs=1 limit=0 | Gamepad_RightStick_Up
+  #11 score= 30 | 0x846C7A4 |    24B | refs=1 limit=0 | Gamepad_RightStick_Right
+  #12 score= 30 | 0x846C90C |    24B | refs=1 limit=0 | MotionController_Left_Thumbsti
+  #13 score= 30 | 0x846C924 |    24B | refs=1 limit=0 | MotionController_Left_Thumbsti
+  #14 score= 30 | 0x846C93C |    24B | refs=1 limit=0 | MotionController_Left_Thumbsti
+  #15 score= 30 | 0x846CA8C |    24B | refs=1 limit=0 | MotionController_Right_Thumbst
+  #16 score= 30 | 0x846CAA4 |    24B | refs=1 limit=0 | MotionController_Right_Thumbst
+  #17 score= 30 | 0x846CABC |    48B | refs=1 limit=0 | MotionController_Right_Thumbst
+  #18 score= 30 | 0x846CAEC |    24B | refs=1 limit=0 | MotionController_Right_Thumbst
+  #19 score= 30 | 0x846CB04 |   120B | refs=1 limit=0 | MotionController_Left_Thumbsti
+  #20 score= 30 | 0x846CB7C |    24B | refs=1 limit=0 | MotionController_Right_Thumbst
+  #21 score= 25 | 0x72C04C0 |   340B | refs=2 limit=0 | F:\Release4.4.0\AS\Survive\Sou; F:\Release4.4.0\AS\Survive\Sou
+  #22 score= 20 | 0x72124F4 |  4096B | refs=4 limit=0 | FTimeTicker; SetTickFunction
+  #23 score= 20 | 0x72BFA08 |  1144B | refs=4 limit=0 | TickOptimization; F:\Release4.4.0\AS\Survive\Sou
+  #24 score= 20 | 0x72BCCBC |   692B | refs=1 limit=0 | F:\Release4.4.0\AS\Survive\Sou
+  #25 score= 20 | 0x72BCF70 |   648B | refs=1 limit=0 | F:\Release4.4.0\AS\Survive\Sou
+  #26 score= 20 | 0x72BF26C |   324B | refs=1 limit=0 | F:\Release4.4.0\AS\Survive\Sou
+  #27 score= 20 | 0x72C0218 |   680B | refs=1 limit=0 | F:\Release4.4.0\AS\Survive\Sou
+  #28 score= 20 | 0x846C564 |   456B | refs=1 limit=0 | Gamepad_LeftThumbstick
+  #29 score= 20 | 0x846C7BC |   336B | refs=1 limit=0 | Gamepad_RightStick_Left
+  #30 score= 20 | 0x846C954 |   312B | refs=1 limit=0 | MotionController_Left_Thumbsti
+  #31 score= 15 | 0x56202F8 |  4096B | refs=3 limit=0 | AverageFPS; DrawCallNumber
+  #32 score= 15 | 0x592D998 |  2120B | refs=3 limit=0 | F:\Release4.4.0\AS\Survive\Sou; F:\Release4.4.0\AS\Survive\Sou
+  #33 score= 15 | 0x72C0614 |  4096B | refs=3 limit=0 | F:\Release4.4.0\AS\Survive\Sou; F:\Release4.4.0\AS\Survive\Sou
+  #34 score= 15 | 0x73B8E64 |  4096B | refs=3 limit=0 | Client_BackendHUDTick; Client_BackendHUDTick
+  #35 score= 15 | 0x84B31AC |  4096B | refs=3 limit=0 | TickAsyncLoading_GT; TickAsyncLoading_GT
+  #36 score= 10 | 0x72BD9F4 |   840B | refs=2 limit=0 | F:\Release4.4.0\AS\Survive\Sou; F:\Release4.4.0\AS\Survive\Sou
+  #37 score= 10 | 0x72BDD3C |  4096B | refs=2 limit=0 | F:\Release4.4.0\AS\Survive\Sou; F:\Release4.4.0\AS\Survive\Sou
+  #38 score=  5 | 0x563237C |  4096B | refs=1 limit=0 | NativeWindowRedrawNeeded: %p -
+  #39 score=  5 | 0x592E1E0 |  4096B | refs=1 limit=0 | F:\Release4.4.0\AS\Survive\Sou
+  #40 score=  5 | 0x592F3AC |  4096B | refs=1 limit=0 | F:\Release4.4.0\AS\Survive\Sou
+  #41 score=  5 | 0x6561940 |  4096B | refs=1 limit=0 | F:\Release4.4.0\AS\Survive\Sou
+  #42 score=  5 | 0x661E8CC |  4096B | refs=1 limit=0 | F:\Release4.4.0\AS\Survive\Sou
+  #43 score=  5 | 0x66B2658 |  4096B | refs=1 limit=0 | VehicleProtection_TickPreventP
+  #44 score=  5 | 0x72BC938 |   900B | refs=1 limit=0 | F:\Release4.4.0\AS\Survive\Sou
+  #45 score=  5 | 0x72BD514 |  1248B | refs=1 limit=0 | F:\Release4.4.0\AS\Survive\Sou
+  #46 score=  5 | 0x72BF3B0 |  1624B | refs=1 limit=0 | F:\Release4.4.0\AS\Survive\Sou
+  #47 score=  5 | 0x74DBA48 |  4096B | refs=1 limit=0 | WebView-OnGetTicket callback %
+  #48 score=  5 | 0x74DD158 |  3208B | refs=1 limit=0 | {"isneedticket":true,"showHori
+  #49 score=  5 | 0x74DDDE0 |  4096B | refs=1 limit=0 | {"isneedticket":false,"showHor
+  #50 score=  5 | 0x7F51550 |  4096B | refs=1 limit=0 | VehicleProtectionComponentBall
+  #51 score=  5 | 0x846CB94 |  4096B | refs=1 limit=0 | MotionController_Right_Thumbst
