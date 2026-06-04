@@ -393,3 +393,107 @@ NEW HOOKS: GuardFlagKiller, ReportBlocker, HookDetectBypass, MemScanBypass, Emul
 KEY: BSS 0x54A000 has 25 guard flags. Zero them = universal bypass.
 Functions: 0x379220(scan), 0x4B39E0(str), 0x4B5E78(report), 0x5201E0/F0(verify)
 Codespace: laughing-space-tribble-xr5vj64pr654cv6vg (Available)
+
+================================================================================
+13. AGENT 1 SESSION 3 - ANTI-BAN BYPASS (2026-06-04)
+================================================================================
+TASK: Create new UE4 anti-ban bypass (libUE4.so)
+
+ANALYSIS PERFORMED:
+  - Anti-Ban Hunter v1-v5: 5 iterations of scanner development
+  - Phase 1: String search - Found 14 anti-ban keywords, 104 string instances
+    Keywords: AntiCheat(34), Detection(23), Monitor(18), SecurityCheck(6),
+    PunishType(5), DeviceId(4), KickPlayer(4), CheatType(3), etc.
+  - Phase 2: PLT analysis - Found 160 PLT stubs in .plt section
+    PLT stubs use 4-instruction pattern: ADRP+LDR+ADD+BR (not standard 3-insn)
+    nanosleep PLT confirmed at 0xC4E2170 (GOT 0xDD944C0)
+  - Phase 3: BL scan - 1.7M BL instructions, 95,081 unique call targets
+  - Phase 4: Import resolution - .rela.plt is ENCRYPTED (BGMI anti-RE)
+    Only 3 of 645 entries resolve to known names
+    78 imported functions called from code
+  - Phase 5: Internal AC functions - 22,770 internal functions called 3+ times
+    Top: 0x5624A80 (270K calls), 0x8241084 (228K calls), 0x8394FEC (59K calls)
+  - Phase 6: AC call chains - 0x5ACC184 called from 21 locations!
+
+KEY DISCOVERY: .rela.plt ENCRYPTION
+  BGMI 4.4.0 encrypts relocation entries to prevent static analysis
+  645 entries in .rela.plt but only 3 resolve to valid symbols
+  GOT entries 0xDD93FC0-0xDD944D0 are all imports
+  PLT names require runtime resolution (dlopen/dlsym at load time)
+
+CREATED: hooks/AntiBan.h - 6-Layer Anti-Ban Protection
+
+LAYER 1 - AC Dispatcher NOP (22 patches):
+  NOP all 21 BL callers of 0x5ACC184 (main AC dispatcher)
+  Callers at: 0x5AB2F78, 0x5ACBFB4, 0x5C6AA88, 0x5D79504, 0x5D7A8A0,
+  0x6213140, 0x62131AC, 0x644B5DC, 0x67826F4, 0x68CD9C8,
+  0x6921EE8, 0x695DC08, 0x69A8570, 0x69A8604, 0x7BF8044,
+  0x7C3A808, 0x9FEFDE4, 0xAA73CD8, 0xBA6FC2C, 0xBA9D4AC, 0xC25D2D4
+  Plus: NOP BL to AC_Enforcer (0x7A649A8) from 0x7AD1B4C
+
+LAYER 2 - AC Function RET (8 patches):
+  0x749F538 AC_StructInit (was STP -> RET)
+  0x7AD8950 AC_DataHandler (was SUB SP -> RET)
+  0xA4FBA10 AC_ReportGen (was STP -> RET)
+  0x5ACC184 AC_DispatchMain (was B -> RET)
+  0x62E286C AC_IntegrityCheck (was STP -> RET)
+  0x68CE7EC AC_MemoryMonitor (was SUB SP -> RET)
+  0x68CE7F4 AC_CodeIntegrity (was SUB SP -> RET)
+  0x7A649A8 AC_Enforcer (was 0x9F21BD13 -> RET)
+
+LAYER 3 - FPS Unlock (dual with FPSUnlock.h):
+  0xBC2C054 NOP BL nanosleep (confirmed 1 call site)
+
+LAYER 4 - Internal AC Dispatchers (5 RET patches):
+  0x8394FEC AC_Reporter (58,714 calls - per-frame reporter)
+  0x8603830 AC_Watcher1 (30,497 calls - memory watcher)
+  0x86037F4 AC_Watcher2 (30,477 calls - paired watcher)
+  0x862A210 AC_Dispatch2 (24,428 calls - high-freq dispatch)
+
+LAYER 5 - Import Blocking (needs runtime verification):
+  __stack_chk_fail, write(), dlopen() PLT stubs identified but names
+  need runtime resolution due to .rela.plt encryption
+
+NEW SCRIPTS:
+  scripts/antiban_hunter.py - Final anti-ban scanner (v5 condensed)
+
+TOTAL HOOKS IN PROJECT: 14
+  PhantomTrace, FPSUnlock, HyperFrame, ScanTrigger, WisdomBypass,
+  IntegrityHook, GuardFlagKiller, ReportBlocker, HookDetectBypass,
+  MemScanBypass, EmulatorBypass, NoRecoil, NoShake, AntiBan
+
+================================================================================
+14. COMPLETE REPO STRUCTURE (Updated 2026-06-04)
+================================================================================
+LIBSOFFF/
+  bg.apk                              BGMI 4.4.0 full APK (97MB)
+  prompt.txt                          Agent 1 + Agent 2 progress report
+  a2.txt                              Agent 2 notes
+  bgmi_hack.lua                       Full hack config
+  sam+bp.rar                          Sam BP analysis source
+  hooks/
+    PhantomTrace.h                    Anti-debug + emulator bypass
+    FPSUnlock.h                       120fps unlock
+    HyperFrame.h                      120fps unlock (alt)
+    ScanTriggerHook.h                 Memory scan trigger
+    WisdomBypass.h                    Verified WISDOM SRC offsets
+    IntegrityDispatcherHook.h         Integrity dispatch bypass
+    GuardFlagKiller.h                  BSS guard flag killer
+    ReportBlocker.h                    Report submission blocker
+    HookDetectBypass.h                 Inline hook detection bypass
+    MemScanBypass.h                    Memory scan bypass
+    EmulatorBypass.h                   Emulator detection bypass
+    NoRecoil.h                        No recoil hook
+    NoShake.h                         No shake hook
+    NoRecoil_NoShake_32bit.h           32-bit offsets (legacy)
+    NoRecoil_NoShake_64bit.h           64-bit offsets
+    AntiBan.h                         NEW: UE4 Anti-Ban bypass (6 layers)
+  scripts/
+    antiban_hunter.py                 NEW: Anti-ban function scanner
+    fast_hook_hunter.py               ADRP xref hook discovery
+    nanosleep_hunter.py               BL nanosleep call finder
+    ... (15+ more scripts)
+  sam_bp_analysis/                     Sam BP source reference
+  binaries/arm64-v8a/                 17 .so files (29MB)
+  analysis/strings/                   String dumps
+  reports/                            Analysis reports
