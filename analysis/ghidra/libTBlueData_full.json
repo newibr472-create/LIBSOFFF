@@ -1,0 +1,1113 @@
+{
+  "lib": "libTBlueData.so",
+  "exports": 53,
+  "functions": [
+    {
+      "name": "_ZN3TDM10ITBlueData11GetInstanceEv",
+      "offset": "0x4d1cc",
+      "size": 0,
+      "asm": [
+        "b #0x4d1d0",
+        "stp x20, x19, [sp, #-0x20]!",
+        "stp x29, x30, [sp, #0x10]",
+        "add x29, sp, #0x10",
+        "adrp x0, #0x3e4000",
+        "add x0, x0, #0x370",
+        "bl #0x4c300",
+        "adrp x20, #0x3e4000"
+      ]
+    },
+    {
+      "name": "Java_com_blue_dm_TBlueData_TDMEnableReport",
+      "offset": "0x8e854",
+      "size": 0,
+      "asm": [
+        "str x19, [sp, #-0x20]!",
+        "stp x29, x30, [sp, #0x10]",
+        "add x29, sp, #0x10",
+        "adrp x8, #0x2db000",
+        "adrp x9, #0x2db000",
+        "tst w2, #0xff",
+        "add x8, x8, #0x304",
+        "add x9, x9, #0x2ff"
+      ]
+    },
+    {
+      "name": "Java_com_blue_dm_TBlueData_TDMReportBinary",
+      "offset": "0x8f5c4",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x60",
+        "str x23, [sp, #0x20]",
+        "stp x22, x21, [sp, #0x30]",
+        "stp x20, x19, [sp, #0x40]",
+        "stp x29, x30, [sp, #0x50]",
+        "add x29, sp, #0x50",
+        "mrs x23, tpidr_el0",
+        "ldr x8, [x23, #0x28]"
+      ]
+    },
+    {
+      "name": "Java_com_blue_dm_system_FileUtils_FileUtilsInit",
+      "offset": "0x8ff3c",
+      "size": 0,
+      "asm": [
+        "stp x20, x19, [sp, #-0x20]!",
+        "stp x29, x30, [sp, #0x10]",
+        "add x29, sp, #0x10",
+        "mov x19, x1",
+        "adrp x1, #0x2df000",
+        "adrp x3, #0x2df000",
+        "adrp x4, #0x2df000",
+        "mov x20, x0"
+      ]
+    },
+    {
+      "name": "Java_com_blue_dm_device_DeviceInfoHolder_SetNewLongDeviceInfo",
+      "offset": "0x8fbd0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x60",
+        "stp x24, x23, [sp, #0x20]",
+        "stp x22, x21, [sp, #0x30]",
+        "stp x20, x19, [sp, #0x40]",
+        "stp x29, x30, [sp, #0x50]",
+        "add x29, sp, #0x50",
+        "mrs x24, tpidr_el0",
+        "ldr x8, [x24, #0x28]"
+      ]
+    },
+    {
+      "name": "TDM_Destroy_Event",
+      "offset": "0x91fb8",
+      "size": 0,
+      "asm": [
+        "str x19, [sp, #-0x20]!",
+        "stp x29, x30, [sp, #0x10]",
+        "add x29, sp, #0x10",
+        "mov x19, x0",
+        "cbz x19, #0x91fe4",
+        "ldr x0, [x19]",
+        "cbz x0, #0x91fe4",
+        "ldr x8, [x0]"
+      ]
+    },
+    {
+      "name": "Java_com_blue_dm_system_TDMUtils_EncryptField",
+      "offset": "0x8e308",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "stp x22, x21, [sp, #0x20]",
+        "stp x20, x19, [sp, #0x30]",
+        "stp x29, x30, [sp, #0x40]",
+        "add x29, sp, #0x40",
+        "mrs x22, tpidr_el0",
+        "ldr x8, [x22, #0x28]",
+        "adrp x20, #0x2df000"
+      ]
+    },
+    {
+      "name": "_ZN3TDM10ITBlueData15ReleaseInstanceEv",
+      "offset": "0x4d258",
+      "size": 0,
+      "asm": [
+        "str x19, [sp, #-0x20]!",
+        "stp x29, x30, [sp, #0x10]",
+        "add x29, sp, #0x10",
+        "adrp x19, #0x3e4000",
+        "ldr x0, [x19, #0x368]",
+        "cbz x0, #0x4d280",
+        "ldr x8, [x0]",
+        "ldr x8, [x8, #8]"
+      ]
+    },
+    {
+      "name": "Java_com_blue_dm_TBlueData_TDMPause",
+      "offset": "0x8e81c",
+      "size": 0,
+      "asm": [
+        "stp x29, x30, [sp, #-0x10]!",
+        "mov x29, sp",
+        "adrp x1, #0x2df000",
+        "adrp x3, #0x2df000",
+        "adrp x4, #0x2df000",
+        "add x1, x1, #0x75a",
+        "add x3, x3, #0x825",
+        "add x4, x4, #0x849"
+      ]
+    },
+    {
+      "name": "Java_com_blue_dm_TBlueData_TDMGetUID",
+      "offset": "0x8e8bc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "str x21, [sp, #0x20]",
+        "stp x20, x19, [sp, #0x30]",
+        "stp x29, x30, [sp, #0x40]",
+        "add x29, sp, #0x40",
+        "mrs x21, tpidr_el0",
+        "ldr x8, [x21, #0x28]",
+        "adrp x1, #0x2df000"
+      ]
+    },
+    {
+      "name": "Java_com_blue_dm_TBlueData_TDMResume",
+      "offset": "0x8e7e4",
+      "size": 0,
+      "asm": [
+        "stp x29, x30, [sp, #-0x10]!",
+        "mov x29, sp",
+        "adrp x1, #0x2df000",
+        "adrp x3, #0x2df000",
+        "adrp x4, #0x2df000",
+        "add x1, x1, #0x75a",
+        "add x3, x3, #0x7f1",
+        "add x4, x4, #0x816"
+      ]
+    },
+    {
+      "name": "Java_com_blue_dm_TBlueData_TDMGetSDKVerision",
+      "offset": "0x8ea38",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "str x21, [sp, #0x20]",
+        "stp x20, x19, [sp, #0x30]",
+        "stp x29, x30, [sp, #0x40]",
+        "add x29, sp, #0x40",
+        "mrs x21, tpidr_el0",
+        "ldr x8, [x21, #0x28]",
+        "adrp x1, #0x2df000"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve6Plugin12PluginReportD0Ev",
+      "offset": "0x92328",
+      "size": 0,
+      "asm": [
+        "b #0x273b4c",
+        "adrp x0, #0x2de000",
+        "add x0, x0, #0x134",
+        "ret ",
+        "adrp x0, #0x2da000",
+        "add x0, x0, #0x194",
+        "ret ",
+        "cbz x1, #0x92364"
+      ]
+    },
+    {
+      "name": "_ZThn8_NK6HDmpve6Plugin12PluginReport7GetNameEv",
+      "offset": "0x92380",
+      "size": 0,
+      "asm": [
+        "adrp x0, #0x2de000",
+        "add x0, x0, #0x134",
+        "ret ",
+        "adrp x0, #0x2da000",
+        "add x0, x0, #0x194",
+        "ret ",
+        "cbz x1, #0x923b8",
+        "ldr x8, [x1]"
+      ]
+    },
+    {
+      "name": "TDM_Set_Log_Level",
+      "offset": "0x91dd4",
+      "size": 0,
+      "asm": [
+        "str x19, [sp, #-0x20]!",
+        "stp x29, x30, [sp, #0x10]",
+        "add x29, sp, #0x10",
+        "mov w19, w0",
+        "adrp x1, #0x2e0000",
+        "adrp x3, #0x2e0000",
+        "adrp x4, #0x2e0000",
+        "add x1, x1, #0x68"
+      ]
+    },
+    {
+      "name": "_Z20RegisterHDmpvePluginv",
+      "offset": "0x6e484",
+      "size": 0,
+      "asm": [
+        "str x21, [sp, #-0x30]!",
+        "stp x20, x19, [sp, #0x10]",
+        "stp x29, x30, [sp, #0x20]",
+        "add x29, sp, #0x20",
+        "adrp x1, #0x2dc000",
+        "adrp x3, #0x2dc000",
+        "adrp x4, #0x2dc000",
+        "add x1, x1, #0x3c0"
+      ]
+    },
+    {
+      "name": "Java_com_blue_dm_system_TDMUtils_SetDeviceInfoEncryptKey",
+      "offset": "0x8e578",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "str x21, [sp, #0x20]",
+        "stp x20, x19, [sp, #0x30]",
+        "stp x29, x30, [sp, #0x40]",
+        "add x29, sp, #0x40",
+        "mrs x21, tpidr_el0",
+        "ldr x8, [x21, #0x28]",
+        "mov x19, x3"
+      ]
+    },
+    {
+      "name": "_ZThn8_N6HDmpve6Plugin12PluginReport13OnPreShutdownEv",
+      "offset": "0x923c0",
+      "size": 0,
+      "asm": [
+        "ret ",
+        "ret ",
+        "str x19, [sp, #-0x20]!",
+        "stp x29, x30, [sp, #0x10]",
+        "add x29, sp, #0x10",
+        "adrp x19, #0x3e4000",
+        "ldr x0, [x19, #0x818]",
+        "cbnz x0, #0x923fc"
+      ]
+    },
+    {
+      "name": "Java_com_blue_dm_database_TDMDataBase_DataBaseInit",
+      "offset": "0x8e020",
+      "size": 0,
+      "asm": [
+        "stp x20, x19, [sp, #-0x20]!",
+        "stp x29, x30, [sp, #0x10]",
+        "add x29, sp, #0x10",
+        "mov x19, x1",
+        "adrp x1, #0x2df000",
+        "adrp x3, #0x2df000",
+        "adrp x4, #0x2df000",
+        "mov x20, x0"
+      ]
+    },
+    {
+      "name": "Java_com_blue_dm_system_FileUtils_GetDefaultPreferenceByKey",
+      "offset": "0x8ffa0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "str x21, [sp, #0x20]",
+        "stp x20, x19, [sp, #0x30]",
+        "stp x29, x30, [sp, #0x40]",
+        "add x29, sp, #0x40",
+        "mrs x21, tpidr_el0",
+        "ldr x8, [x21, #0x28]",
+        "mov w19, w3"
+      ]
+    },
+    {
+      "name": "_ZThn8_N6HDmpve6Plugin12PluginReport16GetServiceByNameEPKc",
+      "offset": "0x922e4",
+      "size": 0,
+      "asm": [
+        "stp x29, x30, [sp, #-0x10]!",
+        "mov x29, sp",
+        "cbz x1, #0x9230c",
+        "adrp x0, #0x2e0000",
+        "add x0, x0, #0x202",
+        "bl #0x4bf70",
+        "cbz w0, #0x92318",
+        "mov x0, xzr"
+      ]
+    },
+    {
+      "name": "Java_com_blue_dm_device_DeviceInfoHolder_SetNewBoolDeviceInfo",
+      "offset": "0x8fd6c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x60",
+        "stp x24, x23, [sp, #0x20]",
+        "stp x22, x21, [sp, #0x30]",
+        "stp x20, x19, [sp, #0x40]",
+        "stp x29, x30, [sp, #0x50]",
+        "add x29, sp, #0x50",
+        "mrs x24, tpidr_el0",
+        "ldr x8, [x24, #0x28]"
+      ]
+    },
+    {
+      "name": "Java_com_blue_dm_TBlueData_TDMReportEvent",
+      "offset": "0x8ebf8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x140",
+        "stp x28, x27, [sp, #0xe0]",
+        "stp x26, x25, [sp, #0xf0]",
+        "stp x24, x23, [sp, #0x100]",
+        "stp x22, x21, [sp, #0x110]",
+        "stp x20, x19, [sp, #0x120]",
+        "stp x29, x30, [sp, #0x130]",
+        "add x29, sp, #0x130"
+      ]
+    },
+    {
+      "name": "Java_com_blue_dm_TBlueData_setAppDir",
+      "offset": "0x71e48",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x70",
+        "str x23, [sp, #0x30]",
+        "stp x22, x21, [sp, #0x40]",
+        "stp x20, x19, [sp, #0x50]",
+        "stp x29, x30, [sp, #0x60]",
+        "add x29, sp, #0x60",
+        "mrs x23, tpidr_el0",
+        "ldr x8, [x23, #0x28]"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve6Plugin12PluginReport10OnShutdownEv",
+      "offset": "0x92370",
+      "size": 0,
+      "asm": [
+        "ret ",
+        "ret ",
+        "sub x0, x0, #8",
+        "b #0x273b4c",
+        "adrp x0, #0x2de000",
+        "add x0, x0, #0x134",
+        "ret ",
+        "adrp x0, #0x2da000"
+      ]
+    },
+    {
+      "name": "Java_com_blue_dm_device_DeviceInfoHolder_isEnableDeviceInfo",
+      "offset": "0x8ff20",
+      "size": 0,
+      "asm": [
+        "stp x29, x30, [sp, #-0x10]!",
+        "mov x29, sp",
+        "bl #0x802dc",
+        "bl #0x806d8",
+        "and w0, w0, #1",
+        "ldp x29, x30, [sp], #0x10",
+        "ret ",
+        "stp x20, x19, [sp, #-0x20]!"
+      ]
+    },
+    {
+      "name": "Java_com_blue_dm_device_DeviceInfoHolder_SetNewStringDeviceInfo",
+      "offset": "0x8f97c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "stp x22, x21, [sp, #0x20]",
+        "stp x20, x19, [sp, #0x30]",
+        "stp x29, x30, [sp, #0x40]",
+        "add x29, sp, #0x40",
+        "mrs x22, tpidr_el0",
+        "ldr x8, [x22, #0x28]",
+        "mov x20, x3"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve6Plugin12PluginReport9OnStartupEPNS0_16IServiceRegisterE",
+      "offset": "0x92344",
+      "size": 0,
+      "asm": [
+        "cbz x1, #0x92364",
+        "ldr x8, [x1]",
+        "mov x0, x1",
+        "ldr x2, [x8]",
+        "adrp x8, #0x2e0000",
+        "add x8, x8, #0x202",
+        "mov x1, x8",
+        "br x2"
+      ]
+    },
+    {
+      "name": "Java_com_blue_dm_system_TDMUtils_OnNetworkChanged",
+      "offset": "0x8e0e8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "str x21, [sp, #0x20]",
+        "stp x20, x19, [sp, #0x30]",
+        "stp x29, x30, [sp, #0x40]",
+        "add x29, sp, #0x40",
+        "mrs x21, tpidr_el0",
+        "ldr x8, [x21, #0x28]",
+        "mov x20, x3"
+      ]
+    },
+    {
+      "name": "_ZThn8_N6HDmpve6Plugin12PluginReport9OnStartupEPNS0_16IServiceRegisterE",
+      "offset": "0x92398",
+      "size": 0,
+      "asm": [
+        "cbz x1, #0x923b8",
+        "ldr x8, [x1]",
+        "mov x0, x1",
+        "ldr x2, [x8]",
+        "adrp x8, #0x2e0000",
+        "add x8, x8, #0x202",
+        "mov x1, x8",
+        "br x2"
+      ]
+    },
+    {
+      "name": "TDM_Report_Binary",
+      "offset": "0x91ff0",
+      "size": 0,
+      "asm": [
+        "stp x22, x21, [sp, #-0x30]!",
+        "stp x20, x19, [sp, #0x10]",
+        "stp x29, x30, [sp, #0x20]",
+        "add x29, sp, #0x20",
+        "mov w19, w3",
+        "adrp x3, #0x2e0000",
+        "mov x21, x1",
+        "adrp x1, #0x2e0000"
+      ]
+    },
+    {
+      "name": "Java_com_blue_dm_TBlueData_TDMInit",
+      "offset": "0x8e7ac",
+      "size": 0,
+      "asm": [
+        "stp x29, x30, [sp, #-0x10]!",
+        "mov x29, sp",
+        "adrp x1, #0x2df000",
+        "adrp x3, #0x2df000",
+        "adrp x4, #0x2df000",
+        "add x1, x1, #0x75a",
+        "add x3, x3, #0x7c1",
+        "add x4, x4, #0x7e4"
+      ]
+    },
+    {
+      "name": "TDM_Create_Event",
+      "offset": "0x91ef8",
+      "size": 0,
+      "asm": [
+        "stp x20, x19, [sp, #-0x20]!",
+        "stp x29, x30, [sp, #0x10]",
+        "add x29, sp, #0x10",
+        "mov x19, x1",
+        "mov w20, w0",
+        "cbz x19, #0x91f84",
+        "mov w0, #0xb0",
+        "bl #0x274dc0"
+      ]
+    },
+    {
+      "name": "TDM_Enable_Device_Info",
+      "offset": "0x91e74",
+      "size": 0,
+      "asm": [
+        "str x19, [sp, #-0x20]!",
+        "stp x29, x30, [sp, #0x10]",
+        "add x29, sp, #0x10",
+        "adrp x3, #0x2da000",
+        "adrp x1, #0x2e0000",
+        "add x3, x3, #0x1cc",
+        "mov w19, w0",
+        "add x1, x1, #0x68"
+      ]
+    },
+    {
+      "name": "_ZThn8_N6HDmpve6Plugin12PluginReport10OnShutdownEv",
+      "offset": "0x923c4",
+      "size": 0,
+      "asm": [
+        "ret ",
+        "str x19, [sp, #-0x20]!",
+        "stp x29, x30, [sp, #0x10]",
+        "add x29, sp, #0x10",
+        "adrp x19, #0x3e4000",
+        "ldr x0, [x19, #0x818]",
+        "cbnz x0, #0x923fc",
+        "mov w0, #8"
+      ]
+    },
+    {
+      "name": "JNI_OnLoad",
+      "offset": "0x6e864",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "str x23, [sp, #0x10]",
+        "stp x22, x21, [sp, #0x20]",
+        "stp x20, x19, [sp, #0x30]",
+        "stp x29, x30, [sp, #0x40]",
+        "add x29, sp, #0x40",
+        "mrs x22, tpidr_el0",
+        "ldr x8, [x22, #0x28]"
+      ]
+    },
+    {
+      "name": "TDM_Release_Instance",
+      "offset": "0x91ec0",
+      "size": 0,
+      "asm": [
+        "stp x29, x30, [sp, #-0x10]!",
+        "mov x29, sp",
+        "adrp x1, #0x2e0000",
+        "adrp x3, #0x2e0000",
+        "adrp x4, #0x2df000",
+        "add x1, x1, #0x68",
+        "add x3, x3, #0x196",
+        "add x4, x4, #0xfd2"
+      ]
+    },
+    {
+      "name": "_ZThn8_NK6HDmpve6Plugin12PluginReport10GetVersionEv",
+      "offset": "0x9238c",
+      "size": 0,
+      "asm": [
+        "adrp x0, #0x2da000",
+        "add x0, x0, #0x194",
+        "ret ",
+        "cbz x1, #0x923b8",
+        "ldr x8, [x1]",
+        "mov x0, x1",
+        "ldr x2, [x8]",
+        "adrp x8, #0x2e0000"
+      ]
+    },
+    {
+      "name": "Java_com_blue_dm_TBlueData_TDMSetLogLevel",
+      "offset": "0x8ebb4",
+      "size": 0,
+      "asm": [
+        "str x19, [sp, #-0x20]!",
+        "stp x29, x30, [sp, #0x10]",
+        "add x29, sp, #0x10",
+        "adrp x1, #0x2df000",
+        "adrp x3, #0x2df000",
+        "adrp x4, #0x2df000",
+        "mov w19, w2",
+        "add x1, x1, #0x75a"
+      ]
+    },
+    {
+      "name": "Java_com_blue_dm_TBlueData_TDMReportLogin",
+      "offset": "0x8f7ac",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "str x21, [sp, #0x20]",
+        "stp x20, x19, [sp, #0x30]",
+        "stp x29, x30, [sp, #0x40]",
+        "add x29, sp, #0x40",
+        "mrs x21, tpidr_el0",
+        "ldr x8, [x21, #0x28]",
+        "mov x20, x3"
+      ]
+    },
+    {
+      "name": "_ZNK6HDmpve6Plugin12PluginReport7GetNameEv",
+      "offset": "0x9232c",
+      "size": 0,
+      "asm": [
+        "adrp x0, #0x2de000",
+        "add x0, x0, #0x134",
+        "ret ",
+        "adrp x0, #0x2da000",
+        "add x0, x0, #0x194",
+        "ret ",
+        "cbz x1, #0x92364",
+        "ldr x8, [x1]"
+      ]
+    },
+    {
+      "name": "Java_com_blue_dm_system_TDMUtils_Init",
+      "offset": "0x8e084",
+      "size": 0,
+      "asm": [
+        "stp x20, x19, [sp, #-0x20]!",
+        "stp x29, x30, [sp, #0x10]",
+        "add x29, sp, #0x10",
+        "mov x19, x1",
+        "adrp x1, #0x2df000",
+        "adrp x3, #0x2df000",
+        "adrp x4, #0x2df000",
+        "mov x20, x0"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve6Plugin12PluginReport13OnPreShutdownEv",
+      "offset": "0x9236c",
+      "size": 0,
+      "asm": [
+        "ret ",
+        "ret ",
+        "ret ",
+        "sub x0, x0, #8",
+        "b #0x273b4c",
+        "adrp x0, #0x2de000",
+        "add x0, x0, #0x134",
+        "ret "
+      ]
+    },
+    {
+      "name": "TDM_Initialize",
+      "offset": "0x91d74",
+      "size": 0,
+      "asm": [
+        "str x21, [sp, #-0x30]!",
+        "stp x20, x19, [sp, #0x10]",
+        "stp x29, x30, [sp, #0x20]",
+        "add x29, sp, #0x20",
+        "adrp x3, #0x2e0000",
+        "mov x20, x1",
+        "adrp x1, #0x2e0000",
+        "add x3, x3, #0x14d"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve6Plugin12PluginReport13OnPostStartupEv",
+      "offset": "0x92368",
+      "size": 0,
+      "asm": [
+        "ret ",
+        "ret ",
+        "ret ",
+        "ret ",
+        "sub x0, x0, #8",
+        "b #0x273b4c",
+        "adrp x0, #0x2de000",
+        "add x0, x0, #0x134"
+      ]
+    },
+    {
+      "name": "_ZThn8_N6HDmpve6Plugin12PluginReport13OnPostStartupEv",
+      "offset": "0x923bc",
+      "size": 0,
+      "asm": [
+        "ret ",
+        "ret ",
+        "ret ",
+        "str x19, [sp, #-0x20]!",
+        "stp x29, x30, [sp, #0x10]",
+        "add x29, sp, #0x10",
+        "adrp x19, #0x3e4000",
+        "ldr x0, [x19, #0x818]"
+      ]
+    },
+    {
+      "name": "Java_com_blue_dm_TBlueData_TDMEnableDeviceInfo",
+      "offset": "0x8f914",
+      "size": 0,
+      "asm": [
+        "str x19, [sp, #-0x20]!",
+        "stp x29, x30, [sp, #0x10]",
+        "add x29, sp, #0x10",
+        "adrp x8, #0x2db000",
+        "adrp x9, #0x2db000",
+        "tst w2, #0xff",
+        "add x8, x8, #0x304",
+        "add x9, x9, #0x2ff"
+      ]
+    },
+    {
+      "name": "_ZThn8_N6HDmpve6Plugin12PluginReportD0Ev",
+      "offset": "0x92378",
+      "size": 0,
+      "asm": [
+        "sub x0, x0, #8",
+        "b #0x273b4c",
+        "adrp x0, #0x2de000",
+        "add x0, x0, #0x134",
+        "ret ",
+        "adrp x0, #0x2da000",
+        "add x0, x0, #0x194",
+        "ret "
+      ]
+    },
+    {
+      "name": "TDM_Enable_Report",
+      "offset": "0x91e28",
+      "size": 0,
+      "asm": [
+        "str x19, [sp, #-0x20]!",
+        "stp x29, x30, [sp, #0x10]",
+        "add x29, sp, #0x10",
+        "adrp x3, #0x2e0000",
+        "adrp x1, #0x2e0000",
+        "add x3, x3, #0x184",
+        "mov w19, w0",
+        "add x1, x1, #0x68"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve6Plugin12PluginReportD2Ev",
+      "offset": "0x92324",
+      "size": 0,
+      "asm": [
+        "ret ",
+        "b #0x273b4c",
+        "adrp x0, #0x2de000",
+        "add x0, x0, #0x134",
+        "ret ",
+        "adrp x0, #0x2da000",
+        "add x0, x0, #0x194",
+        "ret "
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve6Plugin12PluginReport16GetServiceByNameEPKc",
+      "offset": "0x922a4",
+      "size": 0,
+      "asm": [
+        "stp x29, x30, [sp, #-0x10]!",
+        "mov x29, sp",
+        "cbz x1, #0x922cc",
+        "adrp x0, #0x2e0000",
+        "add x0, x0, #0x202",
+        "bl #0x4bf70",
+        "cbz w0, #0x922d8",
+        "mov x0, xzr"
+      ]
+    },
+    {
+      "name": "_ZThn8_N6HDmpve6Plugin12PluginReportD1Ev",
+      "offset": "0x92374",
+      "size": 0,
+      "asm": [
+        "ret ",
+        "sub x0, x0, #8",
+        "b #0x273b4c",
+        "adrp x0, #0x2de000",
+        "add x0, x0, #0x134",
+        "ret ",
+        "adrp x0, #0x2da000",
+        "add x0, x0, #0x194"
+      ]
+    },
+    {
+      "name": "_ZNK6HDmpve6Plugin12PluginReport10GetVersionEv",
+      "offset": "0x92338",
+      "size": 0,
+      "asm": [
+        "adrp x0, #0x2da000",
+        "add x0, x0, #0x194",
+        "ret ",
+        "cbz x1, #0x92364",
+        "ldr x8, [x1]",
+        "mov x0, x1",
+        "ldr x2, [x8]",
+        "adrp x8, #0x2e0000"
+      ]
+    }
+  ],
+  "suspicious_strings": [
+    "Report mode : %d",
+    "before m_pReporter->Stop()",
+    "TDM_STARTUP_REPORTED",
+    "ReportStartup",
+    "Report Startup, has reported already",
+    "Report Startup",
+    "ReportStart",
+    "[ReportStart]",
+    "ReportHang",
+    "[ReportStat]",
+    "[ReportHang]",
+    "ReportResume",
+    "[ReportResume]",
+    "ReportDeviceInfo",
+    "[ReportDeviceInfo]",
+    "CreateEventReporter",
+    "[TDM] PluginReportEvent",
+    "Report login user event, platform:%d, openid:%s",
+    "N3TDM13EventReporterE",
+    "N3TDM14IEventReporterE",
+    "send_succeed_cnt",
+    "connect_succeed_cnt",
+    "resume_time",
+    "task_result",
+    "MSDK plugin is not supported in HDmpve core",
+    "http report url is empty",
+    "http report is not enable",
+    "is_compress_report",
+    "report_interval",
+    "report_user_event",
+    "report_start_event",
+    "report_system_event",
+    "report_sdk_event",
+    "report_internal_event",
+    "report_debug_log",
+    "AppId is not a num. Please check",
+    "save push event success",
+    "Disable localDiskCheckInterval: %d, localDiskCheckCritical: %lld, availSpace:%lld",
+    "Enable localDiskCheckInterval: %d, localDiskCheckCritical: %lld, availSpace:%lld",
+    "nothing to report",
+    "kv event report num valid : %d, all : %d",
+    "bin event report num valid: %d, all : %d",
+    "start clear report file, before fileSet size : %zu",
+    "ClearReportFile",
+    "vector::_M_range_check: __n (which is %zu) >= this->size() (which is %zu)",
+    "GetFileNameForReport",
+    "/Users/intl/devops/PUBGM/TDMWorkspace/tdm/Project/TDM/Source/TBlueDataReporter.cpp",
+    "~TBlueDataReporter",
+    "[~TBlueDataReporter]",
+    "StartBinReportThread",
+    "TDM_USER_REPORT_ENABLE",
+    "report-bin",
+    "background, not report",
+    "report start--------------------------------------",
+    "report success--------------------------------------",
+    "Reporting startup event is preparing, %d",
+    "report disable--------------------------------------",
+    "report end--------------------------------------",
+    "/Users/intl/devops/PUBGM/TDMWorkspace/tdm/Project/TDM/Source/TBlueDataReportManager.cpp",
+    "TBlueDataReportManager",
+    "TBlueDataReportManager constructor called",
+    "HTTPReportProc",
+    "bin report file error",
+    "kv report file error",
+    "http route request result : %s",
+    "Dynamic configuration request success, TDM will be in report process",
+    "OnHTTPReportResp",
+    "http report type error, http report type : %d",
+    "OnHTTPReportResp ret != 0 or respBody is empty",
+    "HTTP report error, error code : %d, error msg : %s",
+    "HTTP report success",
+    "http report success but delete file error",
+    "PushBackReportFile",
+    "no space to push back report file, delete it. file set size : %ld, maxFileNum : %ld",
+    "com/blue/dm/hdmpve/service/PluginReportService",
+    "registerTdmReportServiceNative",
+    "LogFile start upload log file",
+    "Upload",
+    "UploadFile",
+    "LogFile upload file:%s size:%d finish, but delete faild:%d",
+    "LogFile upload file:%s size:%d finish, and delete succeed:",
+    "basic_string::substr",
+    "[TDM HTTP] InitHttpClient success client:%p i:%d",
+    "[TDM HTTP] TDMHTTPManager return host error, result:%d, errorTimeOutCount:%d, reqSeq:%d, url:%s",
+    "[TDM HTTP] TDMHTTPManager return host error, result:%d, errorReshostCount:%d, reqSeq:%d, url:%s",
+    "[TDM HTTP] TDMHTTPManager return host error, result:%d, errorConnectCount:%d, reqSeq:%d, url:%s",
+    "[TDM HTTP] TDMHTTPManager return host error, result:%d, reqSeq:%d, url:%s",
+    "[TDM HTTP] Get clientIdle successful",
+    "[TDM HTTP] httpclient Create Request Thread Report Type is none",
+    "[TDM HTTP] http client statistic starttime:%lld, reqissuetiem:%lld, reqrequestime:%lld",
+    "Http network request consume, network consume:%lldms, request consume:%lldms",
+    "[TDM HTTP] Get method get http response code get http response code result:%d, code:%ld",
+    "[TDM HTTP] POST method get http response code result:%d, code:%ld",
+    "HttpGet result is empty",
+    "GetDiskCheckInterval",
+    "TSystem::GetDiskCheckInterval tmpObj == 0",
+    "getDiskCheckInterval",
+    "GetDiskCheckCritical",
+    "TSystem::GetDiskCheckCritical tmpObj == 0",
+    "getDiskCheckCritical",
+    "asyn info observer insert success",
+    "custom info observer insert success",
+    "invoke 'deleteSharePreferenceItem' function success",
+    "Java_com_blue_dm_TBlueData_TDMResume",
+    "JNI TDMResume ",
+    "Java_com_blue_dm_TBlueData_TDMEnableReport",
+    "JNI TDMEnableReport %s",
+    "Java_com_blue_dm_TBlueData_TDMReportEvent",
+    "JNI TDMReportEvent ",
+    "JNI TDMReportEvent, jeventInfo is null!",
+    "JNI TDMReportEvent, map is empty",
+    "Java_com_blue_dm_TBlueData_TDMReportBinary",
+    "JNI TDMReportBinary ",
+    "JNI TDMReportBinary, data is null!",
+    "Java_com_blue_dm_TBlueData_TDMReportLogin",
+    "JNI TDMReportLogin ",
+    "tdm_enable_report",
+    "tdm_report_event",
+    "tdm_report_event, eventName:%s, data:%p, len:%d, isBinary:%d ",
+    "tdm_report_event, data is null.",
+    "tdm_report_login",
+    "TDM_Enable_Report",
+    "TDM_Report_Binary",
+    "REPORT",
+    "N6HDmpve6Plugin12PluginReportE",
+    "N6HDmpve6Plugin9SingletonINS0_12PluginReportEEE",
+    "/Users/intl/devops/PUBGM/TDMWorkspace/tdm/Project/TDM/Target/Android/TDM/TBlueData/../../../../Source/HDmpve/ReportService.mm",
+    "ReportLogin::ReportLogin",
+    "ReportService::GetSessionID",
+    "ReportService::GetTDMUID",
+    "N6HDmpve6Plugin13ReportServiceE",
+    "N6HDmpve6Plugin14IReportServiceE",
+    "CheckMapRequest",
+    "N3TDM22UncheckedByteArraySinkE",
+    "need construct first, suggest use MSDKJsonManager",
+    "TDMDeviceReportTask",
+    "N3TDM19TDMDeviceReportTaskE",
+    "add task success :%s",
+    "remove task success :%s",
+    "OnResume",
+    "TDMTaskManager::onResume ..",
+    "Can't add itself as a subpart!",
+    "CURLOPT_SSL_VERIFYHOST no longer supports 1 as value!",
+    "Chunky upload is not supported by HTTP 1.0",
+    "File already completely uploaded",
+    "Write callback asked for PAUSE when not supported!",
+    "Protocol \"%s\" not supported or disabled in libcurl",
+    "SMB shares are not supported in file: URLs.",
+    "Unsupported proxy scheme for '%s'",
+    "Unsupported proxy '%s', libcurl is built without the HTTPS-proxy support.",
+    "Read callback asked for PAUSE when not supported!",
+    "HTTP server doesn't seem to support byte ranges. Cannot resume.",
+    "Friday",
+    "Sunday",
+    "Can't complete SOCKS4 connection to %d.%d.%d.%d:%d. (%d), request rejected because the client program and identd report different user-ids.",
+    "Failed to send SOCKS5 sub-negotiation request.",
+    "Unable to receive SOCKS5 sub-negotiation response.",
+    "SOCKS5 GSSAPI per-message authentication is not supported.",
+    "No authentication method was acceptable. (It is quite likely that the SOCKS5 server wanted a username/password, since none was supplied to the server on this connection.)",
+    "could not parse PKCS12 file, check password, OpenSSL error %s",
+    "not supported file type '%s' for certificate",
+    "file type ENG for private key not supported",
+    "file type P12 for private key not supported",
+    "not supported file type for private key",
+    "SSL Engine not supported",
+    "SSL: no alternative certificate subject name matches target host name '%s'",
+    "SSL: certificate subject name '%s' does not match target host name '%s'",
+    "Server verify",
+    "CERT verify",
+    "OpenSSL was built without TLS 1.3 support",
+    "Subject",
+    "Issuer",
+    "SSL: couldn't get X509-issuer name!",
+    "SSL: Unable to open issuer cert (%s)",
+    "SSL: Unable to read issuer cert (%s)",
+    "SSL: Certificate issuer check failed (%s)",
+    "SSL certificate verify result: %s (%ld)",
+    "Error: %s does not support double SSL tunneling.",
+    "SSL for verify callback",
+    "Verify error:",
+    "SUITEB128ONLY",
+    "SUITEB128C2",
+    "SUITEB128",
+    "SUITEB192",
+    "CHECK_SUITEB_CIPHER_LIST",
+    "dtls1_check_timeout_num",
+    "DTLS1_GET_HELLO_VERIFY",
+    "dtls1_send_client_verify",
+    "DTLS1_SEND_HELLO_VERIFY_REQUEST",
+    "GET_SERVER_VERIFY",
+    "SERVER_VERIFY",
+    "ssl3_check_cert_and_algorithm",
+    "ssl3_check_client_hello",
+    "SSL3_CHECK_FINISHED",
+    "ssl3_get_cert_verify",
+    "ssl3_send_client_verify",
+    "SSL_add_dir_cert_subjects_to_stack",
+    "SSL_add_file_cert_subjects_to_stack",
+    "SSL_check_private_key",
+    "SSL_CHECK_SERVERHELLO_TLSEXT",
+    "ssl_check_srvr_ecc_cert_and_alg",
+    "SSL_CTX_check_private_key",
+    "ssl_verify_cert_chain",
+    "tls12_check_peer_sigalg",
+    "tls1_cert_verify_mac",
+    "TLS1_CHECK_SERVERHELLO_TLSEXT",
+    "bad checksum",
+    "certificate verify failed",
+    "digest check failed",
+    "ecdh required for suiteb mode",
+    "illegal Suite B digest",
+    "missing verify message",
+    "Peer haven't sent GOST certificate, required for selected ciphersuite",
+    "no verify callback",
+    "only DTLS 1.2 allowed in Suite B mode",
+    "only TLS 1.2 allowed in Suite B mode",
+    "peer error unsupported certificate type",
+    "sslv3 alert unsupported certificate",
+    "tlsv1 alert insufficient security",
+    "tlsv1 unsupported extension",
+    "tried to use unsupported cipher",
+    "unsupported cipher",
+    "unsupported compression algorithm",
+    "unsupported digest type",
+    "unsupported elliptic curve",
+    "unsupported protocol",
+    "unsupported ssl version",
+    "unsupported status type",
+    "debug_malloc",
+    "debug_malloc2",
+    "issuer",
+    "subject",
+    "issuerUID",
+    "subjectUID",
+    "        Issuer:%c",
+    "        Subject:%c",
+    "%8sIssuer Unique ID: ",
+    "%8sSubject Unique ID: ",
+    "        Subject OCSP hash: ",
+    "subgroup order:",
+    "subgroup factor:",
+    "DSO support routines",
+    "/Users/bkdevops/DevopsAgent/agent/workspace/p-9588583a786341c5b14d2797024c3756/src/openssl/crypto/evp/p_verify.c",
+    "EVP_PKEY_verify",
+    "EVP_PKEY_verify_init",
+    "EVP_PKEY_verify_recover",
+    "EVP_PKEY_verify_recover_init",
+    "EVP_VerifyFinal",
+    "command not supported",
+    "fips mode not supported",
+    "method not supported",
+    "no verify function configured",
+    "operation not supported for this keytype",
+    "unsuported number of rounds",
+    "unsupported algorithm",
+    "unsupported cipher",
+    "unsupported keylength",
+    "unsupported key derivation function",
+    "unsupported key size",
+    "unsupported prf",
+    "unsupported private key algorithm",
+    "unsupported salt type",
+    "subjectKeyIdentifier",
+    "X509v3 Subject Key Identifier",
+    "subjectAltName",
+    "X509v3 Subject Alternative Name",
+    "issuerAltName",
+    "X509v3 Issuer Alternative Name",
+    "surname",
+    "caIssuers",
+    "CA Issuers",
+    "id-it-unsupportedOIDs",
+    "id-it-subscriptionRequest",
+    "id-it-subscriptionResponse",
+    "noCheck",
+    "OCSP No Check",
+    "trustRoot",
+    "Trust Root",
+    "subjectInfoAccess",
+    "Subject Information Access",
+    "holdInstructionCallIssuer",
+    "Hold Instruction Call Issuer",
+    "subtreeMinimumQuality",
+    "subtreeMaximumQuality",
+    "set-policy-root",
+    "setCext-hashedRoot",
+    "setCext-IssuerCapabilities",
+    "issuer capabilities",
+    "set-rootKeyThumb",
+    "subjectDirectoryAttributes",
+    "X509v3 Subject Directory Attributes",
+    "issuingDistributionPoint",
+    "X509v3 Issuing Distrubution Point",
+    "certificateIssuer",
+    "X509v3 Certificate Issuer",
+    "id-it-suppLangTags",
+    "supportedApplicationContext",
+    "supportedAlgorithms",
+    "issuerNameHash",
+    "issuerKeyHash"
+  ],
+  "sus_imports": [
+    "fork",
+    "kill",
+    "access",
+    "fdopen",
+    "open",
+    "fopen",
+    "opendir",
+    "mprotect"
+  ]
+}

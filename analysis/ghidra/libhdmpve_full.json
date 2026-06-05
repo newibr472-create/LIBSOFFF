@@ -1,0 +1,7265 @@
+{
+  "lib": "libhdmpve.so",
+  "exports": 463,
+  "functions": [
+    {
+      "name": "hdmpve_custom_account_adapter_install",
+      "offset": "0xc8898",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "bl #0xc8840",
+        "ldr x1, [x0]",
+        "ldr x1, [x1]",
+        "blr x1",
+        "ldr x30, [sp]",
+        "add sp, sp, #0x10"
+      ]
+    },
+    {
+      "name": "hdmpve_get_connector_factory_instance",
+      "offset": "0xb95a0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "bl #0xc0a18",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x30]",
+        "blr x1",
+        "ldr x30, [sp]",
+        "add sp, sp, #0x10"
+      ]
+    },
+    {
+      "name": "_ZStneIcSt11char_traitsIcESaIcEEbRKSbIT_T0_T1_EPKS3_",
+      "offset": "0x2bbbe0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "bl #0x45a950",
+        "cmp w0, wzr",
+        "ldr x30, [sp]",
+        "cset w0, ne",
+        "add sp, sp, #0x10",
+        "ret "
+      ]
+    },
+    {
+      "name": "hdmpve_gromelink_getVersion",
+      "offset": "0x3d94cc",
+      "size": 0,
+      "asm": [
+        "mov w0, #0x1ed",
+        "movk w0, #0x135, lsl #16",
+        "ret ",
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, #-1",
+        "cbz x0, #0x3d9524",
+        "ldr x1, [x0]"
+      ]
+    },
+    {
+      "name": "_ZNSt3tr18functionIFviiEEC1ERKS2_",
+      "offset": "0x140734",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "str xzr, [x0, #0x10]",
+        "ldr x3, [x1, #0x10]",
+        "cbz x3, #0x140780",
+        "ldr x4, [x1, #0x18]"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsESaIS2_EE16_M_insert_uniqueERKS2_",
+      "offset": "0x16c688",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "stp x23, x24, [sp, #0x20]",
+        "stp x19, x20, [sp]",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x25, x30, [sp, #0x30]",
+        "add x24, x0, #8",
+        "mov x20, x0",
+        "ldr x19, [x0, #0x10]"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeIyySt9_IdentityIyESt4lessIyESaIyEE8_M_eraseEPSt13_Rb_tree_nodeIyE",
+      "offset": "0x241da4",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "mov x19, x1",
+        "cbz x19, #0x241ddc",
+        "ldr x1, [x19, #0x18]",
+        "mov x0, x20"
+      ]
+    },
+    {
+      "name": "GetDownloadTaskInfo",
+      "offset": "0x2ea78c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w4, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea7ac",
+        "ldr x3, [x0]",
+        "ldr x3, [x3, #0x70]",
+        "blr x3",
+        "uxtb w4, w0"
+      ]
+    },
+    {
+      "name": "Java_com_gcore_hdmpve_netinterface_MsgWorker_dnsQueryCallback",
+      "offset": "0x13d18c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0xd0",
+        "stp x21, x22, [sp, #0x20]",
+        "adrp x21, #0x67f000",
+        "str x30, [sp, #0x60]",
+        "stp x19, x20, [sp, #0x10]",
+        "mov x19, x0",
+        "str x2, [sp, #0x78]",
+        "ldr x0, [x21, #0xcf8]"
+      ]
+    },
+    {
+      "name": "hdmpve_pay_Dipose",
+      "offset": "0xb9514",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "bl #0xc0a18",
+        "ldr x1, [x0]",
+        "ldr x2, [x1, #0x38]",
+        "mov w1, #1",
+        "blr x2",
+        "cbz x0, #0xb9550"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve15IAccountServiceD0Ev",
+      "offset": "0xc1724",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0xc1708",
+        "mov x0, x19",
+        "ldp x19, x30, [sp]",
+        "add sp, sp, #0x10",
+        "b #0x40f820"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsESaIS2_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS2_ERS1_",
+      "offset": "0x97184",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x22, x0",
+        "add x0, x0, #8",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x20]",
+        "cmp x1, x0",
+        "mov x19, x1"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE16_M_insert_uniqueERKi",
+      "offset": "0x3d3a24",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x40",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x19, x20, [sp]",
+        "stp x23, x30, [sp, #0x20]",
+        "add x23, x0, #8",
+        "mov x20, x0",
+        "ldr x2, [x0, #0x10]",
+        "mov x22, x1"
+      ]
+    },
+    {
+      "name": "hdmpve_none_account_initialize",
+      "offset": "0xc149c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0xb0",
+        "mov w2, w1",
+        "stp x19, x20, [sp]",
+        "adrp x19, #0x67f000",
+        "add x20, sp, #0x38",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x21, x0",
+        "str x2, [sp, #0x28]"
+      ]
+    },
+    {
+      "name": "_ZNSt6vectorISsSaISsEE5clearEv",
+      "offset": "0x165f10",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "stp x19, x20, [sp]",
+        "stp x21, x22, [sp, #0x10]",
+        "str x30, [sp, #0x20]",
+        "mov x20, x0",
+        "ldr x21, [x0]",
+        "ldr x22, [x0, #8]",
+        "mov x19, x21"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve4Conn13NameRouteInfoD0Ev",
+      "offset": "0x12fb5c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0x12fb10",
+        "mov x0, x19",
+        "ldp x19, x30, [sp]",
+        "add sp, sp, #0x10",
+        "b #0x40f820"
+      ]
+    },
+    {
+      "name": "CreateVersionInfoCallBack",
+      "offset": "0x2e9948",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x60",
+        "stp x23, x24, [sp, #0x30]",
+        "stp x25, x26, [sp, #0x40]",
+        "mov x24, x3",
+        "mov x26, x1",
+        "mov x23, x4",
+        "adrp x1, #0x4d6000",
+        "adrp x3, #0x4d6000"
+      ]
+    },
+    {
+      "name": "InitVersionMgr",
+      "offset": "0x2e9a98",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x40",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "str x1, [sp, #0x38]",
+        "str w2, [sp, #0x34]",
+        "str x3, [sp, #0x28]",
+        "cbz x19, #0x2e9b1c"
+      ]
+    },
+    {
+      "name": "_ZN15ChannelInfoUtil44WriteOldApkChannel2NewApk_ReturnWriteErrCodeEPKcS1_Rj",
+      "offset": "0x1b5580",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x60",
+        "stp x21, x22, [sp, #0x10]",
+        "adrp x22, #0x67f000",
+        "stp x25, x26, [sp, #0x30]",
+        "mov x26, x0",
+        "mov x25, x1",
+        "ldr x0, [x22, #0xcf8]",
+        "cmp x26, xzr"
+      ]
+    },
+    {
+      "name": "Install",
+      "offset": "0xc119c",
+      "size": 0,
+      "asm": [
+        "adrp x3, #0x47c000",
+        "sub sp, sp, #0x10",
+        "adrp x1, #0x47c000",
+        "add x3, x3, #0x4f0",
+        "adrp x4, #0x47c000",
+        "mov w2, #0x17",
+        "add x3, x3, #0x50",
+        "add x4, x4, #0x61e"
+      ]
+    },
+    {
+      "name": "hdmpve_releaseInstance",
+      "offset": "0x10e074",
+      "size": 0,
+      "asm": [
+        "b #0x17d318",
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov w19, w0",
+        "bl #0x17d38c",
+        "ldr x1, [x0]",
+        "ldr x2, [x1, #0x28]",
+        "mov w1, w19"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve5TokenD0Ev",
+      "offset": "0xc7e80",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0xc7cf0",
+        "mov x0, x19",
+        "ldp x19, x30, [sp]",
+        "add sp, sp, #0x10",
+        "b #0x40f820"
+      ]
+    },
+    {
+      "name": "DataMgrPollCallback",
+      "offset": "0x2ea230",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w2, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea250",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x50]",
+        "blr x1",
+        "uxtb w2, w0"
+      ]
+    },
+    {
+      "name": "_ZNSt12_Vector_baseIPN6HDmpve16IServiceObserverESaIS2_EED1Ev",
+      "offset": "0xbbf5c",
+      "size": 0,
+      "asm": [
+        "ldr x0, [x0]",
+        "cbz x0, #0xbbf68",
+        "b #0x40f820",
+        "ret ",
+        "sub sp, sp, #0x20",
+        "adrp x1, #0x649000",
+        "add x1, x1, #0x300",
+        "stp x19, x20, [sp]"
+      ]
+    },
+    {
+      "name": "PufferManagerGetLastError",
+      "offset": "0x193674",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w2, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x193694",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x80]",
+        "blr x1",
+        "mov w2, w0"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsPN6HDmpve4Conn10IConnectorEESt10_Select1stIS6_ESt4lessISsESaIS6_EE8_M_eraseEPSt13_Rb_tree_nodeIS6_E",
+      "offset": "0x12d2ec",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "mov x19, x1",
+        "cbz x19, #0x12d32c",
+        "ldr x1, [x19, #0x18]",
+        "mov x0, x20"
+      ]
+    },
+    {
+      "name": "GetDataMgrMemorySize",
+      "offset": "0x2ea384",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov x2, x0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea3a4",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x48]",
+        "blr x1",
+        "mov x2, x0"
+      ]
+    },
+    {
+      "name": "_ZN15ChannelInfoUtil13isV2SignatureEPKc",
+      "offset": "0x1b3ac0",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "sub sp, sp, #0x70",
+        "ldr x2, [x1, #0xcf8]",
+        "stp x19, x20, [sp]",
+        "stp x21, x22, [sp, #0x10]",
+        "str x30, [sp, #0x20]",
+        "mov x19, x1",
+        "ldr x2, [x2]"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve13ZoneRouteInfoD1Ev",
+      "offset": "0x179acc",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "ldr x1, [x1, #0xef0]",
+        "add x1, x1, #0x10",
+        "str x1, [x0]",
+        "b #0xbbb48",
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0"
+      ]
+    },
+    {
+      "name": "_ZNSt10_List_baseISsSaISsEE8_M_clearEv",
+      "offset": "0x16c3fc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "ldr x19, [x0]",
+        "cmp x19, x20",
+        "b.eq #0x16c434",
+        "mov x0, x19"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve14IPluginManager15ReleaseInstanceEv",
+      "offset": "0xb7cf8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "adrp x20, #0x69b000",
+        "str x30, [sp, #0x10]",
+        "ldr x0, [x20, #0xe78]",
+        "cbz x0, #0xb7d54",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x30]"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve5ITDirC1Ev",
+      "offset": "0x3c6e98",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "ldr x1, [x1, #0xa00]",
+        "add x1, x1, #0x10",
+        "str x1, [x0]",
+        "ret ",
+        "ret ",
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]"
+      ]
+    },
+    {
+      "name": "_ZNSt10_List_baseIPcSaIS0_EE8_M_clearEv",
+      "offset": "0x242354",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "ldr x0, [x0]",
+        "cmp x0, x19",
+        "b.eq #0x242380",
+        "ldr x20, [x0]"
+      ]
+    },
+    {
+      "name": "DoDownloadAction",
+      "offset": "0x2eab68",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "uxtb w1, w1",
+        "str x30, [sp]",
+        "cbz x0, #0x2eab84",
+        "ldr x2, [x0]",
+        "ldr x2, [x2, #0x40]",
+        "blr x2",
+        "ldr x30, [sp]"
+      ]
+    },
+    {
+      "name": "hdmpve_pay_action",
+      "offset": "0xb92e8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x70",
+        "adrp x4, #0x47a000",
+        "mov w2, #0x3a",
+        "add x4, x4, #0xb2a",
+        "stp x19, x20, [sp]",
+        "adrp x19, #0x67f000",
+        "str x30, [sp, #0x30]",
+        "stp x23, x24, [sp, #0x20]"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve11WaitingInfoD2Ev",
+      "offset": "0x179a64",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "ldr x1, [x1, #0x718]",
+        "add x1, x1, #0x10",
+        "str x1, [x0]",
+        "b #0xbbb48",
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsbESt10_Select1stIS2_ESt4lessISsESaIS2_EE24_M_get_insert_unique_posERS1_",
+      "offset": "0x17e308",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "mov w2, #1",
+        "stp x19, x20, [sp]",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x23, x30, [sp, #0x20]",
+        "mov x22, x0",
+        "mov x23, x1",
+        "ldr x19, [x0, #0x10]"
+      ]
+    },
+    {
+      "name": "CreateDownlaodMgrCallBack",
+      "offset": "0x2ea42c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "stp x23, x30, [sp, #0x20]",
+        "mov x23, x0",
+        "mov x0, #0x28",
+        "stp x19, x20, [sp]",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x20, x3",
+        "mov x22, x1"
+      ]
+    },
+    {
+      "name": "InitPufferManager",
+      "offset": "0x1934a4",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x40",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "str x1, [sp, #0x38]",
+        "str w2, [sp, #0x34]",
+        "str x3, [sp, #0x28]",
+        "cbz x19, #0x193528"
+      ]
+    },
+    {
+      "name": "hdmpve_gromelink_createSocket",
+      "offset": "0x3d94d8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, #-1",
+        "cbz x0, #0x3d9524",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x10]",
+        "blr x1",
+        "mov x19, x0"
+      ]
+    },
+    {
+      "name": "_ZNSt5dequeImSaImEE16_M_push_back_auxERKm",
+      "offset": "0x2e8874",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x21, x0",
+        "str x30, [sp, #0x40]",
+        "stp x23, x24, [sp, #0x20]",
+        "mov x23, x21",
+        "stp x25, x26, [sp, #0x30]",
+        "stp x19, x20, [sp]"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve15CSdkFactoryBaseC2Ev",
+      "offset": "0xb83bc",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "ldr x1, [x1, #0x608]",
+        "add x2, x1, #0x10",
+        "add x1, x1, #0x68",
+        "str x2, [x0]",
+        "str x1, [x0, #8]",
+        "ret ",
+        "ret "
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve12RealNameInfoD2Ev",
+      "offset": "0x17cb0c",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "sub sp, sp, #0x30",
+        "ldr x1, [x1, #0xd00]",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x20]",
+        "mov x20, x0",
+        "add x1, x1, #0x10"
+      ]
+    },
+    {
+      "name": "_ZThn8_N19NNoneAccountAdapter19CNoneAccountFactory10GetServiceEi",
+      "offset": "0xc1288",
+      "size": 0,
+      "asm": [
+        "sub x0, x0, #8",
+        "b #0xc1214",
+        "b #0xc119c",
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "mov x19, x0",
+        "mov x20, x1",
+        "mov x0, x1"
+      ]
+    },
+    {
+      "name": "_ZNSt6vectorISsSaISsEEaSERKS1_",
+      "offset": "0x120db8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "cmp x1, x0",
+        "stp x19, x20, [sp]",
+        "stp x23, x24, [sp, #0x20]",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x25, x30, [sp, #0x30]",
+        "mov x20, x0",
+        "mov x24, x1"
+      ]
+    },
+    {
+      "name": "_ZNK6HDmpve15ServerRouteInfo5CloneEv",
+      "offset": "0x1799f4",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "mov x20, x0",
+        "mov x0, #0x20",
+        "str x30, [sp, #0x10]",
+        "bl #0x410f20",
+        "mov x19, x0",
+        "bl #0xbd700"
+      ]
+    },
+    {
+      "name": "hdmpve_connector_set_protocol_version",
+      "offset": "0x12f38c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov w20, w1",
+        "mov x21, x0",
+        "mov w19, w2",
+        "bl #0x90250",
+        "ldr x1, [x0]"
+      ]
+    },
+    {
+      "name": "PausePreDownloadService",
+      "offset": "0x2eab1c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "uxtb w1, w1",
+        "str x30, [sp]",
+        "cbz x0, #0x2eab38",
+        "ldr x2, [x0]",
+        "ldr x2, [x2, #0x30]",
+        "blr x2",
+        "ldr x30, [sp]"
+      ]
+    },
+    {
+      "name": "SetGetVersionInterval",
+      "offset": "0x2eabd8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "cbz x0, #0x2eabf0",
+        "ldr x2, [x0]",
+        "ldr x2, [x2, #0x58]",
+        "blr x2",
+        "ldr x30, [sp]",
+        "add sp, sp, #0x10"
+      ]
+    },
+    {
+      "name": "hdmpve_connector_set_connectExtInt",
+      "offset": "0x12f6cc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x20, x0",
+        "mov w19, w1",
+        "bl #0x90250",
+        "ldr x1, [x0]",
+        "ldr x2, [x1, #0x10]"
+      ]
+    },
+    {
+      "name": "ReleasePuffer",
+      "offset": "0x1894b4",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "cbz x0, #0x1894e0",
+        "ldr x1, [x0]",
+        "cbz x1, #0x1894e0",
+        "mov x19, x0",
+        "ldr x0, [x1]",
+        "ldr x2, [x0, #8]"
+      ]
+    },
+    {
+      "name": "_ZNSt6vectorISsSaISsEE7reserveEm",
+      "offset": "0x11137c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "stp x19, x20, [sp]",
+        "mov x19, x0",
+        "mov x0, #0x1fffffffffffffff",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x23, x24, [sp, #0x20]",
+        "str x30, [sp, #0x30]",
+        "cmp x1, x0"
+      ]
+    },
+    {
+      "name": "_ZNSt3mapIiPKcSt4lessIiESaISt4pairIKiS1_EEED2Ev",
+      "offset": "0x11cca4",
+      "size": 0,
+      "asm": [
+        "ldr x1, [x0, #0x10]",
+        "b #0x11cc5c",
+        "sub sp, sp, #0x20",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "cmp x19, x1",
+        "b.eq #0x11cce0",
+        "ldr x0, [x19]"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeI9TGCPStateSt4pairIKS0_iESt10_Select1stIS3_ESt4lessIS0_ESaIS3_EE24_M_get_insert_unique_posERS2_",
+      "offset": "0xc38e4",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "mov x3, x0",
+        "mov w4, #1",
+        "stp x19, x30, [sp]",
+        "add x19, x0, #8",
+        "ldr x2, [x0, #0x10]",
+        "cbz x2, #0xc3930",
+        "ldr w4, [x1]"
+      ]
+    },
+    {
+      "name": "_ZNSt11__copy_moveILb0ELb0ESt26random_access_iterator_tagE8__copy_mIPSsS3_EET0_T_S5_S4_",
+      "offset": "0x2c3aec",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x40",
+        "sub x1, x1, x0",
+        "stp x19, x20, [sp]",
+        "asr x19, x1, #3",
+        "str x30, [sp, #0x20]",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x20, x0",
+        "mov x21, x19"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve12CServiceBase11AddObserverEPNS_16IServiceObserverE",
+      "offset": "0xb8718",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x40",
+        "stp x19, x20, [sp]",
+        "mov x19, x0",
+        "adrp x0, #0x67f000",
+        "stp x21, x30, [sp, #0x10]",
+        "str x1, [sp, #0x28]",
+        "mov x20, x0",
+        "ldr x2, [x0, #0xcf8]"
+      ]
+    },
+    {
+      "name": "_ZNK6HDmpve13ConnectedInfo5CloneEv",
+      "offset": "0x17ce04",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x40",
+        "stp x19, x20, [sp]",
+        "mov x19, x0",
+        "mov x0, #0x118",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x23, x24, [sp, #0x20]",
+        "stp x25, x30, [sp, #0x30]",
+        "bl #0x410f20"
+      ]
+    },
+    {
+      "name": "Java_com_gcore_hdmpve_netinterface_MsgWorker_bindCallback",
+      "offset": "0x13b534",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x90",
+        "stp x19, x20, [sp, #0x10]",
+        "adrp x20, #0x67f000",
+        "str x30, [sp, #0x50]",
+        "stp x21, x22, [sp, #0x20]",
+        "mov x21, x0",
+        "str x2, [sp, #0x68]",
+        "ldr x0, [x20, #0xcf8]"
+      ]
+    },
+    {
+      "name": "GetLastDataMgrError",
+      "offset": "0x2ea354",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w2, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea374",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x40]",
+        "blr x1",
+        "mov w2, w0"
+      ]
+    },
+    {
+      "name": "hdmpve_account_realname_auth",
+      "offset": "0xba3c4",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x70",
+        "adrp x4, #0x47b000",
+        "mov w2, #0x30",
+        "add x4, x4, #0x29d",
+        "stp x21, x22, [sp, #0x10]",
+        "adrp x22, #0x67f000",
+        "str x30, [sp, #0x30]",
+        "stp x23, x24, [sp, #0x20]"
+      ]
+    },
+    {
+      "name": "UnInitDataPreDownloader",
+      "offset": "0x2eaa8c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w2, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2eaaac",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x18]",
+        "blr x1",
+        "uxtb w2, w0"
+      ]
+    },
+    {
+      "name": "_ZN19NNoneAccountAdapter19CNoneAccountFactoryC2Ev",
+      "offset": "0xc10cc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "bl #0xb83bc",
+        "adrp x1, #0x67f000",
+        "adrp x3, #0x47c000",
+        "add x3, x3, #0x4f0"
+      ]
+    },
+    {
+      "name": "SetPreDownloadSpeed",
+      "offset": "0x2eab90",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "cbz x0, #0x2eaba8",
+        "ldr x2, [x0]",
+        "ldr x2, [x2, #0x48]",
+        "blr x2",
+        "ldr x30, [sp]",
+        "add sp, sp, #0x10"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsbESt10_Select1stIS2_ESt4lessISsESaIS2_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS2_ERS1_",
+      "offset": "0x17e3bc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x22, x0",
+        "add x0, x0, #8",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x20]",
+        "cmp x1, x0",
+        "mov x19, x1"
+      ]
+    },
+    {
+      "name": "_ZNSt3setIhSt4lessIhESaIhEE6insertERKh",
+      "offset": "0x3ff9d8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x40",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x19, x20, [sp]",
+        "stp x23, x30, [sp, #0x20]",
+        "add x23, x0, #8",
+        "mov x20, x0",
+        "ldr x2, [x0, #0x10]",
+        "mov x22, x1"
+      ]
+    },
+    {
+      "name": "_ZN15ChannelInfoUtil17getDataDiffOffsetEPKc",
+      "offset": "0x1b3ce8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "adrp x1, #0x67f000",
+        "stp x19, x20, [sp]",
+        "mov x20, x0",
+        "ldr x0, [x1, #0xcf8]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x19, x1",
+        "ldr x0, [x0]"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsESaIS2_EE7_M_copyEPKSt13_Rb_tree_nodeIS2_EPSA_",
+      "offset": "0x1bf274",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x40",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x22, x0",
+        "add x0, x1, #0x20",
+        "stp x19, x20, [sp]",
+        "str x2, [sp, #0x38]",
+        "mov x20, x1",
+        "stp x23, x30, [sp, #0x20]"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve11CPluginBase17OnApplicationQuitEv",
+      "offset": "0xb8340",
+      "size": 0,
+      "asm": [
+        "ret ",
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0xb7c14",
+        "ldr x1, [x0]",
+        "ldr x2, [x1]",
+        "mov x1, x19"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve15ServerRouteInfoD2Ev",
+      "offset": "0x179a98",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "ldr x1, [x1, #0xef0]",
+        "add x1, x1, #0x10",
+        "str x1, [x0]",
+        "b #0xbbb48",
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0"
+      ]
+    },
+    {
+      "name": "hdmpve_gromelink_destorySocket",
+      "offset": "0x3d9534",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "cbz x0, #0x3d9550",
+        "cbz x1, #0x3d9550",
+        "ldr x2, [x0]",
+        "ldr x2, [x2, #0x18]",
+        "blr x2",
+        "ldr x30, [sp]"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve4Conn13ZoneRouteInfoD0Ev",
+      "offset": "0x12e85c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0x12e848",
+        "mov x0, x19",
+        "ldp x19, x30, [sp]",
+        "add sp, sp, #0x10",
+        "b #0x40f820"
+      ]
+    },
+    {
+      "name": "hdmpve_account_IsPlatformSupportApi",
+      "offset": "0xba9cc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "mov w1, w0",
+        "stp x19, x30, [sp]",
+        "str x1, [sp, #0x18]",
+        "bl #0xc0a18",
+        "ldr x2, [x0]",
+        "ldr x2, [x2, #0x18]",
+        "blr x2"
+      ]
+    },
+    {
+      "name": "hdmpve_account_initialize",
+      "offset": "0xba224",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x70",
+        "adrp x4, #0x47b000",
+        "mov w2, #0x1d",
+        "add x4, x4, #0x20e",
+        "stp x19, x20, [sp]",
+        "adrp x19, #0x67f000",
+        "stp x23, x24, [sp, #0x20]",
+        "mov x24, x0"
+      ]
+    },
+    {
+      "name": "SetDownloadSpeed",
+      "offset": "0x2ea6bc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w3, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea6dc",
+        "ldr x2, [x0]",
+        "ldr x2, [x2, #0x40]",
+        "blr x2",
+        "uxtb w3, w0"
+      ]
+    },
+    {
+      "name": "hdmpve_gromelink_getFactory",
+      "offset": "0x3d9484",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "bl #0x40cca0",
+        "mov x19, x0",
+        "adrp x1, #0x50d000",
+        "adrp x3, #0x50d000",
+        "adrp x4, #0x50d000",
+        "mov x5, x19"
+      ]
+    },
+    {
+      "name": "_ZN19NNoneAccountAdapter19CNoneAccountFactory10GetVersionEv",
+      "offset": "0xc1058",
+      "size": 0,
+      "asm": [
+        "adrp x0, #0x690000",
+        "ldr x0, [x0, #0x18]",
+        "ret ",
+        "adrp x1, #0x47c000",
+        "adrp x3, #0x47c000",
+        "adrp x4, #0x47c000",
+        "adrp x5, #0x47c000",
+        "mov w0, #1"
+      ]
+    },
+    {
+      "name": "CancelUpdate",
+      "offset": "0x2e9c28",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "cbz x0, #0x2e9c40",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x30]",
+        "blr x1",
+        "ldr x30, [sp]",
+        "add sp, sp, #0x10"
+      ]
+    },
+    {
+      "name": "GetDownloadCallbackGCHandle",
+      "offset": "0x2ea4c4",
+      "size": 0,
+      "asm": [
+        "mov x1, x0",
+        "cbz x0, #0x2ea4d0",
+        "ldr x1, [x0, #8]",
+        "mov x0, x1",
+        "ret ",
+        "sub sp, sp, #0x40",
+        "stp x25, x30, [sp, #0x30]",
+        "mov x25, x0"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve13ZoneRouteInfoD0Ev",
+      "offset": "0x179ae0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0x179acc",
+        "mov x0, x19",
+        "ldp x19, x30, [sp]",
+        "add sp, sp, #0x10",
+        "b #0x40f820"
+      ]
+    },
+    {
+      "name": "hdmpve_tdir_queryall",
+      "offset": "0x3c680c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "adrp x1, #0x50a000",
+        "adrp x3, #0x50a000",
+        "adrp x4, #0x50a000",
+        "mov w2, #0x34",
+        "add x3, x3, #0x470",
+        "add x4, x4, #0x534",
+        "add x1, x1, #0x4f0"
+      ]
+    },
+    {
+      "name": "GetHDmpvePlugin",
+      "offset": "0xb76f8",
+      "size": 0,
+      "asm": [
+        "mov x0, #0",
+        "ret ",
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "adrp x19, #0x69b000",
+        "str xzr, [x0]",
+        "mov x21, x0"
+      ]
+    },
+    {
+      "name": "hdmpve_connector_connect",
+      "offset": "0x12eaf8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "adrp x4, #0x48f000",
+        "add x4, x4, #0x650",
+        "stp x19, x20, [sp]",
+        "adrp x20, #0x48f000",
+        "adrp x19, #0x48f000",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x23, x24, [sp, #0x20]"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE24_M_get_insert_unique_posERS1_",
+      "offset": "0x1a1a6c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "mov x3, x0",
+        "mov w4, #1",
+        "stp x19, x30, [sp]",
+        "add x19, x0, #8",
+        "ldr x2, [x0, #0x10]",
+        "cbz x2, #0x1a1ab8",
+        "ldr w4, [x1]"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsPN6HDmpve4Conn10IConnectorEESt10_Select1stIS6_ESt4lessISsESaIS6_EE4findERS1_",
+      "offset": "0x12d70c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x20]",
+        "add x19, x0, #8",
+        "mov x22, x1",
+        "mov x21, x19",
+        "ldr x20, [x0, #0x10]"
+      ]
+    },
+    {
+      "name": "_ZNSt6vectorIPN6HDmpve16IServiceObserverESaIS2_EEC1ERKS4_",
+      "offset": "0xbbec0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x19, x0",
+        "mov x21, x1",
+        "ldr x0, [x1, #8]",
+        "ldr x20, [x1]",
+        "str xzr, [x19]"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve15IAccountServiceD2Ev",
+      "offset": "0xc16fc",
+      "size": 0,
+      "asm": [
+        "mov x2, x1",
+        "mov w1, #0",
+        "b #0xc16a8",
+        "mov w1, #2",
+        "mov x2, #0",
+        "b #0xc16a8",
+        "ldr x16, [x0]",
+        "ldur x17, [x16, #-0x18]"
+      ]
+    },
+    {
+      "name": "hdmpve_tdir_initialize",
+      "offset": "0x3c6a74",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0xc0",
+        "adrp x4, #0x50a000",
+        "mov w2, #0x1d",
+        "add x4, x4, #0x565",
+        "stp x19, x20, [sp]",
+        "adrp x19, #0x67f000",
+        "str x30, [sp, #0x30]",
+        "stp x23, x24, [sp, #0x20]"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeIjSt4pairIKjjESt10_Select1stIS2_ESt4lessIjESaIS2_EE4findERS1_",
+      "offset": "0x1beae8",
+      "size": 0,
+      "asm": [
+        "ldr x2, [x0, #0x10]",
+        "add x0, x0, #8",
+        "mov x3, x0",
+        "cbz x2, #0x1beb24",
+        "ldr w5, [x2, #0x20]",
+        "ldr w4, [x1]",
+        "cmp w5, w4",
+        "b.lo #0x1beb10"
+      ]
+    },
+    {
+      "name": "GetDataDownloader",
+      "offset": "0x2ea2c0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "uxtb w1, w1",
+        "mov x3, x0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea2e4",
+        "ldr x2, [x0]",
+        "ldr x2, [x2, #0x28]",
+        "blr x2"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve11AccountInfoD0Ev",
+      "offset": "0xb9e34",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0xb9d8c",
+        "mov x0, x19",
+        "ldp x19, x30, [sp]",
+        "add sp, sp, #0x10",
+        "b #0x40f820"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve14InitializeInfoD1Ev",
+      "offset": "0x10e184",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "sub sp, sp, #0x20",
+        "ldr x1, [x1, #0x578]",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "add x1, x1, #0x10",
+        "str x1, [x0], #0x48"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeIiSt4pairIKiSsESt10_Select1stIS2_ESt4lessIiESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E",
+      "offset": "0x15d778",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "mov x19, x1",
+        "cbz x19, #0x15d7b8",
+        "ldr x1, [x19, #0x18]",
+        "mov x0, x20"
+      ]
+    },
+    {
+      "name": "ResumePreDownloadService",
+      "offset": "0x2eab44",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "cbz x0, #0x2eab5c",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x38]",
+        "blr x1",
+        "ldr x30, [sp]",
+        "add sp, sp, #0x10"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve5TokenD2Ev",
+      "offset": "0xc7cf0",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "sub sp, sp, #0x20",
+        "ldr x1, [x1, #0x958]",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "add x1, x1, #0x10",
+        "str x1, [x0], #0x18"
+      ]
+    },
+    {
+      "name": "_ZN15ChannelInfoUtil25WriteOldApkChannel2NewApkEPKcS1_",
+      "offset": "0x1b528c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x60",
+        "stp x21, x22, [sp, #0x10]",
+        "adrp x22, #0x67f000",
+        "stp x23, x24, [sp, #0x20]",
+        "mov x24, x0",
+        "ldr x0, [x22, #0xcf8]",
+        "cmp x24, xzr",
+        "stp x27, x30, [sp, #0x40]"
+      ]
+    },
+    {
+      "name": "_ZNSt3tr18functionIFvRKiEEC2INS_5_BindIFNS_7_Mem_fnIMN6pebble9broadcast37PebbleChannelMgrServiceAsyncProcessorEFvNS0_IFvbEEElPNS8_3rpc8protocol9TProtocolEPvS2_EEEPSA_SC_lSG_SH_NS_12_PlaceholderILi1EEEEEEEET_N9__gnu_cxx11__enable_ifIXntsrNS_11is_integralISQ_EE5valueENS4_8_UselessEE6__typeE",
+      "offset": "0x140a34",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x21, x0",
+        "adrp x0, #0x140000",
+        "add x0, x0, #0x500",
+        "stp x23, x30, [sp, #0x20]",
+        "str x0, [x21, #0x18]",
+        "adrp x0, #0x140000"
+      ]
+    },
+    {
+      "name": "_ZNSt11__copy_moveILb0ELb1ESt26random_access_iterator_tagE8__copy_mIN6HDmpve4Conn9Connector6ActionEEEPT_PKS7_SA_S8_",
+      "offset": "0x13098c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov x4, x0",
+        "mov x3, x2",
+        "stp x19, x30, [sp]",
+        "sub x19, x1, x0",
+        "asr x0, x19, #2",
+        "cbz x0, #0x1309bc",
+        "mov x0, x2"
+      ]
+    },
+    {
+      "name": "_ZN15ChannelInfoUtil20getChannelInfoOffsetEPKc",
+      "offset": "0x1b438c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "stp x21, x22, [sp, #0x10]",
+        "adrp x21, #0x67f000",
+        "str x30, [sp, #0x30]",
+        "stp x23, x24, [sp, #0x20]",
+        "mov x23, x0",
+        "ldr x0, [x21, #0xcf8]",
+        "stp x19, x20, [sp]"
+      ]
+    },
+    {
+      "name": "_ZN19NNoneAccountAdapter19CNoneAccountFactory13OnHDmpveStartEv",
+      "offset": "0xc1064",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x47c000",
+        "adrp x3, #0x47c000",
+        "adrp x4, #0x47c000",
+        "adrp x5, #0x47c000",
+        "mov w0, #1",
+        "add x1, x1, #0x560",
+        "mov w2, #0x50",
+        "add x3, x3, #0x4f0"
+      ]
+    },
+    {
+      "name": "_ZTv0_n32_N6HDmpve12CServiceBase11AddObserverEPNS_16IServiceObserverE",
+      "offset": "0xb87f8",
+      "size": 0,
+      "asm": [
+        "ldr x16, [x0]",
+        "ldur x17, [x16, #-0x20]",
+        "add x0, x0, x17",
+        "b #0xb8718",
+        "ret ",
+        "cmp x1, x0",
+        "cset w0, eq",
+        "ret "
+      ]
+    },
+    {
+      "name": "CheckAppUpdate",
+      "offset": "0x2e9b90",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "adrp x4, #0x4d6000",
+        "mov w2, #0xf6",
+        "add x4, x4, #0x813",
+        "stp x19, x20, [sp]",
+        "adrp x19, #0x4d6000",
+        "adrp x20, #0x4d6000",
+        "add x19, x19, #0x770"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve4Conn13ConnectedInfoD2Ev",
+      "offset": "0x12fd84",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "sub sp, sp, #0x20",
+        "ldr x1, [x1, #0xf08]",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "add x1, x1, #0x10",
+        "str x1, [x0], #0x10"
+      ]
+    },
+    {
+      "name": "InitDataDownloader",
+      "offset": "0x2ea59c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w3, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea5bc",
+        "ldr x2, [x0]",
+        "ldr x2, [x2, #0x10]",
+        "blr x2",
+        "uxtb w3, w0"
+      ]
+    },
+    {
+      "name": "CreatePuffer",
+      "offset": "0x189510",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "bl #0x11aad4",
+        "bl #0x11ab84",
+        "mov x0, #0x20",
+        "bl #0x410f20",
+        "mov x19, x0",
+        "bl #0x1894ec"
+      ]
+    },
+    {
+      "name": "_ZNSt6vectorISsSaISsEED2Ev",
+      "offset": "0xd7898",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "ldr x19, [x0]",
+        "ldr x21, [x0, #8]",
+        "cmp x19, x21",
+        "b.eq #0xd78c8"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsPN6HDmpve4Conn10IConnectorEESt10_Select1stIS6_ESt4lessISsESaIS6_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS6_ERS1_",
+      "offset": "0x12dbd4",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x22, x0",
+        "add x0, x0, #8",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x20]",
+        "cmp x1, x0",
+        "mov x19, x1"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve13IConnectorOldD2Ev",
+      "offset": "0xbbe68",
+      "size": 0,
+      "asm": [
+        "mov x2, x1",
+        "mov w1, #0",
+        "b #0xbbe14",
+        "mov w1, #2",
+        "mov x2, #0",
+        "b #0xbbe14",
+        "ldr x16, [x0]",
+        "ldur x17, [x16, #-0x18]"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E",
+      "offset": "0x96f68",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "stp x19, x20, [sp]",
+        "stp x21, x22, [sp, #0x10]",
+        "str x30, [sp, #0x20]",
+        "mov x20, x0",
+        "mov x19, x1",
+        "cbz x19, #0x96fb8",
+        "ldr x1, [x19, #0x18]"
+      ]
+    },
+    {
+      "name": "_ZNSt3tr18functionIFvvEEC1ERKS2_",
+      "offset": "0x145f0c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "str xzr, [x0, #0x10]",
+        "ldr x3, [x1, #0x10]",
+        "cbz x3, #0x145f58",
+        "ldr x4, [x1, #0x18]"
+      ]
+    },
+    {
+      "name": "_ZNSt6vectorIjSaIjEE9push_backERKj",
+      "offset": "0x1be6e8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov x2, x0",
+        "str x30, [sp]",
+        "ldr x3, [x0, #8]",
+        "ldr x4, [x0, #0x10]",
+        "cmp x3, x4",
+        "b.eq #0x1be71c",
+        "cbz x3, #0x1be710"
+      ]
+    },
+    {
+      "name": "IsIFileReady",
+      "offset": "0x2ea90c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w3, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea92c",
+        "ldr x2, [x0]",
+        "ldr x2, [x2, #0x38]",
+        "blr x2",
+        "uxtb w3, w0"
+      ]
+    },
+    {
+      "name": "IIPSFindNextFile",
+      "offset": "0x2ea99c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w4, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea9bc",
+        "ldr x3, [x0]",
+        "ldr x3, [x3, #0x50]",
+        "blr x3",
+        "uxtb w4, w0"
+      ]
+    },
+    {
+      "name": "_ZNSt8ios_base7failureC1ERKS0_",
+      "offset": "0x15e498",
+      "size": 0,
+      "asm": [
+        "adrp x2, #0x67f000",
+        "sub sp, sp, #0x20",
+        "add x1, x1, #8",
+        "ldr x2, [x2, #0x9a0]",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "add x2, x2, #0x10"
+      ]
+    },
+    {
+      "name": "_ZTv0_n24_N6HDmpve15IAccountServiceD1Ev",
+      "offset": "0xc1714",
+      "size": 0,
+      "asm": [
+        "ldr x16, [x0]",
+        "ldur x17, [x16, #-0x18]",
+        "add x0, x0, x17",
+        "b #0xc1708",
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0xc1708"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve8UserInfoD2Ev",
+      "offset": "0xc0d48",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "sub sp, sp, #0x20",
+        "ldr x1, [x1, #0xa40]",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "add x1, x1, #0x10",
+        "str x1, [x0], #0x18"
+      ]
+    },
+    {
+      "name": "_ZNK6HDmpve13NameRouteInfo5CloneEv",
+      "offset": "0x179dd0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "mov x20, x0",
+        "mov x0, #0x48",
+        "str x30, [sp, #0x10]",
+        "bl #0x410f20",
+        "mov x19, x0",
+        "bl #0x15128c"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve13ConnectedInfoD2Ev",
+      "offset": "0xbc778",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67e000",
+        "sub sp, sp, #0x40",
+        "ldr x1, [x1, #0xff8]",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x23, x24, [sp, #0x20]",
+        "stp x19, x20, [sp]",
+        "stp x25, x30, [sp, #0x30]",
+        "mov x20, x0"
+      ]
+    },
+    {
+      "name": "apollo_net_sniffer_SetZSD",
+      "offset": "0x3f4ea8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "adrp x2, #0x67f000",
+        "adrp x1, #0x513000",
+        "adrp x3, #0x512000",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x22, x0",
+        "ldr x0, [x2, #0xcf8]",
+        "stp x19, x20, [sp]"
+      ]
+    },
+    {
+      "name": "GetIFileId",
+      "offset": "0x2ea8ac",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w3, #-1",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea8cc",
+        "ldr x2, [x0]",
+        "ldr x2, [x2, #0x18]",
+        "blr x2",
+        "mov w3, w0"
+      ]
+    },
+    {
+      "name": "Java_com_gcore_hdmpve_qr_QRCodeAPI_genQRImgNotify",
+      "offset": "0x10ebec",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "stp x19, x20, [sp]",
+        "adrp x19, #0x67f000",
+        "adrp x20, #0x48a000",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x22, x0",
+        "adrp x21, #0x48a000",
+        "ldr x0, [x19, #0xcf8]"
+      ]
+    },
+    {
+      "name": "_ZNKSt3tr18functionIFviiEEclEii",
+      "offset": "0x1406e4",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "ldr x4, [x0, #0x10]",
+        "cbnz x4, #0x140720",
+        "mov x0, #8",
+        "bl #0x40fa50",
+        "adrp x1, #0x67f000",
+        "adrp x2, #0x67f000"
+      ]
+    },
+    {
+      "name": "_ZN15ChannelInfoUtil21getV2SignBlockOffset2EPKc",
+      "offset": "0x1b4814",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "stp x21, x22, [sp, #0x10]",
+        "adrp x21, #0x67f000",
+        "str x30, [sp, #0x30]",
+        "stp x23, x24, [sp, #0x20]",
+        "mov x23, x0",
+        "ldr x0, [x21, #0xcf8]",
+        "stp x19, x20, [sp]"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve13NameRouteInfoD0Ev",
+      "offset": "0x1238a4",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0x12383c",
+        "mov x0, x19",
+        "ldp x19, x30, [sp]",
+        "add sp, sp, #0x10",
+        "b #0x40f820"
+      ]
+    },
+    {
+      "name": "_ZTv0_n40_N6HDmpve12CServiceBase14RemoveObserverEPNS_16IServiceObserverE",
+      "offset": "0xb85bc",
+      "size": 0,
+      "asm": [
+        "ldr x16, [x0]",
+        "ldur x17, [x16, #-0x28]",
+        "add x0, x0, x17",
+        "b #0xb8508",
+        "sub sp, sp, #0x50",
+        "stp x19, x20, [sp]",
+        "mov x19, x0",
+        "str x30, [sp, #0x30]"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve13ZoneRouteInfoD2Ev",
+      "offset": "0x179acc",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "ldr x1, [x1, #0xef0]",
+        "add x1, x1, #0x10",
+        "str x1, [x0]",
+        "b #0xbbb48",
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve12CServiceBase14RemoveObserverEPNS_16IServiceObserverE",
+      "offset": "0xb8508",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x40",
+        "adrp x2, #0x67f000",
+        "stp x19, x20, [sp]",
+        "mov x19, x0",
+        "ldr x0, [x2, #0xcf8]",
+        "str x30, [sp, #0x10]",
+        "mov x20, x2",
+        "ldr x0, [x0]"
+      ]
+    },
+    {
+      "name": "JNI_OnLoad",
+      "offset": "0x10ee10",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0xa0",
+        "adrp x4, #0x48a000",
+        "mov w2, #0x6d",
+        "add x4, x4, #0x973",
+        "stp d8, d9, [sp, #0x58]",
+        "stp x21, x22, [sp, #0x10]",
+        "adrp x22, #0x67f000",
+        "str x30, [sp, #0x50]"
+      ]
+    },
+    {
+      "name": "hdmpve_setApolloLogger",
+      "offset": "0x10e0c8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "mov w1, w0",
+        "str x30, [sp]",
+        "str x1, [sp, #0x18]",
+        "bl #0x17d38c",
+        "ldr x2, [x0]",
+        "ldr x1, [sp, #0x18]",
+        "ldr x2, [x2, #0x28]"
+      ]
+    },
+    {
+      "name": "_ZStneIcSt11char_traitsIcESaIcEEbRKSbIT_T0_T1_ES8_",
+      "offset": "0x1817b4",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w3, #0",
+        "str x30, [sp]",
+        "ldr x0, [x0]",
+        "ldr x1, [x1]",
+        "ldur x2, [x0, #-0x18]",
+        "ldur x4, [x1, #-0x18]",
+        "cmp x2, x4"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeIiSt4pairIKiPKcESt10_Select1stIS4_ESt4lessIiESaIS4_EE8_M_eraseEPSt13_Rb_tree_nodeIS4_E",
+      "offset": "0x11cc5c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "mov x19, x1",
+        "cbz x19, #0x11cc94",
+        "ldr x1, [x19, #0x18]",
+        "mov x0, x20"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeImSt4pairIKmmESt10_Select1stIS2_ESt4lessImESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E",
+      "offset": "0x3f101c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "mov x19, x1",
+        "cbz x19, #0x3f1054",
+        "ldr x1, [x19, #0x18]",
+        "mov x0, x20"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve5TokenD1Ev",
+      "offset": "0xc7cf0",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "sub sp, sp, #0x20",
+        "ldr x1, [x1, #0x958]",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "add x1, x1, #0x10",
+        "str x1, [x0], #0x18"
+      ]
+    },
+    {
+      "name": "_ZNSt4listISsSaISsEE10push_frontERKSs",
+      "offset": "0x16c3d8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "ldr x19, [x0]",
+        "mov x0, x1",
+        "bl #0x16b224",
+        "mov x1, x19",
+        "ldp x19, x30, [sp]",
+        "add sp, sp, #0x10"
+      ]
+    },
+    {
+      "name": "_ZTv0_n24_N6HDmpve13IConnectorOldD1Ev",
+      "offset": "0xbbe80",
+      "size": 0,
+      "asm": [
+        "ldr x16, [x0]",
+        "ldur x17, [x16, #-0x18]",
+        "add x0, x0, x17",
+        "b #0xbbe74",
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0xbbe74"
+      ]
+    },
+    {
+      "name": "GetIFileName",
+      "offset": "0x2ea87c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov x3, x0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea89c",
+        "ldr x2, [x0]",
+        "ldr x2, [x2, #0x10]",
+        "blr x2",
+        "mov x3, x0"
+      ]
+    },
+    {
+      "name": "CancelDownload",
+      "offset": "0x2ea65c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w3, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea67c",
+        "ldr x2, [x0]",
+        "ldr x2, [x2, #0x30]",
+        "blr x2",
+        "uxtb w3, w0"
+      ]
+    },
+    {
+      "name": "IFSDllVerifyApiCompatable",
+      "offset": "0x247a9c",
+      "size": 0,
+      "asm": [
+        "cmp w0, #1",
+        "cset w0, eq",
+        "ret ",
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "str x1, [x0]",
+        "mov x0, x1",
+        "bl #0x248878"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve4Conn15ServerRouteInfoD1Ev",
+      "offset": "0x12e814",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "ldr x1, [x1, #0x668]",
+        "add x1, x1, #0x10",
+        "str x1, [x0]",
+        "b #0xbbb5c",
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve11CPluginBase10OnUnistallEv",
+      "offset": "0xb8330",
+      "size": 0,
+      "asm": [
+        "mov w0, #1",
+        "ret ",
+        "ret ",
+        "ret ",
+        "ret ",
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve11CPluginBase9OnInstallEv",
+      "offset": "0xb8328",
+      "size": 0,
+      "asm": [
+        "mov w0, #1",
+        "ret ",
+        "mov w0, #1",
+        "ret ",
+        "ret ",
+        "ret ",
+        "ret ",
+        "sub sp, sp, #0x10"
+      ]
+    },
+    {
+      "name": "PufferManagerGetFileId",
+      "offset": "0x193580",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov x3, #-1",
+        "str x30, [sp]",
+        "cbz x0, #0x1935a0",
+        "ldr x2, [x0]",
+        "ldr x2, [x2, #0x28]",
+        "blr x2",
+        "mov x3, x0"
+      ]
+    },
+    {
+      "name": "_ZNSt6vectorIfSaIfEE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPfS1_EERKf",
+      "offset": "0x2d21f0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "stp x19, x20, [sp]",
+        "mov x19, x0",
+        "str x30, [sp, #0x30]",
+        "stp x23, x24, [sp, #0x20]",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x23, x1",
+        "ldr x0, [x0, #8]"
+      ]
+    },
+    {
+      "name": "_ZNSt3tr18functionIFviRSt6vectorISsSaISsEEEEC2ERKS6_",
+      "offset": "0x1223f8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "str xzr, [x0, #0x10]",
+        "ldr x3, [x1, #0x10]",
+        "cbz x3, #0x122444",
+        "ldr x4, [x1, #0x18]"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsPN6HDmpve4Conn17ConnectorObserverEESt10_Select1stIS6_ESt4lessISsESaIS6_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS6_ERS1_",
+      "offset": "0x12df64",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x22, x0",
+        "add x0, x0, #8",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x20]",
+        "cmp x1, x0",
+        "mov x19, x1"
+      ]
+    },
+    {
+      "name": "PufferManagerUpdate",
+      "offset": "0x19355c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "cbz x0, #0x193574",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x20]",
+        "blr x1",
+        "ldr x30, [sp]",
+        "add sp, sp, #0x10"
+      ]
+    },
+    {
+      "name": "Java_com_gcore_hdmpve_netinterface_MsgWorker_setInterfaces",
+      "offset": "0x13b084",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x60",
+        "stp x19, x20, [sp]",
+        "adrp x20, #0x67f000",
+        "str x30, [sp, #0x20]",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x21, x0",
+        "str x2, [sp, #0x38]",
+        "ldr x0, [x20, #0xcf8]"
+      ]
+    },
+    {
+      "name": "_ZNSt10_List_baseIdSaIdEE8_M_clearEv",
+      "offset": "0x2bccd8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "ldr x0, [x0]",
+        "cmp x0, x19",
+        "b.eq #0x2bcd04",
+        "ldr x20, [x0]"
+      ]
+    },
+    {
+      "name": "_ZNSt6vectorISsSaISsEE9push_backERKSs",
+      "offset": "0x11145c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov x2, x1",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "ldr x3, [x0, #8]",
+        "ldr x4, [x0, #0x10]",
+        "cmp x3, x4",
+        "b.eq #0x111498"
+      ]
+    },
+    {
+      "name": "hdmpve_connector_get_connectedInfo",
+      "offset": "0x12fdf0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0xc0",
+        "cmp x1, xzr",
+        "stp x21, x22, [sp, #0x10]",
+        "adrp x22, #0x67f000",
+        "str x30, [sp, #0x30]",
+        "stp x19, x20, [sp]",
+        "mov x19, x0",
+        "cset w21, eq"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve14IPluginManager11GetInstanceEv",
+      "offset": "0xb7c14",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "bl #0xb7bd4",
+        "ldr x30, [sp]",
+        "add sp, sp, #0x10",
+        "ret ",
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]"
+      ]
+    },
+    {
+      "name": "hdmpve_connector_relayconnect",
+      "offset": "0x12ec18",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "adrp x4, #0x48f000",
+        "mov w2, #0x77",
+        "add x4, x4, #0x6c9",
+        "stp x19, x20, [sp]",
+        "adrp x19, #0x48f000",
+        "stp x21, x22, [sp, #0x10]",
+        "add x20, x19, #0x430"
+      ]
+    },
+    {
+      "name": "_ZNK6HDmpve11WaitingInfo5CloneEv",
+      "offset": "0x1798ec",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "mov x20, x0",
+        "mov x0, #0x20",
+        "str x30, [sp, #0x10]",
+        "bl #0x410f20",
+        "mov x19, x0",
+        "bl #0xbd700"
+      ]
+    },
+    {
+      "name": "Java_com_gcore_hdmpve_qr_QRCodeAPI_launchNotify",
+      "offset": "0x10eaec",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x40",
+        "adrp x4, #0x48a000",
+        "add x4, x4, #0x8f5",
+        "stp x19, x20, [sp]",
+        "adrp x19, #0x67f000",
+        "adrp x20, #0x48a000",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x22, x0"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsxESt10_Select1stIS2_ESt4lessISsESaIS2_EE4findERS1_",
+      "offset": "0x1bf910",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x20]",
+        "add x19, x0, #8",
+        "mov x22, x1",
+        "mov x21, x19",
+        "ldr x20, [x0, #0x10]"
+      ]
+    },
+    {
+      "name": "_ZN19NNoneAccountAdapter19CNoneAccountFactoryC1Ev",
+      "offset": "0xc10cc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "bl #0xb83bc",
+        "adrp x1, #0x67f000",
+        "adrp x3, #0x47c000",
+        "add x3, x3, #0x4f0"
+      ]
+    },
+    {
+      "name": "Read",
+      "offset": "0x2ea3b4",
+      "size": 0,
+      "asm": [
+        "cmp x3, xzr",
+        "sub sp, sp, #0x10",
+        "cset w7, eq",
+        "cmp x4, xzr",
+        "cset w6, eq",
+        "str x30, [sp]",
+        "orr w6, w7, w6",
+        "cbnz w6, #0x2ea3ec"
+      ]
+    },
+    {
+      "name": "hdmpve_gromelink_recv",
+      "offset": "0x3d95f0",
+      "size": 0,
+      "asm": [
+        "adrp x3, #0x67f000",
+        "sub sp, sp, #0x20",
+        "ldr x5, [x3, #0xcf8]",
+        "stp x19, x30, [sp]",
+        "mov x19, x3",
+        "mov w3, #-1",
+        "ldr x5, [x5]",
+        "str x5, [sp, #0x18]"
+      ]
+    },
+    {
+      "name": "IIPSFindClose",
+      "offset": "0x2ea9cc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w3, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea9ec",
+        "ldr x2, [x0]",
+        "ldr x2, [x2, #0x58]",
+        "blr x2",
+        "uxtb w3, w0"
+      ]
+    },
+    {
+      "name": "apollo_net_sniffer_Init",
+      "offset": "0x3f4e5c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "adrp x3, #0x512000",
+        "adrp x1, #0x513000",
+        "add x3, x3, #0xec0",
+        "adrp x4, #0x513000",
+        "add x1, x1, #0x2a0",
+        "stp x19, x30, [sp]",
+        "mov x19, x0"
+      ]
+    },
+    {
+      "name": "hdmpve_pay_Pay",
+      "offset": "0xb91b4",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x70",
+        "adrp x4, #0x47a000",
+        "mov w2, #0x2b",
+        "add x4, x4, #0xae7",
+        "stp x19, x20, [sp]",
+        "adrp x19, #0x67f000",
+        "str x30, [sp, #0x30]",
+        "stp x23, x24, [sp, #0x20]"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsESaIS2_EE17_M_insert_unique_ESt23_Rb_tree_const_iteratorIS2_ERKS2_",
+      "offset": "0x972d0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x19, x20, [sp]",
+        "stp x23, x24, [sp, #0x20]",
+        "stp x25, x30, [sp, #0x30]",
+        "mov x21, x0",
+        "mov x22, x2",
+        "bl #0x97184"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsPN6HDmpve4Conn17ConnectorObserverEESt10_Select1stIS6_ESt4lessISsESaIS6_EE4findERS1_",
+      "offset": "0x12d530",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x20]",
+        "add x19, x0, #8",
+        "mov x22, x1",
+        "mov x21, x19",
+        "ldr x20, [x0, #0x10]"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsPN6HDmpve4Conn17ConnectorObserverEESt10_Select1stIS6_ESt4lessISsESaIS6_EE8_M_eraseEPSt13_Rb_tree_nodeIS6_E",
+      "offset": "0x12d3f8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "mov x19, x1",
+        "cbz x19, #0x12d438",
+        "ldr x1, [x19, #0x18]",
+        "mov x0, x20"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSsSt9_IdentityISsESt4lessISsESaISsEE16_M_insert_uniqueERKSs",
+      "offset": "0x1aac1c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "stp x23, x24, [sp, #0x20]",
+        "stp x19, x20, [sp]",
+        "stp x21, x22, [sp, #0x10]",
+        "str x30, [sp, #0x30]",
+        "add x24, x0, #8",
+        "mov x20, x0",
+        "mov x23, x1"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve8UserInfoD0Ev",
+      "offset": "0xc0d94",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0xc0d48",
+        "mov x0, x19",
+        "ldp x19, x30, [sp]",
+        "add sp, sp, #0x10",
+        "b #0x40f820"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeI9TGCPStateSt4pairIKS0_iESt10_Select1stIS3_ESt4lessIS0_ESaIS3_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS3_ERS2_",
+      "offset": "0xc3984",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "stp x19, x20, [sp]",
+        "mov x20, x0",
+        "add x0, x0, #8",
+        "stp x21, x22, [sp, #0x10]",
+        "str x30, [sp, #0x20]",
+        "cmp x1, x0",
+        "mov x19, x1"
+      ]
+    },
+    {
+      "name": "_ZNSt3tr18functionIFviRSt6vectorISsSaISsEEEEC1ERKS6_",
+      "offset": "0x1223f8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "str xzr, [x0, #0x10]",
+        "ldr x3, [x1, #0x10]",
+        "cbz x3, #0x122444",
+        "ldr x4, [x1, #0x18]"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsxESt10_Select1stIS2_ESt4lessISsESaIS2_EE16_M_insert_uniqueERKS2_",
+      "offset": "0x1c1244",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "stp x23, x24, [sp, #0x20]",
+        "stp x19, x20, [sp]",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x25, x30, [sp, #0x30]",
+        "add x24, x0, #8",
+        "mov x20, x0",
+        "ldr x19, [x0, #0x10]"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE8_M_eraseEPSt13_Rb_tree_nodeIiE",
+      "offset": "0x3d3b84",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "mov x19, x1",
+        "cbz x19, #0x3d3bbc",
+        "ldr x1, [x19, #0x18]",
+        "mov x0, x20"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve4Conn15ConnectorResultD2Ev",
+      "offset": "0x12c300",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "sub sp, sp, #0x20",
+        "ldr x1, [x1, #0xed0]",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "add x1, x1, #0x10",
+        "str x1, [x0], #0x18"
+      ]
+    },
+    {
+      "name": "_ZStltIcSt11char_traitsIcESaIcEEbRKSbIT_T0_T1_ES8_",
+      "offset": "0x96fcc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "bl #0x45a784",
+        "ldr x30, [sp]",
+        "lsr w0, w0, #0x1f",
+        "add sp, sp, #0x10",
+        "ret ",
+        "sub sp, sp, #0x50"
+      ]
+    },
+    {
+      "name": "_ZN15ChannelInfoUtil22setApkAllChannelsForV1Eb",
+      "offset": "0x1b40e8",
+      "size": 0,
+      "asm": [
+        "uxtb w5, w0",
+        "adrp x0, #0x69d000",
+        "adrp x3, #0x4a6000",
+        "adrp x1, #0x4a6000",
+        "add x3, x3, #0x6a0",
+        "adrp x4, #0x4a6000",
+        "strb w5, [x0, #0x878]",
+        "add x1, x1, #0x890"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve5ITDirC2Ev",
+      "offset": "0x3c6e98",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "ldr x1, [x1, #0xa00]",
+        "add x1, x1, #0x10",
+        "str x1, [x0]",
+        "ret ",
+        "ret ",
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]"
+      ]
+    },
+    {
+      "name": "GetISocketFactory",
+      "offset": "0x40cca0",
+      "size": 0,
+      "asm": [
+        "adrp x3, #0x514000",
+        "sub sp, sp, #0x10",
+        "adrp x1, #0x514000",
+        "add x3, x3, #0x7a0",
+        "adrp x4, #0x514000",
+        "adrp x5, #0x514000",
+        "adrp x6, #0x514000",
+        "mov w0, #0"
+      ]
+    },
+    {
+      "name": "_ZNSt8ios_base7failureC2ERKS0_",
+      "offset": "0x15e498",
+      "size": 0,
+      "asm": [
+        "adrp x2, #0x67f000",
+        "sub sp, sp, #0x20",
+        "add x1, x1, #8",
+        "ldr x2, [x2, #0x9a0]",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "add x2, x2, #0x10"
+      ]
+    },
+    {
+      "name": "_ZStplIcSt11char_traitsIcESaIcEESbIT_T0_T1_ERKS6_PKS3_",
+      "offset": "0x112df0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "mov x2, x0",
+        "mov x0, x8",
+        "stp x19, x20, [sp]",
+        "mov x20, x1",
+        "mov x1, x2",
+        "mov x19, x8",
+        "str x30, [sp, #0x10]"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve4Conn13ConnectedInfoD1Ev",
+      "offset": "0x12fd84",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "sub sp, sp, #0x20",
+        "ldr x1, [x1, #0xf08]",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "add x1, x1, #0x10",
+        "str x1, [x0], #0x10"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeIjSt4pairIKjjESt10_Select1stIS2_ESt4lessIjESaIS2_EE10_M_insert_EPSt18_Rb_tree_node_baseSA_RKS2_",
+      "offset": "0x1bf1e4",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x40",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x20]",
+        "mov x20, x0",
+        "mov w22, #1",
+        "add x21, x0, #8",
+        "cbnz x1, #0x1bf21c"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve11WaitingInfoD0Ev",
+      "offset": "0x179a78",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0x179a64",
+        "mov x0, x19",
+        "ldp x19, x30, [sp]",
+        "add sp, sp, #0x10",
+        "b #0x40f820"
+      ]
+    },
+    {
+      "name": "hdmpve_getInstance",
+      "offset": "0x10e070",
+      "size": 0,
+      "asm": [
+        "b #0x17d38c",
+        "b #0x17d318",
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov w19, w0",
+        "bl #0x17d38c",
+        "ldr x1, [x0]",
+        "ldr x2, [x1, #0x28]"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve5ITDirD1Ev",
+      "offset": "0x3c6eac",
+      "size": 0,
+      "asm": [
+        "ret ",
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0x3c6eac",
+        "mov x0, x19",
+        "ldp x19, x30, [sp]",
+        "add sp, sp, #0x10"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve11CPluginBase13OnHDmpveStartEv",
+      "offset": "0xb833c",
+      "size": 0,
+      "asm": [
+        "ret ",
+        "ret ",
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0xb7c14",
+        "ldr x1, [x0]",
+        "ldr x2, [x1]"
+      ]
+    },
+    {
+      "name": "IsIFileDir",
+      "offset": "0x2ea93c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w3, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea95c",
+        "ldr x2, [x0]",
+        "ldr x2, [x2, #0x40]",
+        "blr x2",
+        "uxtb w3, w0"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve13DolphinHelper10InstallAPKEPKc",
+      "offset": "0x1ed040",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "stp x19, x20, [sp]",
+        "adrp x20, #0x67f000",
+        "stp x23, x24, [sp, #0x20]",
+        "mov x23, x0",
+        "ldr x0, [x20, #0xcf8]",
+        "mov w19, w23",
+        "stp x21, x22, [sp, #0x10]"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve13NameRouteInfoD2Ev",
+      "offset": "0x12383c",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67e000",
+        "sub sp, sp, #0x20",
+        "ldr x1, [x1, #0xf08]",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "add x1, x1, #0x10",
+        "str x1, [x0], #0x18"
+      ]
+    },
+    {
+      "name": "_ZNSt3mapImmSt4lessImESaISt4pairIKmmEEEixERS3_",
+      "offset": "0x3f6040",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x60",
+        "mov x3, x1",
+        "stp x19, x20, [sp]",
+        "mov x20, x0",
+        "adrp x0, #0x67f000",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x25, x30, [sp, #0x30]",
+        "ldr x1, [x0, #0xcf8]"
+      ]
+    },
+    {
+      "name": "StopPreDownloadService",
+      "offset": "0x2eaaec",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w2, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2eab0c",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x28]",
+        "blr x1",
+        "uxtb w2, w0"
+      ]
+    },
+    {
+      "name": "GetDataQuery",
+      "offset": "0x2ea2f4",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov x2, x0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea314",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x30]",
+        "blr x1",
+        "mov x2, x0"
+      ]
+    },
+    {
+      "name": "hdmpve_connector_Initialize",
+      "offset": "0x12f798",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x120",
+        "stp d8, d9, [sp, #0x68]",
+        "fmov d8, x5",
+        "stp x19, x20, [sp, #0x10]",
+        "adrp x20, #0x67f000",
+        "str x30, [sp, #0x60]",
+        "stp x27, x28, [sp, #0x50]",
+        "mov x28, x0"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve13ConnectedInfoD1Ev",
+      "offset": "0xbc778",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67e000",
+        "sub sp, sp, #0x40",
+        "ldr x1, [x1, #0xff8]",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x23, x24, [sp, #0x20]",
+        "stp x19, x20, [sp]",
+        "stp x25, x30, [sp, #0x30]",
+        "mov x20, x0"
+      ]
+    },
+    {
+      "name": "GetCallBackGCHandle",
+      "offset": "0x2e9a38",
+      "size": 0,
+      "asm": [
+        "mov x1, x0",
+        "cbz x0, #0x2e9a44",
+        "ldr x1, [x0, #8]",
+        "mov x0, x1",
+        "ret ",
+        "b #0x1a3ff8",
+        "sub sp, sp, #0x20",
+        "add x1, sp, #0x20"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsiESt10_Select1stIS2_ESt4lessISsESaIS2_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS2_ERS1_",
+      "offset": "0x13bff8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x22, x0",
+        "add x0, x0, #8",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x20]",
+        "cmp x1, x0",
+        "mov x19, x1"
+      ]
+    },
+    {
+      "name": "CreatePufferManager",
+      "offset": "0x193464",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "bl #0x11aad4",
+        "bl #0x11ab84",
+        "ldr x30, [sp]",
+        "add sp, sp, #0x10",
+        "b #0x1947bc",
+        "sub sp, sp, #0x20"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsPN6HDmpve4Conn10IConnectorEESt10_Select1stIS6_ESt4lessISsESaIS6_EE24_M_get_insert_unique_posERS1_",
+      "offset": "0x12d8e4",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "mov w2, #1",
+        "stp x19, x20, [sp]",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x23, x30, [sp, #0x20]",
+        "mov x22, x0",
+        "mov x23, x1",
+        "ldr x19, [x0, #0x10]"
+      ]
+    },
+    {
+      "name": "SetNextStage",
+      "offset": "0x2e9b5c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "uxtb w1, w1",
+        "mov w3, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2e9b80",
+        "ldr x2, [x0]",
+        "ldr x2, [x2, #0x20]",
+        "blr x2"
+      ]
+    },
+    {
+      "name": "hdmpve_gromelink_send",
+      "offset": "0x3d95b8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w4, #-1",
+        "str x30, [sp]",
+        "cbz x1, #0x3d95e0",
+        "cbz x0, #0x3d95e0",
+        "ldr x3, [x0]",
+        "ldr x4, [x3, #0x18]",
+        "mov w3, #0"
+      ]
+    },
+    {
+      "name": "_ZNSt3mapISsSsSt4lessISsESaISt4pairIKSsSsEEEixERS3_",
+      "offset": "0x17e508",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x60",
+        "adrp x2, #0x67f000",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x22, x0",
+        "ldr x0, [x2, #0xcf8]",
+        "stp x19, x20, [sp]",
+        "stp x23, x24, [sp, #0x20]",
+        "str x30, [sp, #0x30]"
+      ]
+    },
+    {
+      "name": "GetLastReaderError",
+      "offset": "0x2ea3fc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w2, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea41c",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x40]",
+        "blr x1",
+        "mov w2, w0"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve15CSdkFactoryBaseC1Ev",
+      "offset": "0xb83bc",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "ldr x1, [x1, #0x608]",
+        "add x2, x1, #0x10",
+        "add x1, x1, #0x68",
+        "str x2, [x0]",
+        "str x1, [x0, #8]",
+        "ret ",
+        "ret "
+      ]
+    },
+    {
+      "name": "UninitPufferManager",
+      "offset": "0x193538",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "cbz x0, #0x193550",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x18]",
+        "blr x1",
+        "ldr x30, [sp]",
+        "add sp, sp, #0x10"
+      ]
+    },
+    {
+      "name": "hdmpve_setLogLevel",
+      "offset": "0x10e078",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov w19, w0",
+        "bl #0x17d38c",
+        "ldr x1, [x0]",
+        "ldr x2, [x1, #0x28]",
+        "mov w1, w19",
+        "blr x2"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsxESt10_Select1stIS2_ESt4lessISsESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E",
+      "offset": "0x1be734",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "mov x19, x1",
+        "cbz x19, #0x1be774",
+        "ldr x1, [x19, #0x18]",
+        "mov x0, x20"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeIxxSt9_IdentityIxESt4lessIxESaIxEE16_M_insert_uniqueERKx",
+      "offset": "0x1b1e94",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x40",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x19, x20, [sp]",
+        "stp x23, x30, [sp, #0x20]",
+        "add x23, x0, #8",
+        "mov x20, x0",
+        "ldr x2, [x0, #0x10]",
+        "mov x22, x1"
+      ]
+    },
+    {
+      "name": "hdmpve_access_getInstance",
+      "offset": "0xb959c",
+      "size": 0,
+      "asm": [
+        "b #0xc0a18",
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "bl #0xc0a18",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x30]",
+        "blr x1",
+        "ldr x30, [sp]"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeIjSt4pairIKjjESt10_Select1stIS2_ESt4lessIjESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E",
+      "offset": "0x1be440",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "mov x19, x1",
+        "cbz x19, #0x1be478",
+        "ldr x1, [x19, #0x18]",
+        "mov x0, x20"
+      ]
+    },
+    {
+      "name": "hdmpve_connector_writeRoute",
+      "offset": "0x12ef50",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x70",
+        "stp x19, x20, [sp]",
+        "adrp x19, #0x67f000",
+        "stp x27, x30, [sp, #0x40]",
+        "mov x27, x0",
+        "ldr x0, [x19, #0xcf8]",
+        "stp x23, x24, [sp, #0x20]",
+        "stp x25, x26, [sp, #0x30]"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve6ResultD2Ev",
+      "offset": "0xb9a38",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67e000",
+        "sub sp, sp, #0x20",
+        "ldr x1, [x1, #0xfb0]",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "add x1, x1, #0x10",
+        "str x1, [x0], #0x18"
+      ]
+    },
+    {
+      "name": "hdmpve_connector_setRouteInfo",
+      "offset": "0x12f460",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x60",
+        "stp x19, x20, [sp]",
+        "adrp x19, #0x67f000",
+        "str x30, [sp, #0x30]",
+        "stp x23, x24, [sp, #0x20]",
+        "mov x24, x0",
+        "mov x23, x1",
+        "ldr x0, [x19, #0xcf8]"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve14IQRCodeServiceD1Ev",
+      "offset": "0x10f8c0",
+      "size": 0,
+      "asm": [
+        "ret ",
+        "sub sp, sp, #0x30",
+        "adrp x1, #0x69d000",
+        "stp x19, x20, [sp]",
+        "mov x19, x0",
+        "adrp x0, #0x66a000",
+        "add x0, x0, #0xe20",
+        "str x30, [sp, #0x20]"
+      ]
+    },
+    {
+      "name": "_ZNSt4listISsSaISsEEC2ERKS1_",
+      "offset": "0x2bcd9c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "mov x19, x0",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x21, x1",
+        "str x0, [x19]",
+        "str x0, [x19, #8]",
+        "ldr x20, [x1]"
+      ]
+    },
+    {
+      "name": "hdmpve_account_reset",
+      "offset": "0xba764",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "bl #0xc0a18",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x18]",
+        "blr x1",
+        "mov x19, x0",
+        "cbnz x0, #0xba7ac"
+      ]
+    },
+    {
+      "name": "_ZNK6HDmpve6Result5CloneEv",
+      "offset": "0x179b00",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "mov x20, x0",
+        "mov x0, #0x50",
+        "stp x21, x30, [sp, #0x10]",
+        "bl #0x410f20",
+        "mov x19, x0",
+        "bl #0xbd700"
+      ]
+    },
+    {
+      "name": "_ZNSt3setISsSt4lessISsESaISsEE6insertERKSs",
+      "offset": "0x1bfbc0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x40",
+        "stp x23, x24, [sp, #0x20]",
+        "stp x19, x20, [sp]",
+        "stp x21, x22, [sp, #0x10]",
+        "str x30, [sp, #0x30]",
+        "add x24, x0, #8",
+        "mov x20, x0",
+        "mov x23, x1"
+      ]
+    },
+    {
+      "name": "GetLocalDataResumeBrokenInfo",
+      "offset": "0x2ea7bc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w5, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea7dc",
+        "ldr x4, [x0]",
+        "ldr x4, [x4, #0x78]",
+        "blr x4",
+        "uxtb w5, w0"
+      ]
+    },
+    {
+      "name": "hdmpve_account_refreshAtk",
+      "offset": "0xbaa44",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "adrp x4, #0x47b000",
+        "mov x5, x0",
+        "mov w2, #0xd4",
+        "add x4, x4, #0x558",
+        "mov w0, #1",
+        "stp x19, x20, [sp]",
+        "adrp x19, #0x47b000"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeIjSt4pairIKjjESt10_Select1stIS2_ESt4lessIjESaIS2_EE24_M_get_insert_unique_posERS1_",
+      "offset": "0x1bf144",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "mov x3, x0",
+        "mov w4, #1",
+        "stp x19, x30, [sp]",
+        "add x19, x0, #8",
+        "ldr x2, [x0, #0x10]",
+        "cbz x2, #0x1bf190",
+        "ldr w4, [x1]"
+      ]
+    },
+    {
+      "name": "hdmpve_access_releaseInstance",
+      "offset": "0xb95c4",
+      "size": 0,
+      "asm": [
+        "b #0xc09a4",
+        "sub sp, sp, #0x20",
+        "str x30, [sp]",
+        "str x0, [sp, #0x18]",
+        "bl #0xc0a18",
+        "ldr x2, [x0]",
+        "ldr x1, [sp, #0x18]",
+        "ldr x2, [x2, #0x10]"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve14SetAccountInfoEPKcmS1_",
+      "offset": "0xc1eb8",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x47c000",
+        "adrp x3, #0x47c000",
+        "adrp x4, #0x47c000",
+        "mov w0, #2",
+        "add x1, x1, #0x910",
+        "mov w2, #0x16",
+        "add x3, x3, #0x900",
+        "add x4, x4, #0x967"
+      ]
+    },
+    {
+      "name": "UnitDataManager",
+      "offset": "0x2ea260",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w2, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea280",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x18]",
+        "blr x1",
+        "uxtb w2, w0"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeI9TGCPStateSt4pairIKS0_iESt10_Select1stIS3_ESt4lessIS0_ESaIS3_EE8_M_eraseEPSt13_Rb_tree_nodeIS3_E",
+      "offset": "0xbde00",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "mov x19, x1",
+        "cbz x19, #0xbde38",
+        "ldr x1, [x19, #0x18]",
+        "mov x0, x20"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve18RealNameAuthResultD2Ev",
+      "offset": "0x17caa0",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "sub sp, sp, #0x20",
+        "ldr x1, [x1, #0xa68]",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "add x1, x1, #0x10",
+        "str x1, [x0], #0x20"
+      ]
+    },
+    {
+      "name": "hdmpve_setUserInfo",
+      "offset": "0x10e20c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x80",
+        "stp x19, x20, [sp]",
+        "adrp x20, #0x67f000",
+        "add x19, sp, #0x30",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x22, x0",
+        "mov w21, w1",
+        "ldr x0, [x20, #0xcf8]"
+      ]
+    },
+    {
+      "name": "CreateDolphin",
+      "offset": "0x1f6768",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "bl #0x11aad4",
+        "bl #0x11ab84",
+        "mov x0, #0x30",
+        "bl #0x410f20",
+        "mov x19, x0",
+        "bl #0x1f6730"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsPN6HDmpve4Conn17ConnectorObserverEESt10_Select1stIS6_ESt4lessISsESaIS6_EE10_M_insert_EPSt18_Rb_tree_node_baseSE_RKS6_",
+      "offset": "0x12db10",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x23, x24, [sp, #0x20]",
+        "stp x19, x20, [sp]",
+        "stp x25, x30, [sp, #0x30]",
+        "mov x20, x0",
+        "mov x21, x2",
+        "mov x22, x3"
+      ]
+    },
+    {
+      "name": "CreateDataManager",
+      "offset": "0x2ea164",
+      "size": 0,
+      "asm": [
+        "b #0x214680",
+        "sub sp, sp, #0x20",
+        "add x1, sp, #0x20",
+        "str x30, [sp]",
+        "str x0, [x1, #-8]!",
+        "mov x0, x1",
+        "bl #0x21459c",
+        "ldr x30, [sp]"
+      ]
+    },
+    {
+      "name": "hdmpve_custom_account_initialize",
+      "offset": "0xc88bc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0xe0",
+        "adrp x4, #0x47d000",
+        "mov w2, #0x18",
+        "add x4, x4, #0xc81",
+        "stp x19, x20, [sp]",
+        "adrp x19, #0x67f000",
+        "str x30, [sp, #0x30]",
+        "stp x23, x24, [sp, #0x20]"
+      ]
+    },
+    {
+      "name": "_ZNSt3tr18functionIFvRKiEEC1INS_5_BindIFNS_7_Mem_fnIMN6pebble9broadcast37PebbleChannelMgrServiceAsyncProcessorEFvNS0_IFvbEEElPNS8_3rpc8protocol9TProtocolEPvS2_EEEPSA_SC_lSG_SH_NS_12_PlaceholderILi1EEEEEEEET_N9__gnu_cxx11__enable_ifIXntsrNS_11is_integralISQ_EE5valueENS4_8_UselessEE6__typeE",
+      "offset": "0x140a34",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x21, x0",
+        "adrp x0, #0x140000",
+        "add x0, x0, #0x500",
+        "stp x23, x30, [sp, #0x20]",
+        "str x0, [x21, #0x18]",
+        "adrp x0, #0x140000"
+      ]
+    },
+    {
+      "name": "hdmpve_account_IsPlatformInstalled",
+      "offset": "0xba954",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "mov w1, w0",
+        "stp x19, x30, [sp]",
+        "str x1, [sp, #0x18]",
+        "bl #0xc0a18",
+        "ldr x2, [x0]",
+        "ldr x2, [x2, #0x18]",
+        "blr x2"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E",
+      "offset": "0x1a1464",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "mov x19, x1",
+        "cbz x19, #0x1a149c",
+        "ldr x1, [x19, #0x18]",
+        "mov x0, x20"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve14IQRCodeServiceC1Ev",
+      "offset": "0x10f8ac",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "ldr x1, [x1, #0x780]",
+        "add x1, x1, #0x10",
+        "str x1, [x0]",
+        "ret ",
+        "ret ",
+        "sub sp, sp, #0x30",
+        "adrp x1, #0x69d000"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsSt4listISsSaISsEEESt10_Select1stIS5_ESt4lessISsESaIS5_EE4findERS1_",
+      "offset": "0x2bd358",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x20]",
+        "add x19, x0, #8",
+        "mov x22, x1",
+        "mov x21, x19",
+        "ldr x20, [x0, #0x10]"
+      ]
+    },
+    {
+      "name": "_ZNSt6vectorISsSaISsEEC1ERKS1_",
+      "offset": "0x156f4c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "mov x20, x1",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "ldr x1, [x1, #8]",
+        "ldr x2, [x20]",
+        "str xzr, [x0]"
+      ]
+    },
+    {
+      "name": "CreateVersionManager",
+      "offset": "0x2e9a4c",
+      "size": 0,
+      "asm": [
+        "b #0x1a3ff8",
+        "sub sp, sp, #0x20",
+        "add x1, sp, #0x20",
+        "str x30, [sp]",
+        "str x0, [x1, #-8]!",
+        "mov x0, x1",
+        "bl #0x1a4064",
+        "ldr x30, [sp]"
+      ]
+    },
+    {
+      "name": "GetIFSDataResumeBrokenInfo",
+      "offset": "0x2ea7ec",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w4, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea80c",
+        "ldr x3, [x0]",
+        "ldr x3, [x3, #0x80]",
+        "blr x3",
+        "uxtb w4, w0"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve11CPluginBase8UnistallEv",
+      "offset": "0xb8380",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0xb7c14",
+        "ldr x1, [x0]",
+        "ldr x2, [x1, #8]",
+        "mov x1, x19",
+        "blr x2"
+      ]
+    },
+    {
+      "name": "_ZNK6HDmpve13ZoneRouteInfo5CloneEv",
+      "offset": "0x179978",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "mov x20, x0",
+        "mov x0, #0x20",
+        "str x30, [sp, #0x10]",
+        "bl #0x410f20",
+        "mov x19, x0",
+        "bl #0xbd700"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve18RealNameAuthResultD0Ev",
+      "offset": "0x17caec",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0x17caa0",
+        "mov x0, x19",
+        "ldp x19, x30, [sp]",
+        "add sp, sp, #0x10",
+        "b #0x40f820"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve4Conn15ServerRouteInfoD0Ev",
+      "offset": "0x12e828",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0x12e814",
+        "mov x0, x19",
+        "ldp x19, x30, [sp]",
+        "add sp, sp, #0x10",
+        "b #0x40f820"
+      ]
+    },
+    {
+      "name": "_ZN15ChannelInfoUtil20getV2SignBlockOffsetEPKc",
+      "offset": "0x1b3bdc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x70",
+        "stp x19, x20, [sp]",
+        "adrp x19, #0x67f000",
+        "str x0, [sp, #0x38]",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x23, x30, [sp, #0x20]",
+        "ldr x1, [x19, #0xcf8]",
+        "ldr x1, [x1]"
+      ]
+    },
+    {
+      "name": "Java_com_gcore_hdmpve_netinterface_MsgWorker_versionAvailable",
+      "offset": "0x13aee4",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "adrp x3, #0x491000",
+        "adrp x1, #0x491000",
+        "add x3, x3, #0x700",
+        "adrp x4, #0x491000",
+        "add x1, x1, #0x9e0",
+        "stp x19, x30, [sp]",
+        "uxtb w19, w2"
+      ]
+    },
+    {
+      "name": "_ZNSt3tr18functionIFviPSt6vectorISsSaISsEEEEC2ERKS6_",
+      "offset": "0x144ef0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "str xzr, [x0, #0x10]",
+        "ldr x3, [x1, #0x10]",
+        "cbz x3, #0x144f3c",
+        "ldr x4, [x1, #0x18]"
+      ]
+    },
+    {
+      "name": "hdmpve_connector_set_userInfo",
+      "offset": "0x12f1cc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x40",
+        "stp x19, x20, [sp]",
+        "stp x21, x22, [sp, #0x10]",
+        "str x30, [sp, #0x20]",
+        "mov x22, x0",
+        "mov x21, x1",
+        "mov w20, w2",
+        "mov x19, x3"
+      ]
+    },
+    {
+      "name": "_ZN15ChannelInfoUtil16getChannelInfoIdEPKc",
+      "offset": "0x1b4a50",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "stp x19, x20, [sp]",
+        "adrp x20, #0x67f000",
+        "stp x23, x30, [sp, #0x20]",
+        "mov x23, x0",
+        "ldr x0, [x20, #0xcf8]",
+        "stp x21, x22, [sp, #0x10]",
+        "ldr x0, [x0]"
+      ]
+    },
+    {
+      "name": "hdmpve_account_logout",
+      "offset": "0xba684",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "adrp x4, #0x47b000",
+        "mov w2, #0x57",
+        "add x4, x4, #0x398",
+        "mov w0, #1",
+        "stp x19, x20, [sp]",
+        "adrp x19, #0x47b000",
+        "stp x21, x30, [sp, #0x10]"
+      ]
+    },
+    {
+      "name": "GetIFSPackageResumeBrokenInfo",
+      "offset": "0x2ea81c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w4, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea83c",
+        "ldr x3, [x0]",
+        "ldr x3, [x3, #0x88]",
+        "blr x3",
+        "uxtb w4, w0"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeIjjSt9_IdentityIjESt4lessIjESaIjEE16_M_insert_uniqueERKj",
+      "offset": "0x1aad5c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x40",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x19, x20, [sp]",
+        "stp x23, x30, [sp, #0x20]",
+        "add x23, x0, #8",
+        "mov x20, x0",
+        "ldr x2, [x0, #0x10]",
+        "mov x22, x1"
+      ]
+    },
+    {
+      "name": "_ZNSt6vectorISsSaISsEEC2ERKS1_",
+      "offset": "0x156f4c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "mov x20, x1",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "ldr x1, [x1, #8]",
+        "ldr x2, [x20]",
+        "str xzr, [x0]"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsPN6HDmpve7IPluginEESt10_Select1stIS5_ESt4lessISsESaIS5_EE4findERS1_",
+      "offset": "0xb7d64",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x20]",
+        "add x19, x0, #8",
+        "mov x22, x1",
+        "mov x21, x19",
+        "ldr x20, [x0, #0x10]"
+      ]
+    },
+    {
+      "name": "GetMemorySize",
+      "offset": "0x2e9cac",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov x2, x0",
+        "str x30, [sp]",
+        "cbz x0, #0x2e9ccc",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x48]",
+        "blr x1",
+        "mov x2, x0"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve4Conn15ConnectorResultD1Ev",
+      "offset": "0x12c300",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "sub sp, sp, #0x20",
+        "ldr x1, [x1, #0xed0]",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "add x1, x1, #0x10",
+        "str x1, [x0], #0x18"
+      ]
+    },
+    {
+      "name": "InitDataPreDownloader",
+      "offset": "0x2eaa5c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w3, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2eaa7c",
+        "ldr x2, [x0]",
+        "ldr x2, [x2, #0x10]",
+        "blr x2",
+        "uxtb w3, w0"
+      ]
+    },
+    {
+      "name": "_ZNSt6vectorIN5ABase13ANetworkStateESaIS1_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS1_S3_EERKS1_",
+      "offset": "0x135454",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "stp x19, x20, [sp]",
+        "mov x19, x0",
+        "str x30, [sp, #0x30]",
+        "stp x23, x24, [sp, #0x20]",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x23, x1",
+        "ldr x0, [x0, #8]"
+      ]
+    },
+    {
+      "name": "_ZNSt3tr117bad_function_callD2Ev",
+      "offset": "0x11da34",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "ldr x1, [x1, #0x610]",
+        "add x1, x1, #0x10",
+        "str x1, [x0]",
+        "b #0x40feb4",
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve6Access15ReleaseInstanceEv",
+      "offset": "0xc09a4",
+      "size": 0,
+      "asm": [
+        "b #0xc0974",
+        "mov x2, x1",
+        "mov w1, #0",
+        "b #0xc07b4",
+        "mov w1, #1",
+        "mov x2, #0",
+        "b #0xc07b4",
+        "sub sp, sp, #0x20"
+      ]
+    },
+    {
+      "name": "apollo_net_sniffer_SetupLobbyCluster",
+      "offset": "0x3f512c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x70",
+        "adrp x4, #0x67f000",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x21, x0",
+        "ldr x0, [x4, #0xcf8]",
+        "stp x19, x20, [sp]",
+        "stp x23, x24, [sp, #0x20]",
+        "str x30, [sp, #0x30]"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsPN6HDmpve4Conn10IConnectorEESt10_Select1stIS6_ESt4lessISsESaIS6_EE10_M_insert_EPSt18_Rb_tree_node_baseSE_RKS6_",
+      "offset": "0x12d998",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x23, x24, [sp, #0x20]",
+        "stp x19, x20, [sp]",
+        "stp x25, x30, [sp, #0x30]",
+        "mov x20, x0",
+        "mov x21, x2",
+        "mov x22, x3"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeIyySt9_IdentityIyESt4lessIyESaIyEE16_M_insert_uniqueERKy",
+      "offset": "0x241c94",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x40",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x19, x20, [sp]",
+        "stp x23, x30, [sp, #0x20]",
+        "add x23, x0, #8",
+        "mov x20, x0",
+        "ldr x2, [x0, #0x10]",
+        "mov x22, x1"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve14IQRCodeServiceD2Ev",
+      "offset": "0x10f8c0",
+      "size": 0,
+      "asm": [
+        "ret ",
+        "sub sp, sp, #0x30",
+        "adrp x1, #0x69d000",
+        "stp x19, x20, [sp]",
+        "mov x19, x0",
+        "adrp x0, #0x66a000",
+        "add x0, x0, #0xe20",
+        "str x30, [sp, #0x20]"
+      ]
+    },
+    {
+      "name": "_ZNSt11__copy_moveILb0ELb1ESt26random_access_iterator_tagE8__copy_mIN5ABase13ANetworkStateEEEPT_PKS5_S8_S6_",
+      "offset": "0x130b20",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov x4, x0",
+        "mov x3, x2",
+        "stp x19, x30, [sp]",
+        "sub x19, x1, x0",
+        "asr x0, x19, #2",
+        "cbz x0, #0x130b50",
+        "mov x0, x2"
+      ]
+    },
+    {
+      "name": "_ZNK6HDmpve5Token5CloneEv",
+      "offset": "0x179d5c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "mov x20, x0",
+        "mov x0, #0x50",
+        "str x30, [sp, #0x10]",
+        "bl #0x410f20",
+        "mov x19, x0",
+        "bl #0x179d04"
+      ]
+    },
+    {
+      "name": "hdmpve_tdir_queryleaf",
+      "offset": "0x3c68ac",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "adrp x3, #0x50a000",
+        "add x3, x3, #0x470",
+        "adrp x4, #0x50a000",
+        "add x4, x4, #0x534",
+        "mov w2, #0x40",
+        "stp x19, x20, [sp]",
+        "mov w19, w1"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeImSt4pairIKmmESt10_Select1stIS2_ESt4lessImESaIS2_EE24_M_get_insert_unique_posERS1_",
+      "offset": "0x3f5e94",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "mov x3, x0",
+        "mov w4, #1",
+        "stp x19, x30, [sp]",
+        "add x19, x0, #8",
+        "ldr x2, [x0, #0x10]",
+        "cbz x2, #0x3f5ee0",
+        "ldr x4, [x1]"
+      ]
+    },
+    {
+      "name": "_ZNSt6vectorIPN6HDmpve16IServiceObserverESaIS2_EEC2ERKS4_",
+      "offset": "0xbbec0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x19, x0",
+        "mov x21, x1",
+        "ldr x0, [x1, #8]",
+        "ldr x20, [x1]",
+        "str xzr, [x19]"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve18RealNameAuthResultD1Ev",
+      "offset": "0x17caa0",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "sub sp, sp, #0x20",
+        "ldr x1, [x1, #0xa68]",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "add x1, x1, #0x10",
+        "str x1, [x0], #0x20"
+      ]
+    },
+    {
+      "name": "NoneAccount_adapter_install",
+      "offset": "0xc1290",
+      "size": 0,
+      "asm": [
+        "b #0xc119c",
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "mov x19, x0",
+        "mov x20, x1",
+        "mov x0, x1",
+        "add x1, x19, #0x10",
+        "str x30, [sp, #0x10]"
+      ]
+    },
+    {
+      "name": "_ZN15ChannelInfoUtil18getChannelInfoSizeEPKc",
+      "offset": "0x1b45d0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "stp x21, x22, [sp, #0x10]",
+        "adrp x21, #0x67f000",
+        "str x30, [sp, #0x30]",
+        "stp x23, x24, [sp, #0x20]",
+        "mov x23, x0",
+        "ldr x0, [x21, #0xcf8]",
+        "stp x19, x20, [sp]"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve5ITDirD2Ev",
+      "offset": "0x3c6eac",
+      "size": 0,
+      "asm": [
+        "ret ",
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0x3c6eac",
+        "mov x0, x19",
+        "ldp x19, x30, [sp]",
+        "add sp, sp, #0x10"
+      ]
+    },
+    {
+      "name": "_ZNSt10_List_baseIjSaIjEE8_M_clearEv",
+      "offset": "0x21929c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "ldr x0, [x0]",
+        "cmp x0, x19",
+        "b.eq #0x2192c8",
+        "ldr x20, [x0]"
+      ]
+    },
+    {
+      "name": "GetIFileSize",
+      "offset": "0x2ea8dc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w3, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea8fc",
+        "ldr x2, [x0]",
+        "ldr x2, [x2, #0x30]",
+        "blr x2",
+        "mov w3, w0"
+      ]
+    },
+    {
+      "name": "PauseDownload",
+      "offset": "0x2ea5fc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w2, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea61c",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x20]",
+        "blr x1",
+        "uxtb w2, w0"
+      ]
+    },
+    {
+      "name": "_ZNSt3mapIiSsSt4lessIiESaISt4pairIKiSsEEED1Ev",
+      "offset": "0x15d7c8",
+      "size": 0,
+      "asm": [
+        "ldr x1, [x0, #0x10]",
+        "b #0x15d778",
+        "ret ",
+        "mov w0, #0",
+        "ret ",
+        "mov w0, #0",
+        "ret ",
+        "mov w0, #0"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeIxSt4pairIKxSsESt10_Select1stIS2_ESt4lessIxESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E",
+      "offset": "0x1c9a18",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "mov x19, x1",
+        "cbz x19, #0x1c9a58",
+        "ldr x1, [x19, #0x18]",
+        "mov x0, x20"
+      ]
+    },
+    {
+      "name": "DestroyVersionInfoCallBack",
+      "offset": "0x2e9a14",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "cbz x0, #0x2e9a2c",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #8]",
+        "blr x1",
+        "ldr x30, [sp]",
+        "add sp, sp, #0x10"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve13DolphinHelper13GetCurApkPathEv",
+      "offset": "0x1ecdac",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x70",
+        "adrp x4, #0x4b0000",
+        "mov w2, #0x2d",
+        "add x4, x4, #0x92a",
+        "stp x19, x20, [sp]",
+        "adrp x20, #0x67f000",
+        "str x30, [sp, #0x40]",
+        "stp x21, x22, [sp, #0x10]"
+      ]
+    },
+    {
+      "name": "hdmpve_gromelink_updateCookie",
+      "offset": "0x3d9590",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "cbz x1, #0x3d95ac",
+        "cbz x0, #0x3d95ac",
+        "ldr x3, [x0]",
+        "ldr x3, [x3, #0x28]",
+        "blr x3",
+        "ldr x30, [sp]"
+      ]
+    },
+    {
+      "name": "ReleaseDataManager",
+      "offset": "0x2ea168",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "add x1, sp, #0x20",
+        "str x30, [sp]",
+        "str x0, [x1, #-8]!",
+        "mov x0, x1",
+        "bl #0x21459c",
+        "ldr x30, [sp]",
+        "add sp, sp, #0x20"
+      ]
+    },
+    {
+      "name": "_ZNKSt4listISsSaISsEE4sizeEv",
+      "offset": "0x2bc5e0",
+      "size": 0,
+      "asm": [
+        "mov x2, x0",
+        "ldr x1, [x0]",
+        "mov x0, #0",
+        "cmp x1, x2",
+        "b.eq #0x2bc600",
+        "ldr x1, [x1]",
+        "add x0, x0, #1",
+        "b #0x2bc5ec"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeImSt4pairIKmmESt10_Select1stIS2_ESt4lessImESaIS2_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS2_ERS1_",
+      "offset": "0x3f5f34",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "stp x19, x20, [sp]",
+        "mov x20, x0",
+        "add x0, x0, #8",
+        "stp x21, x22, [sp, #0x10]",
+        "str x30, [sp, #0x20]",
+        "cmp x1, x0",
+        "mov x19, x1"
+      ]
+    },
+    {
+      "name": "_ZNSt3tr18functionIFvvEEC2ERKS2_",
+      "offset": "0x145f0c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "str xzr, [x0, #0x10]",
+        "ldr x3, [x1, #0x10]",
+        "cbz x3, #0x145f58",
+        "ldr x4, [x1, #0x18]"
+      ]
+    },
+    {
+      "name": "_ZNK6HDmpve11AccountInfo5CloneEv",
+      "offset": "0x17cd78",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "mov x20, x0",
+        "mov x0, #0x98",
+        "str x30, [sp, #0x10]",
+        "bl #0x410f20",
+        "mov x19, x0",
+        "bl #0x17ccb8"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve4Conn13RouteInfoBaseD0Ev",
+      "offset": "0xbbb70",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0xbbb5c",
+        "mov x0, x19",
+        "ldp x19, x30, [sp]",
+        "add sp, sp, #0x10",
+        "b #0x40f820"
+      ]
+    },
+    {
+      "name": "_ZNSt3mapI9TGCPStateiSt4lessIS0_ESaISt4pairIKS0_iEEEixERS4_",
+      "offset": "0xc3a90",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "mov x3, x1",
+        "stp x19, x20, [sp]",
+        "mov x20, x0",
+        "adrp x0, #0x67f000",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x23, x30, [sp, #0x20]",
+        "ldr x1, [x0, #0xcf8]"
+      ]
+    },
+    {
+      "name": "CreatePufferCallBack",
+      "offset": "0x1933a0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x40",
+        "stp x25, x30, [sp, #0x30]",
+        "mov x25, x0",
+        "mov x0, #0x38",
+        "stp x19, x20, [sp]",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x23, x24, [sp, #0x20]",
+        "mov x22, x3"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve15CSdkFactoryBaseD1Ev",
+      "offset": "0xb83d8",
+      "size": 0,
+      "asm": [
+        "ret ",
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "mov w20, w1",
+        "cbnz w1, #0xb83fc",
+        "ldr x0, [x2]"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve4Conn13RouteInfoBaseD2Ev",
+      "offset": "0xbbb5c",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "ldr x1, [x1, #0x118]",
+        "add x1, x1, #0x10",
+        "str x1, [x0]",
+        "b #0xbbb48",
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve4Conn13NameRouteInfoD2Ev",
+      "offset": "0x12fb10",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "sub sp, sp, #0x20",
+        "ldr x1, [x1, #0xe20]",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "add x1, x1, #0x10",
+        "str x1, [x0], #0x18"
+      ]
+    },
+    {
+      "name": "DownloadIfsData",
+      "offset": "0x2ea6ec",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "uxtb w2, w2",
+        "mov w5, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea710",
+        "ldr x4, [x0]",
+        "ldr x4, [x4, #0x60]",
+        "blr x4"
+      ]
+    },
+    {
+      "name": "ReleaseDolphinUtility",
+      "offset": "0x1f66f8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "cbz x0, #0x1f6724",
+        "ldr x1, [x0]",
+        "cbz x1, #0x1f6724",
+        "mov x19, x0",
+        "ldr x0, [x1]",
+        "ldr x2, [x0, #8]"
+      ]
+    },
+    {
+      "name": "_ZN19NNoneAccountAdapter19CNoneAccountFactory17GetAccountServiceEv",
+      "offset": "0xc11e8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "bl #0xc19a4",
+        "mov x2, x0",
+        "cbz x2, #0xc1208",
+        "ldr x0, [x2]",
+        "ldur x1, [x0, #-0x20]",
+        "add x0, x2, x1"
+      ]
+    },
+    {
+      "name": "Java_com_gcore_hdmpve_netinterface_MsgWorker_connectivityManagerException",
+      "offset": "0x13af34",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "adrp x3, #0x491000",
+        "adrp x1, #0x491000",
+        "add x3, x3, #0x700",
+        "adrp x4, #0x491000",
+        "add x1, x1, #0x9e0",
+        "stp x19, x20, [sp]",
+        "adrp x20, #0x67f000"
+      ]
+    },
+    {
+      "name": "_ZNKSt6vectorISsSaISsEE12_M_check_lenEmPKc",
+      "offset": "0x158b3c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov x4, #0x1fffffffffffffff",
+        "str x30, [sp]",
+        "ldr x3, [x0, #8]",
+        "ldr x0, [x0]",
+        "sub x0, x3, x0",
+        "asr x3, x0, #3",
+        "sub x0, x4, x3"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve6ResultD1Ev",
+      "offset": "0xb9a38",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67e000",
+        "sub sp, sp, #0x20",
+        "ldr x1, [x1, #0xfb0]",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "add x1, x1, #0x10",
+        "str x1, [x0], #0x18"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve7IHDmpve11GetInstanceEv",
+      "offset": "0x17d38c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "bl #0x17d334",
+        "ldr x30, [sp]",
+        "add x0, x0, #0x50",
+        "add sp, sp, #0x10",
+        "ret ",
+        "sub sp, sp, #0x40"
+      ]
+    },
+    {
+      "name": "_ZNK6HDmpve12RealNameInfo5CloneEv",
+      "offset": "0x17cbb8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "stp x19, x20, [sp]",
+        "mov x20, x0",
+        "mov x0, #0xa8",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x23, x30, [sp, #0x20]",
+        "bl #0x410f20",
+        "mov x19, x0"
+      ]
+    },
+    {
+      "name": "_ZNSt6vectorIiSaIiEEaSERKS1_",
+      "offset": "0x1e7c6c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x40",
+        "cmp x1, x0",
+        "stp x19, x20, [sp]",
+        "stp x21, x22, [sp, #0x10]",
+        "str x30, [sp, #0x20]",
+        "mov x19, x0",
+        "mov x20, x1",
+        "b.eq #0x1e7d4c"
+      ]
+    },
+    {
+      "name": "hdmpve_tdir_querytree",
+      "offset": "0x3c6854",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "adrp x3, #0x50a000",
+        "adrp x1, #0x50a000",
+        "add x3, x3, #0x470",
+        "adrp x4, #0x50a000",
+        "add x3, x3, #0x20",
+        "stp x19, x30, [sp]",
+        "mov w19, w0"
+      ]
+    },
+    {
+      "name": "_ZNKSt3tr18functionIFviPSt6vectorISsSaISsEEEEclEiS4_",
+      "offset": "0x158284",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "ldr x4, [x0, #0x10]",
+        "cbnz x4, #0x1582c0",
+        "mov x0, #8",
+        "bl #0x40fa50",
+        "adrp x1, #0x67f000",
+        "adrp x2, #0x67f000"
+      ]
+    },
+    {
+      "name": "hdmpve_set_account_info",
+      "offset": "0xc1edc",
+      "size": 0,
+      "asm": [
+        "b #0xc1eb8",
+        "ret ",
+        "ret ",
+        "ret ",
+        "ret ",
+        "ret ",
+        "adrp x1, #0x47c000",
+        "adrp x3, #0x47c000"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsESaIS2_EED1Ev",
+      "offset": "0x204b48",
+      "size": 0,
+      "asm": [
+        "ldr x1, [x0, #0x10]",
+        "b #0x96f68",
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "mov x19, x0",
+        "add x0, x0, #0x60",
+        "str x30, [sp, #0x10]",
+        "bl #0x45ad80"
+      ]
+    },
+    {
+      "name": "_ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPSsS2_EET0_T_S4_S3_",
+      "offset": "0xd7d70",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x40",
+        "stp x19, x20, [sp]",
+        "stp x21, x22, [sp, #0x10]",
+        "str x30, [sp, #0x20]",
+        "mov x21, x0",
+        "mov x22, x1",
+        "mov x20, x2",
+        "mov x19, x2"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve15ServerRouteInfoD0Ev",
+      "offset": "0x179aac",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0x179a98",
+        "mov x0, x19",
+        "ldp x19, x30, [sp]",
+        "add sp, sp, #0x10",
+        "b #0x40f820"
+      ]
+    },
+    {
+      "name": "DestoryIFSLibDll",
+      "offset": "0x247a6c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "ldr x0, [x0]",
+        "cbz x0, #0x247a8c",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x88]",
+        "blr x1"
+      ]
+    },
+    {
+      "name": "_ZN19NNoneAccountAdapter19CNoneAccountFactory17OnApplicationQuitEv",
+      "offset": "0xc1090",
+      "size": 0,
+      "asm": [
+        "adrp x3, #0x47c000",
+        "sub sp, sp, #0x10",
+        "adrp x1, #0x47c000",
+        "add x3, x3, #0x4f0",
+        "adrp x4, #0x47c000",
+        "mov w0, #1",
+        "add x1, x1, #0x560",
+        "mov w2, #0x55"
+      ]
+    },
+    {
+      "name": "_ZNSt3tr117bad_function_callD0Ev",
+      "offset": "0x11da48",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0x11da34",
+        "mov x0, x19",
+        "ldp x19, x30, [sp]",
+        "add sp, sp, #0x10",
+        "b #0x40f820"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve11WaitingInfoD1Ev",
+      "offset": "0x179a64",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "ldr x1, [x1, #0x718]",
+        "add x1, x1, #0x10",
+        "str x1, [x0]",
+        "b #0xbbb48",
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0"
+      ]
+    },
+    {
+      "name": "_ZNK6HDmpve4Conn15ConnectorResult8ToStringEv",
+      "offset": "0x12ca04",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x70",
+        "adrp x2, #0x48e000",
+        "mov x1, #0x32",
+        "add x2, x2, #0xeae",
+        "stp x19, x20, [sp]",
+        "adrp x19, #0x67f000",
+        "str x30, [sp, #0x20]",
+        "stp x21, x22, [sp, #0x10]"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve13ConnectedInfoD0Ev",
+      "offset": "0xbc860",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0xbc778",
+        "mov x0, x19",
+        "ldp x19, x30, [sp]",
+        "add sp, sp, #0x10",
+        "b #0x40f820"
+      ]
+    },
+    {
+      "name": "_ZN15ChannelInfoUtil18getDataDiffOffset2EP7__sFILE",
+      "offset": "0x1b3de0",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "sub sp, sp, #0x30",
+        "ldr x2, [x1, #0xcf8]",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x20, x0",
+        "mov x19, x1",
+        "ldr x2, [x2]"
+      ]
+    },
+    {
+      "name": "hdmpve_pay_Pay4Mounth",
+      "offset": "0xb9418",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x60",
+        "adrp x4, #0x47a000",
+        "mov w2, #0x49",
+        "add x4, x4, #0xb73",
+        "stp x19, x20, [sp]",
+        "adrp x19, #0x67f000",
+        "adrp x20, #0x47a000",
+        "stp x23, x30, [sp, #0x20]"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve11CPluginBase13OnPluginStartEv",
+      "offset": "0xb8338",
+      "size": 0,
+      "asm": [
+        "ret ",
+        "ret ",
+        "ret ",
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0xb7c14",
+        "ldr x1, [x0]"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeIjjSt9_IdentityIjESt4lessIjESaIjEE8_M_eraseEPSt13_Rb_tree_nodeIjE",
+      "offset": "0x1ab568",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "mov x19, x1",
+        "cbz x19, #0x1ab5a0",
+        "ldr x1, [x19, #0x18]",
+        "mov x0, x20"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeIxSt4pairIKxSsESt10_Select1stIS2_ESt4lessIxESaIS2_EE16_M_insert_uniqueERKS2_",
+      "offset": "0x1c9ef0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "stp x23, x24, [sp, #0x20]",
+        "stp x19, x20, [sp]",
+        "stp x21, x22, [sp, #0x10]",
+        "str x30, [sp, #0x30]",
+        "add x24, x0, #8",
+        "mov x21, x0",
+        "mov x20, x1"
+      ]
+    },
+    {
+      "name": "hdmpve_tdir_update",
+      "offset": "0x3c67e8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "bl #0x3c7a74",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x50]",
+        "blr x1",
+        "ldr x30, [sp]",
+        "add sp, sp, #0x10"
+      ]
+    },
+    {
+      "name": "_ZNKSt3tr18functionIFvbEEclEb",
+      "offset": "0x3bdb5c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "uxtb w1, w1",
+        "str x30, [sp]",
+        "ldr x3, [x0, #0x10]",
+        "cbnz x3, #0x3bdb9c",
+        "mov x0, #8",
+        "bl #0x40fa50",
+        "adrp x1, #0x67f000"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve13IConnectorOldD0Ev",
+      "offset": "0xbbe90",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0xbbe74",
+        "mov x0, x19",
+        "ldp x19, x30, [sp]",
+        "add sp, sp, #0x10",
+        "b #0x40f820"
+      ]
+    },
+    {
+      "name": "_ZNSt11__copy_moveILb0ELb1ESt26random_access_iterator_tagE8__copy_mIiEEPT_PKS3_S6_S4_",
+      "offset": "0x1e7c2c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov x4, x0",
+        "mov x3, x2",
+        "stp x19, x30, [sp]",
+        "sub x19, x1, x0",
+        "asr x0, x19, #2",
+        "cbz x0, #0x1e7c5c",
+        "mov x0, x2"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsiESt10_Select1stIS2_ESt4lessISsESaIS2_EE24_M_get_insert_unique_posERS1_",
+      "offset": "0x13bf44",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "mov w2, #1",
+        "stp x19, x20, [sp]",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x23, x30, [sp, #0x20]",
+        "mov x22, x0",
+        "mov x23, x1",
+        "ldr x19, [x0, #0x10]"
+      ]
+    },
+    {
+      "name": "Java_com_gcore_hdmpve_netinterface_MsgWorker_setNetworkStatus",
+      "offset": "0x13b038",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "adrp x3, #0x491000",
+        "adrp x1, #0x491000",
+        "add x3, x3, #0x700",
+        "adrp x4, #0x491000",
+        "add x1, x1, #0x9e0",
+        "stp x19, x30, [sp]",
+        "mov w19, w2"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve14IQRCodeService11GetInstanceEv",
+      "offset": "0x10facc",
+      "size": 0,
+      "asm": [
+        "adrp x3, #0x48a000",
+        "sub sp, sp, #0x10",
+        "adrp x1, #0x48a000",
+        "add x3, x3, #0xdf0",
+        "adrp x4, #0x48a000",
+        "add x1, x1, #0xe80",
+        "mov w2, #0x16",
+        "add x3, x3, #0x50"
+      ]
+    },
+    {
+      "name": "_ZNSt3tr117_Function_handlerIFN6HDmpve6ResultEPKhiRKNS1_13RouteInfoBaseEENS_5_BindIFNS_7_Mem_fnIMNS1_13IConnectorOldEFiS4_iS7_EEEPSB_NS_12_PlaceholderILi1EEENSG_ILi2EEENSG_ILi3EEEEEEE9_M_invokeERKNS_9_Any_dataES4_iS7_",
+      "offset": "0x15123c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x8",
+        "ldr x4, [x0]",
+        "ldr x6, [x4, #8]",
+        "ldr x5, [x4, #0x18]",
+        "asr x0, x6, #1",
+        "ldr x4, [x4]"
+      ]
+    },
+    {
+      "name": "GetPufferCallBackGCHandle",
+      "offset": "0x193450",
+      "size": 0,
+      "asm": [
+        "mov x1, x0",
+        "cbz x0, #0x19345c",
+        "ldr x1, [x0, #0x30]",
+        "mov x0, x1",
+        "ret ",
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "bl #0x11aad4"
+      ]
+    },
+    {
+      "name": "_ZNSt3tr18functionIFviPSt6vectorISsSaISsEEEEaSERKS6_",
+      "offset": "0x158810",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "stp x19, x20, [sp]",
+        "adrp x20, #0x67f000",
+        "mov x19, x0",
+        "stp x21, x30, [sp, #0x10]",
+        "add x21, sp, #0x28",
+        "ldr x20, [x20, #0xcf8]",
+        "ldr x0, [x20]"
+      ]
+    },
+    {
+      "name": "_ZNSt3mapIiSsSt4lessIiESaISt4pairIKiSsEEED2Ev",
+      "offset": "0x15d7c8",
+      "size": 0,
+      "asm": [
+        "ldr x1, [x0, #0x10]",
+        "b #0x15d778",
+        "ret ",
+        "mov w0, #0",
+        "ret ",
+        "mov w0, #0",
+        "ret ",
+        "mov w0, #0"
+      ]
+    },
+    {
+      "name": "CreateIFSLibDll",
+      "offset": "0x247a3c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "mov x0, #0x10",
+        "bl #0x410f20",
+        "str x19, [x0, #8]",
+        "adrp x1, #0x650000",
+        "add x1, x1, #0x640"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsiESt10_Select1stIS2_ESt4lessISsESaIS2_EED2Ev",
+      "offset": "0x139a64",
+      "size": 0,
+      "asm": [
+        "ldr x1, [x0, #0x10]",
+        "b #0x139a14",
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "ldr x1, [x0]",
+        "cbz x1, #0x139ab8",
+        "mov x19, x0"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve5ITDirD0Ev",
+      "offset": "0x3c6eb0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0x3c6eac",
+        "mov x0, x19",
+        "ldp x19, x30, [sp]",
+        "add sp, sp, #0x10",
+        "b #0x40f820"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve14InitializeInfoaSERKS0_",
+      "offset": "0x179e44",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "mov x20, x1",
+        "mov x19, x0",
+        "str x30, [sp, #0x10]",
+        "ldrb w0, [x20, #0xc]",
+        "ldr w1, [x1, #8]",
+        "str w1, [x19, #8]"
+      ]
+    },
+    {
+      "name": "_ZSteqISsSaISsEEbRKSt6vectorIT_T0_ES6_",
+      "offset": "0x139880",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "stp x19, x20, [sp]",
+        "stp x21, x22, [sp, #0x10]",
+        "str x30, [sp, #0x20]",
+        "ldr x21, [x0, #8]",
+        "ldr x20, [x0]",
+        "ldr x22, [x1]",
+        "ldr x0, [x1, #8]"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsPN6HDmpve7IPluginEESt10_Select1stIS5_ESt4lessISsESaIS5_EE8_M_eraseEPSt13_Rb_tree_nodeIS5_E",
+      "offset": "0xb7c2c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "mov x19, x1",
+        "cbz x19, #0xb7c6c",
+        "ldr x1, [x19, #0x18]",
+        "mov x0, x20"
+      ]
+    },
+    {
+      "name": "_ZNSt3tr18functionIFviiEEC2ERKS2_",
+      "offset": "0x140734",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "str xzr, [x0, #0x10]",
+        "ldr x3, [x1, #0x10]",
+        "cbz x3, #0x140780",
+        "ldr x4, [x1, #0x18]"
+      ]
+    },
+    {
+      "name": "_ZNSt6vectorIPN6HDmpve16IServiceObserverESaIS2_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS2_S4_EERKS2_",
+      "offset": "0xb85cc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "stp x19, x20, [sp]",
+        "mov x19, x0",
+        "str x30, [sp, #0x30]",
+        "stp x23, x24, [sp, #0x20]",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x23, x1",
+        "ldr x0, [x0, #8]"
+      ]
+    },
+    {
+      "name": "GetVersionMgrLastError",
+      "offset": "0x2e9c7c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w2, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2e9c9c",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x40]",
+        "blr x1",
+        "mov w2, w0"
+      ]
+    },
+    {
+      "name": "GetDataReader",
+      "offset": "0x2ea290",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov x2, x0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea2b0",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x20]",
+        "blr x1",
+        "mov x2, x0"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve11AccountInfoD2Ev",
+      "offset": "0xb9d8c",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "sub sp, sp, #0x30",
+        "ldr x1, [x1, #0xb98]",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x19, x20, [sp]",
+        "stp x23, x30, [sp, #0x20]",
+        "mov x21, x0",
+        "add x1, x1, #0x10"
+      ]
+    },
+    {
+      "name": "UnitVersionMgr",
+      "offset": "0x2e9b2c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w2, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2e9b4c",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x18]",
+        "blr x1",
+        "uxtb w2, w0"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsiESt10_Select1stIS2_ESt4lessISsESaIS2_EED1Ev",
+      "offset": "0x139a64",
+      "size": 0,
+      "asm": [
+        "ldr x1, [x0, #0x10]",
+        "b #0x139a14",
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "ldr x1, [x0]",
+        "cbz x1, #0x139ab8",
+        "mov x19, x0"
+      ]
+    },
+    {
+      "name": "StartPreDownloadService",
+      "offset": "0x2eaabc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w2, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2eaadc",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x20]",
+        "blr x1",
+        "uxtb w2, w0"
+      ]
+    },
+    {
+      "name": "GetDownloadSpeed",
+      "offset": "0x2ea68c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w2, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea6ac",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x38]",
+        "blr x1",
+        "mov w2, w0"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve4Conn13ZoneRouteInfoD1Ev",
+      "offset": "0x12e848",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "ldr x1, [x1, #0x688]",
+        "add x1, x1, #0x10",
+        "str x1, [x0]",
+        "b #0xbbb5c",
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0"
+      ]
+    },
+    {
+      "name": "hdmpve_connector_readData",
+      "offset": "0x12fb7c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x80",
+        "cmp x1, xzr",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x21, x2",
+        "adrp x2, #0x67f000",
+        "stp x19, x20, [sp]",
+        "mov x19, x0",
+        "cset w20, eq"
+      ]
+    },
+    {
+      "name": "GetLastDataQueryError",
+      "offset": "0x2eaa2c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w2, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2eaa4c",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x68]",
+        "blr x1",
+        "mov w2, w0"
+      ]
+    },
+    {
+      "name": "hdmpve_tdir_getinstance",
+      "offset": "0x3c67c0",
+      "size": 0,
+      "asm": [
+        "b #0x3c7a74",
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "bl #0x3c7a74",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x40]",
+        "blr x1",
+        "ldr x30, [sp]"
+      ]
+    },
+    {
+      "name": "hdmpve_tdir_isconnected",
+      "offset": "0x3c67c4",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "bl #0x3c7a74",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x40]",
+        "blr x1",
+        "ldr x30, [sp]",
+        "add sp, sp, #0x10"
+      ]
+    },
+    {
+      "name": "_ZNSt3tr117bad_function_callD1Ev",
+      "offset": "0x11da34",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "ldr x1, [x1, #0x610]",
+        "add x1, x1, #0x10",
+        "str x1, [x0]",
+        "b #0x40feb4",
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0"
+      ]
+    },
+    {
+      "name": "ReleaseDolphin",
+      "offset": "0x1f66c0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "cbz x0, #0x1f66ec",
+        "ldr x1, [x0]",
+        "cbz x1, #0x1f66ec",
+        "mov x19, x0",
+        "ldr x0, [x1]",
+        "ldr x2, [x0, #8]"
+      ]
+    },
+    {
+      "name": "GetISocketFactoryVersion",
+      "offset": "0x40ccf4",
+      "size": 0,
+      "asm": [
+        "mov w0, #0x1ed",
+        "movk w0, #0x135, lsl #16",
+        "ret ",
+        "sub sp, sp, #2, lsl #12",
+        "mov w1, #0",
+        "sub sp, sp, #0x810",
+        "mov x2, #0x2800",
+        "sub sp, sp, #0x30"
+      ]
+    },
+    {
+      "name": "GetDataPreDownloader",
+      "offset": "0x2ea324",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov x2, x0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea344",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x38]",
+        "blr x1",
+        "mov x2, x0"
+      ]
+    },
+    {
+      "name": "PufferManagerGetFileSizeCompressed",
+      "offset": "0x1935e0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov x3, x0",
+        "str x30, [sp]",
+        "cbz x0, #0x193600",
+        "ldr x2, [x0]",
+        "ldr x2, [x2, #0x38]",
+        "blr x2",
+        "mov x3, x0"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsSt4listISsSaISsEEESt10_Select1stIS5_ESt4lessISsESaIS5_EE8_M_eraseEPSt13_Rb_tree_nodeIS5_E",
+      "offset": "0x2bcdfc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "mov x19, x1",
+        "cbz x19, #0x2bce44",
+        "ldr x1, [x19, #0x18]",
+        "mov x0, x20"
+      ]
+    },
+    {
+      "name": "CreateDolphinUtility",
+      "offset": "0x1f67b4",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov x0, #0x20",
+        "stp x19, x30, [sp]",
+        "bl #0x410f20",
+        "mov x19, x0",
+        "bl #0x1f6798",
+        "mov x0, x19",
+        "ldp x19, x30, [sp]"
+      ]
+    },
+    {
+      "name": "_ZNK6HDmpve18RealNameAuthResult5CloneEv",
+      "offset": "0x179bb4",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "mov x20, x0",
+        "mov x0, #0x50",
+        "stp x21, x30, [sp, #0x10]",
+        "bl #0x410f20",
+        "mov x19, x0",
+        "bl #0xbd700"
+      ]
+    },
+    {
+      "name": "hdmpve_init",
+      "offset": "0x10e344",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x100",
+        "stp x19, x20, [sp]",
+        "adrp x20, #0x67f000",
+        "add x19, sp, #0x80",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x22, x0",
+        "mov w21, w1",
+        "ldr x0, [x20, #0xcf8]"
+      ]
+    },
+    {
+      "name": "hdmpve_account_getRecord",
+      "offset": "0xbab28",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x1a0",
+        "adrp x4, #0x47b000",
+        "add x4, x4, #0x5fd",
+        "stp x19, x20, [sp]",
+        "adrp x19, #0x67f000",
+        "str x30, [sp, #0x50]",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x25, x26, [sp, #0x30]"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsbESt10_Select1stIS2_ESt4lessISsESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E",
+      "offset": "0x17d9dc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "mov x19, x1",
+        "cbz x19, #0x17da1c",
+        "ldr x1, [x19, #0x18]",
+        "mov x0, x20"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeIiSt4pairIKiPKcESt10_Select1stIS4_ESt4lessIiESaIS4_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS4_ERS1_",
+      "offset": "0x11d184",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "stp x19, x20, [sp]",
+        "mov x20, x0",
+        "add x0, x0, #8",
+        "stp x21, x22, [sp, #0x10]",
+        "str x30, [sp, #0x20]",
+        "cmp x1, x0",
+        "mov x19, x1"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeIjSt4pairIKjjESt10_Select1stIS2_ESt4lessIjESaIS2_EE16_M_insert_uniqueERKS2_",
+      "offset": "0x2016ec",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x40",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x19, x20, [sp]",
+        "stp x23, x30, [sp, #0x20]",
+        "add x23, x0, #8",
+        "mov x20, x0",
+        "ldr x2, [x0, #0x10]",
+        "mov x22, x1"
+      ]
+    },
+    {
+      "name": "GetActionDownloadSpeed",
+      "offset": "0x2e9cdc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w2, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2e9cfc",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x60]",
+        "blr x1",
+        "mov w2, w0"
+      ]
+    },
+    {
+      "name": "ReleaseVersionManager",
+      "offset": "0x2e9a50",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "add x1, sp, #0x20",
+        "str x30, [sp]",
+        "str x0, [x1, #-8]!",
+        "mov x0, x1",
+        "bl #0x1a4064",
+        "ldr x30, [sp]",
+        "add sp, sp, #0x20"
+      ]
+    },
+    {
+      "name": "_ZNSt6vectorIPN6HDmpve15IQRCodeObserverESaIS2_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS2_S4_EERKS2_",
+      "offset": "0x10fb10",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "stp x19, x20, [sp]",
+        "mov x19, x0",
+        "str x30, [sp, #0x30]",
+        "stp x23, x24, [sp, #0x20]",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x23, x1",
+        "ldr x0, [x0, #8]"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSsSt9_IdentityISsESt4lessISsESaISsEE8_M_eraseEPSt13_Rb_tree_nodeISsE",
+      "offset": "0x1ab4e0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "mov x19, x1",
+        "cbz x19, #0x1ab520",
+        "ldr x1, [x19, #0x18]",
+        "mov x0, x20"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve14InitializeInfoD2Ev",
+      "offset": "0x10e184",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "sub sp, sp, #0x20",
+        "ldr x1, [x1, #0x578]",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "add x1, x1, #0x10",
+        "str x1, [x0], #0x48"
+      ]
+    },
+    {
+      "name": "apollo_net_sniffer_SetupCluster",
+      "offset": "0x3f4fcc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0xa0",
+        "adrp x7, #0x67f000",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x21, x0",
+        "ldr x0, [x7, #0xcf8]",
+        "stp x23, x24, [sp, #0x20]",
+        "stp x25, x26, [sp, #0x30]",
+        "stp x19, x20, [sp]"
+      ]
+    },
+    {
+      "name": "hdmpve_connector_set_clientType",
+      "offset": "0x12f2c0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x20, x0",
+        "mov w19, w1",
+        "bl #0x90250",
+        "ldr x1, [x0]",
+        "ldr x2, [x1, #0x10]"
+      ]
+    },
+    {
+      "name": "hdmpve_quit",
+      "offset": "0x10e11c",
+      "size": 0,
+      "asm": [
+        "adrp x3, #0x48a000",
+        "sub sp, sp, #0x10",
+        "adrp x1, #0x48a000",
+        "add x3, x3, #0x440",
+        "adrp x4, #0x48a000",
+        "add x3, x3, #0x40",
+        "add x4, x4, #0x558",
+        "add x1, x1, #0x4c0"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve12RealNameInfoD1Ev",
+      "offset": "0x17cb0c",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "sub sp, sp, #0x30",
+        "ldr x1, [x1, #0xd00]",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x20]",
+        "mov x20, x0",
+        "add x1, x1, #0x10"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve4Conn13NameRouteInfoD1Ev",
+      "offset": "0x12fb10",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "sub sp, sp, #0x20",
+        "ldr x1, [x1, #0xe20]",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "add x1, x1, #0x10",
+        "str x1, [x0], #0x18"
+      ]
+    },
+    {
+      "name": "GetGFMConnectorFactory",
+      "offset": "0x137550",
+      "size": 0,
+      "asm": [
+        "b #0x137514",
+        "b #0x137514",
+        "sub sp, sp, #0x20",
+        "str x30, [sp]",
+        "ldr x3, [x0, #0x10]",
+        "cbz x3, #0x13757c",
+        "mov w0, w1",
+        "mov x1, x2"
+      ]
+    },
+    {
+      "name": "_ZNSt12_Destroy_auxILb0EE9__destroyIPSsEEvT_S3_",
+      "offset": "0x110f18",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "cmp x19, x1",
+        "b.eq #0x110f44",
+        "mov x0, x19",
+        "str x1, [sp, #0x18]",
+        "add x19, x19, #8"
+      ]
+    },
+    {
+      "name": "_ZNSt6vectorIPN6HDmpve12TDirObserverESaIS2_EE13_M_insert_auxEN9__gnu_cxx17__normal_iteratorIPS2_S4_EERKS2_",
+      "offset": "0x3c7694",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "stp x19, x20, [sp]",
+        "mov x19, x0",
+        "str x30, [sp, #0x30]",
+        "stp x23, x24, [sp, #0x20]",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x23, x1",
+        "ldr x0, [x0, #8]"
+      ]
+    },
+    {
+      "name": "_ZNSt3tr18functionIFviPSt6vectorISsSaISsEEEEC1ERKS6_",
+      "offset": "0x144ef0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "str xzr, [x0, #0x10]",
+        "ldr x3, [x1, #0x10]",
+        "cbz x3, #0x144f3c",
+        "ldr x4, [x1, #0x18]"
+      ]
+    },
+    {
+      "name": "DownloadIfsPackage",
+      "offset": "0x2ea720",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "uxtb w2, w2",
+        "mov w5, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea744",
+        "ldr x4, [x0]",
+        "ldr x4, [x4, #0x68]",
+        "blr x4"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve11CPluginBase7InstallEv",
+      "offset": "0xb8344",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0xb7c14",
+        "ldr x1, [x0]",
+        "ldr x2, [x1]",
+        "mov x1, x19",
+        "blr x2"
+      ]
+    },
+    {
+      "name": "_ZN15ChannelInfoUtil20reWriteV2ChannelInfoEPKcS1_",
+      "offset": "0x1b58c0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x120",
+        "cmp x0, xzr",
+        "stp d10, d11, [sp, #0x78]",
+        "fmov d11, x1",
+        "stp x23, x24, [sp, #0x30]",
+        "stp d12, d13, [sp, #0x88]",
+        "adrp x24, #0x67f000",
+        "stp d8, d9, [sp, #0x68]"
+      ]
+    },
+    {
+      "name": "DestroyPufferCallBack",
+      "offset": "0x19342c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "cbz x0, #0x193444",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #8]",
+        "blr x1",
+        "ldr x30, [sp]",
+        "add sp, sp, #0x10"
+      ]
+    },
+    {
+      "name": "hdmpve_connector_disconnect",
+      "offset": "0x12ed14",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "adrp x4, #0x48f000",
+        "mov w2, #0x90",
+        "add x4, x4, #0x746",
+        "stp x19, x20, [sp]",
+        "adrp x19, #0x48f000",
+        "stp x21, x22, [sp, #0x10]",
+        "add x20, x19, #0x430"
+      ]
+    },
+    {
+      "name": "_ZSteqIcSt11char_traitsIcESaIcEEbRKSbIT_T0_T1_EPKS3_",
+      "offset": "0x185168",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "bl #0x45a950",
+        "cmp w0, wzr",
+        "ldr x30, [sp]",
+        "cset w0, eq",
+        "add sp, sp, #0x10",
+        "ret "
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve4Conn13ConnectedInfoD0Ev",
+      "offset": "0x12fdd0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0x12fd84",
+        "mov x0, x19",
+        "ldp x19, x30, [sp]",
+        "add sp, sp, #0x10",
+        "b #0x40f820"
+      ]
+    },
+    {
+      "name": "hdmpve_switchplugin",
+      "offset": "0xb95c8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "str x30, [sp]",
+        "str x0, [sp, #0x18]",
+        "bl #0xc0a18",
+        "ldr x2, [x0]",
+        "ldr x1, [sp, #0x18]",
+        "ldr x2, [x2, #0x10]",
+        "blr x2"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve4Conn15ConnectorResultD0Ev",
+      "offset": "0x12c3d0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0x12c300",
+        "mov x0, x19",
+        "ldp x19, x30, [sp]",
+        "add sp, sp, #0x10",
+        "b #0x40f820"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve15ServerRouteInfoD1Ev",
+      "offset": "0x179a98",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "ldr x1, [x1, #0xef0]",
+        "add x1, x1, #0x10",
+        "str x1, [x0]",
+        "b #0xbbb48",
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0"
+      ]
+    },
+    {
+      "name": "DestoryPufferManager",
+      "offset": "0x193480",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "add x1, sp, #0x20",
+        "str x30, [sp]",
+        "str x0, [x1, #-8]!",
+        "mov x0, x1",
+        "bl #0x194754",
+        "ldr x30, [sp]",
+        "add sp, sp, #0x20"
+      ]
+    },
+    {
+      "name": "hdmpve_pay_Initialize",
+      "offset": "0xb904c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x70",
+        "adrp x4, #0x47a000",
+        "mov w2, #0x1b",
+        "add x4, x4, #0xa96",
+        "stp x21, x22, [sp, #0x10]",
+        "adrp x21, #0x67f000",
+        "str x30, [sp, #0x30]",
+        "stp x23, x24, [sp, #0x20]"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsPN6HDmpve7IPluginEESt10_Select1stIS5_ESt4lessISsESaIS5_EE16_M_insert_uniqueERKS5_",
+      "offset": "0xb8004",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "stp x23, x24, [sp, #0x20]",
+        "stp x19, x20, [sp]",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x25, x30, [sp, #0x30]",
+        "add x24, x0, #8",
+        "mov x20, x0",
+        "ldr x19, [x0, #0x10]"
+      ]
+    },
+    {
+      "name": "CreateDataPredownloaderCallBack",
+      "offset": "0x2ea4d8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x40",
+        "stp x25, x30, [sp, #0x30]",
+        "mov x25, x0",
+        "mov x0, #0x38",
+        "stp x19, x20, [sp]",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x23, x24, [sp, #0x20]",
+        "mov x22, x3"
+      ]
+    },
+    {
+      "name": "apollo_net_sniffer_PingCluster",
+      "offset": "0x3f521c",
+      "size": 0,
+      "asm": [
+        "adrp x2, #0x67f000",
+        "sub sp, sp, #0x50",
+        "mov x1, x0",
+        "ldr x0, [x2, #0xcf8]",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "str x1, [sp, #0x28]",
+        "mov x19, x2"
+      ]
+    },
+    {
+      "name": "_ZNSt3tr18functionIFvbEEC1ERKS2_",
+      "offset": "0x11e518",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "str xzr, [x0, #0x10]",
+        "ldr x3, [x1, #0x10]",
+        "cbz x3, #0x11e564",
+        "ldr x4, [x1, #0x18]"
+      ]
+    },
+    {
+      "name": "Java_com_gcore_hdmpve_netinterface_MsgWorker_setMTKWiFiStatus",
+      "offset": "0x13b1a0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "adrp x3, #0x491000",
+        "adrp x1, #0x491000",
+        "add x3, x3, #0x700",
+        "adrp x4, #0x491000",
+        "add x1, x1, #0x9e0",
+        "stp x19, x30, [sp]",
+        "mov w19, w2"
+      ]
+    },
+    {
+      "name": "_ZNK6HDmpve8UserInfo5CloneEv",
+      "offset": "0x179c68",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "mov x20, x0",
+        "mov x0, #0x48",
+        "stp x21, x30, [sp, #0x10]",
+        "bl #0x410f20",
+        "mov x19, x0",
+        "bl #0xbd700"
+      ]
+    },
+    {
+      "name": "Java_com_gcore_hdmpve_netinterface_MsgWorker_permissionGranted",
+      "offset": "0x13ae94",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "adrp x3, #0x491000",
+        "adrp x1, #0x491000",
+        "add x3, x3, #0x700",
+        "adrp x4, #0x491000",
+        "add x1, x1, #0x9e0",
+        "stp x19, x30, [sp]",
+        "uxtb w19, w2"
+      ]
+    },
+    {
+      "name": "PufferManagerIsFileReady",
+      "offset": "0x1935b0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w3, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x1935d0",
+        "ldr x2, [x0]",
+        "ldr x2, [x2, #0x30]",
+        "blr x2",
+        "uxtb w3, w0"
+      ]
+    },
+    {
+      "name": "GetIfsPackagesInfo",
+      "offset": "0x2ea9fc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w4, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2eaa1c",
+        "ldr x3, [x0]",
+        "ldr x3, [x3, #0x60]",
+        "blr x3",
+        "mov w4, w0"
+      ]
+    },
+    {
+      "name": "hdmpve_account_login",
+      "offset": "0xba558",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x40",
+        "adrp x4, #0x47b000",
+        "mov w2, #0x43",
+        "add x4, x4, #0x332",
+        "mov w0, #1",
+        "stp x19, x20, [sp]",
+        "adrp x19, #0x47b000",
+        "stp x21, x22, [sp, #0x10]"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve15IAccountServiceD1Ev",
+      "offset": "0xc1708",
+      "size": 0,
+      "asm": [
+        "mov w1, #2",
+        "mov x2, #0",
+        "b #0xc16a8",
+        "ldr x16, [x0]",
+        "ldur x17, [x16, #-0x18]",
+        "add x0, x0, x17",
+        "b #0xc1708",
+        "sub sp, sp, #0x10"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsESaIS2_EED2Ev",
+      "offset": "0x204b48",
+      "size": 0,
+      "asm": [
+        "ldr x1, [x0, #0x10]",
+        "b #0x96f68",
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "mov x19, x0",
+        "add x0, x0, #0x60",
+        "str x30, [sp, #0x10]",
+        "bl #0x45ad80"
+      ]
+    },
+    {
+      "name": "PoolVersionManager",
+      "offset": "0x2e9a74",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "cbz x0, #0x2e9a8c",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x50]",
+        "blr x1",
+        "ldr x30, [sp]",
+        "add sp, sp, #0x10"
+      ]
+    },
+    {
+      "name": "_ZN19NNoneAccountAdapter19CNoneAccountFactory11GetInstanceEv",
+      "offset": "0xc1144",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "adrp x19, #0x69b000",
+        "str x30, [sp, #0x10]",
+        "ldr x0, [x19, #0xea8]",
+        "cbnz x0, #0xc1188",
+        "mov x0, #0x10",
+        "bl #0x410f20"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve11AccountInfoD1Ev",
+      "offset": "0xb9d8c",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "sub sp, sp, #0x30",
+        "ldr x1, [x1, #0xb98]",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x19, x20, [sp]",
+        "stp x23, x30, [sp, #0x20]",
+        "mov x21, x0",
+        "add x1, x1, #0x10"
+      ]
+    },
+    {
+      "name": "DestroyDataPredownloaderCallBack",
+      "offset": "0x2ea564",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea57c",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #8]",
+        "blr x1",
+        "ldr x30, [sp]",
+        "add sp, sp, #0x10"
+      ]
+    },
+    {
+      "name": "_ZN15ChannelInfoUtil16writeChannleInfoEiPKcS1_",
+      "offset": "0x1b4f74",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x70",
+        "stp x21, x22, [sp, #0x10]",
+        "adrp x22, #0x67f000",
+        "str x30, [sp, #0x50]",
+        "stp x25, x26, [sp, #0x30]",
+        "mov w26, w0",
+        "mov x25, x1",
+        "ldr x0, [x22, #0xcf8]"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve6Access11GetInstanceEv",
+      "offset": "0xc0a18",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "bl #0xc09c0",
+        "ldr x30, [sp]",
+        "add sp, sp, #0x10",
+        "ret ",
+        "sub sp, sp, #0x40",
+        "stp x21, x22, [sp, #0x10]"
+      ]
+    },
+    {
+      "name": "gfm_connector_get_factory_instance",
+      "offset": "0x137554",
+      "size": 0,
+      "asm": [
+        "b #0x137514",
+        "sub sp, sp, #0x20",
+        "str x30, [sp]",
+        "ldr x3, [x0, #0x10]",
+        "cbz x3, #0x13757c",
+        "mov w0, w1",
+        "mov x1, x2",
+        "str x2, [sp, #0x18]"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsiESt10_Select1stIS2_ESt4lessISsESaIS2_EE8_M_eraseEPSt13_Rb_tree_nodeIS2_E",
+      "offset": "0x139a14",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "mov x19, x1",
+        "cbz x19, #0x139a54",
+        "ldr x1, [x19, #0x18]",
+        "mov x0, x20"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeIjSt4pairIKjjESt10_Select1stIS2_ESt4lessIjESaIS2_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS2_ERS1_",
+      "offset": "0x1bf590",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "stp x19, x20, [sp]",
+        "mov x20, x0",
+        "add x0, x0, #8",
+        "stp x21, x22, [sp, #0x10]",
+        "str x30, [sp, #0x20]",
+        "cmp x1, x0",
+        "mov x19, x1"
+      ]
+    },
+    {
+      "name": "_ZN19NNoneAccountAdapter19CNoneAccountFactory10GetServiceEi",
+      "offset": "0xc1214",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "adrp x3, #0x47c000",
+        "add x3, x3, #0x4f0",
+        "adrp x4, #0x47c000",
+        "mov w2, #0x36",
+        "add x3, x3, #0x60",
+        "stp x19, x20, [sp]",
+        "mov w19, w1"
+      ]
+    },
+    {
+      "name": "_ZNSt6vectorIxSaIxEE9push_backERKx",
+      "offset": "0x1bea9c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov x2, x0",
+        "str x30, [sp]",
+        "ldr x3, [x0, #8]",
+        "ldr x4, [x0, #0x10]",
+        "cmp x3, x4",
+        "b.eq #0x1bead0",
+        "cbz x3, #0x1beac4"
+      ]
+    },
+    {
+      "name": "InitDataManager",
+      "offset": "0x2ea18c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x40",
+        "stp x19, x20, [sp]",
+        "stp x21, x22, [sp, #0x10]",
+        "str x30, [sp, #0x20]",
+        "mov x19, x0",
+        "str w1, [sp, #0x3c]",
+        "mov x22, x2",
+        "cbz x19, #0x2ea21c"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve14InitializeInfoD0Ev",
+      "offset": "0x10e1ec",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0x10e184",
+        "mov x0, x19",
+        "ldp x19, x30, [sp]",
+        "add sp, sp, #0x10",
+        "b #0x40f820"
+      ]
+    },
+    {
+      "name": "_ZTv0_n24_N6HDmpve15IAccountServiceD0Ev",
+      "offset": "0xc1744",
+      "size": 0,
+      "asm": [
+        "ldr x16, [x0]",
+        "ldur x17, [x16, #-0x18]",
+        "add x0, x0, x17",
+        "b #0xc1724",
+        "sub sp, sp, #0x50",
+        "stp x19, x20, [sp]",
+        "adrp x20, #0x67f000",
+        "mov x19, x0"
+      ]
+    },
+    {
+      "name": "_ZNSt10_List_baseI7AStringSaIS0_EE8_M_clearEv",
+      "offset": "0xc35b8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "ldr x19, [x0]",
+        "cmp x19, x20",
+        "b.eq #0xc35f8",
+        "mov x0, x19"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve5ITDir11GetInstanceEv",
+      "offset": "0x3c7a74",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "bl #0x3c7a1c",
+        "ldr x30, [sp]",
+        "add sp, sp, #0x10",
+        "ret ",
+        "sub sp, sp, #0x80",
+        "stp x19, x20, [sp]"
+      ]
+    },
+    {
+      "name": "ResumeDonload",
+      "offset": "0x2ea62c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w2, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea64c",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x28]",
+        "blr x1",
+        "uxtb w2, w0"
+      ]
+    },
+    {
+      "name": "_ZNSt12_Vector_baseIPN6HDmpve16IServiceObserverESaIS2_EED2Ev",
+      "offset": "0xbbf5c",
+      "size": 0,
+      "asm": [
+        "ldr x0, [x0]",
+        "cbz x0, #0xbbf68",
+        "b #0x40f820",
+        "ret ",
+        "sub sp, sp, #0x20",
+        "adrp x1, #0x649000",
+        "add x1, x1, #0x300",
+        "stp x19, x20, [sp]"
+      ]
+    },
+    {
+      "name": "GetLastDownloaderError",
+      "offset": "0x2ea84c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w2, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea86c",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x90]",
+        "blr x1",
+        "mov w2, w0"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeIxxSt9_IdentityIxESt4lessIxESaIxEE8_M_eraseEPSt13_Rb_tree_nodeIxE",
+      "offset": "0x1b20a8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "mov x19, x1",
+        "cbz x19, #0x1b20e0",
+        "ldr x1, [x19, #0x18]",
+        "mov x0, x20"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve4Conn13ZoneRouteInfoD2Ev",
+      "offset": "0x12e848",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "ldr x1, [x1, #0x688]",
+        "add x1, x1, #0x10",
+        "str x1, [x0]",
+        "b #0xbbb5c",
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeIiSt4pairIKiiESt10_Select1stIS2_ESt4lessIiESaIS2_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS2_ERS1_",
+      "offset": "0x1a1b0c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "stp x19, x20, [sp]",
+        "mov x20, x0",
+        "add x0, x0, #8",
+        "stp x21, x22, [sp, #0x10]",
+        "str x30, [sp, #0x20]",
+        "cmp x1, x0",
+        "mov x19, x1"
+      ]
+    },
+    {
+      "name": "Java_com_gcore_hdmpve_qr_QRCodeAPI_qrCodeInit",
+      "offset": "0x10e50c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "adrp x3, #0x48a000",
+        "adrp x4, #0x48a000",
+        "mov w2, #0x9e",
+        "add x3, x3, #0x600",
+        "add x4, x4, #0x743",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x21, x1"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve4Conn13RouteInfoBaseD1Ev",
+      "offset": "0xbbb5c",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "ldr x1, [x1, #0x118]",
+        "add x1, x1, #0x10",
+        "str x1, [x0]",
+        "b #0xbbb48",
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsESaIS2_EE4findERS1_",
+      "offset": "0x1d1050",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x20]",
+        "add x19, x0, #8",
+        "mov x22, x1",
+        "mov x21, x19",
+        "ldr x20, [x0, #0x10]"
+      ]
+    },
+    {
+      "name": "_ZNSt3tr114_Function_base13_Base_managerINS_5_BindIFNS_7_Mem_fnIMN6HDmpve13IConnectorOldEFiPKhiRKNS4_13RouteInfoBaseEEEEPS5_NS_12_PlaceholderILi1EEENSF_ILi2EEENSF_ILi3EEEEEEE10_M_managerERNS_9_Any_dataERKSM_NS_18_Manager_operationE",
+      "offset": "0x1511b0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "cmp w2, #3",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "b.hi #0x151228",
+        "mov x19, x0",
+        "adrp x0, #0x494000",
+        "add x0, x0, #0xad0"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve13DolphinHelper18CopyResFileFromAppEPKcS2_",
+      "offset": "0x1ed284",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x80",
+        "str d8, [sp, #0x58]",
+        "stp x21, x22, [sp, #0x10]",
+        "adrp x21, #0x67f000",
+        "str x30, [sp, #0x50]",
+        "stp x27, x28, [sp, #0x40]",
+        "mov x28, x0",
+        "mov x27, x1"
+      ]
+    },
+    {
+      "name": "_ZNSt12_Vector_baseISsSaISsEE17_M_create_storageEm",
+      "offset": "0x156e68",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x20, x0",
+        "lsl x19, x1, #3",
+        "cbz x1, #0x156e9c",
+        "mov x0, #0x1fffffffffffffff",
+        "cmp x1, x0"
+      ]
+    },
+    {
+      "name": "_ZNSt6vectorISsSaISsEED1Ev",
+      "offset": "0xd7898",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "ldr x19, [x0]",
+        "ldr x21, [x0, #8]",
+        "cmp x19, x21",
+        "b.eq #0xd78c8"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsESaIS2_EE24_M_get_insert_unique_posERS1_",
+      "offset": "0x970d0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "mov w2, #1",
+        "stp x19, x20, [sp]",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x23, x30, [sp, #0x20]",
+        "mov x22, x0",
+        "mov x23, x1",
+        "ldr x19, [x0, #0x10]"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve13IConnectorOldD1Ev",
+      "offset": "0xbbe74",
+      "size": 0,
+      "asm": [
+        "mov w1, #2",
+        "mov x2, #0",
+        "b #0xbbe14",
+        "ldr x16, [x0]",
+        "ldur x17, [x16, #-0x18]",
+        "add x0, x0, x17",
+        "b #0xbbe74",
+        "sub sp, sp, #0x10"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve8UserInfoD1Ev",
+      "offset": "0xc0d48",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "sub sp, sp, #0x20",
+        "ldr x1, [x1, #0xa40]",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "add x1, x1, #0x10",
+        "str x1, [x0], #0x18"
+      ]
+    },
+    {
+      "name": "PufferManagerDownloadFile",
+      "offset": "0x193610",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "uxtb w2, w2",
+        "mov x6, #-1",
+        "str x30, [sp]",
+        "cbz x0, #0x193634",
+        "ldr x5, [x0]",
+        "ldr x5, [x5, #0x40]",
+        "blr x5"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve15CSdkFactoryBaseD2Ev",
+      "offset": "0xb83d8",
+      "size": 0,
+      "asm": [
+        "ret ",
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "mov w20, w1",
+        "cbnz w1, #0xb83fc",
+        "ldr x0, [x2]"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeIxSt4pairIKxSsESt10_Select1stIS2_ESt4lessIxESaIS2_EE4findERS1_",
+      "offset": "0x1c9c10",
+      "size": 0,
+      "asm": [
+        "ldr x2, [x0, #0x10]",
+        "add x0, x0, #8",
+        "mov x3, x0",
+        "cbz x2, #0x1c9c4c",
+        "ldr x5, [x2, #0x20]",
+        "ldr x4, [x1]",
+        "cmp x5, x4",
+        "b.lt #0x1c9c38"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSsSt9_IdentityISsESt4lessISsESaISsEE7_M_copyEPKSt13_Rb_tree_nodeISsEPS7_",
+      "offset": "0x1bf3fc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x40",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x22, x0",
+        "add x0, x1, #0x20",
+        "stp x19, x20, [sp]",
+        "str x2, [sp, #0x38]",
+        "mov x20, x1",
+        "stp x23, x30, [sp, #0x20]"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve6ResultD0Ev",
+      "offset": "0xb9aa0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0xb9a38",
+        "mov x0, x19",
+        "ldp x19, x30, [sp]",
+        "add sp, sp, #0x10",
+        "b #0x40f820"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsPN6HDmpve4Conn17ConnectorObserverEESt10_Select1stIS6_ESt4lessISsESaIS6_EE24_M_get_insert_unique_posERS1_",
+      "offset": "0x12da5c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x30",
+        "mov w2, #1",
+        "stp x19, x20, [sp]",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x23, x30, [sp, #0x20]",
+        "mov x22, x0",
+        "mov x23, x1",
+        "ldr x19, [x0, #0x10]"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeIhhSt9_IdentityIhESt4lessIhESaIhEE8_M_eraseEPSt13_Rb_tree_nodeIhE",
+      "offset": "0x3ffbb8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "mov x19, x1",
+        "cbz x19, #0x3ffbf0",
+        "ldr x1, [x19, #0x18]",
+        "mov x0, x20"
+      ]
+    },
+    {
+      "name": "hdmpve_connector_writeData",
+      "offset": "0x12ee04",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x40",
+        "cmp x1, xzr",
+        "stp x19, x20, [sp]",
+        "cset w20, eq",
+        "cmp w2, wzr",
+        "cset w4, eq",
+        "str x30, [sp, #0x30]",
+        "stp x21, x22, [sp, #0x10]"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve14IQRCodeServiceC2Ev",
+      "offset": "0x10f8ac",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "ldr x1, [x1, #0x780]",
+        "add x1, x1, #0x10",
+        "str x1, [x0]",
+        "ret ",
+        "ret ",
+        "sub sp, sp, #0x30",
+        "adrp x1, #0x69d000"
+      ]
+    },
+    {
+      "name": "_ZNSt3mapIiPKcSt4lessIiESaISt4pairIKiS1_EEED1Ev",
+      "offset": "0x11cca4",
+      "size": 0,
+      "asm": [
+        "ldr x1, [x0, #0x10]",
+        "b #0x11cc5c",
+        "sub sp, sp, #0x20",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "cmp x19, x1",
+        "b.eq #0x11cce0",
+        "ldr x0, [x19]"
+      ]
+    },
+    {
+      "name": "GetCurDataVersion",
+      "offset": "0x2e9c4c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w2, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2e9c6c",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x38]",
+        "blr x1",
+        "sxth w2, w0"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve12RealNameInfoD0Ev",
+      "offset": "0x17cb98",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0x17cb0c",
+        "mov x0, x19",
+        "ldp x19, x30, [sp]",
+        "add sp, sp, #0x10",
+        "b #0x40f820"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve13NameRouteInfoD1Ev",
+      "offset": "0x12383c",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67e000",
+        "sub sp, sp, #0x20",
+        "ldr x1, [x1, #0xf08]",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x20, x0",
+        "add x1, x1, #0x10",
+        "str x1, [x0], #0x18"
+      ]
+    },
+    {
+      "name": "GetDataPredownloaderCallBackGCHandle",
+      "offset": "0x2ea588",
+      "size": 0,
+      "asm": [
+        "mov x1, x0",
+        "cbz x0, #0x2ea594",
+        "ldr x1, [x0, #8]",
+        "mov x0, x1",
+        "ret ",
+        "sub sp, sp, #0x10",
+        "mov w3, w0",
+        "str x30, [sp]"
+      ]
+    },
+    {
+      "name": "StartDownload",
+      "offset": "0x2ea5cc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w2, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea5ec",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #0x18]",
+        "blr x1",
+        "uxtb w2, w0"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeIiSt4pairIKiPKcESt10_Select1stIS4_ESt4lessIiESaIS4_EE24_M_get_insert_unique_posERS1_",
+      "offset": "0x11d0e4",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "mov x3, x0",
+        "mov w4, #1",
+        "stp x19, x30, [sp]",
+        "add x19, x0, #8",
+        "ldr x2, [x0, #0x10]",
+        "cbz x2, #0x11d130",
+        "ldr w4, [x1]"
+      ]
+    },
+    {
+      "name": "IIPSFindFirstFile",
+      "offset": "0x2ea96c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w4, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea98c",
+        "ldr x3, [x0]",
+        "ldr x3, [x3, #0x48]",
+        "blr x3",
+        "mov w4, w0"
+      ]
+    },
+    {
+      "name": "DestroyDownlaodMgrCallBack",
+      "offset": "0x2ea4a0",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea4b8",
+        "ldr x1, [x0]",
+        "ldr x1, [x1, #8]",
+        "blr x1",
+        "ldr x30, [sp]",
+        "add sp, sp, #0x10"
+      ]
+    },
+    {
+      "name": "_ZTv0_n24_N6HDmpve13IConnectorOldD0Ev",
+      "offset": "0xbbeb0",
+      "size": 0,
+      "asm": [
+        "ldr x16, [x0]",
+        "ldur x17, [x16, #-0x18]",
+        "add x0, x0, x17",
+        "b #0xbbe90",
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x19, x0"
+      ]
+    },
+    {
+      "name": "SetPreDownloadSessionCount",
+      "offset": "0x2eabb4",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "cbz x0, #0x2eabcc",
+        "ldr x2, [x0]",
+        "ldr x2, [x2, #0x50]",
+        "blr x2",
+        "ldr x30, [sp]",
+        "add sp, sp, #0x10"
+      ]
+    },
+    {
+      "name": "hdmpve_gromelink_connect",
+      "offset": "0x3d955c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w3, #-1",
+        "str x30, [sp]",
+        "cbz x1, #0x3d9580",
+        "cbz x0, #0x3d9580",
+        "ldr x2, [x0]",
+        "ldr x2, [x2, #0x10]",
+        "blr x2"
+      ]
+    },
+    {
+      "name": "PufferManagerRemoveTask",
+      "offset": "0x193644",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w3, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x193664",
+        "ldr x2, [x0]",
+        "ldr x2, [x2, #0x48]",
+        "blr x2",
+        "uxtb w3, w0"
+      ]
+    },
+    {
+      "name": "_ZN19NNoneAccountAdapter19CNoneAccountFactory7GetNameEv",
+      "offset": "0xc104c",
+      "size": 0,
+      "asm": [
+        "adrp x0, #0x4f3000",
+        "add x0, x0, #0xa27",
+        "ret ",
+        "adrp x0, #0x690000",
+        "ldr x0, [x0, #0x18]",
+        "ret ",
+        "adrp x1, #0x47c000",
+        "adrp x3, #0x47c000"
+      ]
+    },
+    {
+      "name": "DownloadLocalData",
+      "offset": "0x2ea754",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "uxtb w3, w3",
+        "uxtb w5, w5",
+        "mov w7, w0",
+        "str x30, [sp]",
+        "cbz x0, #0x2ea77c",
+        "ldr x6, [x0]",
+        "ldr x6, [x6, #0x58]"
+      ]
+    },
+    {
+      "name": "_ZNSt6vectorIcSaIcEE6resizeEmc",
+      "offset": "0x3ecd08",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "ldr x6, [x0, #8]",
+        "ldr x4, [x0]",
+        "sub x5, x6, x4",
+        "str x30, [sp]",
+        "strb w2, [sp, #0x1f]",
+        "cmp x1, x5",
+        "b.ls #0x3ecd40"
+      ]
+    },
+    {
+      "name": "_ZNK6HDmpve14InitializeInfo5CloneEv",
+      "offset": "0x17afb4",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "mov x20, x0",
+        "mov x0, #0x78",
+        "str x30, [sp, #0x10]",
+        "bl #0x410f20",
+        "mov x19, x0",
+        "bl #0x17af44"
+      ]
+    },
+    {
+      "name": "_ZNKSt3tr18functionIFviRSt6vectorISsSaISsEEEEclEiS4_",
+      "offset": "0x1223a8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "str x30, [sp]",
+        "ldr x4, [x0, #0x10]",
+        "cbnz x4, #0x1223e4",
+        "mov x0, #8",
+        "bl #0x40fa50",
+        "adrp x1, #0x67f000",
+        "adrp x2, #0x67f000"
+      ]
+    },
+    {
+      "name": "_ZN15ChannelInfoUtil14isV2Signature2EPKc",
+      "offset": "0x1b411c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "stp x19, x20, [sp]",
+        "adrp x20, #0x67f000",
+        "str x30, [sp, #0x30]",
+        "stp x23, x24, [sp, #0x20]",
+        "mov x23, x0",
+        "ldr x0, [x20, #0xcf8]",
+        "stp x21, x22, [sp, #0x10]"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve14IQRCodeServiceD0Ev",
+      "offset": "0x10f9b4",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0",
+        "bl #0x10f8c0",
+        "mov x0, x19",
+        "ldp x19, x30, [sp]",
+        "add sp, sp, #0x10",
+        "b #0x40f820"
+      ]
+    },
+    {
+      "name": "_ZN6HDmpve4Conn15ServerRouteInfoD2Ev",
+      "offset": "0x12e814",
+      "size": 0,
+      "asm": [
+        "adrp x1, #0x67f000",
+        "ldr x1, [x1, #0x668]",
+        "add x1, x1, #0x10",
+        "str x1, [x0]",
+        "b #0xbbb5c",
+        "sub sp, sp, #0x10",
+        "stp x19, x30, [sp]",
+        "mov x19, x0"
+      ]
+    },
+    {
+      "name": "hdmpve_account_getAppId",
+      "offset": "0xba820",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x40",
+        "adrp x4, #0x47b000",
+        "mov w0, #1",
+        "add x4, x4, #0x437",
+        "stp x19, x20, [sp]",
+        "adrp x19, #0x47b000",
+        "adrp x20, #0x47b000",
+        "add x19, x19, #0x50"
+      ]
+    },
+    {
+      "name": "_ZNSt4listISsSaISsEEC1ERKS1_",
+      "offset": "0x2bcd9c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "mov x19, x0",
+        "stp x21, x30, [sp, #0x10]",
+        "mov x21, x1",
+        "str x0, [x19]",
+        "str x0, [x19, #8]",
+        "ldr x20, [x1]"
+      ]
+    },
+    {
+      "name": "_ZNSt3tr18functionIFvbEEC2ERKS2_",
+      "offset": "0x11e518",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x20",
+        "stp x19, x20, [sp]",
+        "str x30, [sp, #0x10]",
+        "mov x19, x0",
+        "str xzr, [x0, #0x10]",
+        "ldr x3, [x1, #0x10]",
+        "cbz x3, #0x11e564",
+        "ldr x4, [x1, #0x18]"
+      ]
+    },
+    {
+      "name": "Java_com_gcore_hdmpve_HDmpve_hdmpveInit",
+      "offset": "0x10e6cc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x60",
+        "mov x5, #0",
+        "mov x7, x5",
+        "stp x21, x22, [sp, #0x20]",
+        "adrp x22, #0x67f000",
+        "str x30, [sp, #0x30]",
+        "stp x19, x20, [sp, #0x10]",
+        "mov x19, x0"
+      ]
+    },
+    {
+      "name": "_ZN15ChannelInfoUtil24packNewapkAfterMergeDiffEPKcS1_S1_",
+      "offset": "0x1b3e88",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "stp x21, x22, [sp, #0x10]",
+        "mov x21, x1",
+        "adrp x1, #0x67f000",
+        "stp x19, x20, [sp]",
+        "mov x20, x2",
+        "cmp x21, xzr",
+        "ldr x2, [x1, #0xcf8]"
+      ]
+    },
+    {
+      "name": "_ZN15ChannelInfoUtil19getChannelInfoValueEPKc",
+      "offset": "0x1b4c7c",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x70",
+        "stp x23, x24, [sp, #0x20]",
+        "adrp x23, #0x67f000",
+        "stp x25, x26, [sp, #0x30]",
+        "mov x25, x0",
+        "ldr x0, [x23, #0xcf8]",
+        "stp x19, x20, [sp]",
+        "stp x21, x22, [sp, #0x10]"
+      ]
+    },
+    {
+      "name": "_ZNSt8_Rb_treeISsSt4pairIKSsSt4listISsSaISsEEESt10_Select1stIS5_ESt4lessISsESaIS5_EE16_M_insert_uniqueERKS5_",
+      "offset": "0x2bd6f8",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x50",
+        "stp x23, x24, [sp, #0x20]",
+        "stp x19, x20, [sp]",
+        "stp x21, x22, [sp, #0x10]",
+        "stp x25, x30, [sp, #0x30]",
+        "add x24, x0, #8",
+        "mov x20, x0",
+        "ldr x19, [x0, #0x10]"
+      ]
+    }
+  ],
+  "suspicious_strings": [
+    "[HttpDnsHandler] the current HttpDNS version is not supported, upgrade V3 version!",
+    "[HttpDnsHandler] the current httpdns v%d, is not supported",
+    "unsupported encrypt method",
+    "unsupported key exchange mode",
+    "unsupported account type",
+    "the method is unsupported in current mode",
+    "unsupported account format",
+    "hdmpve_tgcpapi_start_connection tgcpapi_connect_url succ.",
+    "hdmpve_tgcpapi_start_connection hdmpve_tgcpapi_send_syn_msg succ.",
+    "hdmpve_tgcpapi_start_connection hdmpve_tgcpapi_recv_ack_msg succ.",
+    "hdmpve_tgcpapi_start_connection hdmpve_tgcpapi_send_authreq_msg succ.",
+    "hdmpve_tgcpapi_start_connection hdmpve_tgcpapi_recv_authrsp_msg succ.",
+    "hdmpve_tgcpapi_start_connection hdmpve_tgcpapi_recv_bingo_msg succ.",
+    "hdmpve_tgcpapi_relay_connection hdmpve_tgcpapi_recv_relay_msg done, ret=%d, relay_succ=%d",
+    "hdmpve_tgcpapi_get_account unsupported format:%d",
+    "[bSupportCompressMethodList]",
+    "Plugin[%s] dose not support service[%s]",
+    "CApolloPayObserver::OnApolloPayActionProc result:%d, ext:%d, %s",
+    "hdmpve_account_IsPlatformSupportApi",
+    " hdmpve_account_IsPlatformSupportApi pAccountService is null",
+    "OnConnected result[%s]",
+    "OnDisconnectProc result[%s]",
+    "OnStateChangedProc state[%d] result[%s]",
+    "onConnResultStatic",
+    "ConnResultStatic result[%d] tcpTime[%d] keyTime[%d] authTime[%d] bingoTime[%d]",
+    "notfyLoginOnMainThread this[%p] size[%d] result[%d]",
+    "<account service>GetRecord result[%d]",
+    "Connect result[%d] old[%d] new[%d] openID[%s]",
+    "OnAccountLoginProc result[%s] isConnecting[%d]",
+    "OnAccountLoginProc result[%d]",
+    "OnAccessTokenRefreshed m_bRefresAtk[%d] result[%s]",
+    "CreateConnection success:%p",
+    "OnThreadResume",
+    "OnQueryNameResult",
+    "Resunme but m_pHandler is null",
+    "OnThreadResume ret: %d",
+    "tgcpapi_resume failed return %d, for %s, url:%s",
+    "Check NetWorkError ret=%d",
+    "flush success!",
+    "update failed, result:%d, reason:%d, excode:%d",
+    "Connect success! url:%s",
+    "Reconnect success!",
+    "CTGcp::OnThreadProc checkTimeOut. url:%s",
+    "OnQueryNameResult Error:%d, %s",
+    "OnQueryNameResult Sussess and choose real url:%s",
+    "OnQueryNameResult Error: ip list is empty",
+    "NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN6HDmpve19CDefaultNameServiceEFviPSt6vectorISsSaISsEEEEEEE",
+    "NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN6HDmpve19CDefaultNameServiceEFviPSt6vectorISsSaISsEEEEEEE",
+    "NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN6HDmpve19CDefaultNameServiceEFviPSt6vectorISsSaISsEEEEEEE",
+    "N6HDmpve13_tagApoResultE",
+    "tcp_debug_print_state",
+    "send_tcp_debug_print",
+    "recv_tcp_debug_print",
+    "tcp_debug_print_pcbs",
+    "Check need to trim msg rcv_nxt[%u] seqno[%u] seqno+tcplen[%u] ",
+    "Wrong check sum[%u] != [%u] [%s]",
+    "tgcpapi_check_connect",
+    "Recv success from svr[%d]",
+    "tgcpapi_init unsupport V1 AuthType:%d, iVersion:%d",
+    "tgcpapi_get_account unsupported account type:%d",
+    "tgcpapi_get_openid unsupported account type:%d",
+    "In sufficent input buffer",
+    "Tcp does not support recv udp",
+    "Tcp does not support send udp",
+    "tsocket_check_connect",
+    "Connect Successs",
+    "Failed to check connection",
+    "Failed to check connect for[%d]",
+    "Check Connect[%d]",
+    "additional six characters expected to parse unicode surrogate pair.",
+    "expecting another \\u token to begin the second half of a unicode surrogate pair",
+    "/Users/hdmpve/android/dev/Common/Source/ReportHandler/HDmpveReport.cpp",
+    "Report Type:%d",
+    "Report",
+    "/Users/hdmpve/android/dev/Common/Source/ReportHandler/ReportHandler.cpp",
+    "ReportHandler::Report eventID:%d, eventName:%s",
+    "N6HDmpve13IHDmpveReportE",
+    "N6HDmpve18HDmpveReportOneSDKE",
+    "/Users/hdmpve/android/dev/Common/Source/ReportHandler/HDmpveReport_OneSDK.mm",
+    "COREREPORT",
+    "result=",
+    "NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN22pebble_address_service18QueryAddrSvrClientEFviPN6pebble3rpc8protocol9TProtocolENS_8functionIFviRNS2_16RspQueryAddrInfoEEEEEEEEE",
+    "NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN22pebble_address_service26QueryAddrSvrAsyncProcessorEFvNS_8functionIFvbEEElPN6pebble3rpc8protocol9TProtocolEPvRKNS2_16RspQueryAddrInfoEEEEEE",
+    "NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN22pebble_address_service18QueryAddrSvrClientEFviPN6pebble3rpc8protocol9TProtocolENS_8functionIFviRNS2_16RspQueryAddrInfoEEEEEEEEE",
+    "NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN22pebble_address_service26QueryAddrSvrAsyncProcessorEFvNS_8functionIFvbEEElPN6pebble3rpc8protocol9TProtocolEPvRKNS2_16RspQueryAddrInfoEEEEEE",
+    "NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN22pebble_address_service18QueryAddrSvrClientEFviPN6pebble3rpc8protocol9TProtocolENS_8functionIFviRNS2_16RspQueryAddrInfoEEEEEEEEE",
+    "NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN22pebble_address_service26QueryAddrSvrAsyncProcessorEFvNS_8functionIFvbEEElPN6pebble3rpc8protocol9TProtocolEPvRKNS2_16RspQueryAddrInfoEEEEEE",
+    "N22pebble_address_service33QueryAddrSvr_QueryAddrInfo_resultE",
+    "N22pebble_address_service34QueryAddrSvr_QueryAddrInfo_presultE",
+    "TApplicationException: Unsupported client type",
+    "TApplicationException: Missing result",
+    "QueryAddrSvr_QueryAddrInfo_result",
+    "QueryAddrSvr_QueryAddrInfo_presult",
+    "QueryAddrInfo failed: unknown result",
+    "NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN6pebble18AddressServiceTaskEFviRKSsRKSt6vectorISsSaISsEEEEEEE",
+    "NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN6pebble18AddressServiceTaskEFviRKSsRKSt6vectorISsSaISsEEEEEEE",
+    "NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN6pebble18AddressServiceTaskEFviRKSsRKSt6vectorISsSaISsEEEEEEE",
+    "OnThreadResume",
+    "AddressServiceTask resume.",
+    "get service address success(%s : %s)",
+    "NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN6pebble21AddressServiceWrapperEFviRN22pebble_address_service16RspQueryAddrInfoERNS_8functionIFviRSt6vectorISsSaISsEEEEEEEEEE",
+    "NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN6pebble21AddressServiceWrapperEFviRN22pebble_address_service16RspQueryAddrInfoERNS_8functionIFviRSt6vectorISsSaISsEEEEEEEEEE",
+    "NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN6pebble21AddressServiceWrapperEFviRN22pebble_address_service16RspQueryAddrInfoERNS_8functionIFviRSt6vectorISsSaISsEEEEEEEEEE",
+    "query addr result failed(%d:%s)",
+    "[stMsgUpload]",
+    "getaddrinfo, host[%s] result[%d]",
+    "lwip not support SetNodelay!",
+    "lwip not support SetSendbuff!",
+    "Handling connect success.",
+    "checkConnect",
+    "selectCheck(WRITE) ret:%d",
+    "socket send success len:%d",
+    "selectCheck(READ) ret:%d",
+    "socket recv success len:%d",
+    "tgcpapi Not support kRouteSpecifyName",
+    "Unsupported!",
+    "DNSUri",
+    "N6HDmpve4Conn15ConnectorResultE",
+    "There's another verify task for another connection",
+    "[Connector:%p]: OnAccountLoginProc result:%d, ext1:%d, ext2:%d, _isConnecting:%d, _hasHandleLoginProc:%d",
+    "Login success, but account info is null",
+    "Login success, but tokenlist is empty",
+    "[Connector:%p]: Connector::OnAccessTokenRefreshed m_bRefresAtk:%d, result:%s",
+    "[Connector:%p]: relayconnect %s, Resume gcpError:%d",
+    "[Connector:%p]: Connector::notifyStateChanged state:%d, result:%d, ext:%d, ext2:%d, %s, url:%s(%s), %s, _isConnecting:%d, _isReconnecting:%d",
+    "retry failed, please check your network is ok",
+    "[Connector:%p]: reconnect success, url:%s, openid:%s",
+    "Disconnect Successfully",
+    "flush success",
+    "[Connector:%p]: onRecvData [isUDP:%d, url:%s]",
+    "[Connector:%p]: recvQueue[isUDP:%d] is NULL.",
+    "[Connector:%p]: recvQueue[isUDP:%d] is overflow",
+    "Connect failed, please check your network is ok",
+    "Network exception, please check your network is ok",
+    "Closed by Connection, please check your network is ok",
+    "[Connector:%p]: try tgcpapi_start success:%s",
+    "CheckNetDevices",
+    "NetInterfaceHelper:AttachCurrentThread success:%p",
+    "NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN6pebble9broadcast29PebbleChannelMgrServiceClientEFviPNS2_3rpc8protocol9TProtocolENS_8functionIFviiEEEEEEEE",
+    "NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN6pebble9broadcast37PebbleChannelMgrServiceAsyncProcessorEFvNS_8functionIFvbEEElPNS2_3rpc8protocol9TProtocolEPvRKiEEEEE",
+    "NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN6pebble9broadcast29PebbleChannelMgrServiceClientEFviPNS2_3rpc8protocol9TProtocolENS_8functionIFviiEEEEEEEE",
+    "NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN6pebble9broadcast37PebbleChannelMgrServiceAsyncProcessorEFvNS_8functionIFvbEEElPNS2_3rpc8protocol9TProtocolEPvRKiEEEEE",
+    "NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN6pebble9broadcast29PebbleChannelMgrServiceClientEFviPNS2_3rpc8protocol9TProtocolENS_8functionIFviiEEEEEEEE",
+    "NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN6pebble9broadcast37PebbleChannelMgrServiceAsyncProcessorEFvNS_8functionIFvbEEElPNS2_3rpc8protocol9TProtocolEPvRKiEEEEE",
+    "N6pebble9broadcast42PebbleChannelMgrService_JoinChannel_resultE",
+    "N6pebble9broadcast43PebbleChannelMgrService_JoinChannel_presultE",
+    "N6pebble9broadcast42PebbleChannelMgrService_QuitChannel_resultE",
+    "N6pebble9broadcast43PebbleChannelMgrService_QuitChannel_presultE",
+    "PebbleChannelMgrService_JoinChannel_result",
+    "PebbleChannelMgrService_JoinChannel_presult",
+    "PebbleChannelMgrService_QuitChannel_result",
+    "PebbleChannelMgrService_QuitChannel_presult",
+    "JoinChannel failed: unknown result",
+    "QuitChannel failed: unknown result",
+    "NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN6pebble3rpc12RpcConnectorEFmvEEEEE",
+    "NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN6pebble3rpc9transport9MsgBufferEFvmEEEEE",
+    "NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN6pebble3rpc12RpcConnectorEFvbEEEEE",
+    "NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN6pebble3rpc12RpcConnectorEFviPSt6vectorISsSaISsEEEEEEE",
+    "NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN6pebble3rpc12RpcConnectorEFmvEEEEE",
+    "NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN6pebble3rpc9transport9MsgBufferEFvmEEEEE",
+    "NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN6pebble3rpc12RpcConnectorEFvbEEEEE",
+    "NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN6pebble3rpc12RpcConnectorEFviPSt6vectorISsSaISsEEEEEEE",
+    "NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN6pebble3rpc12RpcConnectorEFmvEEEEE",
+    "NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN6pebble3rpc9transport9MsgBufferEFvmEEEEE",
+    "NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN6pebble3rpc12RpcConnectorEFvbEEEEE",
+    "NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN6pebble3rpc12RpcConnectorEFviPSt6vectorISsSaISsEEEEEEE",
+    "Base TTransport cannot consume.",
+    "consume did not follow a borrow.",
+    "create connector[old] success, url:%s, tdr:%d.",
+    "reportProc",
+    "Report analysis, tag:%d",
+    "PingResult, tag:%d, ret:%d",
+    "NSLookupResult, tag:%d, ret:%d",
+    "NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN6pebble7rpc_new12RpcConnectorEFvlmEEEEE",
+    "NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN6pebble7rpc_new12RpcConnectorEFvbEEEEE",
+    "NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN6pebble7rpc_new12RpcConnectorEFvlmEEEEE",
+    "NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN6pebble7rpc_new12RpcConnectorEFvbEEEEE",
+    "NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN6pebble7rpc_new12RpcConnectorEFvlmEEEEE",
+    "NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN6pebble7rpc_new12RpcConnectorEFvbEEEEE",
+    "NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN6HDmpve13IConnectorOldEFiPKhiRKNS2_13RouteInfoBaseEEEEEE",
+    "NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN6HDmpve13IConnectorOldEFiPKhiRKNS2_13RouteInfoBaseEEEEEE",
+    "NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN6HDmpve13IConnectorOldEFiPKhiRKNS2_13RouteInfoBaseEEEEEE",
+    "NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN8addr_svr18QueryAddrSvrClientEFviPN6pebble3rpc8protocol9TProtocolENS_8functionIFviRNS2_16RspQueryAddrInfoEEEEEEEEE",
+    "NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN8addr_svr26QueryAddrSvrAsyncProcessorEFvNS_8functionIFvbEEElPN6pebble3rpc8protocol9TProtocolEPvRKNS2_16RspQueryAddrInfoEEEEEE",
+    "NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN8addr_svr18QueryAddrSvrClientEFviPN6pebble3rpc8protocol9TProtocolENS_8functionIFviRNS2_16RspQueryAddrInfoEEEEEEEEE",
+    "NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN8addr_svr26QueryAddrSvrAsyncProcessorEFvNS_8functionIFvbEEElPN6pebble3rpc8protocol9TProtocolEPvRKNS2_16RspQueryAddrInfoEEEEEE",
+    "NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN8addr_svr18QueryAddrSvrClientEFviPN6pebble3rpc8protocol9TProtocolENS_8functionIFviRNS2_16RspQueryAddrInfoEEEEEEEEE",
+    "NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN8addr_svr26QueryAddrSvrAsyncProcessorEFvNS_8functionIFvbEEElPN6pebble3rpc8protocol9TProtocolEPvRKNS2_16RspQueryAddrInfoEEEEEE",
+    "N8addr_svr33QueryAddrSvr_QueryAddrInfo_resultE",
+    "N8addr_svr34QueryAddrSvr_QueryAddrInfo_presultE",
+    "SaveAddressResult",
+    "GetAddressResult",
+    "save address result for url:%s, resultIPList size:%d",
+    "address result:%s",
+    "get address result from file for url:%s, resultIPList size:%d, but the cache is expired",
+    "get address result from file for url:%s, resultIPList size:%d",
+    "get address result from cache for url:%s, resultIPList size:%d",
+    "address result: %s",
+    "NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN6pebble3rpc14AddressServiceEFmvEEEEE",
+    "NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN6pebble3rpc14AddressServiceEFmvEEEEE",
+    "NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN6pebble3rpc14AddressServiceEFmvEEEEE",
+    "Recv_QueryAddrInfo ret:%d, rsp.result:%d",
+    "get service address success(num is %u):",
+    "dns %s success, result is:",
+    "Insufficient space in external MemoryBuffer",
+    "<HDmpveDNS> getaddrinfo, host:%s, result:%d timeMS:%d.",
+    "<httpdns> get DNSResultTYpe:%d .",
+    "<LocalDNS> getaddrinfo, host:ipv4only.arpa, result:%d.",
+    "<HttpDns> GetIpAddress result is null",
+    "<HttpDNS> GetHostByNameForAll, host:%s, result:%s, timeMS:%d.",
+    "<HttpDNS> GetHostByNameForAllRecursive, host:%s, result:%s, timeMS:%d.",
+    "<HttpDNS> GetHostByNameForAllRecursive, host:%s, result:%s, timeMS:%d, errCode:%s .",
+    "<LocalDNS> getaddrinfo, host:%s, result:%d, timeMS:%d.",
+    "<LocalDNS> DNS Result: v4Size[%d] v6Size[%d] PRI[%d] realPRI[%d]",
+    "N6HDmpve15HDmpveDNSResultE",
+    "<HDmpveDNS> seq:%d, result:%d",
+    "Report",
+    "DNSResult",
+    "/Users/hdmpve/android/dev/Common/Source/DNS/DNSReport.cpp",
+    "parseResult",
+    "[MultiDNS], wait for dns result, local:%d",
+    "CheckFileMd5",
+    "CheckLargeFileMd5",
+    "check file[%s] md5 error for file not found",
+    "Failed to get addr info for no result",
+    "/proc/self/maps",
+    "MakeSureDirUseFull",
+    "Failed to makesure path exist[%s]",
+    "check dir but create file failed %s ->%d",
+    "N6HDmpve6ResultE",
+    "N6HDmpve18RealNameAuthResultE",
+    "HighCdnCheckSickConnect",
+    "HighCdnProcReportTimeInterValSec",
+    "HighCdnCheckSickConnectIntertvalTime",
+    "HighCdnOpenCurlDebugInfoLog",
+    "HCDNReportDetectHistErrMaxDurTimeSec",
+    "HCDNReportIntervalTimeSec",
+    "HighCdnReportMinumsErrNum",
+    "HighCdnReportMaxSuccNum",
+    "HighCdnReportMaxDLSpeed",
+    "HighCdnReportExtraConnInfoOnlyDetectOnce",
+    "HCDNCollConnInfoReportLevel",
+    "HCDNOpenCheckSickSpeedRate",
+    "HCDNCheckDynamicExpendTimestamp",
+    "OpenReportLastLoadingDLInfoInPufferInit",
+    "UseUnsupportedIPProtocols",
+    "NetworkAnalysisUrl",
+    "PufferReportInterval",
+    "TdmReportAvailable",
+    "HDmpveOpenDLServerIpReport",
+    "HDmpveContinueDLServerIpReportWhenError",
+    "_OpenReportLastLoadingDLInfoInPufferInit[%d] ",
+    "HighCdnCheckSickConnect ",
+    "_HCDNCollConnInfoReportLevel :%d",
+    "_HCDNCheckDynamicExpendTimestamp :%d",
+    "_HighCdnCheckSickConnect :%d",
+    "_HighCdnProcReportTimeInterValSec :%d",
+    "_HighCdnCheckSickConnectIntertvalTime :%d",
+    "_HighCdnOpenCurlDebugInfoLog :%d",
+    "HighCdnReportExtraConnInfoTimeSec",
+    "_HighCdnReportExtraConnInfoTime :%d",
+    "_HCDNReportDetectHistErrMaxDurTimeSec :%d",
+    "_HighCdnReportMinumsErrNum :%d",
+    "_HighCdnReportMaxSuccNum :%d",
+    "_HighCdnReportMaxDLSpeed :%d",
+    "_HighCdnReportExtraConnInfoOnlyDetectOnce :%d",
+    "_HCDNReportIntervalTimeSec :%d",
+    "_HighCdnCheckSickSpeedRate :%d",
+    "_HCDNOpenReportDNSData :%d",
+    "_open_dl_serverip_report[%d] _continue_dl_serverip_report_when_error[%d]",
+    "success. key exist. key:%s, type:bool",
+    "parse json Success ",
+    "CheckMD5Block",
+    "[CuResFileCreate::InitCreater] init success",
+    "[CEifsCreate::StartEifsCreate] start downloadheader success url:%s path %s",
+    "CEifsCreate::CheckMD5Block pfile null",
+    "CEifsCreate::CheckMD5Block read file failed",
+    "CEifsCreate::CheckMD5Block get md5",
+    "CEifsCreate::CheckMD5Block md5 not ==",
+    "[CEifsCreate::OnDownloadRangeCompleted][check md5block failed][%s][%d]",
+    "[CEifsCreate::DoCompletedCreate][check listfile failed][%s][%d]",
+    "[CEifsCreate::DoCompletedCreate][filecheck bitmap write header failed][%s][%d]",
+    "CheckEifs",
+    "/Users/hdmpve/android/dev/IIPS/Source/app/puffer_manager/cu_eifs_check.cpp",
+    "[CEifsCheck::CheckEifs][START][%s]",
+    "[CEifsCheck::CheckEifs][open eifs failed][%u]",
+    "[CEifsCheck::CheckEifs][read eifs header failed][%u]",
+    "[CEifsCheck::CheckEifs][eifs version not same][%u]",
+    "[CEifsCheck::CheckEifs][eifs version not same][%llu]",
+    "[CEifsCheck::CheckEifs][eifs md5 block mark zero][%llu][%llu]",
+    "[CEifsCheck::CheckEifs][feek to md5 block failed][%llu][%u]",
+    "[CEifsCheck::CheckEifs][read md5 block failed][%u]",
+    "[CEifsCheck::CheckEifs][get header md5 failed][%d]",
+    "[CEifsCheck::CheckEifs][check header md5 failed][%d]",
+    "[CEifsCheck::CheckEifs][try to open archive failed][%d][%s]",
+    "[CEifsCheck::CheckEifs][eifs md5 not same,now update][%s][%s]",
+    "[CEifsCheck::CheckEifs][eifs ok but tempdir not same needupdate and ignore temp dir][%s][%s]",
+    "[CEifsCheck::CheckEifs][check eifs success]",
+    "GetFileResumeBrokenTransferInfo",
+    "VerifyDownloadBitmap"
+  ],
+  "sus_imports": [
+    "_ZN5ABase7CSystem7GetUdidEv",
+    "_ZN5ABase11ABaseCommon9GetOpenIDEv",
+    "openlog",
+    "fopen",
+    "fdopen",
+    "mprotect",
+    "open",
+    "opendir",
+    "_ZN5ABase7CSystem11GetBundleIdEv",
+    "access"
+  ]
+}

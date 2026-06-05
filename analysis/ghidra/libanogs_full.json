@@ -1,0 +1,404 @@
+{
+  "lib": "libanogs.so",
+  "exports": 21,
+  "functions": [
+    {
+      "name": "AnoSDKInit",
+      "offset": "0x1d3814",
+      "size": 0,
+      "asm": [
+        "stp x29, x30, [sp, #-0x50]!",
+        "stp x26, x25, [sp, #0x10]",
+        "stp x24, x23, [sp, #0x20]",
+        "stp x22, x21, [sp, #0x30]",
+        "stp x20, x19, [sp, #0x40]",
+        "mov x29, sp",
+        "sub sp, sp, #0x30",
+        "mov w21, #0xa319"
+      ]
+    },
+    {
+      "name": "AnoSDKGetReportData3",
+      "offset": "0x1d7938",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w8, #0x51bf",
+        "mov w9, #0x19e2",
+        "movk w8, #0xc4b9, lsl #16",
+        "movk w9, #0x1314, lsl #16",
+        "cmp w8, w9",
+        "str w8, [sp, #0xc]",
+        "b.ge #0x1d7998"
+      ]
+    },
+    {
+      "name": "AnoSDKGetReportData",
+      "offset": "0x1d551c",
+      "size": 0,
+      "asm": [
+        "stp x29, x30, [sp, #-0x60]!",
+        "stp x28, x27, [sp, #0x10]",
+        "stp x26, x25, [sp, #0x20]",
+        "stp x24, x23, [sp, #0x30]",
+        "stp x22, x21, [sp, #0x40]",
+        "stp x20, x19, [sp, #0x50]",
+        "mov x29, sp",
+        "sub sp, sp, #0x50"
+      ]
+    },
+    {
+      "name": "AnoSDKOnRecvData",
+      "offset": "0x1d624c",
+      "size": 0,
+      "asm": [
+        "stp x29, x30, [sp, #-0x60]!",
+        "str x27, [sp, #0x10]",
+        "stp x26, x25, [sp, #0x20]",
+        "stp x24, x23, [sp, #0x30]",
+        "stp x22, x21, [sp, #0x40]",
+        "stp x20, x19, [sp, #0x50]",
+        "mov x29, sp",
+        "sub sp, sp, #0x20"
+      ]
+    },
+    {
+      "name": "AnoSDKIoctlOld",
+      "offset": "0x1d6598",
+      "size": 0,
+      "asm": [
+        "stp x29, x30, [sp, #-0x60]!",
+        "stp x28, x27, [sp, #0x10]",
+        "stp x26, x25, [sp, #0x20]",
+        "stp x24, x23, [sp, #0x30]",
+        "stp x22, x21, [sp, #0x40]",
+        "stp x20, x19, [sp, #0x50]",
+        "mov x29, sp",
+        "sub sp, sp, #0x80"
+      ]
+    },
+    {
+      "name": "AnoSDKIoctl",
+      "offset": "0x1d6ea8",
+      "size": 0,
+      "asm": [
+        "stp x29, x30, [sp, #-0x10]!",
+        "mov x29, sp",
+        "sub sp, sp, #0x40",
+        "mov w8, #0x34bb",
+        "mov w14, #0x7a21",
+        "mov w9, #0xf6ba",
+        "movk w8, #0xfec2, lsl #16",
+        "mov w10, #0xe9c1"
+      ]
+    },
+    {
+      "name": "AnoSDKDelReportData3",
+      "offset": "0x1d79a4",
+      "size": 0,
+      "asm": [
+        "stp x29, x30, [sp, #-0x10]!",
+        "mov x29, sp",
+        "sub sp, sp, #0x60",
+        "mov w9, #0xc74c",
+        "mov w16, #0xbd99",
+        "mov w8, #0x15a6",
+        "movk w9, #0xdfa6, lsl #16",
+        "mov w10, #0x5dc"
+      ]
+    },
+    {
+      "name": "AnoSDKGetReportData4",
+      "offset": "0x1d7fc4",
+      "size": 0,
+      "asm": [
+        "stp x29, x30, [sp, #-0x50]!",
+        "stp x26, x25, [sp, #0x10]",
+        "stp x24, x23, [sp, #0x20]",
+        "stp x22, x21, [sp, #0x30]",
+        "stp x20, x19, [sp, #0x40]",
+        "mov x29, sp",
+        "sub sp, sp, #0x40",
+        "mov w22, #0x2e24"
+      ]
+    },
+    {
+      "name": "AnoSDKOnRecvSignature",
+      "offset": "0x1d88ec",
+      "size": 0,
+      "asm": [
+        "stp x29, x30, [sp, #-0x60]!",
+        "stp x28, x27, [sp, #0x10]",
+        "stp x26, x25, [sp, #0x20]",
+        "stp x24, x23, [sp, #0x30]",
+        "stp x22, x21, [sp, #0x40]",
+        "stp x20, x19, [sp, #0x50]",
+        "mov x29, sp",
+        "sub sp, sp, #0x40"
+      ]
+    },
+    {
+      "name": "AnoSDKInitEx",
+      "offset": "0x1d3b40",
+      "size": 0,
+      "asm": [
+        "stp x29, x30, [sp, #-0x20]!",
+        "stp x20, x19, [sp, #0x10]",
+        "mov x29, sp",
+        "sub sp, sp, #0x50",
+        "mov w8, #0x652b",
+        "mov w16, #0xe968",
+        "mov w9, #0xbf85",
+        "movk w8, #0xd8e6, lsl #16"
+      ]
+    },
+    {
+      "name": "AnoSDKSetUserInfo",
+      "offset": "0x1d417c",
+      "size": 0,
+      "asm": [
+        "stp x29, x30, [sp, #-0x60]!",
+        "stp x28, x27, [sp, #0x10]",
+        "stp x26, x25, [sp, #0x20]",
+        "stp x24, x23, [sp, #0x30]",
+        "stp x22, x21, [sp, #0x40]",
+        "stp x20, x19, [sp, #0x50]",
+        "mov x29, sp",
+        "sub sp, sp, #0x30"
+      ]
+    },
+    {
+      "name": "AnoSDKDelReportData",
+      "offset": "0x1d5a88",
+      "size": 0,
+      "asm": [
+        "stp x29, x30, [sp, #-0x60]!",
+        "stp x28, x27, [sp, #0x10]",
+        "stp x26, x25, [sp, #0x20]",
+        "stp x24, x23, [sp, #0x30]",
+        "stp x22, x21, [sp, #0x40]",
+        "stp x20, x19, [sp, #0x50]",
+        "mov x29, sp",
+        "sub sp, sp, #0x60"
+      ]
+    },
+    {
+      "name": "AnoSDKDelReportData4",
+      "offset": "0x1d82cc",
+      "size": 0,
+      "asm": [
+        "stp x29, x30, [sp, #-0x10]!",
+        "mov x29, sp",
+        "sub sp, sp, #0x60",
+        "mov w9, #0xc74c",
+        "mov w16, #0xbd99",
+        "mov w8, #0x15a6",
+        "movk w9, #0xdfa6, lsl #16",
+        "mov w10, #0x5dc"
+      ]
+    },
+    {
+      "name": "AnoSDKSetUserInfoWithLicense",
+      "offset": "0x1d4580",
+      "size": 0,
+      "asm": [
+        "stp x29, x30, [sp, #-0x60]!",
+        "stp x28, x27, [sp, #0x10]",
+        "stp x26, x25, [sp, #0x20]",
+        "stp x24, x23, [sp, #0x30]",
+        "stp x22, x21, [sp, #0x40]",
+        "stp x20, x19, [sp, #0x50]",
+        "mov x29, sp",
+        "sub sp, sp, #0x60"
+      ]
+    },
+    {
+      "name": "AnoSDKFree",
+      "offset": "0x1d7398",
+      "size": 0,
+      "asm": [
+        "stp x29, x30, [sp, #-0x10]!",
+        "mov x29, sp",
+        "sub sp, sp, #0x60",
+        "mov w11, #0x48ca",
+        "mov w14, #0xcf00",
+        "mov w8, #0xe855",
+        "mov w9, #0x91ab",
+        "mov w10, #0x57f5"
+      ]
+    },
+    {
+      "name": "AnoSDKForExport",
+      "offset": "0x1d9024",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w8, #0xf4dc",
+        "mov w9, #0x7506",
+        "movk w8, #0xf4df, lsl #16",
+        "movk w9, #0xd7a7, lsl #16",
+        "cmp w9, w8",
+        "str w9, [sp, #0xc]",
+        "b.ge #0x1d9084"
+      ]
+    },
+    {
+      "name": "JNI_OnLoad",
+      "offset": "0x1db894",
+      "size": 0,
+      "asm": [
+        "stp x29, x30, [sp, #-0x40]!",
+        "str x23, [sp, #0x10]",
+        "stp x22, x21, [sp, #0x20]",
+        "stp x20, x19, [sp, #0x30]",
+        "mov x29, sp",
+        "mov x20, x1",
+        "mov x19, x0",
+        "bl #0x2d57a4"
+      ]
+    },
+    {
+      "name": "AnoSDKOnPause",
+      "offset": "0x1d4c0c",
+      "size": 0,
+      "asm": [
+        "stp x29, x30, [sp, #-0x60]!",
+        "stp x28, x27, [sp, #0x10]",
+        "stp x26, x25, [sp, #0x20]",
+        "stp x24, x23, [sp, #0x30]",
+        "stp x22, x21, [sp, #0x40]",
+        "stp x20, x19, [sp, #0x50]",
+        "mov x29, sp",
+        "sub sp, sp, #0x30"
+      ]
+    },
+    {
+      "name": "AnoSDKOnResume",
+      "offset": "0x1d5030",
+      "size": 0,
+      "asm": [
+        "stp x29, x30, [sp, #-0x60]!",
+        "stp x28, x27, [sp, #0x10]",
+        "stp x26, x25, [sp, #0x20]",
+        "stp x24, x23, [sp, #0x30]",
+        "stp x22, x21, [sp, #0x40]",
+        "stp x20, x19, [sp, #0x50]",
+        "mov x29, sp",
+        "sub sp, sp, #0x30"
+      ]
+    },
+    {
+      "name": "AnoSDKGetReportData2",
+      "offset": "0x1d78cc",
+      "size": 0,
+      "asm": [
+        "sub sp, sp, #0x10",
+        "mov w8, #0x51bf",
+        "mov w9, #0x19e2",
+        "movk w8, #0xc4b9, lsl #16",
+        "movk w9, #0x1314, lsl #16",
+        "cmp w8, w9",
+        "str w8, [sp, #0xc]",
+        "b.ge #0x1d792c"
+      ]
+    },
+    {
+      "name": "AnoSDKRegistInfoListener",
+      "offset": "0x1d8c74",
+      "size": 0,
+      "asm": [
+        "stp x29, x30, [sp, #-0x60]!",
+        "str x27, [sp, #0x10]",
+        "stp x26, x25, [sp, #0x20]",
+        "stp x24, x23, [sp, #0x30]",
+        "stp x22, x21, [sp, #0x40]",
+        "stp x20, x19, [sp, #0x50]",
+        "mov x29, sp",
+        "sub sp, sp, #0x30"
+      ]
+    }
+  ],
+  "suspicious_strings": [
+    "DW_EH_PE_funcrel pointer encoding not supported",
+    "nsUyhU}uwja",
+    "tdm_report",
+    "debugger=%s",
+    "oversubscribed distance tree",
+    "Smoothing not supported with nonstandard sampling ratios",
+    "REPORT",
+    "result",
+    "inline_hook_opcode_dismatch",
+    "Suspension not allowed here",
+    "ReportComplaint",
+    "onResume",
+    "Insufficient memory (case %d)",
+    "_Unwind_Resume() can't return",
+    "set_inline_hook_error",
+    "debugger:%s",
+    "Error when TiXmlDocument added to document, because TiXmlDocument can only be at the root.",
+    "Unsupported JPEG data precision %d",
+    "hello getreportdata3",
+    "mt2_no_root",
+    "allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size",
+    "Unsupported color conversion request",
+    "void __cxxabiv1::scan_eh_tab(scan_results &, _Unwind_Action, bool, _Unwind_Exception *, _Unwind_Context *)",
+    "unsupported arm64 register",
+    "unsupported restore location for register",
+    "debugger",
+    "check_state=%s",
+    "DCT scaled block size %dx%d not supported",
+    "unsupported restore location for float register",
+    "DW_EH_PE_aligned pointer encoding not supported",
+    "check_state:%s",
+    "insufficient lookahead",
+    "COREREPORT",
+    "Empty JPEG image (DNL not supported)",
+    "Unsupported JPEG process: SOF type 0x%02x",
+    "Unrecognized component IDs %d %d %d, assuming YCbCr",
+    "DW_EH_PE_textrel pointer encoding not supported",
+    "oversubscribed literal/length tree",
+    "ms_set_inlie_hook",
+    "Maximum supported image dimension is %u pixels",
+    "check_state",
+    "incorrect header check",
+    "|emulator_name=",
+    "Unsupported marker type 0x%02x",
+    "__cxa_guard_acquire detected recursive initialization: do you have a function-local static variable whose initialization depends on that function?",
+    "_Unwind_Resume",
+    "oversubscribed dynamic bit lengths tree",
+    "incorrect data check",
+    "ms_hook_opcode",
+    "Backing store not supported",
+    "name=%s|rate=%.2f|is_root=%d",
+    "results.reason == _URC_HANDLER_FOUND",
+    "ir\"ekphc(}bjx-w`e1saq5dbvwsu{=wq",
+    "N12_GLOBAL__N_116itanium_demangle18ArraySubscriptExprE",
+    "N12_GLOBAL__N_116itanium_demangle15ClosureTypeNameE",
+    "N12_GLOBAL__N_116itanium_demangle13SubobjectExprE",
+    "N12_GLOBAL__N_116itanium_demangle19SpecialSubstitutionE",
+    "N12_GLOBAL__N_116itanium_demangle27ExpandedSpecialSubstitutionE",
+    "N12_GLOBAL__N_116itanium_demangle9DotSuffixE"
+  ],
+  "sus_imports": [
+    "kill",
+    "fopen",
+    "dlopen",
+    "dlsym",
+    "__open_2",
+    "popen",
+    "open",
+    "access",
+    "opendir",
+    "ptrace",
+    "fdopen",
+    "fork",
+    "__openat_2",
+    "__system_property_get",
+    "mprotect",
+    "inotify_add_watch",
+    "inotify_init",
+    "__system_property_find_nth",
+    "__system_property_read",
+    "openlog"
+  ]
+}
