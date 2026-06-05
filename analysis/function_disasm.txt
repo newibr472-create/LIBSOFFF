@@ -1,0 +1,15 @@
+UE4 Key Functions Disassembly
+============================================================
+
+FUNC 0x0A40F3E8 [hdr] Tonemapper
+  0x0A40F3E8: stp x29, x30, [sp, #-0x20]!
+  0x0A40F3EC: str x19, [sp, #0x10]
+  0x0A40F3F0: mov x29, sp
+  0x0A40F3F4: mov x19, x0
+  0x0A40F3F8: bl #0xa58028c
+  0x0A40F3FC: adrp x8, #0xd6b4000
+  0x0A40F400: add x8, x8, #0x1a8
+  0x0A40F404: mov w9, #0x16
+  0x0A40F408: str x8, [x19]
+  0x0A40F40C: add x8, x8, #0x3a8
+

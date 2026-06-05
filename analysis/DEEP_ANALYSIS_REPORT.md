@@ -1,0 +1,746 @@
+# BGMI 4.4.0 Anti-Cheat DEEP ANALYSIS REPORT
+# Generated: $(date)
+
+
+## libanogs.so
+### Exports (21 total)
+- 0x00000000001d3814 : AnoSDKInit@@ANO
+- 0x00000000001d7938 : AnoSDKGetReportData3@@ANO
+- 0x00000000001d551c : AnoSDKGetReportData@@ANO
+- 0x00000000001d624c : AnoSDKOnRecvData@@ANO
+- 0x00000000001d6598 : AnoSDKIoctlOld@@ANO
+- 0x00000000001d6ea8 : AnoSDKIoctl@@ANO
+- 0x00000000001d79a4 : AnoSDKDelReportData3@@ANO
+- 0x00000000001d7fc4 : AnoSDKGetReportData4@@ANO
+- 0x00000000001d88ec : AnoSDKOnRecvSignature@@ANO
+- 0x00000000001d3b40 : AnoSDKInitEx@@ANO
+- 0x00000000001d417c : AnoSDKSetUserInfo@@ANO
+- 0x00000000001d5a88 : AnoSDKDelReportData@@ANO
+- 0x00000000001d82cc : AnoSDKDelReportData4@@ANO
+- 0x00000000001d4580 : AnoSDKSetUserInfoWithLicense@@ANO
+- 0x00000000001d7398 : AnoSDKFree@@ANO
+- 0x00000000001d9024 : AnoSDKForExport@@ANO
+- 0x00000000001db894 : JNI_OnLoad@@ANO
+- 0x00000000001d4c0c : AnoSDKOnPause@@ANO
+- 0x00000000001d5030 : AnoSDKOnResume@@ANO
+- 0x00000000001d78cc : AnoSDKGetReportData2@@ANO
+- 0x00000000001d8c74 : AnoSDKRegistInfoListener@@ANO
+
+### Anti-Cheat Indicators (8 found)
+
+#### Hook Detection
+  - STR: inline_hook_opcode_dismatch
+  - STR: set_inline_hook_error
+
+#### Debug Detection
+  - STR: debugger=%s
+  - STR: debugger
+  - STR: debugger:%s
+  - STR: ptrace
+
+#### Memory Protection
+  - STR: inotify_add_watch
+  - STR: mprotect
+
+### Hookable Targets (9 found)
+- 0x00000000001d3814 : AnoSDKInit@@ANO
+- 0x00000000001d7938 : AnoSDKGetReportData3@@ANO
+- 0x00000000001d551c : AnoSDKGetReportData@@ANO
+- 0x00000000001d79a4 : AnoSDKDelReportData3@@ANO
+- 0x00000000001d7fc4 : AnoSDKGetReportData4@@ANO
+- 0x00000000001d3b40 : AnoSDKInitEx@@ANO
+- 0x00000000001d5a88 : AnoSDKDelReportData@@ANO
+- 0x00000000001d82cc : AnoSDKDelReportData4@@ANO
+- 0x00000000001d78cc : AnoSDKGetReportData2@@ANO
+
+### Suspicious Strings (top 50)
+  - AnoSDKOnResume
+  - Insufficient memory (case %d)
+  - void AVM::BopMemoryOperation::PmemWrite(paddr_t, word_t, int)
+  - Empty JPEG image (DNL not supported)
+  - Virtual array controller messed up
+  - incorrect data check
+  - non-virtual thunk to 
+  - 	sutp9-"1>%9(>s(7
+  - AnoSDKOnRecvSignature
+  - |emulator_name=
+  - T	|	SuN(
+  - psuv|wk
+  - Unsupported JPEG process: SOF type 0x%02x
+  - result
+  - virtual thunk to 
+  - debugger=%s
+  - N12_GLOBAL__N_116itanium_demangle18ArraySubscriptExprE
+  - onResume
+  - unsupported restore location for register
+  - libunwind: unsupported .eh_frame_hdr at %lx: need at least 4 bytes of data but only got %zd
+  - SUlRYYVLf6+- *1
+  - inotify_init
+  - vqzvsu;#,3<#?*<mfgaldnc
+  - name=%s|rate=%.2f|is_root=%d
+  - debugger
+  - nsUyhU}uwja
+  - Smoothing not supported with nonstandard sampling ratios
+  - output buffer too small for in-memory compression
+  - cXRSUrP
+  - Unsupported JPEG data precision %d
+  - status_info->size_:%d
+  - wn{upsudq
+  - hello getreportdata3
+  - ir"ekphc(}bjx-w`e1saq5dbvwsu{=wq
+  - init_info->tss_sdk_send_data_to_svr:%p
+  - incorrect header check
+  - libanogs.so
+  - check_state=%s
+  - COREREPORT
+  - _Unwind_Resume
+  - ChkSetGameStatus{
+  - Error when TiXmlDocument added to document, because TiXmlDocument can only be at the root.
+  - status_info:%p
+  - AnoSDKDelReportData
+  - AnoSDKGetReportData4
+  - insufficient lookahead
+  - Pure virtual function called!
+  - oversubscribed literal/length tree
+  - ms_set_inlie_hook
+  - =?/SUX^Q*5>2
+
+## libhdmpvecore.so
+### Exports (2580 total)
+- 0x00000000000779d0 : _ZN6HDmpve16RemoteGameConfigD2Ev
+- 0x0000000000066e28 : _ZN5ABase19OperationTargetBaseD0Ev
+- 0x000000000007cc84 : _ZN6HDmpve9Configure11GetInstanceEv
+- 0x0000000000085504 : _ZNK11ADictionary13CStringForKeyEPKc
+- 0x0000000000071e4c : Java_com_gcore_abase_URLRequest_nativeTaskProgress
+- 0x000000000005c170 : _ZN5ABase12CIniFileImpl11WriteStringEPKcS2_S2_
+- 0x00000000000835e0 : _ZTv0_n24_N5ABase22ValueConstIteratorImplD0Ev
+- 0x000000000010de50 : _ZN10ABase_Json5Value13minLargestIntE
+- 0x00000000000839d8 : _Z8FloatValPK7AObject
+- 0x000000000005efc0 : _ZN5ABase10BundleImpl3GetEPKcS2_
+- 0x000000000007e818 : _ZN5ABase15IPlatformObjectD2Ev
+- 0x0000000000093788 : _ZN6HDmpve6Plugin13PluginManager15UninstallByNameEPKc
+- 0x0000000000099cec : _ZN6HDmpve6Plugin19RemoteConfigSerivceC2Ev
+- 0x000000000008e1c0 : _ZN10ABase_Json13ValueIteratorC2Ev
+- 0x000000000005838c : _ZN5ABase14uECC_secp224r1Ev
+- 0x00000000000858dc : _ZNK7AString8AsDoubleEv
+- 0x0000000000061fc8 : Java_com_gcore_abase_config_ConfigBundle_setLong
+- 0x00000000000903f0 : _ZNSt4pairIKN10ABase_Json5Value8CZStringES1_ED1Ev
+- 0x0000000000096e38 : _ZN6HDmpve6Plugin11SpanContextC1EPKc
+- 0x000000000008e19c : _ZN10ABase_Json18ValueConstIteratoraSERKNS_17ValueIteratorBaseE
+- 0x0000000000068058 : _ZN5ABase10ThreadPool12stopAllTasksEv
+- 0x000000000005193c : _ZN5ABase19CApolloBufferWriter5WriteERNS_20_tagApolloBufferBaseE
+- 0x000000000008e244 : _ZN10ABase_Json5Value11CommentInfoD1Ev
+- 0x000000000007e098 : _ZN20CPlatformObjectClass14RegisterClassGEPKcP22IPlatformObjectFactory
+- 0x000000000009abd8 : _ZN6HDmpve6Plugin14ServiceManager15ReleaseInstanceEv
+- 0x0000000000049f0c : _ZN5ABase13base64_encodeEPKhj
+- 0x0000000000082eb4 : _ZN5ABase21ValueIteratorBaseImplC1ERKSt17_Rb_tree_iteratorISt4pairIKNS_11ValueStringENS_5ValueEEE
+- 0x000000000010de58 : _ZN10ABase_Json5Value9maxUInt64E
+- 0x0000000000069770 : _ZN5ABase17OperationQueueImp12createThreadEv
+- 0x0000000000070534 : _ZN5ABase15UrlResponseImpl9SetHeaderEPKcS2_
+- 0x000000000004d308 : _ZN5ABase11TdrTypeUtil14compareTdrTimeEjj
+- 0x000000000010f410 : _ZTSN6HDmpve6Plugin21HDmpveCoreInnerPluginE
+- 0x0000000000085ee0 : _Z7int2stri
+- 0x0000000000087254 : _ZN7AObjectD2Ev
+- 0x000000000005d524 : _ZN5ABase20EncryptedIniFileImplC2EPKc
+- 0x000000000008e658 : _ZNK10ABase_Json5Value8CZString14isStaticStringEv
+- 0x0000000000092b88 : _ZNSt6vectorIN5ABase18CAFunctionSelectorESaIS1_EE8_M_eraseEN9__gnu_cxx17__normal_iteratorIPS1_S3_EE
+- 0x0000000000099138 : _ZThn32_N6HDmpve6Plugin21HDmpveCoreInnerPlugin16GetServiceByNameEPKc
+- 0x000000000005e974 : _ZN5ABase6BundleD0Ev
+- 0x000000000006b818 : _ZN5ABase16CNetworkObserverC1Ev
+- 0x00000000000642b4 : _ZN5ABase11AFileLogger9LogToFileEPKc
+- 0x000000000006829c : _ZN5ABase10ThreadPool13tryShrinkPoolEv
+- 0x0000000000076bf4 : _ZN6HDmpve16RemoteGameConfig11AddObserverEPNS_20RemoteConfigObserverE
+- 0x0000000000086604 : _ZN14AStringBuilder6AppendEPK7AString
+- 0x000000000005126c : _ZN5ABase16_tagApolloActionD1Ev
+- 0x0000000000085948 : _ZN7AString5emptyEv
+- 0x0000000000050f64 : _ZN5ABase10ITdrObject11fromXmlFileEPKcNS_12TdrXmlFormatEj
+- 0x000000000015f8c0 : _ZTV5AData
+- 0x00000000000802a4 : _ZN6AArray3AddEPK7AObjectb
+- 0x0000000000083688 : _ZN7ANumberC2Ei
+
+### Anti-Cheat Indicators (3 found)
+
+#### Root Detection
+  - FUNC: ABase_system_IsDeviceRooted @ 0000000000073150
+  - FUNC: _ZN5ABase7CSystem14IsDeviceRootedEv @ 0000000000072cac
+  - STR: _ZN5ABase7CSystem14IsDeviceRootedEv
+
+### Hookable Targets (214 found)
+- 0x00000000000763dc : _ZThn16_N5ABase15ANetworkChecker4PingEPKciPFvRNS_10PingResultEEhh
+- 0x000000000006fc88 : _ZN5ABase14UploadTaskImpl6UploadEiiiPKc
+- 0x0000000000072d3c : _ZN5ABase7CSystem15CheckPermissionEi
+- 0x000000000009b00c : Java_com_gcore_hdmpve_plugin_PluginUtils_nativePostStartup
+- 0x000000000015d7d8 : _ZTIN5ABase14UploadTaskImplE
+- 0x000000000007ecbc : _ZN5ABase15CPlatformObject15SendUnityBufferEPKcS2_i
+- 0x000000000007ab4c : _ZN6HDmpve13ConfigureImpl5StartEv
+- 0x0000000000070ff8 : _ZN5ABase10UrlRequest10InitializeEPKciPNS0_8ListenerE
+- 0x000000000010c0e0 : _ZTSN6HDmpve12FileUploaderE
+- 0x000000000006e514 : _ZN5ABase14UploadTaskImplD2Ev
+- 0x00000000000709c8 : Java_com_gcore_abase_cos_CUploadTask_nativeOnUploadFinished
+- 0x0000000000074d30 : _ZN5ABase15ANetworkChecker15ReleaseInstanceEv
+- 0x0000000000093c64 : _ZN6HDmpve6Plugin13PluginManager7StartupEv
+- 0x000000000009978c : _ZN6HDmpve6Plugin21HDmpveCoreInnerPlugin9OnStartupEPNS0_16IServiceRegisterE
+- 0x00000000000765e4 : _ZThn16_N5ABase15ANetworkChecker10TraceRouteEPKciPFvRNS_16TraceRouteResultEEh
+- 0x000000000008015c : _ZNKSt6vectorIP7AObjectSaIS1_EE12_M_check_lenEmPKc
+- 0x000000000006c594 : _ZN5ABase8CNetwork4initEv
+- 0x000000000006d660 : _ZN5ABase3WWW14UploadFromDataEPKcPKvi
+- 0x000000000010c0c0 : _ZTSN14COSCUploadTask8ListenerE
+- 0x000000000006d900 : _ZN5ABase14UploadTaskImpl6FinishEv
+- 0x0000000000079944 : _ZN6HDmpve15ConfigureReport22ReportPullConfigResultEiii
+- 0x0000000000078628 : _ZN6HDmpve12FileUploaderC2Ev
+- 0x000000000015e550 : _ZTV14COSCUploadTask
+- 0x000000000015e350 : _ZTVN5ABase14UploadTaskImplE
+- 0x00000000000687fc : _ZNSt11_Deque_baseIN5ABase10ThreadPool4TaskESaIS2_EE17_M_initialize_mapEm
+- 0x000000000006d72c : _ZN5ABase3WWW7DestroyEPNS_10UploadTaskE
+- 0x00000000000924d4 : _ZN5ABase16ABaseInitializerC1EPKc
+- 0x00000000000924d4 : _ZN5ABase16ABaseInitializerC2EPKc
+- 0x000000000006fc40 : _ZN5ABase14UploadTaskImpl5PauseEv
+- 0x00000000000999d0 : _ZThn32_N6HDmpve6Plugin21HDmpveCoreInnerPlugin9OnStartupEPNS0_16IServiceRegisterE
+- 0x000000000007ed04 : _ZN5ABase15CPlatformObject15SendUnityBufferEPKcS2_iS2_i
+- 0x000000000006fea8 : _ZN5ABase14UploadTaskImpl14onTaskFinishedEil
+- 0x00000000000785e4 : _ZN6HDmpve12FileUploaderD1Ev
+- 0x000000000007eb1c : setApolloSendBufferCallback
+- 0x0000000000070bc0 : _ZN5ABase10UrlRequest10InitializeEPKci
+- 0x000000000006db80 : _ZN5ABase14UploadTaskImpl11SetListenerEPNS_10UploadTask8ListenerE
+- 0x0000000000065680 : _ZN5ABase14ACheckLogLevelEN6HDmpve12ALogPriorityE
+- 0x0000000000099be8 : _ZThn32_N6HDmpve6Plugin21HDmpveCoreInnerPlugin13OnPostStartupEv
+- 0x00000000000752a8 : _ZN5ABase15ANetworkChecker22NotifyTraceRouteFinishEPKcPFvRNS_16TraceRouteResultEE
+- 0x000000000007eb04 : setApolloSendResultCallback
+- 0x000000000015e5a0 : _ZTV17COSUploadTaskImpl
+- 0x000000000006f304 : _ZN17COSUploadTaskImpl17SetCredentialInfoEPKc
+- 0x000000000006fb40 : _ZN5ABase14UploadTaskImpl5_initEv
+- 0x000000000007f918 : _ZN8ABaseJVM19GetCUploadTaskClassEv
+- 0x000000000006e580 : _ZThn88_N5ABase14UploadTaskImplD0Ev
+- 0x000000000009a990 : _ZN6HDmpve6Plugin23HDmpveCoreReportService11GetInstanceEv
+- 0x0000000000078488 : _ZN6HDmpve12FileUploader10OnFinishedEP14COSCUploadTaski
+- 0x0000000000075f08 : _ZN5ABase15ANetworkChecker30HandleNSLookupResultOnUIThreadEPvS1_
+- 0x000000000006de10 : _ZN5ABase10UploadTaskD2Ev
+- 0x0000000000071484 : _ZN5ABase10UrlRequest10UploadFileEPKciiiS2_
+- 0x000000000007eb10 : setApolloSendResultStructCallback
+- 0x000000000015e530 : _ZTI17COSUploadTaskImpl
+- 0x000000000015dab0 : _ZTVN5ABase10UrlRequest18UploadTaskListenerE
+- 0x000000000015e7a0 : _ZTIN5ABase15INetworkCheckerE
+- 0x0000000000160248 : _ZTIN6HDmpve6Plugin23HDmpveCoreReportServiceE
+- 0x000000000007eb28 : setApolloSendResultBufferCallback
+- 0x00000000000763e4 : _ZN5ABase15ANetworkChecker10TraceRouteEPKciPFvRNS_16TraceRouteResultEEh
+- 0x00000000000751d0 : _ZN5ABase15INetworkChecker11GetInstanceEv
+- 0x000000000009a5fc : _ZNK6HDmpve6Plugin23HDmpveCoreReportService7GetNameEv
+- 0x000000000007f910 : _ZN8ABaseJVM19SetCUploadTaskClassEP7_jclass
+- 0x000000000006fdf4 : _ZThn96_N5ABase14UploadTaskImpl11onTaskBeganEl
+- 0x000000000015e9a0 : _ZTIN5ABase15ANetworkCheckerE
+- 0x000000000006f430 : _ZN5ABase12DataTaskImpl5_initEv
+- 0x000000000009a614 : _ZN6HDmpve6Plugin23HDmpveCoreReportServiceD0Ev
+- 0x0000000000160260 : _ZTVN6HDmpve6Plugin18ICoreReportServiceE
+- 0x000000000006d854 : _ZN5ABase14UploadTaskImpl6ResumeEv
+- 0x00000000000660f8 : _ZN5ABase6Logger8XLogInitEv
+- 0x0000000000078628 : _ZN6HDmpve12FileUploaderC1Ev
+- 0x0000000000109f90 : _ZTS14COSCUploadTask
+- 0x000000000006de5c : _ZTv0_n24_N5ABase10UploadTaskD0Ev
+- 0x000000000006f4cc : _ZN5ABase12DataTaskImpl7_uninitEv
+- 0x0000000000079d58 : _ZN6HDmpve14StringIterator5IsEndEv
+- 0x000000000010b9a0 : _ZTSN5ABase15ANetworkCheckerE
+- 0x000000000009a5f8 : _ZN6HDmpve6Plugin23HDmpveCoreReportServiceD2Ev
+- 0x0000000000075474 : _ZN5ABase15ANetworkChecker26HandlePingResultOnUIThreadEPvS1_
+- 0x000000000015e970 : _ZTVN5ABase15INetworkCheckerE
+- 0x000000000006e53c : _ZThn88_N5ABase14UploadTaskImplD1Ev
+- 0x000000000006e544 : _ZThn24_N5ABase14UploadTaskImplD1Ev
+- 0x00000000000739f0 : _ZN5ABase12CApplication7OnStartEv
+- 0x0000000000075158 : _ZN5ABase15ANetworkCheckerD0Ev
+- 0x0000000000109d30 : _ZTSN5ABase10UploadTaskE
+- 0x000000000015ec00 : _ZTVN6HDmpve12FileUploaderE
+- 0x00000000000767d8 : _ZThn16_N5ABase15ANetworkChecker8NSLookupEPKciPFvRNS_14NSLookupResultEE
+- 0x000000000015eb90 : _ZTIN14COSCUploadTask8ListenerE
+- 0x000000000015eba0 : _ZTIN6HDmpve12FileUploaderE
+- 0x00000000000750e0 : _ZN5ABase15ANetworkCheckerC1Ev
+- 0x000000000006f0b4 : _ZN5ABase14UploadTaskImpl15onWorkingThreadEPNS_15ObjectOperationEPv
+- 0x000000000009a974 : _ZN6HDmpve6Plugin23HDmpveCoreReportServiceC1Ev
+- 0x000000000006d7d0 : _ZN5ABase14UploadTaskImpl17SaveUploadingPartEi
+- 0x000000000007314c : ABase_system_CheckPermission
+- 0x000000000006f2ec : _ZN17COSUploadTaskImpl11SetListenerEPN14COSCUploadTask8ListenerE
+- 0x000000000006d92c : _ZThn96_N5ABase14UploadTaskImpl6FinishEv
+- 0x000000000007eb34 : setApolloSendResultStructBufferCallback
+- 0x0000000000095b44 : _ZN6HDmpve6Plugin12TraceService13ReportContextEPKc
+- 0x0000000000071f1c : Java_com_gcore_abase_URLRequest_nativeSaveUploadPart
+- 0x000000000006f370 : _ZN14COSCUploadTaskD2Ev
+- 0x000000000015e520 : _ZTI14COSCUploadTask
+- 0x000000000007513c : _ZN5ABase15ANetworkCheckerD2Ev
+- 0x000000000007ec98 : _ZN5ABase15CPlatformObject15SendUnityResultEPKcS2_i
+- 0x000000000007f8cc : _ZN8ABaseJVM4InitEP7_JavaVM
+- 0x0000000000075950 : _ZN5ABase15ANetworkChecker32HandleTraceRouteResultOnUIThreadEPvS1_
+- 0x000000000006d84c : _ZThn96_N5ABase14UploadTaskImpl17SaveUploadingPartEi
+- 0x000000000006dbe8 : _ZThn88_N5ABase14UploadTaskImpl11SetListenerEPNS_10UploadTask8ListenerE
+- 0x00000000000924b8 : _ZN5ABase16ABaseInitializerC1Ev
+- 0x0000000000078588 : _ZThn8_N6HDmpve12FileUploader10OnFinishedEP14COSCUploadTaski
+- 0x000000000007eaf8 : setApolloSendStructCallback
+- 0x000000000006f374 : _ZN17COSUploadTaskImplD1Ev
+- 0x000000000006d668 : _ZN5ABase3WWW14UploadFromFileEPKcS2_
+- 0x000000000006e54c : _ZN5ABase14UploadTaskImplD0Ev
+- 0x00000000001602a0 : _ZTVN6HDmpve6Plugin23HDmpveCoreReportServiceE
+- 0x000000000006fd48 : _ZTv0_n56_N5ABase14UploadTaskImpl6CancelEv
+- 0x00000000000745ec : _ZN5ABase11CThreadBase5StartEv
+- 0x000000000006de28 : _ZTv0_n24_N5ABase10UploadTaskD1Ev
+- 0x000000000006fc80 : _ZThn88_N5ABase14UploadTaskImpl5PauseEv
+- 0x0000000000070730 : _Z12COSUploadJNIPKcS0_xS0_PvS1_S0_
+- 0x000000000007eb74 : setApolloSendVoidMethodCallback
+- 0x000000000007ed28 : _ZN5ABase15CPlatformObject15SendUnityMethodEi
+- 0x0000000000085cb0 : _ZN7AString9StartWithEPKcS1_
+- 0x0000000000071d9c : Java_com_gcore_abase_URLRequest_nativeInit
+- 0x0000000000092664 : InitABaseObjectEnvironment
+- 0x00000000000765ec : _ZN5ABase15ANetworkChecker8NSLookupEPKciPFvRNS_14NSLookupResultEE
+- 0x000000000007ec50 : _ZN5ABase15CPlatformObject15SendUnityStructEPKcPv
+- 0x00000000000944f4 : _ZN6HDmpve6Plugin12TraceService14_reportContextEPNS0_12ISpanContextE
+- 0x000000000006d6cc : _ZN5ABase3WWW16GetCOSUploadTaskEv
+- 0x000000000006f2f4 : _ZN17COSUploadTaskImpl11GetUploadidEv
+- 0x000000000010fa20 : _ZTSN6HDmpve6Plugin18ICoreReportServiceE
+- 0x000000000007bbcc : _ZN6HDmpve13ConfigureImpl5_InitEv
+- 0x000000000008b474 : _ZNSt11_Deque_baseIN10ABase_Json6Reader9ErrorInfoESaIS2_EE17_M_initialize_mapEm
+- 0x0000000000087408 : hdmpvecore_plugin_startup
+- 0x000000000006f374 : _ZN17COSUploadTaskImplD2Ev
+- 0x000000000006fdfc : _ZN5ABase14UploadTaskImpl14onTaskProgressEll
+- 0x0000000000078bc8 : _ZN6HDmpve12FileUploader7_UploadEPKcS2_i
+- 0x000000000006f400 : _ZN17COSUploadTaskImplC1Ev
+- 0x0000000000048dbc : _ZN5ABase7MD5InitEPNS_7MD5_CTXE
+- 0x00000000000999d8 : _ZN6HDmpve6Plugin21HDmpveCoreInnerPlugin13OnPostStartupEv
+- 0x000000000007ece0 : _ZN5ABase15CPlatformObject15SendUnityBufferEPKciS2_i
+- 0x000000000006e588 : _ZThn24_N5ABase14UploadTaskImplD0Ev
+- 0x000000000006dfb4 : _ZN5ABase14UploadTaskImpl7DestroyEv
+- 0x000000000007536c : _ZN5ABase15ANetworkChecker20NotifyNSLookupFinishEPKcPFvRNS_14NSLookupResultEE
+- 0x000000000009a638 : _ZN6HDmpve6Plugin23HDmpveCoreReportService11CreateEventEiiPKc
+- 0x000000000006e52c : _ZTv0_n24_N5ABase14UploadTaskImplD1Ev
+- 0x000000000007ec74 : _ZN5ABase15CPlatformObject15SendUnityResultEPKci
+- 0x0000000000160230 : _ZTIN6HDmpve6Plugin18ICoreReportServiceE
+- 0x000000000008b270 : _ZNSt11_Deque_baseIPN10ABase_Json5ValueESaIS2_EE17_M_initialize_mapEm
+- 0x000000000015d9c0 : _ZTTN5ABase10UploadTaskE
+- 0x000000000015ebe0 : _ZTVN14COSCUploadTask8ListenerE
+- 0x000000000009a974 : _ZN6HDmpve6Plugin23HDmpveCoreReportServiceC2Ev
+- 0x00000000000924b8 : _ZN5ABase16ABaseInitializerC2Ev
+- 0x000000000006fc08 : _ZN5ABase14UploadTaskImpl7_uninitEv
+- 0x000000000009a608 : _ZNK6HDmpve6Plugin23HDmpveCoreReportService13GetPluginNameEv
+- 0x000000000015d6c0 : _ZTIN5ABase10UploadTaskE
+- 0x000000000006de38 : _ZN5ABase10UploadTaskD0Ev
+- 0x000000000007261c : _ZN5ABase11TimeOutInfo5StartEj
+- 0x000000000006f760 : _ZN5ABase20DownloadFileTaskImpl5_initEv
+- 0x0000000000085dc4 : _ZN7AString9StartWithEPKc
+- 0x0000000000079bd0 : _ZN6HDmpve15ConfigureReport18ReportUploadResultEiPKcS2_
+- 0x0000000000069d74 : _ZNKSt6vectorIPN5ABase9OperationESaIS2_EE12_M_check_lenEmPKc
+- 0x000000000015d708 : _ZTIN5ABase10UrlRequest18UploadTaskListenerE
+- 0x000000000006e520 : _ZN5ABase14UploadTaskImplD1Ev
+- 0x0000000000058db0 : _ZN5ABase11uECC_verifyEPKhS1_jS1_PKNS_12uECC_Curve_tE
+- 0x000000000006d890 : _ZThn88_N5ABase14UploadTaskImpl6ResumeEv
+- 0x0000000000078dcc : _ZN6HDmpve12FileUploader20OnConfigureRefreshedEPNS_15IStringIteratorE
+- 0x000000000006cf64 : _ZN5ABase9CTimerImp10StartTimerEmbPFvjPvES1_
+- 0x000000000006cc80 : _ZN5ABase11CThreadBase13OnThreadStartEv
+- 0x00000000000751e8 : _ZN5ABase15ANetworkChecker16NotifyPingFinishEPKcPFvRNS_10PingResultEE
+- 0x00000000000907c4 : _ZNKSt6vectorIN10ABase_Json12PathArgumentESaIS1_EE12_M_check_lenEmPKc
+- 0x000000000015d9d0 : _ZTVN5ABase10UploadTaskE
+- 0x000000000006dc54 : _ZThn88_N5ABase14UploadTaskImpl14RemoveListenerEPNS_10UploadTask8ListenerE
+- 0x00000000000761dc : _ZN5ABase15ANetworkChecker4PingEPKciPFvRNS_10PingResultEEhh
+- 0x000000000007513c : _ZN5ABase15ANetworkCheckerD1Ev
+- 0x000000000006fd0c : _ZN5ABase14UploadTaskImpl6CancelEv
+- 0x0000000000067cd8 : _ZN5ABase10ThreadPool4initEv
+- 0x0000000000078704 : _ZN6HDmpve12FileUploader11GetInstanceEv
+- 0x0000000000093154 : _ZN6HDmpve6Plugin13PluginManager11PostStartupEv
+- 0x000000000006f3b8 : _ZN17COSUploadTaskImplD0Ev
+- 0x00000000000750e0 : _ZN5ABase15ANetworkCheckerC2Ev
+- 0x000000000006dbf0 : _ZN5ABase14UploadTaskImpl14RemoveListenerEPNS_10UploadTask8ListenerE
+- 0x000000000009a5f8 : _ZN6HDmpve6Plugin23HDmpveCoreReportServiceD1Ev
+- 0x0000000000109fb0 : _ZTS17COSUploadTaskImpl
+- 0x000000000006f0a0 : _ZN5ABase14UploadTaskImplC1EPKcS2_
+- 0x000000000010b820 : _ZTSN5ABase15INetworkCheckerE
+- 0x0000000000094f98 : _ZN6HDmpve6Plugin12TraceService14initTargetListEv
+- 0x000000000009afc4 : Java_com_gcore_hdmpve_plugin_PluginUtils_nativeStartup
+- 0x000000000009a864 : _ZN6HDmpve6Plugin23HDmpveCoreReportService12DestroyEventEPPNS0_6IEventE
+- 0x000000000009931c : _ZN6HDmpve6Plugin21HDmpveCoreInnerPlugin19onStartGTraceClientEPN5ABase15ObjectOperationEPv
+- 0x000000000015e310 : _ZTTN5ABase14UploadTaskImplE
+- 0x0000000000099014 : _ZN6HDmpve6Plugin21HDmpveCoreInnerPlugin16onStartConfigureEPN5ABase15ObjectOperationEPv
+- 0x000000000006d764 : _ZN5ABase14UploadTaskImpl15RemoveCacheDataEv
+- 0x000000000006fea0 : _ZThn96_N5ABase14UploadTaskImpl14onTaskProgressEll
+- 0x000000000006f2fc : _ZN17COSUploadTaskImpl17GetUploadFilePathEv
+- 0x000000000006fd58 : _ZN5ABase14UploadTaskImpl11onTaskBeganEl
+- 0x000000000009a940 : _ZN6HDmpve6Plugin23HDmpveCoreReportService15ReleaseInstanceEv
+- 0x000000000006ff4c : _ZThn96_N5ABase14UploadTaskImpl14onTaskFinishedEil
+- 0x0000000000079a5c : _ZN6HDmpve15ConfigureReport23ReportRecieveUploadTaskEPKcS2_S2_i
+- 0x000000000006f3dc : _ZN14COSCUploadTaskD0Ev
+- 0x000000000006f370 : _ZN14COSCUploadTaskD1Ev
+- 0x000000000006f30c : _ZN17COSUploadTaskImpl6UploadEPKcS1_xS1_
+- 0x000000000006f084 : _ZN5ABase14UploadTaskImplC2EPKcS2_
+- 0x0000000000109da0 : _ZTSN5ABase10UrlRequest18UploadTaskListenerE
+- 0x000000000007c100 : _ZN6HDmpve13ConfigureImpl9StartOnceEv
+- 0x0000000000109e30 : _ZTSN5ABase14UploadTaskImplE
+- 0x00000000000711c4 : _ZN5ABase10UrlRequest17SetUploadDelegateEPNS0_18UploadTaskListenerE
+- 0x000000000007ec2c : _ZN5ABase15CPlatformObject16SendUnityMessageEPKcS2_
+- 0x000000000006f808 : _ZN5ABase20DownloadFileTaskImpl7_uninitEv
+- 0x000000000015e9e0 : _ZTVN5ABase15ANetworkCheckerE
+- 0x000000000010fa50 : _ZTSN6HDmpve6Plugin23HDmpveCoreReportServiceE
+- 0x000000000006d49c : _ZN5ABase6CTimer10StartTimerEmbPFvjPvES1_
+- 0x000000000007517c : _ZN5ABase15ANetworkChecker11GetInstanceEv
+- 0x000000000006d7a8 : _ZThn96_N5ABase14UploadTaskImpl15RemoveCacheDataEv
+- 0x00000000000785e4 : _ZN6HDmpve12FileUploaderD2Ev
+- 0x000000000006de1c : _ZN5ABase10UploadTaskD1Ev
+- 0x000000000006f400 : _ZN17COSUploadTaskImplC2Ev
+- 0x000000000006e570 : _ZTv0_n24_N5ABase14UploadTaskImplD0Ev
+- 0x000000000007eaec : setApolloSendMessageCallback
+
+### Suspicious Strings (top 50)
+  - N6HDmpve6Plugin14TraceIdManagerE
+  - _ZN5ABase12CTimeConsumeD2Ev
+  - _ZTVN6HDmpve12RemoteConfigE
+  - /Users/bkdevops/bkagent/workspace/p-02b32e4dea8d497b85d7ccd6c3e93b1b/src/BuildSDK-rename2/App/HDmpveCore/HDmpveCore/Dev/HDmpveBase/Source/System/Application/Application.cpp
+  - /Users/bkdevops/bkagent/workspace/p-02b32e4dea8d497b85d7ccd6c3e93b1b/src/BuildSDK-rename2/App/HDmpveCore/HDmpveCore/Dev/HDmpveBase/Source/System/NetworkChecker/ANetworkChecker.cpp
+  - _ZTIN6HDmpve7ILoggerE
+  - _ZTSN6HDmpve6Plugin14IPluginServiceE
+  - _ZN5ABase3WWW7DestroyEPNS_10UploadTaskE
+  - _ZN6HDmpve5ABase19oi_symmetry_encryptEPKciS2_PcPi
+  - format PluginName HDMPVECORE
+  - _ZNK14AStringBuilder5CloneEv
+  - _ZThn8_N6HDmpve13ConfigureImplD1Ev
+  - _ZN5ABase14UploadTaskImpl17SaveUploadingPartEi
+  - GTraceEnable
+  - _ZNK6HDmpve6Plugin19RemoteConfigSerivce13GetPluginNameEv
+  - /Users/bkdevops/bkagent/workspace/p-02b32e4dea8d497b85d7ccd6c3e93b1b/src/BuildSDK-rename2/App/HDmpveCore/HDmpveCore/Dev/HDmpvePluginManager/Source/PluginManager/InnerPlugin/GTrace/TraceIdManager.cpp
+  - _ZN5ABase15ANetworkCheckerC1Ev
+  - _ZNSt8_Rb_treeISsSt4pairIKSsN6HDmpve6Plugin20_tagPluginDescriptorEESt10_Select1stIS5_ESt4lessISsESaIS5_EE7_M_copyEPKSt13_Rb_tree_nodeIS5_EPSD_
+  - _ZN5ABase14NSLookupResultC2Ev
+  - _ZTIN6HDmpve12FileUploaderE
+  - _ZTIN6HDmpve9ConfigureE
+  - _ZN5ABase14UploadTaskImplC1EPKcS2_
+  - /Users/bkdevops/bkagent/workspace/p-02b32e4dea8d497b85d7ccd6c3e93b1b/src/BuildSDK-rename2/App/HDmpveCore/HDmpveCore/Dev/HDmpveBase/Source/Base/Configure/UtilsHelper.cpp
+  - _ZN17COSUploadTaskImpl17GetUploadFilePathEv
+  - _ZN5ABase12CTimeConsumeC2EPc
+  - _ZN6HDmpve16RemoteGameConfig7GetLongEPKcl
+  - _ZN5ABase14UploadTaskImpl6CancelEv
+  - _ZN6HDmpve6Plugin20HDmpveCoreLogSerivceD1Ev
+  - Java_com_gcore_hdmpve_plugin_PluginUtils_nativeStartup
+  - HDmpveCore
+  - _Z12COSUploadJNIPKcS0_xS0_PvS1_S0_
+  - _ZN5ABase11CThreadBase14OnThreadResumeEv
+  - _ZN5ABase12CTimeConsumeD1Ev
+  - _ZTVN6HDmpve12FileUploaderE
+  - _ZN6HDmpve16RemoteGameConfig11AddObserverEPNS_20RemoteConfigObserverE
+  - _ZN6HDmpve12FileUploader11GetInstanceEv
+  - _ZN6HDmpve6Plugin9SingletonINS0_21HDmpveCoreInnerPluginEED1Ev
+  - N6HDmpve6Plugin14IPluginManagerE
+  - _ZN5ABase11uECC_verifyEPKhS1_jS1_PKNS_12uECC_Curve_tE
+  - N5ABase15ANetworkCheckerE
+  - _ZN6HDmpve22HDmpveCoreRemoteConfig6GetIntEPKci
+  - N6HDmpve13IRemoteConfigE
+  - _ZN6HDmpve22ConfigObserverDispatchC1EPNS_16RemoteGameConfigE
+  - _ZN5ABase16_tagApolloActionD2Ev
+  - _ZN6HDmpve6Plugin21HDmpveCoreInnerPlugin16onStartConfigureEPN5ABase15ObjectOperationEPv
+  - _ZTIN6HDmpve6Plugin15IServiceManagerE
+  - Upload
+  - pop1TraceIdfromFile
+  - _ZTSN6HDmpve6Plugin15IServiceManagerE
+  - _ZN5ABase10UploadTaskD0Ev
+
+## libTBlueData.so
+### Exports (56 total)
+- 0x000000000004d1cc : _ZN3TDM10ITBlueData11GetInstanceEv
+- 0x000000000008e854 : Java_com_blue_dm_TBlueData_TDMEnableReport
+- 0x000000000008f5c4 : Java_com_blue_dm_TBlueData_TDMReportBinary
+- 0x000000000008ff3c : Java_com_blue_dm_system_FileUtils_FileUtilsInit
+- 0x000000000008fbd0 : Java_com_blue_dm_device_DeviceInfoHolder_SetNewLongDeviceInfo
+- 0x0000000000091fb8 : TDM_Destroy_Event
+- 0x000000000008e308 : Java_com_blue_dm_system_TDMUtils_EncryptField
+- 0x000000000004d258 : _ZN3TDM10ITBlueData15ReleaseInstanceEv
+- 0x00000000002e0210 : _ZTSN6HDmpve6Plugin12PluginReportE
+- 0x000000000008e81c : Java_com_blue_dm_TBlueData_TDMPause
+- 0x000000000008e8bc : Java_com_blue_dm_TBlueData_TDMGetUID
+- 0x000000000008e7e4 : Java_com_blue_dm_TBlueData_TDMResume
+- 0x000000000008ea38 : Java_com_blue_dm_TBlueData_TDMGetSDKVerision
+- 0x0000000000092328 : _ZN6HDmpve6Plugin12PluginReportD0Ev
+- 0x0000000000092380 : _ZThn8_NK6HDmpve6Plugin12PluginReport7GetNameEv
+- 0x0000000000091dd4 : TDM_Set_Log_Level
+- 0x000000000006e484 : _Z20RegisterHDmpvePluginv
+- 0x000000000008e578 : Java_com_blue_dm_system_TDMUtils_SetDeviceInfoEncryptKey
+- 0x00000000000923c0 : _ZThn8_N6HDmpve6Plugin12PluginReport13OnPreShutdownEv
+- 0x000000000008e020 : Java_com_blue_dm_database_TDMDataBase_DataBaseInit
+- 0x000000000008ffa0 : Java_com_blue_dm_system_FileUtils_GetDefaultPreferenceByKey
+- 0x00000000000922e4 : _ZThn8_N6HDmpve6Plugin12PluginReport16GetServiceByNameEPKc
+- 0x000000000008fd6c : Java_com_blue_dm_device_DeviceInfoHolder_SetNewBoolDeviceInfo
+- 0x000000000008ebf8 : Java_com_blue_dm_TBlueData_TDMReportEvent
+- 0x0000000000071e48 : Java_com_blue_dm_TBlueData_setAppDir
+- 0x0000000000092370 : _ZN6HDmpve6Plugin12PluginReport10OnShutdownEv
+- 0x000000000008ff20 : Java_com_blue_dm_device_DeviceInfoHolder_isEnableDeviceInfo
+- 0x000000000008f97c : Java_com_blue_dm_device_DeviceInfoHolder_SetNewStringDeviceInfo
+- 0x0000000000092344 : _ZN6HDmpve6Plugin12PluginReport9OnStartupEPNS0_16IServiceRegisterE
+- 0x000000000008e0e8 : Java_com_blue_dm_system_TDMUtils_OnNetworkChanged
+- 0x0000000000092398 : _ZThn8_N6HDmpve6Plugin12PluginReport9OnStartupEPNS0_16IServiceRegisterE
+- 0x0000000000091ff0 : TDM_Report_Binary
+- 0x000000000008e7ac : Java_com_blue_dm_TBlueData_TDMInit
+- 0x0000000000091ef8 : TDM_Create_Event
+- 0x0000000000091e74 : TDM_Enable_Device_Info
+- 0x00000000000923c4 : _ZThn8_N6HDmpve6Plugin12PluginReport10OnShutdownEv
+- 0x000000000006e864 : JNI_OnLoad
+- 0x0000000000091ec0 : TDM_Release_Instance
+- 0x000000000009238c : _ZThn8_NK6HDmpve6Plugin12PluginReport10GetVersionEv
+- 0x000000000008ebb4 : Java_com_blue_dm_TBlueData_TDMSetLogLevel
+- 0x000000000008f7ac : Java_com_blue_dm_TBlueData_TDMReportLogin
+- 0x000000000009232c : _ZNK6HDmpve6Plugin12PluginReport7GetNameEv
+- 0x000000000008e084 : Java_com_blue_dm_system_TDMUtils_Init
+- 0x000000000009236c : _ZN6HDmpve6Plugin12PluginReport13OnPreShutdownEv
+- 0x0000000000091d74 : TDM_Initialize
+- 0x0000000000092368 : _ZN6HDmpve6Plugin12PluginReport13OnPostStartupEv
+- 0x00000000000923bc : _ZThn8_N6HDmpve6Plugin12PluginReport13OnPostStartupEv
+- 0x000000000008f914 : Java_com_blue_dm_TBlueData_TDMEnableDeviceInfo
+- 0x0000000000092378 : _ZThn8_N6HDmpve6Plugin12PluginReportD0Ev
+- 0x00000000003c7300 : _ZTIN6HDmpve6Plugin12PluginReportE
+
+### Anti-Cheat Indicators (1 found)
+
+#### Memory Protection
+  - STR: mprotect
+
+### Hookable Targets (32 found)
+- 0x000000000008e854 : Java_com_blue_dm_TBlueData_TDMEnableReport
+- 0x000000000008f5c4 : Java_com_blue_dm_TBlueData_TDMReportBinary
+- 0x000000000008ff3c : Java_com_blue_dm_system_FileUtils_FileUtilsInit
+- 0x00000000002e0210 : _ZTSN6HDmpve6Plugin12PluginReportE
+- 0x0000000000092328 : _ZN6HDmpve6Plugin12PluginReportD0Ev
+- 0x0000000000092380 : _ZThn8_NK6HDmpve6Plugin12PluginReport7GetNameEv
+- 0x00000000000923c0 : _ZThn8_N6HDmpve6Plugin12PluginReport13OnPreShutdownEv
+- 0x000000000008e020 : Java_com_blue_dm_database_TDMDataBase_DataBaseInit
+- 0x00000000000922e4 : _ZThn8_N6HDmpve6Plugin12PluginReport16GetServiceByNameEPKc
+- 0x000000000008ebf8 : Java_com_blue_dm_TBlueData_TDMReportEvent
+- 0x0000000000092370 : _ZN6HDmpve6Plugin12PluginReport10OnShutdownEv
+- 0x0000000000092344 : _ZN6HDmpve6Plugin12PluginReport9OnStartupEPNS0_16IServiceRegisterE
+- 0x0000000000092398 : _ZThn8_N6HDmpve6Plugin12PluginReport9OnStartupEPNS0_16IServiceRegisterE
+- 0x0000000000091ff0 : TDM_Report_Binary
+- 0x000000000008e7ac : Java_com_blue_dm_TBlueData_TDMInit
+- 0x00000000000923c4 : _ZThn8_N6HDmpve6Plugin12PluginReport10OnShutdownEv
+- 0x000000000009238c : _ZThn8_NK6HDmpve6Plugin12PluginReport10GetVersionEv
+- 0x000000000008f7ac : Java_com_blue_dm_TBlueData_TDMReportLogin
+- 0x000000000009232c : _ZNK6HDmpve6Plugin12PluginReport7GetNameEv
+- 0x000000000008e084 : Java_com_blue_dm_system_TDMUtils_Init
+- 0x000000000009236c : _ZN6HDmpve6Plugin12PluginReport13OnPreShutdownEv
+- 0x0000000000091d74 : TDM_Initialize
+- 0x0000000000092368 : _ZN6HDmpve6Plugin12PluginReport13OnPostStartupEv
+- 0x00000000000923bc : _ZThn8_N6HDmpve6Plugin12PluginReport13OnPostStartupEv
+- 0x0000000000092378 : _ZThn8_N6HDmpve6Plugin12PluginReportD0Ev
+- 0x00000000003c7300 : _ZTIN6HDmpve6Plugin12PluginReportE
+- 0x0000000000091e28 : TDM_Enable_Report
+- 0x0000000000092324 : _ZN6HDmpve6Plugin12PluginReportD2Ev
+- 0x00000000000922a4 : _ZN6HDmpve6Plugin12PluginReport16GetServiceByNameEPKc
+- 0x00000000003c7250 : _ZTVN6HDmpve6Plugin12PluginReportE
+- 0x0000000000092374 : _ZThn8_N6HDmpve6Plugin12PluginReportD1Ev
+- 0x0000000000092338 : _ZNK6HDmpve6Plugin12PluginReport10GetVersionEv
+
+### Suspicious Strings (top 50)
+  - d.subjectKeyIdentifier
+  - could not load PKCS12 client certificate, OpenSSL error %s
+  - RSA_padding_add_PKCS1_type_1
+  - DSA_do_verify
+  - encrypt error
+  - Suite B: cannot sign P-384 with P-256
+  - HTTPReportProc
+  - ClearReportFile
+  - Proxy Certificate Information
+  - DH-RSA-CAMELLIA256-SHA
+  - Java_com_blue_dm_TBlueData_TDMResume
+  - RSA_sign_ASN1_OCTET_STRING
+  - debug_malloc2
+  - Extended OCSP Status
+  - ** Resuming transfer from byte position %ld
+  - Upload
+  - non fips rsa method
+  - RSA_NULL_PUBLIC_ENCRYPT
+  - ssl3_check_cert_and_algorithm
+  - ECDH-ECDSA-AES256-SHA
+  - Verify error:
+  - PKCS7_verify
+  - RSA_verify_ASN1_OCTET_STRING
+  - AES-128-CTR
+  - V2I_SUBJECT_ALT
+  - format error in certificate's notBefore field
+  - AES-128-CFB8
+  - decrypt error
+  - aes-192-cfb8
+  - http route request result : %s
+  - V2I_ISSUER_ALT
+  - RSA_blinding
+  - PKCS7_encrypt
+  - unsupported prf
+  - %*sOnly User Certificates
+  - AES-256-OFB
+  - not supported for this key type
+  - Unsupported extension feature
+  - Http network request consume, network consume:%lldms, request consume:%lldms
+  - [ReportHang]
+  - unsupported keylength
+  - unsupported private key algorithm
+  - /Users/bkdevops/DevopsAgent/agent/workspace/p-9588583a786341c5b14d2797024c3756/src/openssl/crypto/rsa/rsa_sign.c
+  - public key no rsa
+  - _ZN6HDmpve6Plugin12PluginReport9OnStartupEPNS0_16IServiceRegisterE
+  - certificate revoked
+  - Superseded
+  - issuerDomainPolicy
+  - tdm_report_event, data is null.
+  - no certificate returned
+
+## libhdmpve.so
+### Exports (637 total)
+- 0x00000000000c8898 : hdmpve_custom_account_adapter_install
+- 0x00000000000b95a0 : hdmpve_get_connector_factory_instance
+- 0x00000000004931b0 : _ZTSNSt3tr116_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EEE
+- 0x000000000066e2c0 : _ZTVN6HDmpve13NameRouteInfoE
+- 0x00000000002bbbe0 : _ZStneIcSt11char_traitsIcESaIcEEbRKSbIT_T0_T1_EPKS3_
+- 0x00000000003d94cc : hdmpve_gromelink_getVersion
+- 0x0000000000140734 : _ZNSt3tr18functionIFviiEEC1ERKS2_
+- 0x000000000016c688 : _ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsESaIS2_EE16_M_insert_uniqueERKS2_
+- 0x0000000000241da4 : _ZNSt8_Rb_treeIyySt9_IdentityIyESt4lessIyESaIyEE8_M_eraseEPSt13_Rb_tree_nodeIyE
+- 0x0000000000491380 : _ZTSN6HDmpve4Conn13IGFMConnectorE
+- 0x00000000002ea78c : GetDownloadTaskInfo
+- 0x000000000013d18c : Java_com_gcore_hdmpve_netinterface_MsgWorker_dnsQueryCallback
+- 0x00000000000b9514 : hdmpve_pay_Dipose
+- 0x00000000000c1724 : _ZN6HDmpve15IAccountServiceD0Ev
+- 0x0000000000097184 : _ZNSt8_Rb_treeISsSt4pairIKSsSsESt10_Select1stIS2_ESt4lessISsESaIS2_EE29_M_get_insert_hint_unique_posESt23_Rb_tree_const_iteratorIS2_ERS1_
+- 0x0000000000668bf0 : _ZTIN6HDmpve12CServiceBaseE
+- 0x00000000003d3a24 : _ZNSt8_Rb_treeIiiSt9_IdentityIiESt4lessIiESaIiEE16_M_insert_uniqueERKi
+- 0x000000000066de98 : _ZTIN6HDmpve18RealNameAuthResultE
+- 0x00000000000c149c : hdmpve_none_account_initialize
+- 0x000000000067a580 : _ZTVN6HDmpve12TDirObserverE
+- 0x0000000000165f10 : _ZNSt6vectorISsSaISsEE5clearEv
+- 0x000000000066de80 : _ZTIN6HDmpve12RealNameInfoE
+- 0x0000000000668ab0 : _ZTIN6HDmpve11ISdkFactoryE
+- 0x000000000012fb5c : _ZN6HDmpve4Conn13NameRouteInfoD0Ev
+- 0x00000000002e9948 : CreateVersionInfoCallBack
+- 0x00000000004b2240 : _ZTSN6HDmpve22HDmpveDolphinInterfaceE
+- 0x00000000002e9a98 : InitVersionMgr
+- 0x00000000001b5580 : _ZN15ChannelInfoUtil44WriteOldApkChannel2NewApk_ReturnWriteErrCodeEPKcS1_Rj
+- 0x00000000000c119c : Install
+- 0x000000000010e074 : hdmpve_releaseInstance
+- 0x00000000000c7e80 : _ZN6HDmpve5TokenD0Ev
+- 0x00000000002ea230 : DataMgrPollCallback
+- 0x000000000049d160 : _ZTSN6HDmpve22IHdmpvePufferInterfaceE
+- 0x00000000000bbf5c : _ZNSt12_Vector_baseIPN6HDmpve16IServiceObserverESaIS2_EED1Ev
+- 0x0000000000193674 : PufferManagerGetLastError
+- 0x000000000012d2ec : _ZNSt8_Rb_treeISsSt4pairIKSsPN6HDmpve4Conn10IConnectorEESt10_Select1stIS6_ESt4lessISsESaIS6_EE8_M_eraseEPSt13_Rb_tree_nodeIS6_E
+- 0x00000000002ea384 : GetDataMgrMemorySize
+- 0x00000000001b3ac0 : _ZN15ChannelInfoUtil13isV2SignatureEPKc
+- 0x0000000000179acc : _ZN6HDmpve13ZoneRouteInfoD1Ev
+- 0x000000000016c3fc : _ZNSt10_List_baseISsSaISsEE8_M_clearEv
+- 0x00000000000b7cf8 : _ZN6HDmpve14IPluginManager15ReleaseInstanceEv
+- 0x00000000003c6e98 : _ZN6HDmpve5ITDirC1Ev
+- 0x0000000000242354 : _ZNSt10_List_baseIPcSaIS0_EE8_M_clearEv
+- 0x00000000002eab68 : DoDownloadAction
+- 0x00000000000b92e8 : hdmpve_pay_action
+- 0x000000000066e410 : _ZTVN6HDmpve6ResultE
+- 0x0000000000179a64 : _ZN6HDmpve11WaitingInfoD2Ev
+- 0x0000000000668cf0 : _ZTIN6HDmpve16IServiceObserverE
+- 0x000000000017e308 : _ZNSt8_Rb_treeISsSt4pairIKSsbESt10_Select1stIS2_ESt4lessISsESaIS2_EE24_M_get_insert_unique_posERS1_
+- 0x0000000000668d70 : _ZTVN6HDmpve16IServiceObserverE
+
+### Anti-Cheat Indicators (2 found)
+
+#### Memory Protection
+  - STR: mprotect
+
+#### Integrity Check
+  - STR: verify_signature=
+
+### Hookable Targets (40 found)
+- 0x00000000000c149c : hdmpve_none_account_initialize
+- 0x00000000002e9a98 : InitVersionMgr
+- 0x00000000001934a4 : InitPufferManager
+- 0x00000000002eaa8c : UnInitDataPreDownloader
+- 0x000000000066de38 : _ZTIN6HDmpve14InitializeInfoE
+- 0x00000000000ba224 : hdmpve_account_initialize
+- 0x00000000003c6a74 : hdmpve_tdir_initialize
+- 0x000000000010e184 : _ZN6HDmpve14InitializeInfoD1Ev
+- 0x00000000000c1064 : _ZN19NNoneAccountAdapter19CNoneAccountFactory13OnHDmpveStartEv
+- 0x00000000002e9b90 : CheckAppUpdate
+- 0x00000000002ea59c : InitDataDownloader
+- 0x0000000000247a9c : IFSDllVerifyApiCompatable
+- 0x00000000003f4e5c : apollo_net_sniffer_Init
+- 0x00000000000b833c : _ZN6HDmpve11CPluginBase13OnHDmpveStartEv
+- 0x000000000012f798 : hdmpve_connector_Initialize
+- 0x000000000066df40 : _ZTVN6HDmpve14InitializeInfoE
+- 0x00000000003d95b8 : hdmpve_gromelink_send
+- 0x0000000000193538 : UninitPufferManager
+- 0x00000000000c88bc : hdmpve_custom_account_initialize
+- 0x00000000006695d0 : _ZTVN6HDmpve21ConnectorInitInfoBaseE
+- 0x00000000002eaa5c : InitDataPreDownloader
+- 0x00000000003f512c : apollo_net_sniffer_SetupLobbyCluster
+- 0x000000000047b6b0 : _ZTSN6HDmpve21ConnectorInitInfoBaseE
+- 0x0000000000158b3c : _ZNKSt6vectorISsSaISsEE12_M_check_lenEmPKc
+- 0x0000000000668f68 : _ZTIN6HDmpve21ConnectorInitInfoBaseE
+- 0x00000000000d7d70 : _ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPSsS2_EET0_T_S4_S3_
+- 0x00000000000b8338 : _ZN6HDmpve11CPluginBase13OnPluginStartEv
+- 0x0000000000179e44 : _ZN6HDmpve14InitializeInfoaSERKS0_
+- 0x00000000002eaabc : StartPreDownloadService
+- 0x000000000010e344 : hdmpve_init
+- 0x000000000010e184 : _ZN6HDmpve14InitializeInfoD2Ev
+- 0x00000000003f4fcc : apollo_net_sniffer_SetupCluster
+- 0x00000000000b904c : hdmpve_pay_Initialize
+- 0x00000000002ea18c : InitDataManager
+- 0x000000000010e1ec : _ZN6HDmpve14InitializeInfoD0Ev
+- 0x0000000000498830 : _ZTSN6HDmpve14InitializeInfoE
+- 0x000000000010e50c : Java_com_gcore_hdmpve_qr_QRCodeAPI_qrCodeInit
+- 0x00000000002ea5cc : StartDownload
+- 0x000000000017afb4 : _ZNK6HDmpve14InitializeInfo5CloneEv
+- 0x000000000010e6cc : Java_com_gcore_hdmpve_HDmpve_hdmpveInit
+
+### Suspicious Strings (top 50)
+  - Failed to makesure path exist[%s]
+  - NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN2cu17CPufferInitActionEFviRN6puffer15PufferUpdateRspEEEEEE
+  - [dumpinitinfo] m_pHcdnDnsMgr DnsModeType:%u DnsMode:%u finalMode:%d
+  - [result]:ha->dwFlags & NIFS_FLAG_READ_ONLY!;[code]:%d
+  - makesure cures thread stop
+  - assertion failed: sh.map_result != MAP_FAILED
+  - RSA_padding_add_PKCS1_type_1
+  - N6pebble9broadcast43PebbleChannelMgrService_JoinChannel_presultE
+  - N6HDmpve15HDmpveSDKPluginE
+  - sdcard_read_speed
+  - CHDmpvePluginManager::Unregister plugin(%s) not exist
+  - [CEifsCreate::StartEifsCreate] start downloadheader success url:%s path %s
+  - /Users/hdmpve/android/dev/IIPS/Source/app/data_manager/src/data_managerconfig.cpp
+  - _ZTVN6HDmpve12IPayObserverE
+  - encrypt error
+  - NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN6pebble7rpc_new12RpcConnectorEFvlmEEEEE
+  - Suite B: cannot sign P-384 with P-256
+  - kRSAPSK
+  - N6HDmpve5CTGcpE
+  - /Users/hdmpve/android/dev/IIPS/Source/src/openssl/crypto/pem/pem_info.cpp
+  - /Users/hdmpve/android/dev/IIPS/Source/src/openssl/crypto/ec/ec_pmeth.cpp
+  - HDmpveCore
+  - QueryAddrInfo failed: unknown result
+  - /Users/hdmpve/android/dev/Common/Source/rpc/rpc_new.cpp
+  - [CPufferInitAction::TryToOpenEifs] [open old archive failed]
+  - NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN8addr_svr18QueryAddrSvrClientEFviPN6pebble3rpc8protocol9TProtocolENS_8functionIFviRNS2_16RspQueryAddrInfoEEEEEEEEE
+  - Proxy Certificate Information
+  - /Users/hdmpve/android/dev/IIPS/Source/app/version_manager/app_callback_event_version.cpp
+  - [CDownloadMgrBridge::ResumeTask][LastError:DOWNLOAD_ERROR_FINALIZED][TaskID: %lld]
+  - N6HDmpve15IAccountServiceE
+  - RSA_sign_ASN1_OCTET_STRING
+  - [CPufferInitAction::DoInitEifsNotExistBySpareUrl][makesure new eifs failed]
+  - N6HDmpve17HDmpveDNSNotifierE
+  - StopCheckDownloadWait success!
+  - /Users/hdmpve/android/dev/Common/Source/Adapter/Jni/HDmpve.jni.cpp
+  - N2cu13cu_filehelper22CheckProgressInterfaceE
+  - NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN6pebble7rpc_new12RpcConnectorEFvbEEEEE
+  - hdmpve_tgcpapi_recv_and_decrypt_pkg
+  - N6apollo18cmn_timer_callbackE
+  - [CApkUpdateAction::MakeSureDoDiff][do not need do diff]
+  - hdmpve_tgcpapi_fini
+  - ** Resuming transfer from byte position %ld
+  - Extended OCSP Status
+  - Verify header tag failed
+  - /Users/hdmpve/android/dev/IIPS/Source/src/openssl/crypto/x509v3/v3_ia5.cpp
+  - _ZN6HDmpve13NameRouteInfoD2Ev
+  - /Users/hdmpve/android/dev/Common/Source/tgcpapi/tgcpapi_advanced.cpp
+  - _ZNSt8_Rb_treeISsSt4pairIKSsPN6HDmpve4Conn10IConnectorEESt10_Select1stIS6_ESt4lessISsESaIS6_EE24_M_get_insert_unique_posERS1_
+  - N6apollo9cmn_timerE
+  - HCDNPufferDownloadEngine
+
+## libsigner.so
+### Exports (2 total)
+- 0x000000000009a088 : Java_com_adjust_sdk_sig_NativeLibHelper_nOnResume
+- 0x000000000009afc0 : Java_com_adjust_sdk_sig_NativeLibHelper_nSign
+
+### Anti-Cheat Indicators (0 found)
+
+### Hookable Targets (0 found)
+
+### Suspicious Strings (top 50)
+  - zV@SU]\2
+  - Java_com_adjust_sdk_sig_NativeLibHelper_nOnResume

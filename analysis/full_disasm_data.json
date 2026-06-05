@@ -1,0 +1,1068 @@
+{
+  "libanogs.so": {
+    "exports_count": 21,
+    "critical_count": 10,
+    "imports_count": 0,
+    "jni_onload": [
+      {
+        "offset": "0x1db894",
+        "size": 580,
+        "name": "JNI_OnLoad@@ANO"
+      }
+    ],
+    "top_critical": [
+      {
+        "offset": "0x1d3814",
+        "size": 812,
+        "name": "AnoSDKInit@@ANO"
+      },
+      {
+        "offset": "0x1d7938",
+        "size": 108,
+        "name": "AnoSDKGetReportData3@@ANO"
+      },
+      {
+        "offset": "0x1d551c",
+        "size": 1388,
+        "name": "AnoSDKGetReportData@@ANO"
+      },
+      {
+        "offset": "0x1d79a4",
+        "size": 1568,
+        "name": "AnoSDKDelReportData3@@ANO"
+      },
+      {
+        "offset": "0x1d7fc4",
+        "size": 776,
+        "name": "AnoSDKGetReportData4@@ANO"
+      },
+      {
+        "offset": "0x1d88ec",
+        "size": 904,
+        "name": "AnoSDKOnRecvSignature@@ANO"
+      },
+      {
+        "offset": "0x1d3b40",
+        "size": 1596,
+        "name": "AnoSDKInitEx@@ANO"
+      },
+      {
+        "offset": "0x1d5a88",
+        "size": 1988,
+        "name": "AnoSDKDelReportData@@ANO"
+      },
+      {
+        "offset": "0x1d82cc",
+        "size": 1568,
+        "name": "AnoSDKDelReportData4@@ANO"
+      },
+      {
+        "offset": "0x1d78cc",
+        "size": 108,
+        "name": "AnoSDKGetReportData2@@ANO"
+      }
+    ],
+    "suspicious_imports": [],
+    "bypass_patches": [
+      "PATCH_LIB(\"libanogs.so\", 0x1d3814, \"C0035FD6\");  // AnoSDKInit@@ANO",
+      "PATCH_LIB(\"libanogs.so\", 0x1d7938, \"C0035FD6\");  // AnoSDKGetReportData3@@ANO",
+      "PATCH_LIB(\"libanogs.so\", 0x1d551c, \"C0035FD6\");  // AnoSDKGetReportData@@ANO",
+      "PATCH_LIB(\"libanogs.so\", 0x1d79a4, \"C0035FD6\");  // AnoSDKDelReportData3@@ANO",
+      "PATCH_LIB(\"libanogs.so\", 0x1d7fc4, \"C0035FD6\");  // AnoSDKGetReportData4@@ANO",
+      "PATCH_LIB(\"libanogs.so\", 0x1d88ec, \"C0035FD6\");  // AnoSDKOnRecvSignature@@ANO",
+      "PATCH_LIB(\"libanogs.so\", 0x1d3b40, \"C0035FD6\");  // AnoSDKInitEx@@ANO",
+      "PATCH_LIB(\"libanogs.so\", 0x1d5a88, \"C0035FD6\");  // AnoSDKDelReportData@@ANO",
+      "PATCH_LIB(\"libanogs.so\", 0x1d82cc, \"C0035FD6\");  // AnoSDKDelReportData4@@ANO",
+      "PATCH_LIB(\"libanogs.so\", 0x1d78cc, \"C0035FD6\");  // AnoSDKGetReportData2@@ANO"
+    ]
+  },
+  "libhdmpvecore.so": {
+    "exports_count": 2204,
+    "critical_count": 1918,
+    "imports_count": 0,
+    "jni_onload": [
+      {
+        "offset": "0x7f528",
+        "size": 856,
+        "name": "JNI_OnLoad"
+      }
+    ],
+    "top_critical": [
+      {
+        "offset": "0x779d0",
+        "size": 68,
+        "name": "_ZN6HDmpve16RemoteGameConfigD2Ev"
+      },
+      {
+        "offset": "0x66e28",
+        "size": 36,
+        "name": "_ZN5ABase19OperationTargetBaseD0Ev"
+      },
+      {
+        "offset": "0x7cc84",
+        "size": 84,
+        "name": "_ZN6HDmpve9Configure11GetInstanceEv"
+      },
+      {
+        "offset": "0x71e4c",
+        "size": 88,
+        "name": "Java_com_gcore_abase_URLRequest_nativeTaskProgress"
+      },
+      {
+        "offset": "0x5c170",
+        "size": 1404,
+        "name": "_ZN5ABase12CIniFileImpl11WriteStringEPKcS2_S2_"
+      },
+      {
+        "offset": "0x835e0",
+        "size": 16,
+        "name": "_ZTv0_n24_N5ABase22ValueConstIteratorImplD0Ev"
+      },
+      {
+        "offset": "0x5efc0",
+        "size": 344,
+        "name": "_ZN5ABase10BundleImpl3GetEPKcS2_"
+      },
+      {
+        "offset": "0x7e818",
+        "size": 32,
+        "name": "_ZN5ABase15IPlatformObjectD2Ev"
+      },
+      {
+        "offset": "0x93788",
+        "size": 200,
+        "name": "_ZN6HDmpve6Plugin13PluginManager15UninstallByNameEPKc"
+      },
+      {
+        "offset": "0x99cec",
+        "size": 208,
+        "name": "_ZN6HDmpve6Plugin19RemoteConfigSerivceC2Ev"
+      },
+      {
+        "offset": "0x8e1c0",
+        "size": 4,
+        "name": "_ZN10ABase_Json13ValueIteratorC2Ev"
+      },
+      {
+        "offset": "0x5838c",
+        "size": 16,
+        "name": "_ZN5ABase14uECC_secp224r1Ev"
+      },
+      {
+        "offset": "0x61fc8",
+        "size": 220,
+        "name": "Java_com_gcore_abase_config_ConfigBundle_setLong"
+      },
+      {
+        "offset": "0x903f0",
+        "size": 40,
+        "name": "_ZNSt4pairIKN10ABase_Json5Value8CZStringES1_ED1Ev"
+      },
+      {
+        "offset": "0x96e38",
+        "size": 352,
+        "name": "_ZN6HDmpve6Plugin11SpanContextC1EPKc"
+      },
+      {
+        "offset": "0x8e19c",
+        "size": 36,
+        "name": "_ZN10ABase_Json18ValueConstIteratoraSERKNS_17ValueIteratorBaseE"
+      },
+      {
+        "offset": "0x68058",
+        "size": 132,
+        "name": "_ZN5ABase10ThreadPool12stopAllTasksEv"
+      },
+      {
+        "offset": "0x5193c",
+        "size": 72,
+        "name": "_ZN5ABase19CApolloBufferWriter5WriteERNS_20_tagApolloBufferBaseE"
+      },
+      {
+        "offset": "0x8e244",
+        "size": 16,
+        "name": "_ZN10ABase_Json5Value11CommentInfoD1Ev"
+      },
+      {
+        "offset": "0x9abd8",
+        "size": 56,
+        "name": "_ZN6HDmpve6Plugin14ServiceManager15ReleaseInstanceEv"
+      },
+      {
+        "offset": "0x49f0c",
+        "size": 476,
+        "name": "_ZN5ABase13base64_encodeEPKhj"
+      },
+      {
+        "offset": "0x82eb4",
+        "size": 68,
+        "name": "_ZN5ABase21ValueIteratorBaseImplC1ERKSt17_Rb_tree_iteratorISt4pairIKNS_11ValueStringENS_5ValueEEE"
+      },
+      {
+        "offset": "0x69770",
+        "size": 252,
+        "name": "_ZN5ABase17OperationQueueImp12createThreadEv"
+      },
+      {
+        "offset": "0x70534",
+        "size": 508,
+        "name": "_ZN5ABase15UrlResponseImpl9SetHeaderEPKcS2_"
+      },
+      {
+        "offset": "0x4d308",
+        "size": 232,
+        "name": "_ZN5ABase11TdrTypeUtil14compareTdrTimeEjj"
+      },
+      {
+        "offset": "0x5d524",
+        "size": 48,
+        "name": "_ZN5ABase20EncryptedIniFileImplC2EPKc"
+      },
+      {
+        "offset": "0x8e658",
+        "size": 16,
+        "name": "_ZNK10ABase_Json5Value8CZString14isStaticStringEv"
+      },
+      {
+        "offset": "0x92b88",
+        "size": 116,
+        "name": "_ZNSt6vectorIN5ABase18CAFunctionSelectorESaIS1_EE8_M_eraseEN9__gnu_cxx17__normal_iteratorIPS1_S3_EE"
+      },
+      {
+        "offset": "0x99138",
+        "size": 8,
+        "name": "_ZThn32_N6HDmpve6Plugin21HDmpveCoreInnerPlugin16GetServiceByNameEPKc"
+      },
+      {
+        "offset": "0x5e974",
+        "size": 36,
+        "name": "_ZN5ABase6BundleD0Ev"
+      },
+      {
+        "offset": "0x6b818",
+        "size": 208,
+        "name": "_ZN5ABase16CNetworkObserverC1Ev"
+      },
+      {
+        "offset": "0x642b4",
+        "size": 52,
+        "name": "_ZN5ABase11AFileLogger9LogToFileEPKc"
+      },
+      {
+        "offset": "0x6829c",
+        "size": 808,
+        "name": "_ZN5ABase10ThreadPool13tryShrinkPoolEv"
+      },
+      {
+        "offset": "0x76bf4",
+        "size": 288,
+        "name": "_ZN6HDmpve16RemoteGameConfig11AddObserverEPNS_20RemoteConfigObserverE"
+      },
+      {
+        "offset": "0x5126c",
+        "size": 20,
+        "name": "_ZN5ABase16_tagApolloActionD1Ev"
+      },
+      {
+        "offset": "0x50f64",
+        "size": 8,
+        "name": "_ZN5ABase10ITdrObject11fromXmlFileEPKcNS_12TdrXmlFormatEj"
+      },
+      {
+        "offset": "0x8a784",
+        "size": 580,
+        "name": "_ZN10ABase_Json12StyledWriter15writeArrayValueERKNS_5ValueE"
+      },
+      {
+        "offset": "0x66da4",
+        "size": 72,
+        "name": "_ZNK5ABase15ObjectOperation9DuplicateEv"
+      },
+      {
+        "offset": "0x93610",
+        "size": 116,
+        "name": "_ZNSt8_Rb_treeISsSt4pairIKSsN6HDmpve6Plugin20_tagPluginDescriptorEESt10_Select1stIS5_ESt4lessISsESaIS5_EE5eraseB5cxx11ESt17_Rb_tree_iteratorIS5_E"
+      },
+      {
+        "offset": "0x642e8",
+        "size": 1580,
+        "name": "_ZN5ABase11AFileLogger17RemoveOldLogFilesEi"
+      },
+      {
+        "offset": "0x6bbb0",
+        "size": 152,
+        "name": "_ZN5ABase16CNetworkObserverD2Ev"
+      },
+      {
+        "offset": "0x77228",
+        "size": 524,
+        "name": "_ZN6HDmpve16RemoteGameConfigC2EPKc"
+      },
+      {
+        "offset": "0x5cfc8",
+        "size": 20,
+        "name": "_ZN5ABase20EncryptedIniFileImplD2Ev"
+      },
+      {
+        "offset": "0x7a8b0",
+        "size": 336,
+        "name": "_ZN6HDmpve12RemoteConfig9GetStringEPKcPcRiS2_"
+      },
+      {
+        "offset": "0x73ca0",
+        "size": 300,
+        "name": "_ZN5ABase18CAFunctionSelector7PerformEv"
+      },
+      {
+        "offset": "0x6d70c",
+        "size": 16,
+        "name": "_ZN5ABase3WWW7DestroyEPNS_8DataTaskE"
+      },
+      {
+        "offset": "0x66e00",
+        "size": 8,
+        "name": "_ZN5ABase15ObjectOperation11ClearTargetEv"
+      },
+      {
+        "offset": "0x915bc",
+        "size": 40,
+        "name": "_ZNK10ABase_Json5Value3getERKSsRKS0_"
+      },
+      {
+        "offset": "0x66c20",
+        "size": 20,
+        "name": "_ZN5ABase15StaticOperationD1Ev"
+      },
+      {
+        "offset": "0x50fe4",
+        "size": 60,
+        "name": "_ZNK5ABase22_tagApolloBufferBuffer6encodeER7AString"
+      }
+    ],
+    "suspicious_imports": [],
+    "bypass_patches": [
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x779d0, \"C0035FD6\");  // _ZN6HDmpve16RemoteGameConfigD2Ev",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x66e28, \"C0035FD6\");  // _ZN5ABase19OperationTargetBaseD0Ev",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x7cc84, \"C0035FD6\");  // _ZN6HDmpve9Configure11GetInstanceEv",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x71e4c, \"C0035FD6\");  // Java_com_gcore_abase_URLRequest_nativeTaskProgress",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x5c170, \"C0035FD6\");  // _ZN5ABase12CIniFileImpl11WriteStringEPKcS2_S2_",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x835e0, \"C0035FD6\");  // _ZTv0_n24_N5ABase22ValueConstIteratorImplD0Ev",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x5efc0, \"C0035FD6\");  // _ZN5ABase10BundleImpl3GetEPKcS2_",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x7e818, \"C0035FD6\");  // _ZN5ABase15IPlatformObjectD2Ev",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x93788, \"C0035FD6\");  // _ZN6HDmpve6Plugin13PluginManager15UninstallByNameEPKc",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x99cec, \"C0035FD6\");  // _ZN6HDmpve6Plugin19RemoteConfigSerivceC2Ev",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x8e1c0, \"C0035FD6\");  // _ZN10ABase_Json13ValueIteratorC2Ev",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x5838c, \"C0035FD6\");  // _ZN5ABase14uECC_secp224r1Ev",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x61fc8, \"C0035FD6\");  // Java_com_gcore_abase_config_ConfigBundle_setLong",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x903f0, \"C0035FD6\");  // _ZNSt4pairIKN10ABase_Json5Value8CZStringES1_ED1Ev",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x96e38, \"C0035FD6\");  // _ZN6HDmpve6Plugin11SpanContextC1EPKc",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x8e19c, \"C0035FD6\");  // _ZN10ABase_Json18ValueConstIteratoraSERKNS_17ValueIteratorBaseE",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x68058, \"C0035FD6\");  // _ZN5ABase10ThreadPool12stopAllTasksEv",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x5193c, \"C0035FD6\");  // _ZN5ABase19CApolloBufferWriter5WriteERNS_20_tagApolloBufferBaseE",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x8e244, \"C0035FD6\");  // _ZN10ABase_Json5Value11CommentInfoD1Ev",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x9abd8, \"C0035FD6\");  // _ZN6HDmpve6Plugin14ServiceManager15ReleaseInstanceEv",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x49f0c, \"C0035FD6\");  // _ZN5ABase13base64_encodeEPKhj",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x82eb4, \"C0035FD6\");  // _ZN5ABase21ValueIteratorBaseImplC1ERKSt17_Rb_tree_iteratorISt4pairIKNS_11ValueStringENS_5ValueEEE",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x69770, \"C0035FD6\");  // _ZN5ABase17OperationQueueImp12createThreadEv",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x70534, \"C0035FD6\");  // _ZN5ABase15UrlResponseImpl9SetHeaderEPKcS2_",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x4d308, \"C0035FD6\");  // _ZN5ABase11TdrTypeUtil14compareTdrTimeEjj",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x5d524, \"C0035FD6\");  // _ZN5ABase20EncryptedIniFileImplC2EPKc",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x8e658, \"C0035FD6\");  // _ZNK10ABase_Json5Value8CZString14isStaticStringEv",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x92b88, \"C0035FD6\");  // _ZNSt6vectorIN5ABase18CAFunctionSelectorESaIS1_EE8_M_eraseEN9__gnu_cxx17__normal_iteratorIPS1_S3_EE",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x99138, \"C0035FD6\");  // _ZThn32_N6HDmpve6Plugin21HDmpveCoreInnerPlugin16GetServiceByNameEPKc",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x5e974, \"C0035FD6\");  // _ZN5ABase6BundleD0Ev",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x6b818, \"C0035FD6\");  // _ZN5ABase16CNetworkObserverC1Ev",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x642b4, \"C0035FD6\");  // _ZN5ABase11AFileLogger9LogToFileEPKc",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x6829c, \"C0035FD6\");  // _ZN5ABase10ThreadPool13tryShrinkPoolEv",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x76bf4, \"C0035FD6\");  // _ZN6HDmpve16RemoteGameConfig11AddObserverEPNS_20RemoteConfigObserverE",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x5126c, \"C0035FD6\");  // _ZN5ABase16_tagApolloActionD1Ev",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x50f64, \"C0035FD6\");  // _ZN5ABase10ITdrObject11fromXmlFileEPKcNS_12TdrXmlFormatEj",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x8a784, \"C0035FD6\");  // _ZN10ABase_Json12StyledWriter15writeArrayValueERKNS_5ValueE",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x66da4, \"C0035FD6\");  // _ZNK5ABase15ObjectOperation9DuplicateEv",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x93610, \"C0035FD6\");  // _ZNSt8_Rb_treeISsSt4pairIKSsN6HDmpve6Plugin20_tagPluginDescriptorEESt10_Select1stIS5_ESt4lessISsESaIS5_EE5eraseB5cxx11ESt17_Rb_tree_iteratorIS5_E",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x642e8, \"C0035FD6\");  // _ZN5ABase11AFileLogger17RemoveOldLogFilesEi",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x6bbb0, \"C0035FD6\");  // _ZN5ABase16CNetworkObserverD2Ev",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x77228, \"C0035FD6\");  // _ZN6HDmpve16RemoteGameConfigC2EPKc",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x5cfc8, \"C0035FD6\");  // _ZN5ABase20EncryptedIniFileImplD2Ev",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x7a8b0, \"C0035FD6\");  // _ZN6HDmpve12RemoteConfig9GetStringEPKcPcRiS2_",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x73ca0, \"C0035FD6\");  // _ZN5ABase18CAFunctionSelector7PerformEv",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x6d70c, \"C0035FD6\");  // _ZN5ABase3WWW7DestroyEPNS_8DataTaskE",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x66e00, \"C0035FD6\");  // _ZN5ABase15ObjectOperation11ClearTargetEv",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x915bc, \"C0035FD6\");  // _ZNK10ABase_Json5Value3getERKSsRKS0_",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x66c20, \"C0035FD6\");  // _ZN5ABase15StaticOperationD1Ev",
+      "PATCH_LIB(\"libhdmpvecore.so\", 0x50fe4, \"C0035FD6\");  // _ZNK5ABase22_tagApolloBufferBuffer6encodeER7AString"
+    ]
+  },
+  "libTBlueData.so": {
+    "exports_count": 53,
+    "critical_count": 39,
+    "imports_count": 0,
+    "jni_onload": [
+      {
+        "offset": "0x6e864",
+        "size": 576,
+        "name": "JNI_OnLoad"
+      }
+    ],
+    "top_critical": [
+      {
+        "offset": "0x4d1cc",
+        "size": 4,
+        "name": "_ZN3TDM10ITBlueData11GetInstanceEv"
+      },
+      {
+        "offset": "0x8e854",
+        "size": 104,
+        "name": "Java_com_blue_dm_TBlueData_TDMEnableReport"
+      },
+      {
+        "offset": "0x8f5c4",
+        "size": 488,
+        "name": "Java_com_blue_dm_TBlueData_TDMReportBinary"
+      },
+      {
+        "offset": "0x8ff3c",
+        "size": 100,
+        "name": "Java_com_blue_dm_system_FileUtils_FileUtilsInit"
+      },
+      {
+        "offset": "0x4d258",
+        "size": 52,
+        "name": "_ZN3TDM10ITBlueData15ReleaseInstanceEv"
+      },
+      {
+        "offset": "0x8e81c",
+        "size": 56,
+        "name": "Java_com_blue_dm_TBlueData_TDMPause"
+      },
+      {
+        "offset": "0x8e8bc",
+        "size": 380,
+        "name": "Java_com_blue_dm_TBlueData_TDMGetUID"
+      },
+      {
+        "offset": "0x8e7e4",
+        "size": 56,
+        "name": "Java_com_blue_dm_TBlueData_TDMResume"
+      },
+      {
+        "offset": "0x8ea38",
+        "size": 380,
+        "name": "Java_com_blue_dm_TBlueData_TDMGetSDKVerision"
+      },
+      {
+        "offset": "0x92328",
+        "size": 4,
+        "name": "_ZN6HDmpve6Plugin12PluginReportD0Ev"
+      },
+      {
+        "offset": "0x92380",
+        "size": 12,
+        "name": "_ZThn8_NK6HDmpve6Plugin12PluginReport7GetNameEv"
+      },
+      {
+        "offset": "0x6e484",
+        "size": 348,
+        "name": "_Z20RegisterHDmpvePluginv"
+      },
+      {
+        "offset": "0x923c0",
+        "size": 4,
+        "name": "_ZThn8_N6HDmpve6Plugin12PluginReport13OnPreShutdownEv"
+      },
+      {
+        "offset": "0x8e020",
+        "size": 100,
+        "name": "Java_com_blue_dm_database_TDMDataBase_DataBaseInit"
+      },
+      {
+        "offset": "0x922e4",
+        "size": 64,
+        "name": "_ZThn8_N6HDmpve6Plugin12PluginReport16GetServiceByNameEPKc"
+      },
+      {
+        "offset": "0x8ebf8",
+        "size": 2508,
+        "name": "Java_com_blue_dm_TBlueData_TDMReportEvent"
+      },
+      {
+        "offset": "0x71e48",
+        "size": 640,
+        "name": "Java_com_blue_dm_TBlueData_setAppDir"
+      },
+      {
+        "offset": "0x92370",
+        "size": 4,
+        "name": "_ZN6HDmpve6Plugin12PluginReport10OnShutdownEv"
+      },
+      {
+        "offset": "0x92344",
+        "size": 36,
+        "name": "_ZN6HDmpve6Plugin12PluginReport9OnStartupEPNS0_16IServiceRegisterE"
+      },
+      {
+        "offset": "0x92398",
+        "size": 36,
+        "name": "_ZThn8_N6HDmpve6Plugin12PluginReport9OnStartupEPNS0_16IServiceRegisterE"
+      },
+      {
+        "offset": "0x91ff0",
+        "size": 108,
+        "name": "TDM_Report_Binary"
+      },
+      {
+        "offset": "0x8e7ac",
+        "size": 56,
+        "name": "Java_com_blue_dm_TBlueData_TDMInit"
+      },
+      {
+        "offset": "0x923c4",
+        "size": 4,
+        "name": "_ZThn8_N6HDmpve6Plugin12PluginReport10OnShutdownEv"
+      },
+      {
+        "offset": "0x9238c",
+        "size": 12,
+        "name": "_ZThn8_NK6HDmpve6Plugin12PluginReport10GetVersionEv"
+      },
+      {
+        "offset": "0x8ebb4",
+        "size": 68,
+        "name": "Java_com_blue_dm_TBlueData_TDMSetLogLevel"
+      },
+      {
+        "offset": "0x8f7ac",
+        "size": 360,
+        "name": "Java_com_blue_dm_TBlueData_TDMReportLogin"
+      },
+      {
+        "offset": "0x9232c",
+        "size": 12,
+        "name": "_ZNK6HDmpve6Plugin12PluginReport7GetNameEv"
+      },
+      {
+        "offset": "0x8e084",
+        "size": 100,
+        "name": "Java_com_blue_dm_system_TDMUtils_Init"
+      },
+      {
+        "offset": "0x9236c",
+        "size": 4,
+        "name": "_ZN6HDmpve6Plugin12PluginReport13OnPreShutdownEv"
+      },
+      {
+        "offset": "0x91d74",
+        "size": 96,
+        "name": "TDM_Initialize"
+      },
+      {
+        "offset": "0x92368",
+        "size": 4,
+        "name": "_ZN6HDmpve6Plugin12PluginReport13OnPostStartupEv"
+      },
+      {
+        "offset": "0x923bc",
+        "size": 4,
+        "name": "_ZThn8_N6HDmpve6Plugin12PluginReport13OnPostStartupEv"
+      },
+      {
+        "offset": "0x8f914",
+        "size": 104,
+        "name": "Java_com_blue_dm_TBlueData_TDMEnableDeviceInfo"
+      },
+      {
+        "offset": "0x92378",
+        "size": 8,
+        "name": "_ZThn8_N6HDmpve6Plugin12PluginReportD0Ev"
+      },
+      {
+        "offset": "0x91e28",
+        "size": 76,
+        "name": "TDM_Enable_Report"
+      },
+      {
+        "offset": "0x92324",
+        "size": 4,
+        "name": "_ZN6HDmpve6Plugin12PluginReportD2Ev"
+      },
+      {
+        "offset": "0x922a4",
+        "size": 64,
+        "name": "_ZN6HDmpve6Plugin12PluginReport16GetServiceByNameEPKc"
+      },
+      {
+        "offset": "0x92374",
+        "size": 4,
+        "name": "_ZThn8_N6HDmpve6Plugin12PluginReportD1Ev"
+      },
+      {
+        "offset": "0x92338",
+        "size": 12,
+        "name": "_ZNK6HDmpve6Plugin12PluginReport10GetVersionEv"
+      }
+    ],
+    "suspicious_imports": [],
+    "bypass_patches": [
+      "PATCH_LIB(\"libTBlueData.so\", 0x4d1cc, \"C0035FD6\");  // _ZN3TDM10ITBlueData11GetInstanceEv",
+      "PATCH_LIB(\"libTBlueData.so\", 0x8e854, \"C0035FD6\");  // Java_com_blue_dm_TBlueData_TDMEnableReport",
+      "PATCH_LIB(\"libTBlueData.so\", 0x8f5c4, \"C0035FD6\");  // Java_com_blue_dm_TBlueData_TDMReportBinary",
+      "PATCH_LIB(\"libTBlueData.so\", 0x8ff3c, \"C0035FD6\");  // Java_com_blue_dm_system_FileUtils_FileUtilsInit",
+      "PATCH_LIB(\"libTBlueData.so\", 0x4d258, \"C0035FD6\");  // _ZN3TDM10ITBlueData15ReleaseInstanceEv",
+      "PATCH_LIB(\"libTBlueData.so\", 0x8e81c, \"C0035FD6\");  // Java_com_blue_dm_TBlueData_TDMPause",
+      "PATCH_LIB(\"libTBlueData.so\", 0x8e8bc, \"C0035FD6\");  // Java_com_blue_dm_TBlueData_TDMGetUID",
+      "PATCH_LIB(\"libTBlueData.so\", 0x8e7e4, \"C0035FD6\");  // Java_com_blue_dm_TBlueData_TDMResume",
+      "PATCH_LIB(\"libTBlueData.so\", 0x8ea38, \"C0035FD6\");  // Java_com_blue_dm_TBlueData_TDMGetSDKVerision",
+      "PATCH_LIB(\"libTBlueData.so\", 0x92328, \"C0035FD6\");  // _ZN6HDmpve6Plugin12PluginReportD0Ev",
+      "PATCH_LIB(\"libTBlueData.so\", 0x92380, \"C0035FD6\");  // _ZThn8_NK6HDmpve6Plugin12PluginReport7GetNameEv",
+      "PATCH_LIB(\"libTBlueData.so\", 0x6e484, \"C0035FD6\");  // _Z20RegisterHDmpvePluginv",
+      "PATCH_LIB(\"libTBlueData.so\", 0x923c0, \"C0035FD6\");  // _ZThn8_N6HDmpve6Plugin12PluginReport13OnPreShutdownEv",
+      "PATCH_LIB(\"libTBlueData.so\", 0x8e020, \"C0035FD6\");  // Java_com_blue_dm_database_TDMDataBase_DataBaseInit",
+      "PATCH_LIB(\"libTBlueData.so\", 0x922e4, \"C0035FD6\");  // _ZThn8_N6HDmpve6Plugin12PluginReport16GetServiceByNameEPKc",
+      "PATCH_LIB(\"libTBlueData.so\", 0x8ebf8, \"C0035FD6\");  // Java_com_blue_dm_TBlueData_TDMReportEvent",
+      "PATCH_LIB(\"libTBlueData.so\", 0x71e48, \"C0035FD6\");  // Java_com_blue_dm_TBlueData_setAppDir",
+      "PATCH_LIB(\"libTBlueData.so\", 0x92370, \"C0035FD6\");  // _ZN6HDmpve6Plugin12PluginReport10OnShutdownEv",
+      "PATCH_LIB(\"libTBlueData.so\", 0x92344, \"C0035FD6\");  // _ZN6HDmpve6Plugin12PluginReport9OnStartupEPNS0_16IServiceRegisterE",
+      "PATCH_LIB(\"libTBlueData.so\", 0x92398, \"C0035FD6\");  // _ZThn8_N6HDmpve6Plugin12PluginReport9OnStartupEPNS0_16IServiceRegisterE",
+      "PATCH_LIB(\"libTBlueData.so\", 0x91ff0, \"C0035FD6\");  // TDM_Report_Binary",
+      "PATCH_LIB(\"libTBlueData.so\", 0x8e7ac, \"C0035FD6\");  // Java_com_blue_dm_TBlueData_TDMInit",
+      "PATCH_LIB(\"libTBlueData.so\", 0x923c4, \"C0035FD6\");  // _ZThn8_N6HDmpve6Plugin12PluginReport10OnShutdownEv",
+      "PATCH_LIB(\"libTBlueData.so\", 0x9238c, \"C0035FD6\");  // _ZThn8_NK6HDmpve6Plugin12PluginReport10GetVersionEv",
+      "PATCH_LIB(\"libTBlueData.so\", 0x8ebb4, \"C0035FD6\");  // Java_com_blue_dm_TBlueData_TDMSetLogLevel",
+      "PATCH_LIB(\"libTBlueData.so\", 0x8f7ac, \"C0035FD6\");  // Java_com_blue_dm_TBlueData_TDMReportLogin",
+      "PATCH_LIB(\"libTBlueData.so\", 0x9232c, \"C0035FD6\");  // _ZNK6HDmpve6Plugin12PluginReport7GetNameEv",
+      "PATCH_LIB(\"libTBlueData.so\", 0x8e084, \"C0035FD6\");  // Java_com_blue_dm_system_TDMUtils_Init",
+      "PATCH_LIB(\"libTBlueData.so\", 0x9236c, \"C0035FD6\");  // _ZN6HDmpve6Plugin12PluginReport13OnPreShutdownEv",
+      "PATCH_LIB(\"libTBlueData.so\", 0x91d74, \"C0035FD6\");  // TDM_Initialize",
+      "PATCH_LIB(\"libTBlueData.so\", 0x92368, \"C0035FD6\");  // _ZN6HDmpve6Plugin12PluginReport13OnPostStartupEv",
+      "PATCH_LIB(\"libTBlueData.so\", 0x923bc, \"C0035FD6\");  // _ZThn8_N6HDmpve6Plugin12PluginReport13OnPostStartupEv",
+      "PATCH_LIB(\"libTBlueData.so\", 0x8f914, \"C0035FD6\");  // Java_com_blue_dm_TBlueData_TDMEnableDeviceInfo",
+      "PATCH_LIB(\"libTBlueData.so\", 0x92378, \"C0035FD6\");  // _ZThn8_N6HDmpve6Plugin12PluginReportD0Ev",
+      "PATCH_LIB(\"libTBlueData.so\", 0x91e28, \"C0035FD6\");  // TDM_Enable_Report",
+      "PATCH_LIB(\"libTBlueData.so\", 0x92324, \"C0035FD6\");  // _ZN6HDmpve6Plugin12PluginReportD2Ev",
+      "PATCH_LIB(\"libTBlueData.so\", 0x922a4, \"C0035FD6\");  // _ZN6HDmpve6Plugin12PluginReport16GetServiceByNameEPKc",
+      "PATCH_LIB(\"libTBlueData.so\", 0x92374, \"C0035FD6\");  // _ZThn8_N6HDmpve6Plugin12PluginReportD1Ev",
+      "PATCH_LIB(\"libTBlueData.so\", 0x92338, \"C0035FD6\");  // _ZNK6HDmpve6Plugin12PluginReport10GetVersionEv"
+    ]
+  },
+  "libhdmpve.so": {
+    "exports_count": 463,
+    "critical_count": 231,
+    "imports_count": 86,
+    "jni_onload": [
+      {
+        "offset": "0x10ee10",
+        "size": 892,
+        "name": "JNI_OnLoad"
+      }
+    ],
+    "top_critical": [
+      {
+        "offset": "0xc8898",
+        "size": 36,
+        "name": "hdmpve_custom_account_adapter_install"
+      },
+      {
+        "offset": "0xb95a0",
+        "size": 36,
+        "name": "hdmpve_get_connector_factory_instance"
+      },
+      {
+        "offset": "0x3d94cc",
+        "size": 12,
+        "name": "hdmpve_gromelink_getVersion"
+      },
+      {
+        "offset": "0x13d18c",
+        "size": 592,
+        "name": "Java_com_gcore_hdmpve_netinterface_MsgWorker_dnsQueryCallback"
+      },
+      {
+        "offset": "0xb9514",
+        "size": 136,
+        "name": "hdmpve_pay_Dipose"
+      },
+      {
+        "offset": "0xc1724",
+        "size": 32,
+        "name": "_ZN6HDmpve15IAccountServiceD0Ev"
+      },
+      {
+        "offset": "0xc149c",
+        "size": 204,
+        "name": "hdmpve_none_account_initialize"
+      },
+      {
+        "offset": "0x12fb5c",
+        "size": 32,
+        "name": "_ZN6HDmpve4Conn13NameRouteInfoD0Ev"
+      },
+      {
+        "offset": "0x2e9a98",
+        "size": 148,
+        "name": "InitVersionMgr"
+      },
+      {
+        "offset": "0x10e074",
+        "size": 4,
+        "name": "hdmpve_releaseInstance"
+      },
+      {
+        "offset": "0xc7e80",
+        "size": 32,
+        "name": "_ZN6HDmpve5TokenD0Ev"
+      },
+      {
+        "offset": "0xbbf5c",
+        "size": 16,
+        "name": "_ZNSt12_Vector_baseIPN6HDmpve16IServiceObserverESaIS2_EED1Ev"
+      },
+      {
+        "offset": "0x12d2ec",
+        "size": 80,
+        "name": "_ZNSt8_Rb_treeISsSt4pairIKSsPN6HDmpve4Conn10IConnectorEESt10_Select1stIS6_ESt4lessISsESaIS6_EE8_M_eraseEPSt13_Rb_tree_nodeIS6_E"
+      },
+      {
+        "offset": "0x1b3ac0",
+        "size": 284,
+        "name": "_ZN15ChannelInfoUtil13isV2SignatureEPKc"
+      },
+      {
+        "offset": "0x179acc",
+        "size": 20,
+        "name": "_ZN6HDmpve13ZoneRouteInfoD1Ev"
+      },
+      {
+        "offset": "0xb7cf8",
+        "size": 108,
+        "name": "_ZN6HDmpve14IPluginManager15ReleaseInstanceEv"
+      },
+      {
+        "offset": "0x3c6e98",
+        "size": 20,
+        "name": "_ZN6HDmpve5ITDirC1Ev"
+      },
+      {
+        "offset": "0xb92e8",
+        "size": 304,
+        "name": "hdmpve_pay_action"
+      },
+      {
+        "offset": "0x179a64",
+        "size": 20,
+        "name": "_ZN6HDmpve11WaitingInfoD2Ev"
+      },
+      {
+        "offset": "0x1934a4",
+        "size": 148,
+        "name": "InitPufferManager"
+      },
+      {
+        "offset": "0x3d94d8",
+        "size": 92,
+        "name": "hdmpve_gromelink_createSocket"
+      },
+      {
+        "offset": "0xb83bc",
+        "size": 28,
+        "name": "_ZN6HDmpve15CSdkFactoryBaseC2Ev"
+      },
+      {
+        "offset": "0x17cb0c",
+        "size": 140,
+        "name": "_ZN6HDmpve12RealNameInfoD2Ev"
+      },
+      {
+        "offset": "0x1799f4",
+        "size": 112,
+        "name": "_ZNK6HDmpve15ServerRouteInfo5CloneEv"
+      },
+      {
+        "offset": "0x12f38c",
+        "size": 212,
+        "name": "hdmpve_connector_set_protocol_version"
+      },
+      {
+        "offset": "0x12f6cc",
+        "size": 204,
+        "name": "hdmpve_connector_set_connectExtInt"
+      },
+      {
+        "offset": "0xb8718",
+        "size": 224,
+        "name": "_ZN6HDmpve12CServiceBase11AddObserverEPNS_16IServiceObserverE"
+      },
+      {
+        "offset": "0x17ce04",
+        "size": 452,
+        "name": "_ZNK6HDmpve13ConnectedInfo5CloneEv"
+      },
+      {
+        "offset": "0x13b534",
+        "size": 348,
+        "name": "Java_com_gcore_hdmpve_netinterface_MsgWorker_bindCallback"
+      },
+      {
+        "offset": "0xba3c4",
+        "size": 404,
+        "name": "hdmpve_account_realname_auth"
+      },
+      {
+        "offset": "0x2eaa8c",
+        "size": 48,
+        "name": "UnInitDataPreDownloader"
+      },
+      {
+        "offset": "0xb8340",
+        "size": 4,
+        "name": "_ZN6HDmpve11CPluginBase17OnApplicationQuitEv"
+      },
+      {
+        "offset": "0x179a98",
+        "size": 20,
+        "name": "_ZN6HDmpve15ServerRouteInfoD2Ev"
+      },
+      {
+        "offset": "0x3d9534",
+        "size": 40,
+        "name": "hdmpve_gromelink_destorySocket"
+      },
+      {
+        "offset": "0x12e85c",
+        "size": 32,
+        "name": "_ZN6HDmpve4Conn13ZoneRouteInfoD0Ev"
+      },
+      {
+        "offset": "0xba9cc",
+        "size": 120,
+        "name": "hdmpve_account_IsPlatformSupportApi"
+      },
+      {
+        "offset": "0xba224",
+        "size": 416,
+        "name": "hdmpve_account_initialize"
+      },
+      {
+        "offset": "0x3d9484",
+        "size": 72,
+        "name": "hdmpve_gromelink_getFactory"
+      },
+      {
+        "offset": "0x179ae0",
+        "size": 32,
+        "name": "_ZN6HDmpve13ZoneRouteInfoD0Ev"
+      },
+      {
+        "offset": "0x3c680c",
+        "size": 72,
+        "name": "hdmpve_tdir_queryall"
+      },
+      {
+        "offset": "0xb76f8",
+        "size": 8,
+        "name": "GetHDmpvePlugin"
+      },
+      {
+        "offset": "0x12eaf8",
+        "size": 288,
+        "name": "hdmpve_connector_connect"
+      },
+      {
+        "offset": "0x12d70c",
+        "size": 140,
+        "name": "_ZNSt8_Rb_treeISsSt4pairIKSsPN6HDmpve4Conn10IConnectorEESt10_Select1stIS6_ESt4lessISsESaIS6_EE4findERS1_"
+      },
+      {
+        "offset": "0xbbec0",
+        "size": 156,
+        "name": "_ZNSt6vectorIPN6HDmpve16IServiceObserverESaIS2_EEC1ERKS4_"
+      },
+      {
+        "offset": "0xc16fc",
+        "size": 12,
+        "name": "_ZN6HDmpve15IAccountServiceD2Ev"
+      },
+      {
+        "offset": "0x3c6a74",
+        "size": 372,
+        "name": "hdmpve_tdir_initialize"
+      },
+      {
+        "offset": "0xb9e34",
+        "size": 32,
+        "name": "_ZN6HDmpve11AccountInfoD0Ev"
+      },
+      {
+        "offset": "0x10e184",
+        "size": 104,
+        "name": "_ZN6HDmpve14InitializeInfoD1Ev"
+      },
+      {
+        "offset": "0xc7cf0",
+        "size": 76,
+        "name": "_ZN6HDmpve5TokenD2Ev"
+      },
+      {
+        "offset": "0x13098c",
+        "size": 64,
+        "name": "_ZNSt11__copy_moveILb0ELb1ESt26random_access_iterator_tagE8__copy_mIN6HDmpve4Conn9Connector6ActionEEEPT_PKS7_SA_S8_"
+      }
+    ],
+    "suspicious_imports": [
+      "pthread_cond_signal",
+      "connect",
+      "pthread_rwlock_unlock",
+      "_ZN5ABase15CPlatformObject15SendUnityBufferEPKciS2_i",
+      "_ZN5ABase11CThreadBaseC2Ev",
+      "_ZN5ABase15CPlatformObject16SendUnityMessageEPKcS2_",
+      "_ZN5ABase16CNetworkObserver21OnNetworkStateChangedENS_13ANetworkStateE",
+      "_ZN5ABase11CThreadBase4StopEv",
+      "_ZN5ABase7CSystem7GetUdidEv",
+      "pthread_mutexattr_destroy",
+      "_ZN5ABase16CNetworkObserver23PopStateFromChangedListERNS_13ANetworkStateE",
+      "fstat64",
+      "_ZN5ABase15CPlatformObject15SendUnityResultEPKcS2_i",
+      "_ZN5ABase15CPlatformObject15SendUnityMethodEi",
+      "pthread_mutex_init",
+      "_ZN5ABase11CThreadBase6ResumeEb",
+      "pthread_create",
+      "_ZN5ABase10TdrBufUtil10printTdrIPERNS_11TdrWriteBufEicPKcjj",
+      "_ZN5ABase11ABaseCommon9GetOpenIDEv",
+      "pthread_cond_broadcast",
+      "pthread_cond_destroy",
+      "pthread_self",
+      "pthread_key_create",
+      "pthread_rwlock_init",
+      "ioctl",
+      "pthread_exit",
+      "_ZN5ABase10TdrBufUtil13printVariableERNS_11TdrWriteBufEicPKcjb",
+      "send",
+      "getpid",
+      "_ZN5ABase19CApolloBufferReader4ReadEPNS_20_tagApolloBufferBaseE",
+      "pthread_getspecific",
+      "fread",
+      "openlog",
+      "pthread_mutex_unlock",
+      "mmap",
+      "_ZN5ABase10TdrBufUtil10printTdrIPERNS_11TdrWriteBufEicPKcj",
+      "pthread_mutex_trylock",
+      "stat64",
+      "pthread_key_delete",
+      "pthread_rwlock_rdlock",
+      "read",
+      "_ZN5ABase15CPlatformObject15SendUnityBufferEPKcS2_i",
+      "fopen",
+      "pthread_cond_init",
+      "write",
+      "fwrite",
+      "pthread_mutex_lock",
+      "pthread_equal",
+      "pthread_mutex_destroy",
+      "fdopen",
+      "mprotect",
+      "pthread_once",
+      "pthread_cond_wait",
+      "pthread_rwlock_destroy",
+      "lstat",
+      "_ZN5ABase11CThreadBase5PauseEv",
+      "fstat",
+      "_ZN5ABase19CApolloBufferWriter5WriteERKNS_20_tagApolloBufferBaseE",
+      "pthread_rwlock_wrlock",
+      "_ZN5ABase25PerformSelectorOnUIThreadEPNS_18CAFunctionSelectorE",
+      "_ZN5ABase10TdrBufUtil13printVariableERNS_11TdrWriteBufEicPKcS4_z",
+      "_ZN5ABase19CApolloBufferWriter5WriteEPK7AObject",
+      "_ZN5ABase19CApolloBufferReader4ReadERNS_20_tagApolloBufferBaseE",
+      "writev",
+      "_ZN5ABase15CPlatformObject15SendUnityBufferEPKcS2_iS2_i",
+      "_ZN5ABase19CApolloBufferWriter5WriteEPNS_20_tagApolloBufferBaseE",
+      "pthread_cond_timedwait",
+      "sendto",
+      "open",
+      "opendir",
+      "_ZN5ABase7CSystem11GetBundleIdEv",
+      "_ZN5ABase11CThreadBase5SleepEi",
+      "access",
+      "_ZN5ABase10TdrBufUtil11printStringERNS_11TdrWriteBufEicPKcS4_",
+      "_ZN5ABase11CThreadBase7DestroyEPPS0_b",
+      "stat",
+      "readdir",
+      "pthread_mutexattr_settype",
+      "statfs",
+      "ABase_IgnoreUIThread",
+      "_ZN5ABase10TdrBufUtil13printVariableERNS_11TdrWriteBufEicPKcb",
+      "pthread_join",
+      "_ZN5ABase11CThreadBase5StartEv",
+      "_ZN5ABase10TdrBufUtil10printArrayERNS_11TdrWriteBufEicPKcl",
+      "pthread_setspecific",
+      "pthread_mutexattr_init"
+    ],
+    "bypass_patches": [
+      "PATCH_LIB(\"libhdmpve.so\", 0xc8898, \"C0035FD6\");  // hdmpve_custom_account_adapter_install",
+      "PATCH_LIB(\"libhdmpve.so\", 0xb95a0, \"C0035FD6\");  // hdmpve_get_connector_factory_instance",
+      "PATCH_LIB(\"libhdmpve.so\", 0x3d94cc, \"C0035FD6\");  // hdmpve_gromelink_getVersion",
+      "PATCH_LIB(\"libhdmpve.so\", 0x13d18c, \"C0035FD6\");  // Java_com_gcore_hdmpve_netinterface_MsgWorker_dnsQueryCallback",
+      "PATCH_LIB(\"libhdmpve.so\", 0xb9514, \"C0035FD6\");  // hdmpve_pay_Dipose",
+      "PATCH_LIB(\"libhdmpve.so\", 0xc1724, \"C0035FD6\");  // _ZN6HDmpve15IAccountServiceD0Ev",
+      "PATCH_LIB(\"libhdmpve.so\", 0xc149c, \"C0035FD6\");  // hdmpve_none_account_initialize",
+      "PATCH_LIB(\"libhdmpve.so\", 0x12fb5c, \"C0035FD6\");  // _ZN6HDmpve4Conn13NameRouteInfoD0Ev",
+      "PATCH_LIB(\"libhdmpve.so\", 0x2e9a98, \"C0035FD6\");  // InitVersionMgr",
+      "PATCH_LIB(\"libhdmpve.so\", 0x10e074, \"C0035FD6\");  // hdmpve_releaseInstance",
+      "PATCH_LIB(\"libhdmpve.so\", 0xc7e80, \"C0035FD6\");  // _ZN6HDmpve5TokenD0Ev",
+      "PATCH_LIB(\"libhdmpve.so\", 0xbbf5c, \"C0035FD6\");  // _ZNSt12_Vector_baseIPN6HDmpve16IServiceObserverESaIS2_EED1Ev",
+      "PATCH_LIB(\"libhdmpve.so\", 0x12d2ec, \"C0035FD6\");  // _ZNSt8_Rb_treeISsSt4pairIKSsPN6HDmpve4Conn10IConnectorEESt10_Select1stIS6_ESt4lessISsESaIS6_EE8_M_eraseEPSt13_Rb_tree_nodeIS6_E",
+      "PATCH_LIB(\"libhdmpve.so\", 0x1b3ac0, \"C0035FD6\");  // _ZN15ChannelInfoUtil13isV2SignatureEPKc",
+      "PATCH_LIB(\"libhdmpve.so\", 0x179acc, \"C0035FD6\");  // _ZN6HDmpve13ZoneRouteInfoD1Ev",
+      "PATCH_LIB(\"libhdmpve.so\", 0xb7cf8, \"C0035FD6\");  // _ZN6HDmpve14IPluginManager15ReleaseInstanceEv",
+      "PATCH_LIB(\"libhdmpve.so\", 0x3c6e98, \"C0035FD6\");  // _ZN6HDmpve5ITDirC1Ev",
+      "PATCH_LIB(\"libhdmpve.so\", 0xb92e8, \"C0035FD6\");  // hdmpve_pay_action",
+      "PATCH_LIB(\"libhdmpve.so\", 0x179a64, \"C0035FD6\");  // _ZN6HDmpve11WaitingInfoD2Ev",
+      "PATCH_LIB(\"libhdmpve.so\", 0x1934a4, \"C0035FD6\");  // InitPufferManager",
+      "PATCH_LIB(\"libhdmpve.so\", 0x3d94d8, \"C0035FD6\");  // hdmpve_gromelink_createSocket",
+      "PATCH_LIB(\"libhdmpve.so\", 0xb83bc, \"C0035FD6\");  // _ZN6HDmpve15CSdkFactoryBaseC2Ev",
+      "PATCH_LIB(\"libhdmpve.so\", 0x17cb0c, \"C0035FD6\");  // _ZN6HDmpve12RealNameInfoD2Ev",
+      "PATCH_LIB(\"libhdmpve.so\", 0x1799f4, \"C0035FD6\");  // _ZNK6HDmpve15ServerRouteInfo5CloneEv",
+      "PATCH_LIB(\"libhdmpve.so\", 0x12f38c, \"C0035FD6\");  // hdmpve_connector_set_protocol_version",
+      "PATCH_LIB(\"libhdmpve.so\", 0x12f6cc, \"C0035FD6\");  // hdmpve_connector_set_connectExtInt",
+      "PATCH_LIB(\"libhdmpve.so\", 0xb8718, \"C0035FD6\");  // _ZN6HDmpve12CServiceBase11AddObserverEPNS_16IServiceObserverE",
+      "PATCH_LIB(\"libhdmpve.so\", 0x17ce04, \"C0035FD6\");  // _ZNK6HDmpve13ConnectedInfo5CloneEv",
+      "PATCH_LIB(\"libhdmpve.so\", 0x13b534, \"C0035FD6\");  // Java_com_gcore_hdmpve_netinterface_MsgWorker_bindCallback",
+      "PATCH_LIB(\"libhdmpve.so\", 0xba3c4, \"C0035FD6\");  // hdmpve_account_realname_auth",
+      "PATCH_LIB(\"libhdmpve.so\", 0x2eaa8c, \"C0035FD6\");  // UnInitDataPreDownloader",
+      "PATCH_LIB(\"libhdmpve.so\", 0xb8340, \"C0035FD6\");  // _ZN6HDmpve11CPluginBase17OnApplicationQuitEv",
+      "PATCH_LIB(\"libhdmpve.so\", 0x179a98, \"C0035FD6\");  // _ZN6HDmpve15ServerRouteInfoD2Ev",
+      "PATCH_LIB(\"libhdmpve.so\", 0x3d9534, \"C0035FD6\");  // hdmpve_gromelink_destorySocket",
+      "PATCH_LIB(\"libhdmpve.so\", 0x12e85c, \"C0035FD6\");  // _ZN6HDmpve4Conn13ZoneRouteInfoD0Ev",
+      "PATCH_LIB(\"libhdmpve.so\", 0xba9cc, \"C0035FD6\");  // hdmpve_account_IsPlatformSupportApi",
+      "PATCH_LIB(\"libhdmpve.so\", 0xba224, \"C0035FD6\");  // hdmpve_account_initialize",
+      "PATCH_LIB(\"libhdmpve.so\", 0x3d9484, \"C0035FD6\");  // hdmpve_gromelink_getFactory",
+      "PATCH_LIB(\"libhdmpve.so\", 0x179ae0, \"C0035FD6\");  // _ZN6HDmpve13ZoneRouteInfoD0Ev",
+      "PATCH_LIB(\"libhdmpve.so\", 0x3c680c, \"C0035FD6\");  // hdmpve_tdir_queryall",
+      "PATCH_LIB(\"libhdmpve.so\", 0xb76f8, \"C0035FD6\");  // GetHDmpvePlugin",
+      "PATCH_LIB(\"libhdmpve.so\", 0x12eaf8, \"C0035FD6\");  // hdmpve_connector_connect",
+      "PATCH_LIB(\"libhdmpve.so\", 0x12d70c, \"C0035FD6\");  // _ZNSt8_Rb_treeISsSt4pairIKSsPN6HDmpve4Conn10IConnectorEESt10_Select1stIS6_ESt4lessISsESaIS6_EE4findERS1_",
+      "PATCH_LIB(\"libhdmpve.so\", 0xbbec0, \"C0035FD6\");  // _ZNSt6vectorIPN6HDmpve16IServiceObserverESaIS2_EEC1ERKS4_",
+      "PATCH_LIB(\"libhdmpve.so\", 0xc16fc, \"C0035FD6\");  // _ZN6HDmpve15IAccountServiceD2Ev",
+      "PATCH_LIB(\"libhdmpve.so\", 0x3c6a74, \"C0035FD6\");  // hdmpve_tdir_initialize",
+      "PATCH_LIB(\"libhdmpve.so\", 0xb9e34, \"C0035FD6\");  // _ZN6HDmpve11AccountInfoD0Ev",
+      "PATCH_LIB(\"libhdmpve.so\", 0x10e184, \"C0035FD6\");  // _ZN6HDmpve14InitializeInfoD1Ev",
+      "PATCH_LIB(\"libhdmpve.so\", 0xc7cf0, \"C0035FD6\");  // _ZN6HDmpve5TokenD2Ev",
+      "PATCH_LIB(\"libhdmpve.so\", 0x13098c, \"C0035FD6\");  // _ZNSt11__copy_moveILb0ELb1ESt26random_access_iterator_tagE8__copy_mIN6HDmpve4Conn9Connector6ActionEEEPT_PKS7_SA_S8_"
+    ]
+  },
+  "libsigner.so": {
+    "exports_count": 2,
+    "critical_count": 1,
+    "imports_count": 0,
+    "jni_onload": [],
+    "top_critical": [
+      {
+        "offset": "0x9afc0",
+        "size": 152,
+        "name": "Java_com_adjust_sdk_sig_NativeLibHelper_nSign"
+      }
+    ],
+    "suspicious_imports": [],
+    "bypass_patches": [
+      "PATCH_LIB(\"libsigner.so\", 0x9afc0, \"C0035FD6\");  // Java_com_adjust_sdk_sig_NativeLibHelper_nSign"
+    ]
+  }
+}

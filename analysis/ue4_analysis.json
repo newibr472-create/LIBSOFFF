@@ -1,0 +1,111 @@
+{
+  "binary": "libUE4.so",
+  "size": 234345672,
+  "arch": "AARCH64",
+  "strings": {
+    "recoil": {
+      "RecoilKickADS": "0x3C7B763",
+      "RecoilKick": "0x3C7B763",
+      "AccessoriesVRecoilFactor": "0x3C90BE6",
+      "AccessoriesHRecoilFactor": "0x3D2859C",
+      "GameDeviationFactor": "0x3D77FC6",
+      "AnimationKick": "0x3CB527E",
+      "BulletSpread": "0x3E48CAE",
+      "SpreadFactor": "0x3E48CB4"
+    },
+    "shake": {
+      "CameraShake": "0x3C00658",
+      "CameraShakeScale": "0x3C89337",
+      "CameraShakeInnerRadius": "0x3E1D961",
+      "PlayCameraShake": "0x3D2064E",
+      "StopCameraShake": "0x3C00654",
+      "CameraAnimInst": "0x3C2BDC8"
+    },
+    "fps": {
+      "FrameRateLimit": "0x3C6B122",
+      "MaxFPS": "0x3CCB838",
+      "bSmoothFrameRate": "0x3C559D1",
+      "FixedFrameRate": "0x3DEA276",
+      "UseFixedFrameRate": "0x3E7C5A3",
+      "MaxTickRate": "0x3DAB118",
+      "NetServerMaxTickRate": "0x3DAB10F",
+      "TargetFrameRate": "0x3D5BB9D"
+    },
+    "fov": {
+      "FieldOfView": "0x3BF6FB7",
+      "FOVAngle": "0x3CAAC87",
+      "DefaultFOV": "0x3BFC2C7",
+      "CameraFOV": "0x3C289A6",
+      "AimFOV": "0x3C8BAA9",
+      "CurrentFOV": "0x3CE62D6",
+      "BaseFOV": "0x3DE9FB6"
+    },
+    "speed": {
+      "MaxWalkSpeed": "0x3C67E9E",
+      "MaxSprintSpeed": "0x3C8BAB0",
+      "MovementSpeed": "0x3C2B84B",
+      "CharacterMovement": "0x3C1E4F8",
+      "MaxAcceleration": "0x3BFA455",
+      "SpeedMultiplier": "0x3BFF34E",
+      "BaseSpeed": "0x3C368F2",
+      "CrouchSpeed": "0x3E0BC0D",
+      "SwimSpeed": "0x3C76C00",
+      "FlySpeed": "0x3CB50E5",
+      "VehicleSpeed": "0x3C7924E"
+    },
+    "grass": {
+      "GrassType": "0x3D69287",
+      "LandscapeGrass": "0x3D6925B",
+      "FoliageType": "0x3CEAFFB",
+      "GrassDensity": "0x3C699FD",
+      "CullDistance": "0x3C4B018"
+    },
+    "aimbot": {
+      "GetSocketLocation": "0x3DD7294",
+      "SkeletalMesh": "0x3BF57F8",
+      "GetBoneTransform": "0x3D80B30",
+      "BoneSpaceTransform": "0x3D80F89",
+      "head": "0x3C19925",
+      "RootComponent": "0x3C168CA",
+      "GetActorLocation": "0x3D40646",
+      "GetActorRotation": "0x3E66C51",
+      "LineTrace": "0x3C0764B",
+      "K2_SetActorRotation": "0x3DBEE37",
+      "SetControlRotation": "0x3C77712"
+    },
+    "hdr": {
+      "HDR": "0x3C1652C",
+      "Tonemapper": "0x3DD560B",
+      "FilmSlope": "0x3C56A09",
+      "FilmToe": "0x3C80418",
+      "PostProcess": "0x3BF5D8A",
+      "AutoExposure": "0x3C2C9ED",
+      "Bloom": "0x3C16F16",
+      "QualityLevel": "0x3C1573D",
+      "ScalabilityGroup": "0x3E18415",
+      "ScreenPercentage": "0x3D7E572"
+    }
+  },
+  "xrefs": {
+    "recoil": {},
+    "shake": {},
+    "fps": {},
+    "fov": {},
+    "speed": {},
+    "grass": {},
+    "aimbot": {},
+    "hdr": {
+      "Tonemapper": [
+        "0xA40FC78"
+      ]
+    }
+  },
+  "functions": [
+    {
+      "addr": "0xA40F3E8",
+      "cat": "hdr",
+      "string": "Tonemapper"
+    }
+  ],
+  "patch_count": 1
+}
