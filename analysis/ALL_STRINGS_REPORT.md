@@ -1,0 +1,777 @@
+# BGMI 4.4.0 - ALL Anti-Cheat Strings Report
+
+
+## libanogs.so (59 strings)
+
+- DW_EH_PE_funcrel pointer encoding not supported
+- nsUyhU}uwja
+- tdm_report
+- debugger=%s
+- oversubscribed distance tree
+- Smoothing not supported with nonstandard sampling ratios
+- REPORT
+- result
+- inline_hook_opcode_dismatch
+- Suspension not allowed here
+- ReportComplaint
+- onResume
+- Insufficient memory (case %d)
+- _Unwind_Resume() can't return
+- set_inline_hook_error
+- debugger:%s
+- Error when TiXmlDocument added to document, because TiXmlDocument can only be at the root.
+- Unsupported JPEG data precision %d
+- hello getreportdata3
+- mt2_no_root
+- allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size
+- Unsupported color conversion request
+- void __cxxabiv1::scan_eh_tab(scan_results &, _Unwind_Action, bool, _Unwind_Exception *, _Unwind_Context *)
+- unsupported arm64 register
+- unsupported restore location for register
+- debugger
+- check_state=%s
+- DCT scaled block size %dx%d not supported
+- unsupported restore location for float register
+- DW_EH_PE_aligned pointer encoding not supported
+- check_state:%s
+- insufficient lookahead
+- COREREPORT
+- Empty JPEG image (DNL not supported)
+- Unsupported JPEG process: SOF type 0x%02x
+- Unrecognized component IDs %d %d %d, assuming YCbCr
+- DW_EH_PE_textrel pointer encoding not supported
+- oversubscribed literal/length tree
+- ms_set_inlie_hook
+- Maximum supported image dimension is %u pixels
+- check_state
+- incorrect header check
+- |emulator_name=
+- Unsupported marker type 0x%02x
+- __cxa_guard_acquire detected recursive initialization: do you have a function-local static variable whose initialization depends on that function?
+- _Unwind_Resume
+- oversubscribed dynamic bit lengths tree
+- incorrect data check
+- ms_hook_opcode
+- Backing store not supported
+- name=%s|rate=%.2f|is_root=%d
+- results.reason == _URC_HANDLER_FOUND
+- ir"ekphc(}bjx-w`e1saq5dbvwsu{=wq
+- N12_GLOBAL__N_116itanium_demangle18ArraySubscriptExprE
+- N12_GLOBAL__N_116itanium_demangle15ClosureTypeNameE
+- N12_GLOBAL__N_116itanium_demangle13SubobjectExprE
+- N12_GLOBAL__N_116itanium_demangle19SpecialSubstitutionE
+- N12_GLOBAL__N_116itanium_demangle27ExpandedSpecialSubstitutionE
+- N12_GLOBAL__N_116itanium_demangle9DotSuffixE
+
+## libhdmpvecore.so (101 strings)
+
+- string length surpass defined size
+- XML root-node is NOT what expected
+- config file md5 check failed!
+- Bundle unsupport Object type
+- copy data 2 mmap file success
+- check _intervalPerLoop %d
+- checkNetworkState
+- N5ABase10UploadTaskE
+- N5ABase10UrlRequest18UploadTaskListenerE
+- N5ABase14UploadTaskImplE
+- SaveUploadingPart
+- SaveUploadingPart %d
+- UploadConfig.ini
+- 14COSCUploadTask
+- 17COSUploadTaskImpl
+- COSUploadJNI
+- Java_com_gcore_abase_cos_CUploadTask_nativeOnUploadFinished
+- /Users/bkdevops/bkagent/workspace/p-02b32e4dea8d497b85d7ccd6c3e93b1b/src/BuildSDK-rename2/App/HDmpveCore/HDmpveCore/Dev/HDmpveBase/Source/System/WWW/Task/COSUploadJNI.cpp
+- GetMethodID [com.abase.cos.CUploadTask.<init>] error
+- GetMethodID [com.abase.cos.CUploadTask.upload] error
+- COSUploadTask *task is NULL
+- COSUploadTask::Listener *rspDlgt is NULL
+- SetUploadDelegate
+- UploadFile
+- Java_com_gcore_abase_URLRequest_nativeSaveUploadPart
+- UrlRequest::SetUploadDelegate:%p
+- setUploadDelegate
+- GetStaticMethodID [com.gcore.abase.URLRequest.setUploadDelegate()] error
+- UrlRequest::UploadFile with path %s
+- uploadFile
+- GetStaticMethodID [com.gcore.abase.URLRequest.uploadFile()] error
+- apollo::UploadTaskImpl *task is NULL
+- Java_com_gcore_apollo_apollovoice_httpclient_URLRequest_response result %d
+- ~CTimeConsume
+- CheckPermission
+- CheckPermission is deprecated
+- OnResume
+- CApplication::OnResume
+- Resume
+- CThreadBase::Resume
+- after Thread: CThreadBase::Resume m_bPause.Set(false)
+- after Thread: CThreadBase::Resume m_PauseEvent.Set()
+- N5ABase10PingResultE
+- N5ABase16TraceRouteResultE
+- N5ABase14NSLookupResultE
+- N5ABase15INetworkCheckerE
+- /Users/bkdevops/bkagent/workspace/p-02b32e4dea8d497b85d7ccd6c3e93b1b/src/BuildSDK-rename2/App/HDmpveCore/HDmpveCore/Dev/HDmpveBase/Source/System/NetworkChecker/ANetworkChecker.cpp
+- N5ABase15ANetworkCheckerE
+- /Users/bkdevops/bkagent/workspace/p-02b32e4dea8d497b85d7ccd6c3e93b1b/src/BuildSDK-rename2/App/HDmpveCore/HDmpveCore/Dev/HDmpveBase/Source/System/NetworkChecker/ANetworkChecker_Android.cpp
+- N14COSCUploadTask8ListenerE
+- N6HDmpve12FileUploaderE
+- _Upload
+- /Users/bkdevops/bkagent/workspace/p-02b32e4dea8d497b85d7ccd6c3e93b1b/src/BuildSDK-rename2/App/HDmpveCore/HDmpveCore/Dev/HDmpveBase/Source/Base/Configure/FileUploader.cpp
+- Upload failed! FileUploader is uploading
+- _isUploading...
+- Upload
+- upload_id
+- manual_upload
+- manual upload
+- searchPaths: %s, filePatterns: %s, uploadid: %s, partSize: %d
+- ReportPullConfigResult
+- ReportRecieveUploadTask
+- ReportUploadResult
+- COREREPORT
+- PullConfigResult
+- /Users/bkdevops/bkagent/workspace/p-02b32e4dea8d497b85d7ccd6c3e93b1b/src/BuildSDK-rename2/App/HDmpveCore/HDmpveCore/Dev/HDmpveBase/Source/Base/Configure/ConfigureReport.mm
+- Report Event is NULL
+- RecieveUploadTask
+- UploadResult
+- valueType not support yet
+- OnDataTaskFinished ignore result:(error:%d, httpStatus:%d, cost time %llu ms, len:%llu), requestUrl:%s, setUrl:%s
+- com/gcore/abase/cos/CUploadTask
+- nativeOnUploadFinished
+- nativeSaveUploadPart
+- nativeResume
+- asUInt64
+- asUInt32
+- Unsupport type:%d
+- Unsupported type:%d
+- additional six characters expected to parse unicode surrogate pair.
+- expecting another \u token to begin the second half of a unicode surrogate pair
+- PluginManager::Install Success, plugin:%p, pluginName:%s, pluginVersion:%s
+- _reportContext
+- result
+- [GTrace] parseTraceIdData check member failed
+- HDmpveCore OnStartup Success
+- HDmpveCoreInnerPlugin::OnStartup InitCheck: Error: HDmpve GameID == 0, Not properly configured in config files!!!
+- N6HDmpve6Plugin18ICoreReportServiceE
+- N6HDmpve6Plugin23HDmpveCoreReportServiceE
+- /Users/bkdevops/bkagent/workspace/p-02b32e4dea8d497b85d7ccd6c3e93b1b/src/BuildSDK-rename2/App/HDmpveCore/HDmpveCore/Dev/HDmpvePluginManager/Source/PluginManager/InnerPlugin/HDmpveCoreReportService.cpp
+- HDmpveCoreReportService::CreateEvent, dataType : %d, srcID : %d, eventName : %s
+- ReportDataType
+- do not report, ReportDataType : %d, currentDataType : %d
+- pReportService is null
+- Report event is null
+- HDmpveCoreReportService::DestroyEvent
+- Report
+- Sunday
+- Friday
+- NSt13__future_base12_Result_baseE
+- basic_string::substr
+
+## libTBlueData.so (300 strings)
+
+- Report mode : %d
+- before m_pReporter->Stop()
+- TDM_STARTUP_REPORTED
+- ReportStartup
+- Report Startup, has reported already
+- Report Startup
+- ReportStart
+- [ReportStart]
+- ReportHang
+- [ReportStat]
+- [ReportHang]
+- ReportResume
+- [ReportResume]
+- ReportDeviceInfo
+- [ReportDeviceInfo]
+- CreateEventReporter
+- [TDM] PluginReportEvent
+- Report login user event, platform:%d, openid:%s
+- N3TDM13EventReporterE
+- N3TDM14IEventReporterE
+- send_succeed_cnt
+- connect_succeed_cnt
+- resume_time
+- task_result
+- MSDK plugin is not supported in HDmpve core
+- http report url is empty
+- http report is not enable
+- is_compress_report
+- report_interval
+- report_user_event
+- report_start_event
+- report_system_event
+- report_sdk_event
+- report_internal_event
+- report_debug_log
+- AppId is not a num. Please check
+- save push event success
+- Disable localDiskCheckInterval: %d, localDiskCheckCritical: %lld, availSpace:%lld
+- Enable localDiskCheckInterval: %d, localDiskCheckCritical: %lld, availSpace:%lld
+- nothing to report
+- kv event report num valid : %d, all : %d
+- bin event report num valid: %d, all : %d
+- start clear report file, before fileSet size : %zu
+- ClearReportFile
+- vector::_M_range_check: __n (which is %zu) >= this->size() (which is %zu)
+- GetFileNameForReport
+- /Users/intl/devops/PUBGM/TDMWorkspace/tdm/Project/TDM/Source/TBlueDataReporter.cpp
+- ~TBlueDataReporter
+- [~TBlueDataReporter]
+- StartBinReportThread
+- TDM_USER_REPORT_ENABLE
+- report-bin
+- background, not report
+- report start--------------------------------------
+- report success--------------------------------------
+- Reporting startup event is preparing, %d
+- report disable--------------------------------------
+- report end--------------------------------------
+- /Users/intl/devops/PUBGM/TDMWorkspace/tdm/Project/TDM/Source/TBlueDataReportManager.cpp
+- TBlueDataReportManager
+- TBlueDataReportManager constructor called
+- HTTPReportProc
+- bin report file error
+- kv report file error
+- http route request result : %s
+- Dynamic configuration request success, TDM will be in report process
+- OnHTTPReportResp
+- http report type error, http report type : %d
+- OnHTTPReportResp ret != 0 or respBody is empty
+- HTTP report error, error code : %d, error msg : %s
+- HTTP report success
+- http report success but delete file error
+- PushBackReportFile
+- no space to push back report file, delete it. file set size : %ld, maxFileNum : %ld
+- com/blue/dm/hdmpve/service/PluginReportService
+- registerTdmReportServiceNative
+- LogFile start upload log file
+- Upload
+- UploadFile
+- LogFile upload file:%s size:%d finish, but delete faild:%d
+- LogFile upload file:%s size:%d finish, and delete succeed:
+- basic_string::substr
+- [TDM HTTP] InitHttpClient success client:%p i:%d
+- [TDM HTTP] TDMHTTPManager return host error, result:%d, errorTimeOutCount:%d, reqSeq:%d, url:%s
+- [TDM HTTP] TDMHTTPManager return host error, result:%d, errorReshostCount:%d, reqSeq:%d, url:%s
+- [TDM HTTP] TDMHTTPManager return host error, result:%d, errorConnectCount:%d, reqSeq:%d, url:%s
+- [TDM HTTP] TDMHTTPManager return host error, result:%d, reqSeq:%d, url:%s
+- [TDM HTTP] Get clientIdle successful
+- [TDM HTTP] httpclient Create Request Thread Report Type is none
+- [TDM HTTP] http client statistic starttime:%lld, reqissuetiem:%lld, reqrequestime:%lld
+- Http network request consume, network consume:%lldms, request consume:%lldms
+- [TDM HTTP] Get method get http response code get http response code result:%d, code:%ld
+- [TDM HTTP] POST method get http response code result:%d, code:%ld
+- HttpGet result is empty
+- GetDiskCheckInterval
+- TSystem::GetDiskCheckInterval tmpObj == 0
+- getDiskCheckInterval
+- GetDiskCheckCritical
+- TSystem::GetDiskCheckCritical tmpObj == 0
+- getDiskCheckCritical
+- asyn info observer insert success
+- custom info observer insert success
+- invoke 'deleteSharePreferenceItem' function success
+- Java_com_blue_dm_TBlueData_TDMResume
+- JNI TDMResume 
+- Java_com_blue_dm_TBlueData_TDMEnableReport
+- JNI TDMEnableReport %s
+- Java_com_blue_dm_TBlueData_TDMReportEvent
+- JNI TDMReportEvent 
+- JNI TDMReportEvent, jeventInfo is null!
+- JNI TDMReportEvent, map is empty
+- Java_com_blue_dm_TBlueData_TDMReportBinary
+- JNI TDMReportBinary 
+- JNI TDMReportBinary, data is null!
+- Java_com_blue_dm_TBlueData_TDMReportLogin
+- JNI TDMReportLogin 
+- tdm_enable_report
+- tdm_report_event
+- tdm_report_event, eventName:%s, data:%p, len:%d, isBinary:%d 
+- tdm_report_event, data is null.
+- tdm_report_login
+- TDM_Enable_Report
+- TDM_Report_Binary
+- REPORT
+- N6HDmpve6Plugin12PluginReportE
+- N6HDmpve6Plugin9SingletonINS0_12PluginReportEEE
+- /Users/intl/devops/PUBGM/TDMWorkspace/tdm/Project/TDM/Target/Android/TDM/TBlueData/../../../../Source/HDmpve/ReportService.mm
+- ReportLogin::ReportLogin
+- ReportService::GetSessionID
+- ReportService::GetTDMUID
+- N6HDmpve6Plugin13ReportServiceE
+- N6HDmpve6Plugin14IReportServiceE
+- CheckMapRequest
+- N3TDM22UncheckedByteArraySinkE
+- need construct first, suggest use MSDKJsonManager
+- TDMDeviceReportTask
+- N3TDM19TDMDeviceReportTaskE
+- add task success :%s
+- remove task success :%s
+- OnResume
+- TDMTaskManager::onResume ..
+- Can't add itself as a subpart!
+- CURLOPT_SSL_VERIFYHOST no longer supports 1 as value!
+- Chunky upload is not supported by HTTP 1.0
+- File already completely uploaded
+- Write callback asked for PAUSE when not supported!
+- Protocol "%s" not supported or disabled in libcurl
+- SMB shares are not supported in file: URLs.
+- Unsupported proxy scheme for '%s'
+- Unsupported proxy '%s', libcurl is built without the HTTPS-proxy support.
+- Read callback asked for PAUSE when not supported!
+- HTTP server doesn't seem to support byte ranges. Cannot resume.
+- Friday
+- Sunday
+- Can't complete SOCKS4 connection to %d.%d.%d.%d:%d. (%d), request rejected because the client program and identd report different user-ids.
+- Failed to send SOCKS5 sub-negotiation request.
+- Unable to receive SOCKS5 sub-negotiation response.
+- SOCKS5 GSSAPI per-message authentication is not supported.
+- No authentication method was acceptable. (It is quite likely that the SOCKS5 server wanted a username/password, since none was supplied to the server on this connection.)
+- could not parse PKCS12 file, check password, OpenSSL error %s
+- not supported file type '%s' for certificate
+- file type ENG for private key not supported
+- file type P12 for private key not supported
+- not supported file type for private key
+- SSL Engine not supported
+- SSL: no alternative certificate subject name matches target host name '%s'
+- SSL: certificate subject name '%s' does not match target host name '%s'
+- Server verify
+- CERT verify
+- OpenSSL was built without TLS 1.3 support
+- Subject
+- Issuer
+- SSL: couldn't get X509-issuer name!
+- SSL: Unable to open issuer cert (%s)
+- SSL: Unable to read issuer cert (%s)
+- SSL: Certificate issuer check failed (%s)
+- SSL certificate verify result: %s (%ld)
+- Error: %s does not support double SSL tunneling.
+- SSL for verify callback
+- Verify error:
+- SUITEB128ONLY
+- SUITEB128C2
+- SUITEB128
+- SUITEB192
+- CHECK_SUITEB_CIPHER_LIST
+- dtls1_check_timeout_num
+- DTLS1_GET_HELLO_VERIFY
+- dtls1_send_client_verify
+- DTLS1_SEND_HELLO_VERIFY_REQUEST
+- GET_SERVER_VERIFY
+- SERVER_VERIFY
+- ssl3_check_cert_and_algorithm
+- ssl3_check_client_hello
+- SSL3_CHECK_FINISHED
+- ssl3_get_cert_verify
+- ssl3_send_client_verify
+- SSL_add_dir_cert_subjects_to_stack
+- SSL_add_file_cert_subjects_to_stack
+- SSL_check_private_key
+- SSL_CHECK_SERVERHELLO_TLSEXT
+- ssl_check_srvr_ecc_cert_and_alg
+- SSL_CTX_check_private_key
+- ssl_verify_cert_chain
+- tls12_check_peer_sigalg
+- tls1_cert_verify_mac
+- TLS1_CHECK_SERVERHELLO_TLSEXT
+- bad checksum
+- certificate verify failed
+- digest check failed
+- ecdh required for suiteb mode
+- illegal Suite B digest
+- missing verify message
+- Peer haven't sent GOST certificate, required for selected ciphersuite
+- no verify callback
+- only DTLS 1.2 allowed in Suite B mode
+- only TLS 1.2 allowed in Suite B mode
+- peer error unsupported certificate type
+- sslv3 alert unsupported certificate
+- tlsv1 alert insufficient security
+- tlsv1 unsupported extension
+- tried to use unsupported cipher
+- unsupported cipher
+- unsupported compression algorithm
+- unsupported digest type
+- unsupported elliptic curve
+- unsupported protocol
+- unsupported ssl version
+- unsupported status type
+- debug_malloc
+- debug_malloc2
+- issuer
+- subject
+- issuerUID
+- subjectUID
+-         Issuer:%c
+-         Subject:%c
+- %8sIssuer Unique ID: 
+- %8sSubject Unique ID: 
+-         Subject OCSP hash: 
+- subgroup order:
+- subgroup factor:
+- DSO support routines
+- /Users/bkdevops/DevopsAgent/agent/workspace/p-9588583a786341c5b14d2797024c3756/src/openssl/crypto/evp/p_verify.c
+- EVP_PKEY_verify
+- EVP_PKEY_verify_init
+- EVP_PKEY_verify_recover
+- EVP_PKEY_verify_recover_init
+- EVP_VerifyFinal
+- command not supported
+- fips mode not supported
+- method not supported
+- no verify function configured
+- operation not supported for this keytype
+- unsuported number of rounds
+- unsupported algorithm
+- unsupported cipher
+- unsupported keylength
+- unsupported key derivation function
+- unsupported key size
+- unsupported prf
+- unsupported private key algorithm
+- unsupported salt type
+- subjectKeyIdentifier
+- X509v3 Subject Key Identifier
+- subjectAltName
+- X509v3 Subject Alternative Name
+- issuerAltName
+- X509v3 Issuer Alternative Name
+- surname
+- caIssuers
+- CA Issuers
+- id-it-unsupportedOIDs
+- id-it-subscriptionRequest
+- id-it-subscriptionResponse
+- noCheck
+- OCSP No Check
+- trustRoot
+- Trust Root
+- subjectInfoAccess
+- Subject Information Access
+- holdInstructionCallIssuer
+- Hold Instruction Call Issuer
+- subtreeMinimumQuality
+- subtreeMaximumQuality
+- set-policy-root
+- setCext-hashedRoot
+- setCext-IssuerCapabilities
+- issuer capabilities
+- set-rootKeyThumb
+- subjectDirectoryAttributes
+- X509v3 Subject Directory Attributes
+- issuingDistributionPoint
+- X509v3 Issuing Distrubution Point
+- certificateIssuer
+- X509v3 Certificate Issuer
+- id-it-suppLangTags
+- supportedApplicationContext
+- supportedAlgorithms
+- issuerNameHash
+- issuerKeyHash
+
+## libhdmpve.so (300 strings)
+
+- [HttpDnsHandler] the current HttpDNS version is not supported, upgrade V3 version!
+- [HttpDnsHandler] the current httpdns v%d, is not supported
+- unsupported encrypt method
+- unsupported key exchange mode
+- unsupported account type
+- the method is unsupported in current mode
+- unsupported account format
+- hdmpve_tgcpapi_start_connection tgcpapi_connect_url succ.
+- hdmpve_tgcpapi_start_connection hdmpve_tgcpapi_send_syn_msg succ.
+- hdmpve_tgcpapi_start_connection hdmpve_tgcpapi_recv_ack_msg succ.
+- hdmpve_tgcpapi_start_connection hdmpve_tgcpapi_send_authreq_msg succ.
+- hdmpve_tgcpapi_start_connection hdmpve_tgcpapi_recv_authrsp_msg succ.
+- hdmpve_tgcpapi_start_connection hdmpve_tgcpapi_recv_bingo_msg succ.
+- hdmpve_tgcpapi_relay_connection hdmpve_tgcpapi_recv_relay_msg done, ret=%d, relay_succ=%d
+- hdmpve_tgcpapi_get_account unsupported format:%d
+- [bSupportCompressMethodList]
+- Plugin[%s] dose not support service[%s]
+- CApolloPayObserver::OnApolloPayActionProc result:%d, ext:%d, %s
+- hdmpve_account_IsPlatformSupportApi
+-  hdmpve_account_IsPlatformSupportApi pAccountService is null
+- OnConnected result[%s]
+- OnDisconnectProc result[%s]
+- OnStateChangedProc state[%d] result[%s]
+- onConnResultStatic
+- ConnResultStatic result[%d] tcpTime[%d] keyTime[%d] authTime[%d] bingoTime[%d]
+- notfyLoginOnMainThread this[%p] size[%d] result[%d]
+- <account service>GetRecord result[%d]
+- Connect result[%d] old[%d] new[%d] openID[%s]
+- OnAccountLoginProc result[%s] isConnecting[%d]
+- OnAccountLoginProc result[%d]
+- OnAccessTokenRefreshed m_bRefresAtk[%d] result[%s]
+- CreateConnection success:%p
+- OnThreadResume
+- OnQueryNameResult
+- Resunme but m_pHandler is null
+- OnThreadResume ret: %d
+- tgcpapi_resume failed return %d, for %s, url:%s
+- Check NetWorkError ret=%d
+- flush success!
+- update failed, result:%d, reason:%d, excode:%d
+- Connect success! url:%s
+- Reconnect success!
+- CTGcp::OnThreadProc checkTimeOut. url:%s
+- OnQueryNameResult Error:%d, %s
+- OnQueryNameResult Sussess and choose real url:%s
+- OnQueryNameResult Error: ip list is empty
+- NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN6HDmpve19CDefaultNameServiceEFviPSt6vectorISsSaISsEEEEEEE
+- NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN6HDmpve19CDefaultNameServiceEFviPSt6vectorISsSaISsEEEEEEE
+- NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN6HDmpve19CDefaultNameServiceEFviPSt6vectorISsSaISsEEEEEEE
+- N6HDmpve13_tagApoResultE
+- tcp_debug_print_state
+- send_tcp_debug_print
+- recv_tcp_debug_print
+- tcp_debug_print_pcbs
+- Check need to trim msg rcv_nxt[%u] seqno[%u] seqno+tcplen[%u] 
+- Wrong check sum[%u] != [%u] [%s]
+- tgcpapi_check_connect
+- Recv success from svr[%d]
+- tgcpapi_init unsupport V1 AuthType:%d, iVersion:%d
+- tgcpapi_get_account unsupported account type:%d
+- tgcpapi_get_openid unsupported account type:%d
+- In sufficent input buffer
+- Tcp does not support recv udp
+- Tcp does not support send udp
+- tsocket_check_connect
+- Connect Successs
+- Failed to check connection
+- Failed to check connect for[%d]
+- Check Connect[%d]
+- additional six characters expected to parse unicode surrogate pair.
+- expecting another \u token to begin the second half of a unicode surrogate pair
+- /Users/hdmpve/android/dev/Common/Source/ReportHandler/HDmpveReport.cpp
+- Report Type:%d
+- Report
+- /Users/hdmpve/android/dev/Common/Source/ReportHandler/ReportHandler.cpp
+- ReportHandler::Report eventID:%d, eventName:%s
+- N6HDmpve13IHDmpveReportE
+- N6HDmpve18HDmpveReportOneSDKE
+- /Users/hdmpve/android/dev/Common/Source/ReportHandler/HDmpveReport_OneSDK.mm
+- COREREPORT
+- result=
+- NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN22pebble_address_service18QueryAddrSvrClientEFviPN6pebble3rpc8protocol9TProtocolENS_8functionIFviRNS2_16RspQueryAddrInfoEEEEEEEEE
+- NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN22pebble_address_service26QueryAddrSvrAsyncProcessorEFvNS_8functionIFvbEEElPN6pebble3rpc8protocol9TProtocolEPvRKNS2_16RspQueryAddrInfoEEEEEE
+- NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN22pebble_address_service18QueryAddrSvrClientEFviPN6pebble3rpc8protocol9TProtocolENS_8functionIFviRNS2_16RspQueryAddrInfoEEEEEEEEE
+- NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN22pebble_address_service26QueryAddrSvrAsyncProcessorEFvNS_8functionIFvbEEElPN6pebble3rpc8protocol9TProtocolEPvRKNS2_16RspQueryAddrInfoEEEEEE
+- NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN22pebble_address_service18QueryAddrSvrClientEFviPN6pebble3rpc8protocol9TProtocolENS_8functionIFviRNS2_16RspQueryAddrInfoEEEEEEEEE
+- NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN22pebble_address_service26QueryAddrSvrAsyncProcessorEFvNS_8functionIFvbEEElPN6pebble3rpc8protocol9TProtocolEPvRKNS2_16RspQueryAddrInfoEEEEEE
+- N22pebble_address_service33QueryAddrSvr_QueryAddrInfo_resultE
+- N22pebble_address_service34QueryAddrSvr_QueryAddrInfo_presultE
+- TApplicationException: Unsupported client type
+- TApplicationException: Missing result
+- QueryAddrSvr_QueryAddrInfo_result
+- QueryAddrSvr_QueryAddrInfo_presult
+- QueryAddrInfo failed: unknown result
+- NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN6pebble18AddressServiceTaskEFviRKSsRKSt6vectorISsSaISsEEEEEEE
+- NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN6pebble18AddressServiceTaskEFviRKSsRKSt6vectorISsSaISsEEEEEEE
+- NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN6pebble18AddressServiceTaskEFviRKSsRKSt6vectorISsSaISsEEEEEEE
+- OnThreadResume
+- AddressServiceTask resume.
+- get service address success(%s : %s)
+- NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN6pebble21AddressServiceWrapperEFviRN22pebble_address_service16RspQueryAddrInfoERNS_8functionIFviRSt6vectorISsSaISsEEEEEEEEEE
+- NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN6pebble21AddressServiceWrapperEFviRN22pebble_address_service16RspQueryAddrInfoERNS_8functionIFviRSt6vectorISsSaISsEEEEEEEEEE
+- NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN6pebble21AddressServiceWrapperEFviRN22pebble_address_service16RspQueryAddrInfoERNS_8functionIFviRSt6vectorISsSaISsEEEEEEEEEE
+- query addr result failed(%d:%s)
+- [stMsgUpload]
+- getaddrinfo, host[%s] result[%d]
+- lwip not support SetNodelay!
+- lwip not support SetSendbuff!
+- Handling connect success.
+- checkConnect
+- selectCheck(WRITE) ret:%d
+- socket send success len:%d
+- selectCheck(READ) ret:%d
+- socket recv success len:%d
+- tgcpapi Not support kRouteSpecifyName
+- Unsupported!
+- DNSUri
+- N6HDmpve4Conn15ConnectorResultE
+- There's another verify task for another connection
+- [Connector:%p]: OnAccountLoginProc result:%d, ext1:%d, ext2:%d, _isConnecting:%d, _hasHandleLoginProc:%d
+- Login success, but account info is null
+- Login success, but tokenlist is empty
+- [Connector:%p]: Connector::OnAccessTokenRefreshed m_bRefresAtk:%d, result:%s
+- [Connector:%p]: relayconnect %s, Resume gcpError:%d
+- [Connector:%p]: Connector::notifyStateChanged state:%d, result:%d, ext:%d, ext2:%d, %s, url:%s(%s), %s, _isConnecting:%d, _isReconnecting:%d
+- retry failed, please check your network is ok
+- [Connector:%p]: reconnect success, url:%s, openid:%s
+- Disconnect Successfully
+- flush success
+- [Connector:%p]: onRecvData [isUDP:%d, url:%s]
+- [Connector:%p]: recvQueue[isUDP:%d] is NULL.
+- [Connector:%p]: recvQueue[isUDP:%d] is overflow
+- Connect failed, please check your network is ok
+- Network exception, please check your network is ok
+- Closed by Connection, please check your network is ok
+- [Connector:%p]: try tgcpapi_start success:%s
+- CheckNetDevices
+- NetInterfaceHelper:AttachCurrentThread success:%p
+- NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN6pebble9broadcast29PebbleChannelMgrServiceClientEFviPNS2_3rpc8protocol9TProtocolENS_8functionIFviiEEEEEEEE
+- NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN6pebble9broadcast37PebbleChannelMgrServiceAsyncProcessorEFvNS_8functionIFvbEEElPNS2_3rpc8protocol9TProtocolEPvRKiEEEEE
+- NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN6pebble9broadcast29PebbleChannelMgrServiceClientEFviPNS2_3rpc8protocol9TProtocolENS_8functionIFviiEEEEEEEE
+- NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN6pebble9broadcast37PebbleChannelMgrServiceAsyncProcessorEFvNS_8functionIFvbEEElPNS2_3rpc8protocol9TProtocolEPvRKiEEEEE
+- NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN6pebble9broadcast29PebbleChannelMgrServiceClientEFviPNS2_3rpc8protocol9TProtocolENS_8functionIFviiEEEEEEEE
+- NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN6pebble9broadcast37PebbleChannelMgrServiceAsyncProcessorEFvNS_8functionIFvbEEElPNS2_3rpc8protocol9TProtocolEPvRKiEEEEE
+- N6pebble9broadcast42PebbleChannelMgrService_JoinChannel_resultE
+- N6pebble9broadcast43PebbleChannelMgrService_JoinChannel_presultE
+- N6pebble9broadcast42PebbleChannelMgrService_QuitChannel_resultE
+- N6pebble9broadcast43PebbleChannelMgrService_QuitChannel_presultE
+- PebbleChannelMgrService_JoinChannel_result
+- PebbleChannelMgrService_JoinChannel_presult
+- PebbleChannelMgrService_QuitChannel_result
+- PebbleChannelMgrService_QuitChannel_presult
+- JoinChannel failed: unknown result
+- QuitChannel failed: unknown result
+- NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN6pebble3rpc12RpcConnectorEFmvEEEEE
+- NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN6pebble3rpc9transport9MsgBufferEFvmEEEEE
+- NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN6pebble3rpc12RpcConnectorEFvbEEEEE
+- NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN6pebble3rpc12RpcConnectorEFviPSt6vectorISsSaISsEEEEEEE
+- NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN6pebble3rpc12RpcConnectorEFmvEEEEE
+- NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN6pebble3rpc9transport9MsgBufferEFvmEEEEE
+- NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN6pebble3rpc12RpcConnectorEFvbEEEEE
+- NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN6pebble3rpc12RpcConnectorEFviPSt6vectorISsSaISsEEEEEEE
+- NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN6pebble3rpc12RpcConnectorEFmvEEEEE
+- NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN6pebble3rpc9transport9MsgBufferEFvmEEEEE
+- NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN6pebble3rpc12RpcConnectorEFvbEEEEE
+- NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN6pebble3rpc12RpcConnectorEFviPSt6vectorISsSaISsEEEEEEE
+- Base TTransport cannot consume.
+- consume did not follow a borrow.
+- create connector[old] success, url:%s, tdr:%d.
+- reportProc
+- Report analysis, tag:%d
+- PingResult, tag:%d, ret:%d
+- NSLookupResult, tag:%d, ret:%d
+- NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN6pebble7rpc_new12RpcConnectorEFvlmEEEEE
+- NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN6pebble7rpc_new12RpcConnectorEFvbEEEEE
+- NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN6pebble7rpc_new12RpcConnectorEFvlmEEEEE
+- NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN6pebble7rpc_new12RpcConnectorEFvbEEEEE
+- NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN6pebble7rpc_new12RpcConnectorEFvlmEEEEE
+- NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN6pebble7rpc_new12RpcConnectorEFvbEEEEE
+- NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN6HDmpve13IConnectorOldEFiPKhiRKNS2_13RouteInfoBaseEEEEEE
+- NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN6HDmpve13IConnectorOldEFiPKhiRKNS2_13RouteInfoBaseEEEEEE
+- NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN6HDmpve13IConnectorOldEFiPKhiRKNS2_13RouteInfoBaseEEEEEE
+- NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN8addr_svr18QueryAddrSvrClientEFviPN6pebble3rpc8protocol9TProtocolENS_8functionIFviRNS2_16RspQueryAddrInfoEEEEEEEEE
+- NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN8addr_svr26QueryAddrSvrAsyncProcessorEFvNS_8functionIFvbEEElPN6pebble3rpc8protocol9TProtocolEPvRKNS2_16RspQueryAddrInfoEEEEEE
+- NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN8addr_svr18QueryAddrSvrClientEFviPN6pebble3rpc8protocol9TProtocolENS_8functionIFviRNS2_16RspQueryAddrInfoEEEEEEEEE
+- NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN8addr_svr26QueryAddrSvrAsyncProcessorEFvNS_8functionIFvbEEElPN6pebble3rpc8protocol9TProtocolEPvRKNS2_16RspQueryAddrInfoEEEEEE
+- NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN8addr_svr18QueryAddrSvrClientEFviPN6pebble3rpc8protocol9TProtocolENS_8functionIFviRNS2_16RspQueryAddrInfoEEEEEEEEE
+- NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN8addr_svr26QueryAddrSvrAsyncProcessorEFvNS_8functionIFvbEEElPN6pebble3rpc8protocol9TProtocolEPvRKNS2_16RspQueryAddrInfoEEEEEE
+- N8addr_svr33QueryAddrSvr_QueryAddrInfo_resultE
+- N8addr_svr34QueryAddrSvr_QueryAddrInfo_presultE
+- SaveAddressResult
+- GetAddressResult
+- save address result for url:%s, resultIPList size:%d
+- address result:%s
+- get address result from file for url:%s, resultIPList size:%d, but the cache is expired
+- get address result from file for url:%s, resultIPList size:%d
+- get address result from cache for url:%s, resultIPList size:%d
+- address result: %s
+- NSt3tr122_Maybe_get_result_typeILb1ENS_7_Mem_fnIMN6pebble3rpc14AddressServiceEFmvEEEEE
+- NSt3tr122_Weak_result_type_implINS_7_Mem_fnIMN6pebble3rpc14AddressServiceEFmvEEEEE
+- NSt3tr117_Weak_result_typeINS_7_Mem_fnIMN6pebble3rpc14AddressServiceEFmvEEEEE
+- Recv_QueryAddrInfo ret:%d, rsp.result:%d
+- get service address success(num is %u):
+- dns %s success, result is:
+- Insufficient space in external MemoryBuffer
+- <HDmpveDNS> getaddrinfo, host:%s, result:%d timeMS:%d.
+- <httpdns> get DNSResultTYpe:%d .
+- <LocalDNS> getaddrinfo, host:ipv4only.arpa, result:%d.
+- <HttpDns> GetIpAddress result is null
+- <HttpDNS> GetHostByNameForAll, host:%s, result:%s, timeMS:%d.
+- <HttpDNS> GetHostByNameForAllRecursive, host:%s, result:%s, timeMS:%d.
+- <HttpDNS> GetHostByNameForAllRecursive, host:%s, result:%s, timeMS:%d, errCode:%s .
+- <LocalDNS> getaddrinfo, host:%s, result:%d, timeMS:%d.
+- <LocalDNS> DNS Result: v4Size[%d] v6Size[%d] PRI[%d] realPRI[%d]
+- N6HDmpve15HDmpveDNSResultE
+- <HDmpveDNS> seq:%d, result:%d
+- Report
+- DNSResult
+- /Users/hdmpve/android/dev/Common/Source/DNS/DNSReport.cpp
+- parseResult
+- [MultiDNS], wait for dns result, local:%d
+- CheckFileMd5
+- CheckLargeFileMd5
+- check file[%s] md5 error for file not found
+- Failed to get addr info for no result
+- /proc/self/maps
+- MakeSureDirUseFull
+- Failed to makesure path exist[%s]
+- check dir but create file failed %s ->%d
+- N6HDmpve6ResultE
+- N6HDmpve18RealNameAuthResultE
+- HighCdnCheckSickConnect
+- HighCdnProcReportTimeInterValSec
+- HighCdnCheckSickConnectIntertvalTime
+- HighCdnOpenCurlDebugInfoLog
+- HCDNReportDetectHistErrMaxDurTimeSec
+- HCDNReportIntervalTimeSec
+- HighCdnReportMinumsErrNum
+- HighCdnReportMaxSuccNum
+- HighCdnReportMaxDLSpeed
+- HighCdnReportExtraConnInfoOnlyDetectOnce
+- HCDNCollConnInfoReportLevel
+- HCDNOpenCheckSickSpeedRate
+- HCDNCheckDynamicExpendTimestamp
+- OpenReportLastLoadingDLInfoInPufferInit
+- UseUnsupportedIPProtocols
+- NetworkAnalysisUrl
+- PufferReportInterval
+- TdmReportAvailable
+- HDmpveOpenDLServerIpReport
+- HDmpveContinueDLServerIpReportWhenError
+- _OpenReportLastLoadingDLInfoInPufferInit[%d] 
+- HighCdnCheckSickConnect 
+- _HCDNCollConnInfoReportLevel :%d
+- _HCDNCheckDynamicExpendTimestamp :%d
+- _HighCdnCheckSickConnect :%d
+- _HighCdnProcReportTimeInterValSec :%d
+- _HighCdnCheckSickConnectIntertvalTime :%d
+- _HighCdnOpenCurlDebugInfoLog :%d
+- HighCdnReportExtraConnInfoTimeSec
+- _HighCdnReportExtraConnInfoTime :%d
+- _HCDNReportDetectHistErrMaxDurTimeSec :%d
+- _HighCdnReportMinumsErrNum :%d
+- _HighCdnReportMaxSuccNum :%d
+- _HighCdnReportMaxDLSpeed :%d
+- _HighCdnReportExtraConnInfoOnlyDetectOnce :%d
+- _HCDNReportIntervalTimeSec :%d
+- _HighCdnCheckSickSpeedRate :%d
+- _HCDNOpenReportDNSData :%d
+- _open_dl_serverip_report[%d] _continue_dl_serverip_report_when_error[%d]
+- success. key exist. key:%s, type:bool
+- parse json Success 
+- CheckMD5Block
+- [CuResFileCreate::InitCreater] init success
+- [CEifsCreate::StartEifsCreate] start downloadheader success url:%s path %s
+- CEifsCreate::CheckMD5Block pfile null
+- CEifsCreate::CheckMD5Block read file failed
+- CEifsCreate::CheckMD5Block get md5
+- CEifsCreate::CheckMD5Block md5 not ==
+- [CEifsCreate::OnDownloadRangeCompleted][check md5block failed][%s][%d]
+- [CEifsCreate::DoCompletedCreate][check listfile failed][%s][%d]
+- [CEifsCreate::DoCompletedCreate][filecheck bitmap write header failed][%s][%d]
+- CheckEifs
+- /Users/hdmpve/android/dev/IIPS/Source/app/puffer_manager/cu_eifs_check.cpp
+- [CEifsCheck::CheckEifs][START][%s]
+- [CEifsCheck::CheckEifs][open eifs failed][%u]
+- [CEifsCheck::CheckEifs][read eifs header failed][%u]
+- [CEifsCheck::CheckEifs][eifs version not same][%u]
+- [CEifsCheck::CheckEifs][eifs version not same][%llu]
+- [CEifsCheck::CheckEifs][eifs md5 block mark zero][%llu][%llu]
+- [CEifsCheck::CheckEifs][feek to md5 block failed][%llu][%u]
+- [CEifsCheck::CheckEifs][read md5 block failed][%u]
+- [CEifsCheck::CheckEifs][get header md5 failed][%d]
+- [CEifsCheck::CheckEifs][check header md5 failed][%d]
+- [CEifsCheck::CheckEifs][try to open archive failed][%d][%s]
+- [CEifsCheck::CheckEifs][eifs md5 not same,now update][%s][%s]
+- [CEifsCheck::CheckEifs][eifs ok but tempdir not same needupdate and ignore temp dir][%s][%s]
+- [CEifsCheck::CheckEifs][check eifs success]
+- GetFileResumeBrokenTransferInfo
+- VerifyDownloadBitmap
+
+## libsigner.so (0 strings)
+
