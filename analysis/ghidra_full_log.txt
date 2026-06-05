@@ -1,0 +1,3 @@
+nohup: ignoring input
+=== GHIDRA FULL ANALYSIS ON ALL .so FILES ===
+/tmp/ghidra_run.sh: line 67: syntax error: unexpected end of file from `if' command on line 7
