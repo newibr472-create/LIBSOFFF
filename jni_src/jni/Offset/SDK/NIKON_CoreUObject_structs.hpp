@@ -616,9 +616,7 @@ struct FVector2D
 
             return vector;
         }
-        static float Distance(const FVector2D& A, const FVector2D& B) {
-            return sqrtf((A.X-B.X)*(A.X-B.X) + (A.Y-B.Y)*(A.Y-B.Y));
-        }
+
 
 
 };

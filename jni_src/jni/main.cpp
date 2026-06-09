@@ -1013,7 +1013,7 @@ auto GetTargetForAim()
                         FVector2D v2Middle = FVector2D((float)(screenWidth / 2), (float)(screenHeight / 2));
                         FVector2D v2Loc = FVector2D(middlePoint.X, middlePoint.Y);
                         if(isInsideFOV((int)middlePoint.X, (int)middlePoint.Y)) {
-                           float dist = FVector2D::Distance(v2Middle, v2Loc);
+                           float dist = v2Middle.Distance(v2Loc);
                            if (dist < max) {
                                 max = dist;
                                 result = Player;
@@ -1216,7 +1216,7 @@ auto GetTargetForAimBot()
                         FVector2D v2Middle = FVector2D((float)(screenWidth / 2), (float)(screenHeight / 2));
                         FVector2D v2Loc = FVector2D(middlePoint.X, middlePoint.Y);
                         if(isInsideFOVs((int)middlePoint.X, (int)middlePoint.Y)) {
-                           float dist = FVector2D::Distance(v2Middle, v2Loc);
+                           float dist = v2Middle.Distance(v2Loc);
                            if (dist < max) {
                                 max = dist;
                                 result = Player;
