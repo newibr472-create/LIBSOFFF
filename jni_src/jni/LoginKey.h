@@ -157,7 +157,7 @@ static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, voi
     curl = curl_easy_init();
     //======LINKURL=====//
        if (curl) {
-        std::string BHATIA = OBFUSCATE ("http://enginehost.org/conncet");
+        std::string BHATIA = OBFUSCATE ("https://enginehost.org/connect");
         curl_easy_setopt(curl, CURLOPT_URL ,BHATIA.c_str());
 
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
