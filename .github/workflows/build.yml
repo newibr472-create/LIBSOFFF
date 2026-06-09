@@ -1,0 +1,40 @@
+name: Build libKAMLESHMODZZ.so
+
+on:
+  push:
+    branches: [ndk-build]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup NDK
+        uses: nttld/setup-ndk@v1
+        id: setup-ndk
+        with:
+          ndk-version: r26d
+          
+      - name: Build with NDK
+        run: |
+          export NDK=${{ steps.setup-ndk.outputs.ndk-path }}
+          cd jni_src
+          $NDK/ndk-build NDK_PROJECT_PATH=. APP_BUILD_SCRIPT=jni/Android.mk NDK_APPLICATION_MK=jni/Application.mk -j$(nproc)
+          ls -lh libs/arm64-v8a/
+          
+      - name: Upload .so
+        uses: actions/upload-artifact@v4
+        with:
+          name: libKAMLESHMODZZ
+          path: jni_src/libs/arm64-v8a/*.so
+          
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: "Build #${{ github.run_number }}"
+          files: jni_src/libs/arm64-v8a/*.so
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

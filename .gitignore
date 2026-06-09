@@ -8,3 +8,4 @@ __pycache__/
 # Ghidra temp
 ghidra_projects/
 *.rep
+jni_src/obj/
