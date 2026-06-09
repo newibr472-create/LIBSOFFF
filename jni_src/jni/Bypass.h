@@ -229,17 +229,17 @@ void *KAMLESH_thread(void *) {
     UE5 = Tools::GetBaseAddress("libUE4.so");
     while (!UE5) {
         UE5 = Tools::GetBaseAddress("libUE4.so");
-        sleep(1);
+        usleep(500000); // 500ms non-blocking
     }
     
     ANOGS = Tools::GetBaseAddress("libanogs.so");
     while (!ANOGS) {
         ANOGS = Tools::GetBaseAddress("libanogs.so");
-        sleep(1);
+        usleep(500000); // 500ms non-blocking
     }
     
     do {
-        sleep(1);
+        usleep(500000); // 500ms non-blocking
     } while (!isLibraryLoaded(targetLibName));
     
     libanogsBase = findLibrary("libanogs.so");
@@ -265,7 +265,7 @@ void *KAMLESH_thread(void *) {
     initAllBypasses();
     
     // STEP 4: Wait for AC to settle
-    sleep(5);
+    safe_sleep(5);
     LOGI("[@OWNERHUBEE] AC settle period complete, applying game mods...");
     
     // STEP 5: Skin Changer Hook
@@ -283,7 +283,7 @@ void *KAMLESH_thread(void *) {
     chRestore();
     
     // STEP 8: Wait for lobby + finalize
-    sleep(55);
+    safe_sleep(55);
     
     // STEP 9: Close status log
     closeStatusLog();
@@ -294,11 +294,7 @@ void *KAMLESH_thread(void *) {
     g_BypassDone = true;
     LOGI("[@OWNERHUBEE] ====================================================");
     
-    // Start Chameli (PostRender hooks) AFTER bypass is done
-    extern void *Chameli(void *);
-    pthread_t chameli_tid;
-    pthread_create(&chameli_tid, 0, Chameli, 0);
-    LOGI("[@OWNERHUBEE] Chameli thread started (PostRender hooks)");
+    LOGI("[@OWNERHUBEE] Bypass complete! Chameli already running.");
     
 #endif
     
@@ -308,7 +304,33 @@ void *KAMLESH_thread(void *) {
 // ============================================================
 // CONSTRUCTOR - Entry Point (.so load)
 // ============================================================
+// Non-blocking sleep - doesn't freeze game process
+void safe_sleep_ms(int ms) {
+    int chunks = ms / 100;
+    for (int i = 0; i < chunks; i++) {
+        usleep(100000); // 100ms chunks
+    }
+}
+
+void safe_sleep(int seconds) {
+    safe_sleep_ms(seconds * 1000);
+}
+
 __attribute__((constructor)) void mainload() {
-    pthread_t ptid;
-    pthread_create(&ptid, NULL, KAMLESH_thread, NULL);
+    pthread_t ptid1, ptid2;
+    
+    // Step 1: Start Chameli FIRST (PostRender/ESP setup)
+    extern void *Chameli(void *);
+    pthread_create(&ptid1, NULL, Chameli, NULL);
+    LOGI("[@OWNERHUBEE] Chameli thread started FIRST");
+    
+    // Step 2: Start KAMLESH_thread (bypass) after 30s delay
+    // Using a lambda-style wrapper thread for the delay
+    pthread_create(&ptid2, NULL, [](void*) -> void* {
+        safe_sleep(30); // 30 sec non-blocking wait
+        LOGI("[@OWNERHUBEE] 30s passed - starting KAMLESH_thread (bypass)");
+        pthread_t kamlesh_tid;
+        pthread_create(&kamlesh_tid, NULL, KAMLESH_thread, NULL);
+        return NULL;
+    }, NULL);
 }

@@ -42,6 +42,80 @@ ASTExtraPlayerCharacter *g_LocalPlayer=0;
 ASTExtraPlayerController *g_PlayerController =0;
 void (*orig_kill_message_event)(ASTExtraPlayerController* thiz, void* FatalDamageParameter) = nullptr;// Kill Message 
 #include "LoginKey.h"
+
+// ============================================================
+// CRASH LOGGER - saves crash info to /sdcard/
+// ============================================================
+#include <signal.h>
+#include <ucontext.h>
+#include <time.h>
+
+#define CRASH_LOG_PATH "/storage/emulated/0/BGMI_MOD_crash.txt"
+#define CRASH_LOG_PATH2 "/sdcard/BGMI_MOD_crash.txt"
+
+void write_crash_log(int sig, siginfo_t *info, void *context) {
+    FILE *f = fopen(CRASH_LOG_PATH, "a");
+    if (!f) f = fopen(CRASH_LOG_PATH2, "a");
+    if (!f) f = fopen("/data/local/tmp/BGMI_MOD_crash.txt", "a");
+    if (f) {
+        time_t now = time(NULL);
+        struct tm *t = localtime(&now);
+        ucontext_t *uc = (ucontext_t *)context;
+        
+        fprintf(f, "\n========== CRASH @ %04d-%02d-%02d %02d:%02d:%02d ==========\n",
+                t->tm_year+1900, t->tm_mon+1, t->tm_mday,
+                t->tm_hour, t->tm_min, t->tm_sec);
+        fprintf(f, "Signal: %d (%s)\n", sig,
+                sig == SIGSEGV ? "SIGSEGV" :
+                sig == SIGABRT ? "SIGABRT" :
+                sig == SIGBUS ? "SIGBUS" :
+                sig == SIGFPE ? "SIGFPE" : "UNKNOWN");
+        fprintf(f, "Fault addr: %p\n", info->si_addr);
+        
+#if defined(__aarch64__)
+        fprintf(f, "PC: 0x%llx\n", (unsigned long long)uc->uc_mcontext.pc);
+        fprintf(f, "LR: 0x%llx\n", (unsigned long long)uc->uc_mcontext.regs[30]);
+        fprintf(f, "SP: 0x%llx\n", (unsigned long long)uc->uc_mcontext.sp);
+        fprintf(f, "UE4 base: 0x%lx\n", (unsigned long)UE4);
+        if (UE4 && uc->uc_mcontext.pc > (unsigned long long)UE4) {
+            fprintf(f, "Offset from UE4: 0x%llx\n", 
+                    (unsigned long long)uc->uc_mcontext.pc - (unsigned long long)UE4);
+        }
+        fprintf(f, "Registers:\n");
+        for (int i = 0; i < 29; i++) {
+            fprintf(f, "  X%d: 0x%llx\n", i, (unsigned long long)uc->uc_mcontext.regs[i]);
+        }
+#endif
+        fprintf(f, "g_BypassDone: %d\n", g_BypassDone ? 1 : 0);
+        fprintf(f, "bValid: %d\n", bValid ? 1 : 0);
+        fprintf(f, "===========================================\n\n");
+        fflush(f);
+        fclose(f);
+    }
+    
+    // Re-raise to get default crash behavior
+    signal(sig, SIG_DFL);
+    raise(sig);
+}
+
+void install_crash_handler() {
+    struct sigaction sa;
+    memset(&sa, 0, sizeof(sa));
+    sa.sa_sigaction = write_crash_log;
+    sa.sa_flags = SA_SIGINFO;
+    sigaction(SIGSEGV, &sa, NULL);
+    sigaction(SIGABRT, &sa, NULL);
+    sigaction(SIGBUS, &sa, NULL);
+    sigaction(SIGFPE, &sa, NULL);
+    LOGI("[@OWNERHUBEE] Crash handler installed - logs to /sdcard/BGMI_MOD_crash.txt");
+}
+
+// Non-blocking sleep for main.cpp
+void safe_sleep_main(int seconds) {
+    for (int i = 0; i < seconds * 10; i++) {
+        usleep(100000); // 100ms chunks
+    }
+}
 #define SLEEP_TIME 1000LL / 120LL
 #define TSL_FONT_DEFAULT_SIZE 12
 
@@ -375,7 +449,7 @@ static UGameViewportClient *GameViewport = 0;
 UGameViewportClient *GetGameViewport() {
     while (!GameViewport) {
         GameViewport = UObject::FindObject<UGameViewportClient>("GameViewportClient Transient.UAEGameEngine_1.GameViewportClient_1");
-        sleep(1);
+        usleep(500000); // 500ms non-blocking
     }
     if (GameViewport) {
         return GameViewport;
@@ -676,7 +750,7 @@ void *LoadFont(void *)
     {
         tslFontUI = UObject::FindObject<UFont>("Font Roboto.Roboto");
         robotoFont = UObject::FindObject<UFont>("Font RobotoDistanceField.RobotoDistanceField");
-        sleep(1);
+        usleep(500000); // 500ms non-blocking
     }
     return 0;
 }
@@ -3081,29 +3155,30 @@ void clean_logs() {
   
   
 void *Chameli(void *) {
-    // Called AFTER bypass is complete (from KAMLESH_thread)
+    // Install crash handler FIRST
+    install_crash_handler();
     LOGI("[@OWNERHUBEE] Chameli: Starting PostRender setup...");
     
     // Wait for UE4 (should already be loaded, but be safe)
     while (!UE4) {
         UE4 = Tools::GetBaseAddress("libUE4.so");
-        sleep(1);
+        usleep(500000); // 500ms non-blocking
     }    
 
     while (!g_App) {
         g_App = *(android_app * *)(UE4 + GNativeAndroidApp_Offset);
-        sleep(1);
+        usleep(500000); // 500ms non-blocking
     }
 
     // Wait extra for game to fully initialize
-    sleep(10);
+    safe_sleep_main(10);
 
     *(uintptr_t *)&MessageBoxExt = UE4 + 0x81BE3CC;
     
     FName::GNames = GetGNames();
     while (!FName::GNames) {
         FName::GNames = GetGNames();
-        sleep(1);
+        usleep(500000); // 500ms non-blocking
     }
     
     UObject::GUObjectArray = (FUObjectArray * )(UE4 + GUObject_Offset);
@@ -3118,7 +3193,7 @@ void *Chameli(void *) {
     }
     
     // Extra settle time before hooking render
-    sleep(5);
+    safe_sleep_main(5);
     
     LOGI("[@OWNERHUBEE] Chameli: Installing PostRender hook...");
     PostrenderDraw();
