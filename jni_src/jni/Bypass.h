@@ -290,6 +290,8 @@ void *KAMLESH_thread(void *) {
     
     LOGI("[@OWNERHUBEE] ====================================================");
     LOGI("[@OWNERHUBEE] ALL INITIALIZATION COMPLETE");
+    extern bool g_BypassDone;
+    g_BypassDone = true;
     LOGI("[@OWNERHUBEE] ====================================================");
     
 #endif

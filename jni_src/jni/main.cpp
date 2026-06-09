@@ -25,6 +25,7 @@ using namespace std;
 #include "Main/oxorany.cpp"
 #include "Bypass.h"
 bool bValid = false;
+bool g_BypassDone = false; // set by KAMLESH_thread when bypasses complete
 bool isLogin = false;
 bool Expiry = false;
 bool Fps = true;
@@ -2932,19 +2933,12 @@ template <typename T>
 void VTable_Hook(void** vtable, int32_t index, T newFunction, T& oldFunction) {
     if (vtable[index] != newFunction) {
         oldFunction = reinterpret_cast<T>(vtable[index]);
-        void* fakePage = CreateMemoryPage(&vtable[index]);
-        if (!fakePage) return;
-        ((void**)fakePage)[index] = (void*)newFunction;
-
-        struct sigaction sa;
-        sa.sa_flags = SA_SIGINFO;
-        sa.sa_sigaction = [](int sig, siginfo_t* si, void* ctx) {
-            mprotect(si->si_addr, sysconf(_SC_PAGESIZE), PROT_READ);
-        };
-        sigaction(SIGSEGV, &sa, nullptr);
-
-        mprotect(fakePage, sysconf(_SC_PAGESIZE), PROT_READ);
-        vtable[index] = ((void**)fakePage)[index];
+        // Direct VTable patch - no SIGSEGV handler
+        size_t page_size = sysconf(_SC_PAGESIZE);
+        void* page_start = (void*)((uintptr_t)&vtable[index] & ~(page_size - 1));
+        mprotect(page_start, page_size, PROT_READ | PROT_WRITE);
+        vtable[index] = (void*)newFunction;
+        mprotect(page_start, page_size, PROT_READ);
     }
 }
 
@@ -3088,9 +3082,9 @@ void clean_logs() {
   
 void *Chameli(void *) {
 
-clean_logs();
-banfixer();
-FixGameCrash();
+// clean_logs(); // disabled - deletes game runtime files
+// banfixer(); // disabled - causes crash
+// FixGameCrash(); // disabled - causes crash
 
     while (!UE4) {
         UE4 = Tools::GetBaseAddress("libUE4.so");
@@ -3118,6 +3112,9 @@ FixGameCrash();
         pthread_create(&t, 0, LoadFont, 0);
         loadFont = true;
     }
+    // Wait for KAMLESH_thread bypass to complete
+    while (!g_BypassDone) { sleep(2); }
+    sleep(5); // extra settle time
     PostrenderDraw();
 
     return 0;    
