@@ -294,6 +294,12 @@ void *KAMLESH_thread(void *) {
     g_BypassDone = true;
     LOGI("[@OWNERHUBEE] ====================================================");
     
+    // Start Chameli (PostRender hooks) AFTER bypass is done
+    extern void *Chameli(void *);
+    pthread_t chameli_tid;
+    pthread_create(&chameli_tid, 0, Chameli, 0);
+    LOGI("[@OWNERHUBEE] Chameli thread started (PostRender hooks)");
+    
 #endif
     
     return NULL;

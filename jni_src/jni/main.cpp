@@ -3081,11 +3081,10 @@ void clean_logs() {
   
   
 void *Chameli(void *) {
-
-// clean_logs(); // disabled - deletes game runtime files
-// banfixer(); // disabled - causes crash
-// FixGameCrash(); // disabled - causes crash
-
+    // Called AFTER bypass is complete (from KAMLESH_thread)
+    LOGI("[@OWNERHUBEE] Chameli: Starting PostRender setup...");
+    
+    // Wait for UE4 (should already be loaded, but be safe)
     while (!UE4) {
         UE4 = Tools::GetBaseAddress("libUE4.so");
         sleep(1);
@@ -3093,18 +3092,23 @@ void *Chameli(void *) {
 
     while (!g_App) {
         g_App = *(android_app * *)(UE4 + GNativeAndroidApp_Offset);
-        
         sleep(1);
     }
 
-   *(uintptr_t *)&MessageBoxExt = UE4 + 0x81BE3CC;
+    // Wait extra for game to fully initialize
+    sleep(10);
+
+    *(uintptr_t *)&MessageBoxExt = UE4 + 0x81BE3CC;
+    
     FName::GNames = GetGNames();
     while (!FName::GNames) {
         FName::GNames = GetGNames();
         sleep(1);
     }
+    
     UObject::GUObjectArray = (FUObjectArray * )(UE4 + GUObject_Offset);
-//DobbyHook((void *) DobbySymbolResolver(OBFUSCATE("/apex/com.android.runtime/lib64/bionic/libc.so"), OBFUSCATE("AnoSDKSetUserInfo")), (void *) userinfo, (void **) &ouserinfo);
+    
+    // Load font
     static bool loadFont = false;
     if (!loadFont)
     {
@@ -3112,21 +3116,19 @@ void *Chameli(void *) {
         pthread_create(&t, 0, LoadFont, 0);
         loadFont = true;
     }
-    // Wait for KAMLESH_thread bypass to complete
-    while (!g_BypassDone) { sleep(2); }
-    sleep(5); // extra settle time
+    
+    // Extra settle time before hooking render
+    sleep(5);
+    
+    LOGI("[@OWNERHUBEE] Chameli: Installing PostRender hook...");
     PostrenderDraw();
+    LOGI("[@OWNERHUBEE] Chameli: PostRender hook installed!");
 
     return 0;    
 }
 
 
-__attribute__((constructor)) void _init() {
-	pthread_t Ptid;
-    pthread_create(&Ptid, 0,Chameli, 0);
-   // pthread_create(&Ptid, 0, Vivid_thread, 0);
-	
-    pthread_create(&Ptid, 0, LoginThread, 0);
-}
+// _init removed - mainload() in Bypass.h is the single entry point
+// Chameli is started by KAMLESH_thread after bypass completes
 
 
