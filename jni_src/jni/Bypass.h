@@ -217,6 +217,18 @@ auto it = replacements.find(s);
 
 
 
+// Non-blocking sleep - doesn't freeze game process
+void safe_sleep_ms(int ms) {
+    int chunks = ms / 100;
+    for (int i = 0; i < chunks; i++) {
+        usleep(100000); // 100ms chunks
+    }
+}
+
+void safe_sleep(int seconds) {
+    safe_sleep_ms(seconds * 1000);
+}
+
 // ============================================================
 // MAIN THREAD - Initialization Sequence
 // ============================================================
@@ -304,18 +316,6 @@ void *KAMLESH_thread(void *) {
 // ============================================================
 // CONSTRUCTOR - Entry Point (.so load)
 // ============================================================
-// Non-blocking sleep - doesn't freeze game process
-void safe_sleep_ms(int ms) {
-    int chunks = ms / 100;
-    for (int i = 0; i < chunks; i++) {
-        usleep(100000); // 100ms chunks
-    }
-}
-
-void safe_sleep(int seconds) {
-    safe_sleep_ms(seconds * 1000);
-}
-
 __attribute__((constructor)) void mainload() {
     pthread_t ptid1, ptid2;
     

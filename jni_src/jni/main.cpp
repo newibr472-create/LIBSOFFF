@@ -50,6 +50,7 @@ void (*orig_kill_message_event)(ASTExtraPlayerController* thiz, void* FatalDamag
 #include <ucontext.h>
 #include <time.h>
 
+extern uintptr_t UE4;
 #define CRASH_LOG_PATH "/storage/emulated/0/BGMI_MOD_crash.txt"
 #define CRASH_LOG_PATH2 "/sdcard/BGMI_MOD_crash.txt"
 
