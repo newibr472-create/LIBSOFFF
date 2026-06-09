@@ -2908,61 +2908,12 @@ bool saveClipboardTextToFile(const char *filePath, const char *clipboardText)
 
 void *LoginThread(void *arg)
 {
-    while (!g_App)
-    {
-        sleep(1);
-    }
-    std::string ClipboardText;
-    std::string Keystatus;
-    std::ofstream keyFile;
-
-    do {
-        if (!fileExists(Filepath.c_str()))
-        {
-            ClipboardText = getClipboardText();
-
-            if (ClipboardText.empty()) {
-                logError("Clipboard is empty.");
-                exit(0);
-            }
-
-            keyFile.open(Filepath);
-
-            if (!keyFile) {
-                logError("Failed to create or open key.lic file.");
-                exit(0);
-            }
-
-            keyFile << ClipboardText;
-            keyFile.close();
-        }
-        GetKey();
-        if (fileExists(Filepath.c_str()) && !isFileEmpty(Filepath.c_str())) {
-            if (!isLogin) {
-                Keystatus = Login(keyForLogin);
-                if (Keystatus == "OK") {
-                    isLogin = bValid && g_Auth == g_Token;
-                    if (bValid && g_Auth == g_Token) {
-          
-                    } else {
-                        logError("nhi hoga");
-                        exit(0);
-                    }
-                } else {
-                    logError(Keystatus.c_str());
-                    system("rm -rf /sdcard/Android/obb/com.pubg.imobile/key.lic");
-                    exit(1);
-                }
-            } else {
-                logError("already True (:");
-                exit(0);
-            }
-        } else {
-            logError("Key file not found.");
-            exit(0);
-        }
-    } while (Keystatus != "OK");
-
+    // Login disabled - always valid
+    sleep(2); // wait for game init
+    bValid = true;
+    isLogin = true;
+    g_Token = "1";
+    g_Auth = "1";
     return 0;
 }
 
