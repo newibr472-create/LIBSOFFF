@@ -19,10 +19,24 @@ void hook(void *offset, void *ptr, void **orig)
 #define CHUT_LIB(lib, offset, ptr, orig) hook((void *)KittyMemory::getAbsoluteAddress(lib, offset), (void *)ptr, (void **)&orig)
 
 #define HOOK(offset, ptr, orig) hook((void *)getAbsoluteAddress(targetLibName, string2Offset(oxorany(offset))), (void *)ptr, (void **)&orig)
-#define HOOK_LIB(lib, offset, ptr, orig) hook((void *)getAbsoluteAddress(oxorany(lib), string2Offset(oxorany(offset))), (void *)ptr, (void **)&orig)
+#define HOOK_LIB(lib, offset, ptr, orig) do { \
+    void* _addr = (void *)getAbsoluteAddress(oxorany(lib), string2Offset(oxorany(offset))); \
+    if (_addr && (uintptr_t)_addr > 0x1000) { \
+        hook(_addr, (void *)ptr, (void **)&orig); \
+    } else { \
+        LOGI("[@HOOK_FAIL] %s+%s = %p (invalid!)", lib, offset, _addr); \
+    } \
+} while(0)
 
 #define HOOK_NO_ORIG(offset, ptr) hook((void *)getAbsoluteAddress(targetLibName, string2Offset(oxorany(offset))), (void *)ptr, NULL)
-#define HOOK_LIB_NO_ORIG(lib, offset, ptr) hook((void *)getAbsoluteAddress(oxorany(lib), string2Offset(oxorany(offset))), (void *)ptr, NULL)
+#define HOOK_LIB_NO_ORIG(lib, offset, ptr) do { \
+    void* _addr = (void *)getAbsoluteAddress(oxorany(lib), string2Offset(oxorany(offset))); \
+    if (_addr && (uintptr_t)_addr > 0x1000) { \
+        hook(_addr, (void *)ptr, NULL); \
+    } else { \
+        LOGI("[@HOOK_FAIL] %s+%s = %p (invalid!)", lib, offset, _addr); \
+    } \
+} while(0)
 
 #define HOOKSYM(sym, ptr, org) hook(dlsym(dlopen(targetLibName, 4), oxorany(sym)), (void *)ptr, (void **)&org)
 #define HOOKSYM_LIB(lib, sym, ptr, org) hook(dlsym(dlopen(oxorany(lib), 4), oxorany(sym)), (void *)ptr, (void **)&org)

@@ -1038,52 +1038,71 @@ void applyGameFeaturePatches() {
 // ============================================================
 // MASTER INIT - Calls all bypass phases in order
 // ============================================================
+// Safe phase executor - catches crashes per-phase
+#include <setjmp.h>
+
+static sigjmp_buf g_phase_jmp;
+static volatile int g_in_safe_phase = 0;
+static const char* g_current_phase = "unknown";
+
+void bypass_crash_handler(int sig, siginfo_t *info, void *ctx) {
+    if (g_in_safe_phase) {
+        LOGI("[@CRASH] Phase '%s' CRASHED! sig=%d addr=%p", g_current_phase, sig, info->si_addr);
+        g_bypassFailed++;
+        siglongjmp(g_phase_jmp, 1);
+    }
+    // Not in safe phase - re-raise
+    signal(sig, SIG_DFL);
+    raise(sig);
+}
+
+void install_phase_crash_handler() {
+    struct sigaction sa;
+    memset(&sa, 0, sizeof(sa));
+    sa.sa_sigaction = bypass_crash_handler;
+    sa.sa_flags = SA_SIGINFO;
+    sigaction(SIGSEGV, &sa, NULL);
+    sigaction(SIGBUS, &sa, NULL);
+}
+
+// Run a bypass phase safely - if it crashes, skip it
+#define RUN_SAFE_PHASE(phase_name, func) do { \
+    g_current_phase = phase_name; \
+    LOGI("[@OWNERHUBEE] >>> PHASE: %s", phase_name); \
+    g_in_safe_phase = 1; \
+    if (sigsetjmp(g_phase_jmp, 1) == 0) { \
+        func(); \
+        LOGI("[@OWNERHUBEE] <<< PHASE: %s OK", phase_name); \
+    } else { \
+        LOGI("[@OWNERHUBEE] <<< PHASE: %s CRASHED - SKIPPED", phase_name); \
+    } \
+    g_in_safe_phase = 0; \
+} while(0)
+
 void initAllBypasses() {
     LOGI("[@OWNERHUBEE] ====================================");
-    LOGI("[@OWNERHUBEE] INITIALIZING ALL BYPASSES");
+    LOGI("[@OWNERHUBEE] INITIALIZING ALL BYPASSES (SAFE MODE)");
     LOGI("[@OWNERHUBEE] ====================================");
     
-    logStatus("=== BYPASS INITIALIZATION START ===");
-    logStatus("Settings loaded: AC=%d, Anogs=%d, Hdmpve=%d, Core=%d, TDM=%d, Sign=%d, UE4=%d",
-        g_Settings.bAntiCheatBypass, g_Settings.bAnogsPatches, g_Settings.bHdmpvePatches,
-        g_Settings.bHdmpvecorePatches, g_Settings.bTDataMasterPatches, 
-        g_Settings.bSignerPatches, g_Settings.bUE4ACPatches);
-    
     if (!g_Settings.bAntiCheatBypass) {
-        logStatus("[MASTER] All AC bypasses DISABLED by settings");
         LOGI("[@OWNERHUBEE] AC bypass disabled in settings");
         return;
     }
     
-    // Phase 1: AnoGS (most critical - must be first)
-    applyAnogsPatches();
+    // Install per-phase crash handler
+    install_phase_crash_handler();
     
-    // Phase 2: HDmpveCore
-    applyHdmpvecorePatches();
-    
-    // Phase 3: HDmpve
-    applyHdmpvePatches();
-    
-    // Phase 4: TDataMaster
-    applyTDataMasterPatches();
-    
-    // Phase 5: Signer
-    applySignerPatches();
-    
-    // Phase 6: UE4 AC
-    applyUE4ACPatches();
-    
-    // Phase 7: Game Features
-    applyGameFeaturePatches();
-    
-    // Final stats
-    logStatus("\n=== BYPASS STATS ===");
-    logStatus("Success: %d | Failed: %d | Skipped: %d | Total: %d",
-        g_bypassSuccess, g_bypassFailed, g_bypassSkipped,
-        g_bypassSuccess + g_bypassFailed + g_bypassSkipped);
+    // Each phase is protected - if one crashes, we skip it and continue
+    RUN_SAFE_PHASE("AnoGS_Patches", applyAnogsPatches);
+    RUN_SAFE_PHASE("HdmpveCore_Patches", applyHdmpvecorePatches);
+    RUN_SAFE_PHASE("Hdmpve_Patches", applyHdmpvePatches);
+    RUN_SAFE_PHASE("TDataMaster_Patches", applyTDataMasterPatches);
+    RUN_SAFE_PHASE("Signer_Patches", applySignerPatches);
+    RUN_SAFE_PHASE("UE4_AC_Patches", applyUE4ACPatches);
+    RUN_SAFE_PHASE("Game_Features", applyGameFeaturePatches);
     
     LOGI("[@OWNERHUBEE] ====================================");
-    LOGI("[@OWNERHUBEE] ALL BYPASSES COMPLETE: %d OK / %d FAIL / %d SKIP",
+    LOGI("[@OWNERHUBEE] BYPASS DONE: %d OK / %d FAIL / %d SKIP",
         g_bypassSuccess, g_bypassFailed, g_bypassSkipped);
     LOGI("[@OWNERHUBEE] ====================================");
 }

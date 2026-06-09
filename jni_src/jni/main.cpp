@@ -3033,14 +3033,28 @@ int GetPostRenderIndex() {
 
 void PostrenderDraw() {
     auto GViewport = GetGameViewport();
-    if (GViewport) {
-        auto VTable = (void **)GViewport->VTable;
-        if (VTable) {
-            int postrender_idx = GetPostRenderIndex();
-            using PostRender_t = void*(*)(UGameViewportClient*, UCanvas*);
-            VTable_Hook<PostRender_t>(VTable, postrender_idx, new_PostRender, orig_PostRender);
+    if (!GViewport) {
+        LOGI("[@OWNERHUBEE] PostrenderDraw: GViewport is NULL - retrying...");
+        for (int i = 0; i < 30; i++) {
+            usleep(1000000); // 1s
+            GViewport = GetGameViewport();
+            if (GViewport) break;
+        }
+        if (!GViewport) {
+            LOGI("[@OWNERHUBEE] PostrenderDraw: GViewport still NULL after 30s - SKIP");
+            return;
         }
     }
+    auto VTable = (void **)GViewport->VTable;
+    if (!VTable) {
+        LOGI("[@OWNERHUBEE] PostrenderDraw: VTable is NULL - SKIP");
+        return;
+    }
+    int postrender_idx = GetPostRenderIndex();
+    LOGI("[@OWNERHUBEE] PostrenderDraw: hooking VTable[%d]...", postrender_idx);
+    using PostRender_t = void*(*)(UGameViewportClient*, UCanvas*);
+    VTable_Hook<PostRender_t>(VTable, postrender_idx, new_PostRender, orig_PostRender);
+    LOGI("[@OWNERHUBEE] PostrenderDraw: DONE!");
 }
 
 void FixGameCrash() {
