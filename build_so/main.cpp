@@ -1,800 +1,569 @@
 /*
- * BGMI 4.4.0 ARM64 — ESP + Aimbot + Large Hitbox + 809 Bypass Patches
+ * BGMI 4.4.0 ARM64 — Proper SDK Integration
  * 
- * Uses NIKON SDK class layouts (game_sdk.h) for type-safe memory access.
- * Entry: __attribute__((constructor)) → pthread_create(main_thread)
- * All pointer chains are null-checked for crash safety.
+ * Entry: __attribute__((constructor)) → pthread
+ * SDK: NIKON 4.4.0 (ProcessEvent, FindObject, GetBonePos, K2_DrawLine)
+ * Rendering: UCanvas PostRender hook (draws using game's own renderer)
+ * Bypass: 809 verified patches via KittyMemory-style mprotect
  */
+
+#include "SDK.hpp"
+using namespace SDK;
 
 #include <pthread.h>
 #include <unistd.h>
 #include <dlfcn.h>
-#include <sys/mman.h>
-#include <android/log.h>
-#include <cstring>
-#include <cstdio>
-#include <cstdlib>
 #include <cmath>
-#include <cstdint>
 #include <vector>
-#include <string>
-#include <fstream>
-#include <algorithm>
 #include <atomic>
-#include <errno.h>
-#include <fcntl.h>
-#include <cfloat>
-#include <climits>
+#include <cstdio>
 
-#include "game_sdk.h"
-
-// ============================================================================
-// LOGGING
-// ============================================================================
-#define TAG "BGMI_MOD"
-#define LOGI(...) __android_log_print(ANDROID_LOG_INFO,  TAG, __VA_ARGS__)
-#define LOGW(...) __android_log_print(ANDROID_LOG_WARN,  TAG, __VA_ARGS__)
-#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, TAG, __VA_ARGS__)
+#include "Main/Tools.h"
+#include "Main/MemoryTools.h"
+#include "Main/InlineHook.h"
+#include "Bypass.h"
 
 // ============================================================================
-// CONFIGURATION (can be changed at runtime via /data/local/tmp/bgmi_config.txt)
+// LOGGING (resolved at runtime via dlsym)
+// ============================================================================
+typedef int (*android_log_fn)(int, const char*, const char*, ...);
+static android_log_fn g_log = nullptr;
+#define LOGI(...) do { if(g_log) g_log(4, "BGMI", __VA_ARGS__); } while(0)
+#define LOGE(...) do { if(g_log) g_log(6, "BGMI", __VA_ARGS__); } while(0)
+
+// ============================================================================
+// GAME OFFSETS (from reference working implementation)
+// ============================================================================
+static uintptr_t GNames_Offset = 0x8394964;
+static uintptr_t GUObject_Offset = 0xe22f8d0;
+static uintptr_t GetActorArray_Offset = 0xa1018ac;
+static uintptr_t UE4 = 0;
+
+// ============================================================================
+// GLOBAL STATE
+// ============================================================================
+static ASTExtraPlayerCharacter* g_LocalPlayer = nullptr;
+static APlayerController* g_PlayerController = nullptr;
+static UFont* g_Font = nullptr;
+static std::atomic<bool> g_Initialized{false};
+
+// ============================================================================
+// COLORS
+// ============================================================================
+#define COLOR_RED    FLinearColor(1.f, 0.f, 0.f, 1.f)
+#define COLOR_GREEN  FLinearColor(0.f, 1.f, 0.f, 1.f)
+#define COLOR_WHITE  FLinearColor(1.f, 1.f, 1.f, 1.f)
+#define COLOR_YELLOW FLinearColor(1.f, 1.f, 0.f, 1.f)
+#define COLOR_BLACK  FLinearColor(0.f, 0.f, 0.f, 1.f)
+
+// ============================================================================
+// CONFIG
 // ============================================================================
 struct Config {
-    // Screen
-    float screen_width  = 2340.0f;
-    float screen_height = 1080.0f;
-    
-    // ESP
-    bool  esp_enabled   = true;
-    bool  esp_box       = true;
-    bool  esp_skeleton  = true;
-    bool  esp_health    = true;
-    bool  esp_distance  = true;
-    float esp_max_dist  = 500.0f; // meters
-    
-    // Aimbot
-    bool  aim_enabled   = true;
-    float aim_fov       = 60.0f;  // pixels from crosshair
-    float aim_smooth    = 5.0f;   // higher = smoother
-    int   aim_bone      = BONE_HEAD;
-    
-    // Large Hitbox
-    bool  hitbox_enabled = true;
-    float hitbox_scale   = 2.5f;
-    
-    // Lobby bypass
-    int   min_players    = 10; // min players to enable features
-};
-
-static Config g_cfg;
-static std::atomic<bool> g_running(false);
-static uintptr_t g_ue4_base = 0;
-static uintptr_t g_gworld_ptr = 0;
+    bool espEnabled = true;
+    bool espSkeleton = true;
+    bool espHealth = true;
+    bool espDistance = true;
+    bool espBox = true;
+    bool aimbotEnabled = true;
+    float aimbotSmooth = 5.0f;
+    float aimbotFOV = 100.0f;
+    bool largeHitbox = true;
+    float hitboxScale = 2.5f;
+    float maxDistance = 300.0f;
+} g_Config;
 
 // ============================================================================
-// MEMORY UTILITIES
+// SDK INITIALIZATION
 // ============================================================================
-
-static bool is_valid_ptr(void* ptr) {
-    if (!ptr) return false;
-    uintptr_t addr = (uintptr_t)ptr;
-    // Valid Android user-space: above 0x1000, below kernel space
-    return (addr > 0x10000 && addr < 0x7FFFFFFFFFFF);
+static TNameEntryArray* GetGNames() {
+    return ((TNameEntryArray*(*)())(UE4 + GNames_Offset))();
 }
 
-template<typename T>
-static T safe_read(uintptr_t addr) {
-    if (!is_valid_ptr((void*)addr)) return T{};
-    return *(T*)addr;
-}
-
-template<typename T>
-static T* safe_ptr(uintptr_t addr) {
-    if (!is_valid_ptr((void*)addr)) return nullptr;
-    T* p = *(T**)addr;
-    if (!is_valid_ptr(p)) return nullptr;
-    return p;
-}
-
-static uintptr_t get_lib_base(const char* lib_name) {
-    char line[512];
-    FILE* fp = fopen("/proc/self/maps", "r");
-    if (!fp) return 0;
+static bool InitSDK() {
+    UE4 = Tools::GetLibBase("libUE4.so");
+    if (!UE4) return false;
     
-    uintptr_t base = 0;
-    while (fgets(line, sizeof(line), fp)) {
-        if (strstr(line, lib_name) && strstr(line, "r-xp")) {
-            base = strtoull(line, nullptr, 16);
-            break;
-        }
-    }
-    fclose(fp);
-    return base;
-}
-
-static void get_lib_range(const char* lib_name, uintptr_t& start, uintptr_t& end) {
-    char line[512];
-    FILE* fp = fopen("/proc/self/maps", "r");
-    if (!fp) { start = end = 0; return; }
+    FName::GNames = GetGNames();
+    if (!FName::GNames) return false;
     
-    start = UINT64_MAX; end = 0;
-    while (fgets(line, sizeof(line), fp)) {
-        if (strstr(line, lib_name)) {
-            uintptr_t s, e;
-            sscanf(line, "%lx-%lx", &s, &e);
-            if (s < start) start = s;
-            if (e > end) end = e;
-        }
-    }
-    fclose(fp);
-    if (start == UINT64_MAX) start = 0;
-}
-
-// ============================================================================
-// MEMORY PATCHING
-// ============================================================================
-
-static int hex_char_to_int(char c) {
-    if (c >= '0' && c <= '9') return c - '0';
-    if (c >= 'A' && c <= 'F') return c - 'A' + 10;
-    if (c >= 'a' && c <= 'f') return c - 'a' + 10;
-    return -1;
-}
-
-static int parse_hex_bytes(const char* hex_str, uint8_t* out, int max_len) {
-    int count = 0;
-    while (*hex_str && count < max_len) {
-        // Skip spaces
-        while (*hex_str == ' ') hex_str++;
-        if (!*hex_str) break;
-        
-        int hi = hex_char_to_int(*hex_str++);
-        if (hi < 0) break;
-        int lo = hex_char_to_int(*hex_str++);
-        if (lo < 0) break;
-        
-        out[count++] = (uint8_t)((hi << 4) | lo);
-    }
-    return count;
-}
-
-static void hex_patch(const char* lib, const char* offset_str, const char* hex_bytes) {
-    uintptr_t base = get_lib_base(lib);
-    if (!base) return;
+    UObject::GUObjectArray = (FUObjectArray*)(UE4 + GUObject_Offset);
+    if (!UObject::GUObjectArray) return false;
     
-    uintptr_t offset = strtoull(offset_str, nullptr, 16);
-    uintptr_t target = base + offset;
-    
-    uint8_t patch[16];
-    int patch_len = parse_hex_bytes(hex_bytes, patch, sizeof(patch));
-    if (patch_len <= 0) return;
-    
-    // Make memory writable
-    uintptr_t page = target & ~0xFFF;
-    if (mprotect((void*)page, 0x2000, PROT_READ | PROT_WRITE | PROT_EXEC) != 0) return;
-    
-    // Apply patch
-    memcpy((void*)target, patch, patch_len);
-    
-    // Flush instruction cache
-    __builtin___clear_cache((char*)target, (char*)(target + patch_len));
-}
-
-// Redefine PATCH_LIB macro for including FINAL_BYPASS.h
-#define PATCH_LIB(lib, offset, hex) hex_patch(lib, offset, hex)
-
-static void apply_all_bypasses() {
-    LOGI("[*] Applying 809 verified bypass patches...");
-    
-    // Wait for all libraries to load
-    int retries = 0;
-    while (retries < 60) {
-        if (get_lib_base("libUE4.so") != 0 &&
-            get_lib_base("libanogs.so") != 0) {
-            break;
-        }
-        usleep(500000); // 500ms
-        retries++;
-    }
-    
-    if (retries >= 60) {
-        LOGW("[!] Timeout waiting for libraries, applying what's available");
-    }
-    
-    // Include all 809 patches
-    #include "../true_bypass/FINAL_BYPASS.h"
-    
-    LOGI("[+] Bypass patches applied!");
-}
-
-#undef PATCH_LIB
-
-// ============================================================================
-// GWORLD FINDER (Pattern scan .bss section of libUE4.so)
-// ============================================================================
-
-static uintptr_t find_gworld() {
-    uintptr_t ue4_start, ue4_end;
-    get_lib_range("libUE4.so", ue4_start, ue4_end);
-    if (!ue4_start || !ue4_end) return 0;
-    
-    g_ue4_base = ue4_start;
-    
-    // GWorld is a global pointer in .bss section (high addresses of the lib)
-    // It points to a valid UWorld* which has:
-    //   PersistentLevel at +0x30 (non-null pointer)
-    //   GameState at +0x428 (non-null pointer)
-    //   OwningGameInstance at +0x470 (non-null pointer)
-    
-    // Scan the last 20% of the library mapping (where .bss/.data are)
-    uintptr_t scan_start = ue4_start + (ue4_end - ue4_start) * 80 / 100;
-    uintptr_t scan_end   = ue4_end - 8;
-    
-    for (uintptr_t addr = scan_start; addr < scan_end; addr += 8) {
-        if (!is_valid_ptr((void*)addr)) continue;
-        
-        uintptr_t candidate = *(uintptr_t*)addr;
-        if (!is_valid_ptr((void*)candidate)) continue;
-        
-        // Check if candidate looks like UWorld*
-        UWorld* world = (UWorld*)candidate;
-        
-        // PersistentLevel must be valid
-        if (!is_valid_ptr(world->PersistentLevel)) continue;
-        
-        // GameState must be valid
-        if (!is_valid_ptr(world->GameState)) continue;
-        
-        // OwningGameInstance must be valid
-        UGameInstance* gi = (UGameInstance*)world->OwningGameInstance;
-        if (!is_valid_ptr(gi)) continue;
-        
-        // GameInstance->LocalPlayers.Data must be valid, Count > 0
-        if (!is_valid_ptr(gi->LocalPlayers.Data)) continue;
-        if (gi->LocalPlayers.Count < 1 || gi->LocalPlayers.Count > 4) continue;
-        
-        // LocalPlayers[0] must be valid
-        ULocalPlayer* lp = (ULocalPlayer*)gi->LocalPlayers.Data[0];
-        if (!is_valid_ptr(lp)) continue;
-        
-        // LocalPlayer->PlayerController must be valid
-        if (!is_valid_ptr(lp->PlayerController)) continue;
-        
-        // PlayerController->PlayerCameraManager must be valid
-        APlayerController* pc = lp->PlayerController;
-        if (!is_valid_ptr(pc->PlayerCameraManager)) continue;
-        
-        LOGI("[+] Found GWorld at 0x%lx (value=0x%lx)", addr - ue4_start, candidate);
-        return addr;
-    }
-    
-    LOGW("[!] GWorld not found via pattern scan");
-    return 0;
-}
-
-// ============================================================================
-// WORLD TO SCREEN PROJECTION
-// ============================================================================
-
-static bool WorldToScreen(const FVector& worldPos, const FVector& camLoc, 
-                          const FRotator& camRot, float fov, FVector2D& out) {
-    // Convert rotation to radians
-    float pitch = camRot.Pitch * (M_PI / 180.0f);
-    float yaw   = camRot.Yaw   * (M_PI / 180.0f);
-    float roll  = camRot.Roll  * (M_PI / 180.0f);
-    
-    // Camera forward/right/up vectors from rotation
-    float cp = cosf(pitch), sp = sinf(pitch);
-    float cy = cosf(yaw),   sy = sinf(yaw);
-    float cr = cosf(roll),  sr = sinf(roll);
-    
-    FVector forward = { cp * cy, cp * sy, sp };
-    FVector right   = { -(sr * sp * cy - cr * sy), -(sr * sp * sy + cr * cy), sr * cp };
-    FVector up      = { -(cr * sp * cy + sr * sy), cy * sr - cr * sp * sy, cr * cp };
-    
-    // Vector from camera to world point
-    FVector delta = worldPos - camLoc;
-    
-    // Dot products
-    float dotForward = delta.X * forward.X + delta.Y * forward.Y + delta.Z * forward.Z;
-    float dotRight   = delta.X * right.X   + delta.Y * right.Y   + delta.Z * right.Z;
-    float dotUp      = delta.X * up.X      + delta.Y * up.Y      + delta.Z * up.Z;
-    
-    // Behind camera
-    if (dotForward < 1.0f) return false;
-    
-    // FOV scaling
-    float fovRad = fov * (M_PI / 180.0f);
-    float screenCenterX = g_cfg.screen_width  * 0.5f;
-    float screenCenterY = g_cfg.screen_height * 0.5f;
-    float tanHalfFov = tanf(fovRad * 0.5f);
-    
-    out.X = screenCenterX + (dotRight / dotForward / tanHalfFov) * screenCenterX;
-    out.Y = screenCenterY - (dotUp    / dotForward / tanHalfFov) * screenCenterY;
-    
+    LOGI("[+] SDK initialized: UE4=0x%lx GNames=%p GUObject=%p", UE4, FName::GNames, UObject::GUObjectArray);
     return true;
 }
 
 // ============================================================================
-// BONE POSITION (from CachedBoneSpaceTransforms + ComponentToWorld)
+// WORLD ACCESS (proper SDK way — walks UEngine→GameViewport→World)
 // ============================================================================
+static int g_EngineIdx = 0;
+static UWorld* GetFullWorld() {
+    auto& objects = UObject::GetGlobalObjects();
+    
+    if (g_EngineIdx > 0) {
+        auto obj = objects.GetByIndex(g_EngineIdx);
+        if (obj && Tools::IsPtrValid(obj)) {
+            UEngine* engine = (UEngine*)obj;
+            if (Tools::IsPtrValid(engine->GameViewport)) {
+                auto world = engine->GameViewport->World;
+                if (Tools::IsPtrValid(world) && Tools::IsPtrValid(world->PersistentLevel))
+                    return world;
+            }
+        }
+        g_EngineIdx = 0;
+    }
+    
+    for (int i = 0; i < objects.Num(); i++) {
+        auto obj = objects.GetByIndex(i);
+        if (!obj || !Tools::IsPtrValid(obj)) continue;
+        if (obj->IsA(UEngine::StaticClass())) {
+            UEngine* engine = (UEngine*)obj;
+            if (Tools::IsPtrValid(engine->GameViewport) && 
+                Tools::IsPtrValid(engine->GameViewport->World)) {
+                g_EngineIdx = i;
+                return engine->GameViewport->World;
+            }
+        }
+    }
+    return nullptr;
+}
 
-static FVector GetBoneWorldPos(USkeletalMeshComponent* mesh, int boneIndex) {
-    FVector result = {0, 0, 0};
-    if (!is_valid_ptr(mesh)) return result;
+// ============================================================================
+// ACTOR ITERATION (uses game's GetActorArray function)
+// ============================================================================
+struct ActorArray { uintptr_t base; int32_t count; int32_t max; };
+
+static std::vector<AActor*> GetActors() {
+    std::vector<AActor*> result;
+    auto world = GetFullWorld();
+    if (!world || !Tools::IsPtrValid(world->PersistentLevel)) return result;
     
-    // Get CachedBoneSpaceTransforms array
-    TArray<FTransform>* bones = &mesh->CachedBoneSpaceTransforms;
-    if (!is_valid_ptr(bones->Data)) return result;
-    if (boneIndex < 0 || boneIndex >= bones->Count) return result;
+    ActorArray actors = *((ActorArray*(*)(uintptr_t))(UE4 + GetActorArray_Offset))(
+        reinterpret_cast<uintptr_t>(world->PersistentLevel));
     
-    // Get bone transform (relative to component)
-    FTransform* boneTransform = &bones->Data[boneIndex];
-    if (!is_valid_ptr(boneTransform)) return result;
+    if (actors.count <= 0 || !Tools::IsPtrValid((void*)actors.base)) return result;
     
-    // Get component-to-world transform
-    FTransform* c2w = &mesh->ComponentToWorld;
-    
-    // Simplified: bone world pos = ComponentToWorld.Translation + BoneRelative.Translation
-    // (Ignoring rotation for now — good enough for ESP box/line positions)
-    // Full transform would require quaternion multiplication
-    
-    // For proper bone position: apply component rotation to bone translation
-    FQuat& rot = c2w->Rotation;
-    FVector& boneLoc = boneTransform->Translation;
-    
-    // Quaternion rotation: v' = q * v * q^-1
-    // Simplified using quaternion-vector multiplication:
-    float qx = rot.X, qy = rot.Y, qz = rot.Z, qw = rot.W;
-    float vx = boneLoc.X, vy = boneLoc.Y, vz = boneLoc.Z;
-    
-    // t = 2 * cross(q.xyz, v)
-    float tx = 2.0f * (qy * vz - qz * vy);
-    float ty = 2.0f * (qz * vx - qx * vz);
-    float tz = 2.0f * (qx * vy - qy * vx);
-    
-    // result = v + w * t + cross(q.xyz, t)
-    result.X = vx + qw * tx + (qy * tz - qz * ty);
-    result.Y = vy + qw * ty + (qz * tx - qx * tz);
-    result.Z = vz + qw * tz + (qx * ty - qy * tx);
-    
-    // Add component world location
-    result.X += c2w->Translation.X;
-    result.Y += c2w->Translation.Y;
-    result.Z += c2w->Translation.Z;
-    
+    result.reserve(actors.count);
+    for (int i = 0; i < actors.count; i++) {
+        auto actor = *(AActor**)(actors.base + (i * sizeof(uintptr_t)));
+        if (actor && Tools::IsPtrValid(actor))
+            result.push_back(actor);
+    }
     return result;
 }
 
 // ============================================================================
-// GET ACTOR WORLD LOCATION (from RootComponent→ComponentToWorld)
+// BONE HELPER (uses SDK's GetBonePos with FName)
 // ============================================================================
-
-static FVector GetActorLocation(AActor* actor) {
-    if (!is_valid_ptr(actor)) return {0, 0, 0};
-    USceneComponent* root = actor->RootComponent;
-    if (!is_valid_ptr(root)) return {0, 0, 0};
-    return root->ComponentToWorld.Translation;
+static FVector GetBoneLocation(ASTExtraPlayerCharacter* player, const char* boneName) {
+    if (!player || !Tools::IsPtrValid(player)) return FVector();
+    return player->GetBonePos(FName(boneName), FVector());
 }
 
 // ============================================================================
-// CAMERA INFO
+// MATH HELPERS
 // ============================================================================
+static float GetDistance(FVector a, FVector b) {
+    float dx = a.X - b.X, dy = a.Y - b.Y, dz = a.Z - b.Z;
+    return sqrtf(dx*dx + dy*dy + dz*dz) / 100.0f; // cm to meters
+}
 
-struct CameraData {
-    FVector  location;
-    FRotator rotation;
-    float    fov;
-    bool     valid;
-};
+static FRotator CalcAimRotation(FVector from, FVector to) {
+    FVector delta;
+    delta.X = to.X - from.X;
+    delta.Y = to.Y - from.Y;
+    delta.Z = to.Z - from.Z;
+    
+    float dist = sqrtf(delta.X*delta.X + delta.Y*delta.Y);
+    FRotator rot;
+    rot.Pitch = atan2f(delta.Z, dist) * (180.0f / 3.14159265f);
+    rot.Yaw = atan2f(delta.Y, delta.X) * (180.0f / 3.14159265f);
+    rot.Roll = 0;
+    return rot;
+}
 
-static CameraData GetCameraData(APlayerController* pc) {
-    CameraData cam = {};
-    cam.valid = false;
-    
-    if (!is_valid_ptr(pc)) return cam;
-    
-    APlayerCameraManager* mgr = (APlayerCameraManager*)pc->PlayerCameraManager;
-    if (!is_valid_ptr(mgr)) return cam;
-    
-    cam.location = mgr->CameraCache.POV.Location;
-    cam.rotation = mgr->CameraCache.POV.Rotation;
-    cam.fov      = mgr->CameraCache.POV.FOV;
-    
-    // Sanity check FOV
-    if (cam.fov < 1.0f || cam.fov > 180.0f) cam.fov = 90.0f;
-    
-    cam.valid = true;
-    return cam;
+static FRotator InterpRotation(FRotator current, FRotator target, float smooth) {
+    FRotator result;
+    result.Pitch = current.Pitch + (target.Pitch - current.Pitch) / smooth;
+    result.Yaw = current.Yaw + (target.Yaw - current.Yaw) / smooth;
+    result.Roll = 0;
+    return result;
 }
 
 // ============================================================================
-// LOCAL PLAYER INFO
+// ESP DRAWING (called from PostRender hook with UCanvas)
 // ============================================================================
-
-struct LocalPlayerInfo {
-    APlayerController*      playerController;
-    ASTExtraBaseCharacter*  myPawn;
-    int32_t                 myTeamID;
-    bool                    valid;
-};
-
-static LocalPlayerInfo GetLocalPlayer(UWorld* world) {
-    LocalPlayerInfo info = {};
-    info.valid = false;
+static void DrawESP(UCanvas* Canvas, APlayerController* myPC, ASTExtraPlayerCharacter* myChar) {
+    if (!Canvas || !myPC || !myChar) return;
+    if (!g_Config.espEnabled) return;
     
-    if (!is_valid_ptr(world)) return info;
-    
-    // World → GameInstance → LocalPlayers[0] → PlayerController
-    UGameInstance* gi = (UGameInstance*)world->OwningGameInstance;
-    if (!is_valid_ptr(gi)) return info;
-    if (!is_valid_ptr(gi->LocalPlayers.Data)) return info;
-    if (gi->LocalPlayers.Count < 1) return info;
-    
-    ULocalPlayer* lp = (ULocalPlayer*)gi->LocalPlayers.Data[0];
-    if (!is_valid_ptr(lp)) return info;
-    
-    info.playerController = lp->PlayerController;
-    if (!is_valid_ptr(info.playerController)) return info;
-    
-    // Get our pawn through Controller→Pawn
-    AController* ctrl = (AController*)info.playerController;
-    APawn* pawn = ctrl->Pawn;
-    if (is_valid_ptr(pawn)) {
-        info.myPawn = (ASTExtraBaseCharacter*)pawn;
-        // Get TeamID from AUAECharacter offset
-        AUAECharacter* uaeChar = (AUAECharacter*)info.myPawn;
-        info.myTeamID = uaeChar->TeamID;
+    // Get font from engine
+    if (!g_Font) {
+        for (int i = 0; i < UObject::GetGlobalObjects().Num() && !g_Font; i++) {
+            auto obj = UObject::GetGlobalObjects().GetByIndex(i);
+            if (obj && obj->IsA(UEngine::StaticClass())) {
+                g_Font = ((UEngine*)obj)->SmallFont;
+            }
+        }
     }
     
-    info.valid = true;
-    return info;
-}
-
-// ============================================================================
-// ESP DATA (written to file for overlay app to render)
-// ============================================================================
-
-struct PlayerEspData {
-    float screenX, screenY;          // Center position
-    float headScreenX, headScreenY;  // Head position
-    float footScreenX, footScreenY;  // Foot position
-    float health, healthMax;
-    float distance;                   // in meters (UE4 units / 100)
-    int   teamId;
-    bool  isEnemy;
-    // Skeleton bone screen positions
-    float boneScreen[58][2];         // indexed by bone ID
-    bool  boneValid[58];
-};
-
-// ============================================================================
-// AIMBOT
-// ============================================================================
-
-static void DoAimbot(APlayerController* pc, const FVector& targetHeadWorld, 
-                     const CameraData& cam) {
-    if (!g_cfg.aim_enabled) return;
-    if (!is_valid_ptr(pc)) return;
+    // Get my TeamID
+    int myTeamID = *(int*)((uintptr_t)myChar + 0x0604);
     
-    // Calculate target rotation
-    FVector delta = targetHeadWorld - cam.location;
-    float dist = delta.Size();
-    if (dist < 1.0f) return;
+    // Best aimbot target
+    float closestDist = g_Config.aimbotFOV;
+    FVector bestHead = FVector();
+    bool hasTarget = false;
     
-    FRotator targetRot;
-    targetRot.Yaw   = atan2f(delta.Y, delta.X) * (180.0f / M_PI);
-    targetRot.Pitch = atan2f(delta.Z, sqrtf(delta.X*delta.X + delta.Y*delta.Y)) * (180.0f / M_PI);
-    targetRot.Roll  = 0.0f;
+    // Iterate actors
+    auto actors = GetActors();
+    for (auto actor : actors) {
+        if (!actor || actor == (AActor*)myChar) continue;
+        if (!actor->IsA(ASTExtraPlayerCharacter::StaticClass())) continue;
+        
+        auto enemy = (ASTExtraPlayerCharacter*)actor;
+        
+        // Check alive
+        float health = *(float*)((uintptr_t)enemy + 0x0E60);
+        uint8_t deadBits = *(uint8_t*)((uintptr_t)enemy + 0x0E7C);
+        if (health <= 0 || (deadBits & 0x01)) continue;
+        
+        // Check team
+        int theirTeam = *(int*)((uintptr_t)enemy + 0x0604);
+        if (theirTeam == myTeamID) continue;
+        
+        // Get positions using SDK GetBonePos
+        FVector headPos = GetBoneLocation(enemy, "Head");
+        FVector rootPos = GetBoneLocation(enemy, "Root");
+        
+        if (headPos.X == 0 && headPos.Y == 0 && headPos.Z == 0) continue;
+        
+        // Distance check
+        FVector myPos = GetBoneLocation(myChar, "Root");
+        float dist = GetDistance(myPos, rootPos);
+        if (dist > g_Config.maxDistance) continue;
+        
+        // Project to screen
+        FVector2D screenHead, screenFoot;
+        bool headOnScreen = myPC->ProjectWorldLocationToScreen(headPos, false, &screenHead);
+        bool footOnScreen = myPC->ProjectWorldLocationToScreen(rootPos, false, &screenFoot);
+        
+        if (!headOnScreen && !footOnScreen) continue;
+        
+        // --- DRAW ESP ---
+        float boxHeight = screenFoot.Y - screenHead.Y;
+        float boxWidth = boxHeight * 0.5f;
+        
+        // Box ESP
+        if (g_Config.espBox && boxHeight > 5) {
+            FVector2D topLeft = {screenHead.X - boxWidth/2, screenHead.Y};
+            FVector2D topRight = {screenHead.X + boxWidth/2, screenHead.Y};
+            FVector2D botLeft = {screenFoot.X - boxWidth/2, screenFoot.Y};
+            FVector2D botRight = {screenFoot.X + boxWidth/2, screenFoot.Y};
+            
+            Canvas->K2_DrawLine(topLeft, topRight, 1.5f, COLOR_RED);
+            Canvas->K2_DrawLine(topRight, botRight, 1.5f, COLOR_RED);
+            Canvas->K2_DrawLine(botRight, botLeft, 1.5f, COLOR_RED);
+            Canvas->K2_DrawLine(botLeft, topLeft, 1.5f, COLOR_RED);
+        }
+        
+        // Skeleton ESP
+        if (g_Config.espSkeleton) {
+            const char* bones[][2] = {
+                {"Head", "neck_01"},
+                {"neck_01", "spine_02"},
+                {"spine_02", "spine_01"},
+                {"spine_01", "pelvis"},
+                {"neck_01", "upperarm_l"},
+                {"upperarm_l", "lowerarm_l"},
+                {"lowerarm_l", "hand_l"},
+                {"neck_01", "upperarm_r"},
+                {"upperarm_r", "lowerarm_r"},
+                {"lowerarm_r", "hand_r"},
+                {"pelvis", "thigh_l"},
+                {"thigh_l", "calf_l"},
+                {"calf_l", "foot_l"},
+                {"pelvis", "thigh_r"},
+                {"thigh_r", "calf_r"},
+                {"calf_r", "foot_r"},
+            };
+            
+            for (auto& pair : bones) {
+                FVector boneA = GetBoneLocation(enemy, pair[0]);
+                FVector boneB = GetBoneLocation(enemy, pair[1]);
+                FVector2D screenA, screenB;
+                if (myPC->ProjectWorldLocationToScreen(boneA, false, &screenA) &&
+                    myPC->ProjectWorldLocationToScreen(boneB, false, &screenB)) {
+                    Canvas->K2_DrawLine(screenA, screenB, 1.2f, COLOR_GREEN);
+                }
+            }
+        }
+        
+        // Health bar
+        if (g_Config.espHealth && boxHeight > 10) {
+            float maxHealth = *(float*)((uintptr_t)enemy + 0x0E64);
+            float healthPct = (maxHealth > 0) ? (health / maxHealth) : 0;
+            
+            float barX = screenHead.X - boxWidth/2 - 5;
+            float barTop = screenHead.Y;
+            float barBot = screenFoot.Y;
+            float barHeight = (barBot - barTop) * healthPct;
+            
+            FLinearColor hpColor;
+            hpColor.R = 1.0f - healthPct;
+            hpColor.G = healthPct;
+            hpColor.B = 0;
+            hpColor.A = 1.0f;
+            
+            FVector2D hpTop = {barX, barBot - barHeight};
+            FVector2D hpBot = {barX, barBot};
+            Canvas->K2_DrawLine(hpTop, hpBot, 3.0f, hpColor);
+        }
+        
+        // Distance text
+        if (g_Config.espDistance && g_Font && headOnScreen) {
+            char distText[32];
+            snprintf(distText, sizeof(distText), "%.0fm", dist);
+            FVector2D textPos = {screenHead.X, screenHead.Y - 15};
+            Canvas->K2_DrawText(g_Font, FString(distText), textPos, COLOR_WHITE,
+                              0, COLOR_BLACK, FVector2D(), true, false, false, COLOR_BLACK);
+        }
+        
+        // Aimbot target selection
+        if (g_Config.aimbotEnabled && headOnScreen) {
+            float screenCX = Canvas->SizeX / 2.0f;
+            float screenCY = Canvas->SizeY / 2.0f;
+            float dx = screenHead.X - screenCX;
+            float dy = screenHead.Y - screenCY;
+            float crosshairDist = sqrtf(dx*dx + dy*dy);
+            
+            if (crosshairDist < closestDist) {
+                closestDist = crosshairDist;
+                bestHead = headPos;
+                hasTarget = true;
+            }
+        }
+    }
     
-    // Get current ControlRotation from AController
-    AController* ctrl = (AController*)pc;
-    FRotator& current = ctrl->ControlRotation;
+    // Draw FOV circle
+    if (g_Config.aimbotEnabled) {
+        float cx = Canvas->SizeX / 2.0f;
+        float cy = Canvas->SizeY / 2.0f;
+        float radius = g_Config.aimbotFOV;
+        int segments = 32;
+        for (int i = 0; i < segments; i++) {
+            float a1 = (2 * 3.14159f * i) / segments;
+            float a2 = (2 * 3.14159f * (i+1)) / segments;
+            FVector2D p1 = {cx + cosf(a1)*radius, cy + sinf(a1)*radius};
+            FVector2D p2 = {cx + cosf(a2)*radius, cy + sinf(a2)*radius};
+            Canvas->K2_DrawLine(p1, p2, 1.0f, COLOR_WHITE);
+        }
+    }
     
-    // Calculate delta with wrapping
-    float deltaYaw = targetRot.Yaw - current.Yaw;
-    float deltaPitch = targetRot.Pitch - current.Pitch;
-    
-    // Normalize angles to [-180, 180]
-    while (deltaYaw > 180.0f)  deltaYaw -= 360.0f;
-    while (deltaYaw < -180.0f) deltaYaw += 360.0f;
-    while (deltaPitch > 180.0f)  deltaPitch -= 360.0f;
-    while (deltaPitch < -180.0f) deltaPitch += 360.0f;
-    
-    // Check if within FOV (in screen space)
-    FVector2D targetScreen;
-    if (!WorldToScreen(targetHeadWorld, cam.location, cam.rotation, cam.fov, targetScreen))
-        return;
-    
-    float screenCenterX = g_cfg.screen_width  * 0.5f;
-    float screenCenterY = g_cfg.screen_height * 0.5f;
-    float dx = targetScreen.X - screenCenterX;
-    float dy = targetScreen.Y - screenCenterY;
-    float screenDist = sqrtf(dx*dx + dy*dy);
-    
-    if (screenDist > g_cfg.aim_fov) return; // Outside FOV circle
-    
-    // Apply smooth aim
-    float smooth = g_cfg.aim_smooth;
-    if (smooth < 1.0f) smooth = 1.0f;
-    
-    current.Yaw   += deltaYaw / smooth;
-    current.Pitch += deltaPitch / smooth;
+    // Apply aimbot
+    if (hasTarget && g_Config.aimbotEnabled && g_PlayerController) {
+        auto camMgr = (APlayerCameraManager*)(*(void**)((uintptr_t)g_PlayerController + 0x0548));
+        if (Tools::IsPtrValid(camMgr)) {
+            // CameraCache.POV.Location at 0x0530
+            FVector camLoc = *(FVector*)((uintptr_t)camMgr + 0x0530);
+            
+            FRotator targetRot = CalcAimRotation(camLoc, bestHead);
+            FRotator currentRot = ((AController*)g_PlayerController)->GetControlRotation();
+            FRotator smoothed = InterpRotation(currentRot, targetRot, g_Config.aimbotSmooth);
+            ((AController*)g_PlayerController)->SetControlRotation(smoothed, FString(L""));
+        }
+    }
 }
 
 // ============================================================================
 // LARGE HITBOX
 // ============================================================================
-
-static void ApplyLargeHitbox(ASTExtraBaseCharacter* character) {
-    if (!g_cfg.hitbox_enabled) return;
-    if (!is_valid_ptr(character)) return;
-    
-    ACharacter* ch = (ACharacter*)character;
-    void* capsule = ch->CapsuleComponent;
-    if (!is_valid_ptr(capsule)) return;
-    
-    // UCapsuleComponent: CapsuleHalfHeight at ~0x02E8, CapsuleRadius at ~0x02EC
-    // These offsets are from UShapeComponent base
-    // Safe: only scale up, and only for enemies (already filtered)
-    float* halfHeight = (float*)((uintptr_t)capsule + 0x02E8);
+static void ApplyLargeHitbox(ASTExtraPlayerCharacter* enemy) {
+    if (!g_Config.largeHitbox) return;
+    // CapsuleComponent at 0x0520 in ACharacter
+    void* capsule = *(void**)((uintptr_t)enemy + 0x0520);
+    if (!Tools::IsPtrValid(capsule)) return;
+    // CapsuleRadius typically at offset 0x02EC in UCapsuleComponent
     float* radius = (float*)((uintptr_t)capsule + 0x02EC);
+    if (*radius < 100.0f) { // Only scale if not already scaled
+        *radius *= g_Config.hitboxScale;
+    }
+}
+
+// ============================================================================
+// POSTRENDER HOOK (game calls this every frame with UCanvas)
+// ============================================================================
+void (*orig_PostRender)(void* thiz, UCanvas* Canvas) = nullptr;
+
+void hook_PostRender(void* thiz, UCanvas* Canvas) {
+    if (orig_PostRender) orig_PostRender(thiz, Canvas);
     
-    if (is_valid_ptr(halfHeight) && is_valid_ptr(radius)) {
-        float currentRadius = *radius;
-        // Only scale if not already scaled (avoid compound scaling)
-        if (currentRadius > 0.0f && currentRadius < 100.0f) {
-            *radius = currentRadius * g_cfg.hitbox_scale;
-            *halfHeight = (*halfHeight) * g_cfg.hitbox_scale;
+    if (!g_Initialized || !Canvas || !Tools::IsPtrValid(Canvas)) return;
+    
+    auto world = GetFullWorld();
+    if (!world) return;
+    
+    // Get local player
+    auto gameInstance = (UGameInstance*)world->OwningGameInstance;
+    if (!Tools::IsPtrValid(gameInstance)) return;
+    
+    auto& localPlayers = *(TArray<ULocalPlayer*>*)((uintptr_t)gameInstance + 0x0048);
+    if (localPlayers.Num() < 1 || !Tools::IsPtrValid(localPlayers[0])) return;
+    
+    auto localPlayer = localPlayers[0];
+    auto pc = *(APlayerController**)((uintptr_t)localPlayer + 0x0030);
+    if (!Tools::IsPtrValid(pc)) return;
+    
+    auto pawn = *(APawn**)((uintptr_t)pc + 0x0528); // AcknowledgedPawn
+    if (!Tools::IsPtrValid(pawn)) return;
+    
+    g_PlayerController = pc;
+    g_LocalPlayer = (ASTExtraPlayerCharacter*)pawn;
+    
+    // Island/Lobby bypass: check if enough players
+    auto gameState = world->GameState;
+    if (!Tools::IsPtrValid(gameState)) return;
+    auto& playerArray = *(TArray<void*>*)((uintptr_t)gameState + 0x04C8);
+    if (playerArray.Num() < 10) return; // Skip in lobby
+    
+    DrawESP(Canvas, pc, (ASTExtraPlayerCharacter*)pawn);
+}
+
+// ============================================================================
+// FIND AND HOOK POSTRENDER
+// ============================================================================
+static bool HookPostRender() {
+    // Find UGameViewportClient instance
+    auto viewport = UObject::FindObject<UGameViewportClient>(
+        "GameViewportClient Transient.UAEGameEngine_1.GameViewportClient_1");
+    
+    if (!viewport) {
+        // Try generic search
+        for (int i = 0; i < UObject::GetGlobalObjects().Num(); i++) {
+            auto obj = UObject::GetGlobalObjects().GetByIndex(i);
+            if (obj && obj->IsA(UGameViewportClient::StaticClass())) {
+                viewport = (UGameViewportClient*)obj;
+                break;
+            }
         }
     }
+    
+    if (!viewport) {
+        LOGE("[-] Could not find UGameViewportClient");
+        return false;
+    }
+    
+    // Get vtable and hook PostRender (typically vtable index ~100-110 for UGameViewportClient)
+    // Alternative: Hook AHUD::PostRender which is simpler
+    // The AHUD PostRender function signature: void PostRender(UCanvas* Canvas)
+    
+    // Find AHUD instance from PlayerController->MyHUD (offset 0x0540)
+    auto world = GetFullWorld();
+    if (!world) return false;
+    
+    auto gameInstance = (UGameInstance*)world->OwningGameInstance;
+    if (!Tools::IsPtrValid(gameInstance)) return false;
+    
+    auto& localPlayers = *(TArray<ULocalPlayer*>*)((uintptr_t)gameInstance + 0x0048);
+    if (localPlayers.Num() < 1) return false;
+    
+    auto pc = *(APlayerController**)((uintptr_t)localPlayers[0] + 0x0030);
+    if (!Tools::IsPtrValid(pc)) return false;
+    
+    void* hud = *(void**)((uintptr_t)pc + 0x0540); // MyHUD
+    if (!Tools::IsPtrValid(hud)) return false;
+    
+    // Get HUD's vtable
+    void** vtable = *(void***)hud;
+    if (!Tools::IsPtrValid(vtable)) return false;
+    
+    // PostRender is typically at vtable index 89-92 for AHUD
+    // We'll scan for it by checking which vtable entries are in libUE4.so range
+    uintptr_t ue4End = Tools::GetLibEnd("libUE4.so");
+    
+    // PostRender virtual index for AHUD in UE4 4.x is typically 87
+    // We hook vtable[87] which is AHUD::PostRender
+    int postRenderIdx = 87;
+    
+    // Swap vtable entry
+    orig_PostRender = (void(*)(void*, UCanvas*))vtable[postRenderIdx];
+    
+    uintptr_t page = (uintptr_t)&vtable[postRenderIdx] & ~0xFFF;
+    mprotect((void*)page, 0x2000, PROT_READ|PROT_WRITE);
+    vtable[postRenderIdx] = (void*)hook_PostRender;
+    
+    LOGI("[+] Hooked PostRender at vtable[%d] = %p → %p", postRenderIdx, orig_PostRender, hook_PostRender);
+    return true;
 }
 
 // ============================================================================
 // MAIN THREAD
 // ============================================================================
-
-static void* main_thread(void* arg) {
-    LOGI("[*] Main thread started, waiting for game...");
+static void* main_thread(void*) {
+    // Resolve android log
+    g_log = (android_log_fn)dlsym(RTLD_DEFAULT, "__android_log_print");
+    
+    LOGI("[*] ====================================");
+    LOGI("[*] BGMI 4.4.0 — SDK Bypass + ESP");
+    LOGI("[*] ====================================");
     
     // Wait for libUE4.so to load
-    while (get_lib_base("libUE4.so") == 0) {
-        usleep(1000000); // 1 second
+    while (!Tools::GetLibBase("libUE4.so")) {
+        usleep(500000);
     }
-    LOGI("[+] libUE4.so loaded at 0x%lx", get_lib_base("libUE4.so"));
+    LOGI("[+] libUE4.so loaded at 0x%lx", Tools::GetLibBase("libUE4.so"));
     
-    // Apply all bypass patches
-    apply_all_bypasses();
-    
-    // Wait a bit for game to initialize
+    // Wait for full initialization
     sleep(5);
     
-    // Find GWorld
-    LOGI("[*] Scanning for GWorld...");
-    g_gworld_ptr = find_gworld();
-    
-    g_running = true;
-    LOGI("[+] Main loop starting");
-    
-    // ESP output file
-    const char* esp_output = "/data/local/tmp/esp_data.bin";
-    
-    while (g_running) {
-        usleep(16666); // ~60 fps
-        
-        // Re-find GWorld if lost
-        if (!g_gworld_ptr) {
-            g_gworld_ptr = find_gworld();
-            if (!g_gworld_ptr) continue;
-        }
-        
-        // Read GWorld pointer
-        UWorld* world = safe_read<UWorld*>(g_gworld_ptr);
-        if (!is_valid_ptr(world)) {
-            g_gworld_ptr = 0; // Lost it, re-scan next frame
-            continue;
-        }
-        
-        // Get local player
-        LocalPlayerInfo local = GetLocalPlayer(world);
-        if (!local.valid) continue;
-        
-        // Get camera
-        CameraData cam = GetCameraData(local.playerController);
-        if (!cam.valid) continue;
-        
-        // Get GameState → PlayerArray
-        AGameStateBase* gameState = world->GameState;
-        if (!is_valid_ptr(gameState)) continue;
-        
-        TArray<void*>& playerArray = gameState->PlayerArray;
-        if (!is_valid_ptr(playerArray.Data)) continue;
-        if (playerArray.Count < 1 || playerArray.Count > 200) continue;
-        
-        // Lobby/Island check
-        if (playerArray.Count < g_cfg.min_players) continue;
-        
-        // Process players
-        std::vector<PlayerEspData> espPlayers;
-        float closestAimDist = FLT_MAX;
-        FVector closestHeadWorld = {0, 0, 0};
-        bool hasAimTarget = false;
-        
-        for (int i = 0; i < playerArray.Count; i++) {
-            ASTExtraPlayerState* ps = (ASTExtraPlayerState*)playerArray.Data[i];
-            if (!is_valid_ptr(ps)) continue;
-            
-            // Get CharacterOwner from PlayerState
-            ASTExtraBaseCharacter* character = ps->CharacterOwner;
-            if (!is_valid_ptr(character)) continue;
-            
-            // Skip self
-            if (character == local.myPawn) continue;
-            
-            // Check alive (from ASTExtraCharacter parent)
-            ASTExtraCharacter* stChar = (ASTExtraCharacter*)character;
-            if (stChar->IsDead()) continue;
-            if (stChar->Health <= 0.0f) continue;
-            
-            // Get TeamID (from AUAECharacter)
-            AUAECharacter* uaeChar = (AUAECharacter*)character;
-            int32_t theirTeam = uaeChar->TeamID;
-            bool isEnemy = (theirTeam != local.myTeamID);
-            
-            // Get character position
-            FVector actorLoc = GetActorLocation((AActor*)character);
-            float distance = (actorLoc - cam.location).Size() / 100.0f; // Convert to meters
-            
-            // Skip if too far
-            if (distance > g_cfg.esp_max_dist) continue;
-            
-            // Get mesh for bone positions
-            ACharacter* ch = (ACharacter*)character;
-            USkeletalMeshComponent* mesh = ch->Mesh;
-            if (!is_valid_ptr(mesh)) continue;
-            
-            // Get head and foot positions
-            FVector headWorld = GetBoneWorldPos(mesh, BONE_HEAD);
-            FVector footWorld = GetBoneWorldPos(mesh, BONE_ROOT);
-            
-            // WorldToScreen for head and foot
-            FVector2D headScreen, footScreen, centerScreen;
-            bool headOnScreen = WorldToScreen(headWorld, cam.location, cam.rotation, cam.fov, headScreen);
-            bool footOnScreen = WorldToScreen(footWorld, cam.location, cam.rotation, cam.fov, footScreen);
-            
-            if (!headOnScreen && !footOnScreen) continue;
-            
-            // Build ESP data
-            PlayerEspData esp = {};
-            esp.headScreenX = headScreen.X;
-            esp.headScreenY = headScreen.Y;
-            esp.footScreenX = footScreen.X;
-            esp.footScreenY = footScreen.Y;
-            esp.screenX = (headScreen.X + footScreen.X) / 2.0f;
-            esp.screenY = (headScreen.Y + footScreen.Y) / 2.0f;
-            esp.health = stChar->Health;
-            esp.healthMax = stChar->HealthMax;
-            esp.distance = distance;
-            esp.teamId = theirTeam;
-            esp.isEnemy = isEnemy;
-            
-            // Calculate all bone positions for skeleton ESP
-            memset(esp.boneValid, 0, sizeof(esp.boneValid));
-            for (int b = 0; b < 58; b++) {
-                FVector boneWorld = GetBoneWorldPos(mesh, b);
-                FVector2D boneScreen;
-                if (WorldToScreen(boneWorld, cam.location, cam.rotation, cam.fov, boneScreen)) {
-                    esp.boneScreen[b][0] = boneScreen.X;
-                    esp.boneScreen[b][1] = boneScreen.Y;
-                    esp.boneValid[b] = true;
-                }
-            }
-            
-            espPlayers.push_back(esp);
-            
-            // Aimbot: find closest enemy head to crosshair
-            if (isEnemy && g_cfg.aim_enabled && headOnScreen) {
-                float screenCenterX = g_cfg.screen_width  * 0.5f;
-                float screenCenterY = g_cfg.screen_height * 0.5f;
-                float dx = headScreen.X - screenCenterX;
-                float dy = headScreen.Y - screenCenterY;
-                float aimDist = sqrtf(dx*dx + dy*dy);
-                
-                if (aimDist < closestAimDist && aimDist < g_cfg.aim_fov) {
-                    closestAimDist = aimDist;
-                    closestHeadWorld = headWorld;
-                    hasAimTarget = true;
-                }
-            }
-            
-            // Apply large hitbox to enemies
-            if (isEnemy && g_cfg.hitbox_enabled) {
-                ApplyLargeHitbox(character);
-            }
-        }
-        
-        // Execute aimbot on closest target
-        if (hasAimTarget) {
-            DoAimbot(local.playerController, closestHeadWorld, cam);
-        }
-        
-        // Write ESP data to binary file (overlay app reads this)
-        int fd = open(esp_output, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-        if (fd >= 0) {
-            int32_t count = (int32_t)espPlayers.size();
-            write(fd, &count, sizeof(count));
-            if (count > 0) {
-                write(fd, espPlayers.data(), count * sizeof(PlayerEspData));
-            }
-            close(fd);
-        }
+    // Initialize SDK
+    if (!InitSDK()) {
+        LOGE("[-] Failed to initialize SDK");
+        return nullptr;
     }
     
-    LOGI("[*] Main thread exiting");
+    // Apply all 809 bypass patches
+    ApplyAllBypasses();
+    LOGI("[+] Applied 809 bypass patches");
+    
+    // Wait for game world
+    while (!GetFullWorld()) {
+        usleep(1000000);
+    }
+    LOGI("[+] World found");
+    
+    // Wait a bit more for HUD to spawn
+    sleep(3);
+    
+    // Hook PostRender
+    for (int attempt = 0; attempt < 10; attempt++) {
+        if (HookPostRender()) {
+            LOGI("[+] PostRender hooked successfully!");
+            g_Initialized = true;
+            break;
+        }
+        LOGI("[*] Waiting for HUD... attempt %d", attempt);
+        sleep(2);
+    }
+    
+    if (!g_Initialized) {
+        LOGE("[-] Failed to hook PostRender after 10 attempts");
+    }
+    
+    // Keep thread alive
+    while (true) {
+        sleep(10);
+    }
+    
     return nullptr;
 }
 
 // ============================================================================
-// SCREEN SIZE DETECTION
+// ENTRY POINT
 // ============================================================================
-
-static void detect_screen_size() {
-    FILE* fp = popen("wm size 2>/dev/null", "r");
-    if (fp) {
-        char buf[128];
-        if (fgets(buf, sizeof(buf), fp)) {
-            int w, h;
-            if (sscanf(buf, "Physical size: %dx%d", &w, &h) == 2) {
-                g_cfg.screen_width  = (float)w;
-                g_cfg.screen_height = (float)h;
-                LOGI("[+] Screen: %dx%d", w, h);
-            }
-        }
-        pclose(fp);
-    }
-}
-
-// ============================================================================
-// CONFIG LOADER
-// ============================================================================
-
-static void load_config() {
-    FILE* fp = fopen("/data/local/tmp/bgmi_config.txt", "r");
-    if (!fp) return;
-    
-    char line[256];
-    while (fgets(line, sizeof(line), fp)) {
-        float val;
-        int ival;
-        if (sscanf(line, "aim_fov=%f", &val) == 1) g_cfg.aim_fov = val;
-        else if (sscanf(line, "aim_smooth=%f", &val) == 1) g_cfg.aim_smooth = val;
-        else if (sscanf(line, "aim_bone=%d", &ival) == 1) g_cfg.aim_bone = ival;
-        else if (sscanf(line, "hitbox_scale=%f", &val) == 1) g_cfg.hitbox_scale = val;
-        else if (sscanf(line, "esp_max_dist=%f", &val) == 1) g_cfg.esp_max_dist = val;
-        else if (sscanf(line, "aim_enabled=%d", &ival) == 1) g_cfg.aim_enabled = (ival != 0);
-        else if (sscanf(line, "esp_enabled=%d", &ival) == 1) g_cfg.esp_enabled = (ival != 0);
-        else if (sscanf(line, "hitbox_enabled=%d", &ival) == 1) g_cfg.hitbox_enabled = (ival != 0);
-    }
-    fclose(fp);
-    LOGI("[+] Config loaded");
-}
-
-// ============================================================================
-// ENTRY POINT — __attribute__((constructor))
-// ============================================================================
-
 __attribute__((constructor))
 void _init() {
-    LOGI("[*] ====================================");
-    LOGI("[*] BGMI 4.4.0 Mod Loaded");
-    LOGI("[*] SDK: NIKON 4.4.0 64-bit");
-    LOGI("[*] Features: ESP + Aimbot + LargeHitbox");
-    LOGI("[*] Bypasses: 809 verified patches");
-    LOGI("[*] ====================================");
-    
-    detect_screen_size();
-    load_config();
-    
     pthread_t ptid;
     pthread_create(&ptid, nullptr, main_thread, nullptr);
     pthread_detach(ptid);
