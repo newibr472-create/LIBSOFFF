@@ -610,7 +610,7 @@ PATCH_LIB("libUE4.so", "0x5ABED70", "1F 20 03 D5");  // ULagCompensationComponen
 PATCH_LIB("libUE4.so", "0x5AECAB0", "1F 20 03 D5");  // lagcomp.DSLagServerTimeOpt
 PATCH_LIB("libUE4.so", "0x5ABE868", "1F 20 03 D5");  // ULagCompensationComponentBase::VerifyShooterHeadLocus D
 PATCH_LIB("libUE4.so", "0x5AECAB8", "1F 20 03 D5");  // lagcomp.DSLagServerTimeOpt
-lagcomp.DSLagServerTimeOpt s
+// lagcomp.DSLagServerTimeOpt (stray line removed)
 PATCH_LIB("libUE4.so", "0x5ABD774", "1F 20 03 D5");  // ULagCompensationComponentBase::VerifyShootPosInHistory 
 PATCH_LIB("libUE4.so", "0x650E75C", "1F 20 03 D5");  // UDefaultAntiCheatComponent::_Verify_Projectile_ShootPos
 PATCH_LIB("libUE4.so", "0x5A9942C", "1F 20 03 D5");  // ULagCompensationComponent::StartLagCompensation Charact
