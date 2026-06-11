@@ -1,0 +1,370 @@
+# libUE4.so Deep Analysis (Ghidra)
+
+## Stats
+- Total functions: 597805
+- Decompiled: 500
+- AC-related functions: 608
+- Dispatcher candidates (>15 xrefs): 10363
+- JNI functions: 66
+- Large functions (>5000 bytes): 331
+- AC strings: 30388
+- Total strings: 123387
+
+## Top AC Dispatcher Candidates (most called)
+
+- `FUN_05724a80` @ `0x5724A80` (265933x called, 1 bytes)
+- `FUN_08341084` @ `0x8341084` (227724x called, 124 bytes)
+- `_Unwind_Resume` @ `0xC5DFAF0` (42123x called, 16 bytes)
+- `FUN_06513e74` @ `0x6513E74` (36626x called, 12 bytes)
+- `FUN_08340fd4` @ `0x8340FD4` (25551x called, 148 bytes)
+- `FUN_0872a210` @ `0x872A210` (24402x called, 212 bytes)
+- `FUN_083a8280` @ `0x83A8280` (21486x called, 568 bytes)
+- `FUN_05725a64` @ `0x5725A64` (19600x called, 4 bytes)
+- `FUN_087037f4` @ `0x87037F4` (19163x called, 60 bytes)
+- `FUN_06513e48` @ `0x6513E48` (18583x called, 8 bytes)
+- `FUN_08703830` @ `0x8703830` (15928x called, 80 bytes)
+- `FUN_08741d20` @ `0x8741D20` (14310x called, 136 bytes)
+- `FUN_085dd268` @ `0x85DD268` (14240x called, 196 bytes)
+- `FUN_06b14c64` @ `0x6B14C64` (13547x called, 1 bytes)
+- `FUN_05725aec` @ `0x5725AEC` (12801x called, 1 bytes)
+- `FUN_05725948` @ `0x5725948` (12800x called, 1 bytes)
+- `FUN_086642a4` @ `0x86642A4` (11583x called, 1 bytes)
+- `memcpy` @ `0xC5DFBA0` (11321x called, 16 bytes)
+- `FUN_08494fec` @ `0x8494FEC` (9579x called, 1 bytes)
+- `__cxa_guard_acquire` @ `0xC5DFB40` (8726x called, 16 bytes)
+- `FUN_08495c88` @ `0x8495C88` (7298x called, 1 bytes)
+- `FUN_083411e4` @ `0x83411E4` (7266x called, 48 bytes)
+- `__cxa_atexit` @ `0xC5DFC20` (7253x called, 16 bytes)
+- `FUN_057259d4` @ `0x57259D4` (6903x called, 1 bytes)
+- `FUN_082fe828` @ `0x82FE828` (6594x called, 364 bytes)
+- `FUN_08ca68a4` @ `0x8CA68A4` (6427x called, 1 bytes)
+- `FUN_086a91d0` @ `0x86A91D0` (5959x called, 84 bytes)
+- `FUN_057c81f4` @ `0x57C81F4` (5957x called, 32 bytes)
+- `FUN_057c81e0` @ `0x57C81E0` (5956x called, 8 bytes)
+- `FUN_057c8124` @ `0x57C8124` (5955x called, 88 bytes)
+- `FUN_086a924c` @ `0x86A924C` (5955x called, 104 bytes)
+- `FUN_057c8180` @ `0x57C8180` (5951x called, 32 bytes)
+- `FUN_057c81ec` @ `0x57C81EC` (5951x called, 8 bytes)
+- `FUN_057c8278` @ `0x57C8278` (5946x called, 8 bytes)
+- `FUN_057c8270` @ `0x57C8270` (5945x called, 8 bytes)
+- `FUN_057c81b0` @ `0x57C81B0` (5943x called, 8 bytes)
+- `FUN_057c811c` @ `0x57C811C` (5941x called, 8 bytes)
+- `FUN_086a92b4` @ `0x86A92B4` (5940x called, 296 bytes)
+- `FUN_08be50c8` @ `0x8BE50C8` (5918x called, 1 bytes)
+- `FUN_057c8108` @ `0x57C8108` (5912x called, 4 bytes)
+- `FUN_057c8104` @ `0x57C8104` (5910x called, 4 bytes)
+- `FUN_057c81b8` @ `0x57C81B8` (5898x called, 8 bytes)
+- `FUN_057c80b0` @ `0x57C80B0` (5866x called, 8 bytes)
+- `FUN_057c80b8` @ `0x57C80B8` (5866x called, 4 bytes)
+- `FUN_0842c8a8` @ `0x842C8A8` (5860x called, 344 bytes)
+- `FUN_086a9144` @ `0x86A9144` (5838x called, 140 bytes)
+- `FUN_086a8fe8` @ `0x86A8FE8` (5830x called, 344 bytes)
+- `FUN_057c810c` @ `0x57C810C` (5803x called, 4 bytes)
+- `FUN_057c8100` @ `0x57C8100` (5798x called, 4 bytes)
+- `FUN_057c8110` @ `0x57C8110` (5798x called, 4 bytes)
+
+## AC-Related Functions
+
+- `FUN_0577ace4` @ `0x577ACE4` (8 bytes)
+- `FUN_0577acec` @ `0x577ACEC` (8 bytes)
+- `FUN_0594acec` @ `0x594ACEC` (600 bytes)
+- `FUN_05a8ace4` @ `0x5A8ACE4` (140 bytes)
+- `thunk_FUN_05a8ace4` @ `0x5A901D0` (4 bytes)
+- `FUN_05aace00` @ `0x5AACE00` (376 bytes)
+- `FUN_05ace034` @ `0x5ACE034` (524 bytes)
+- `FUN_05ace240` @ `0x5ACE240` (600 bytes)
+- `FUN_05ace4c4` @ `0x5ACE4C4` (544 bytes)
+- `FUN_05ace6e4` @ `0x5ACE6E4` (512 bytes)
+- `FUN_05ace940` @ `0x5ACE940` (132 bytes)
+- `FUN_05ace9d4` @ `0x5ACE9D4` (300 bytes)
+- `FUN_05aceb00` @ `0x5ACEB00` (160 bytes)
+- `FUN_05aceee8` @ `0x5ACEEE8` (32 bytes)
+- `FUN_05c2ace4` @ `0x5C2ACE4` (152 bytes)
+- `FUN_05c4ace0` @ `0x5C4ACE0` (40 bytes)
+- `FUN_05c9ace8` @ `0x5C9ACE8` (80 bytes)
+- `FUN_05cacea4` @ `0x5CACEA4` (368 bytes)
+- `FUN_05daced0` @ `0x5DACED0` (924 bytes)
+- `FUN_05dcace4` @ `0x5DCACE4` (36 bytes)
+- `FUN_05e4ace4` @ `0x5E4ACE4` (24 bytes)
+- `FUN_05f2ace0` @ `0x5F2ACE0` (544 bytes)
+- `FUN_05face38` @ `0x5FACE38` (268 bytes)
+- `FUN_061cace0` @ `0x61CACE0` (144 bytes)
+- `FUN_061dace4` @ `0x61DACE4` (148 bytes)
+- `FUN_0628ace0` @ `0x628ACE0` (88 bytes)
+- `FUN_063ace48` @ `0x63ACE48` (348 bytes)
+- `FUN_064ace30` @ `0x64ACE30` (92 bytes)
+- `FUN_0675ace4` @ `0x675ACE4` (108 bytes)
+- `FUN_069ace1c` @ `0x69ACE1C` (8 bytes)
+- `FUN_069ace24` @ `0x69ACE24` (312 bytes)
+- `FUN_06a4ace4` @ `0x6A4ACE4` (40 bytes)
+- `FUN_06aace48` @ `0x6AACE48` (8 bytes)
+- `FUN_06aace50` @ `0x6AACE50` (8 bytes)
+- `FUN_06aace58` @ `0x6AACE58` (8 bytes)
+- `FUN_06aace60` @ `0x6AACE60` (624 bytes)
+- `FUN_06ace5f0` @ `0x6ACE5F0` (48 bytes)
+- `FUN_06acea6c` @ `0x6ACEA6C` (300 bytes)
+- `FUN_06aceb98` @ `0x6ACEB98` (940 bytes)
+- `FUN_06b0ace4` @ `0x6B0ACE4` (8 bytes)
+- `FUN_06b0acec` @ `0x6B0ACEC` (40 bytes)
+- `FUN_06b6ace4` @ `0x6B6ACE4` (12 bytes)
+- `FUN_06b7ace4` @ `0x6B7ACE4` (24 bytes)
+- `FUN_06b9ace8` @ `0x6B9ACE8` (8 bytes)
+- `FUN_06baceec` @ `0x6BACEEC` (76 bytes)
+- `FUN_06beace8` @ `0x6BEACE8` (160 bytes)
+- `FUN_06bface0` @ `0x6BFACE0` (60 bytes)
+- `FUN_06c9acec` @ `0x6C9ACEC` (88 bytes)
+- `FUN_06cace88` @ `0x6CACE88` (4 bytes)
+- `FUN_06cace90` @ `0x6CACE90` (8 bytes)
+- `FUN_06cace98` @ `0x6CACE98` (8 bytes)
+- `FUN_06cacea0` @ `0x6CACEA0` (8 bytes)
+- `FUN_06cacea8` @ `0x6CACEA8` (8 bytes)
+- `FUN_06caceb0` @ `0x6CACEB0` (4 bytes)
+- `FUN_06caceb4` @ `0x6CACEB4` (8 bytes)
+- `FUN_06cacebc` @ `0x6CACEBC` (8 bytes)
+- `FUN_06cacec4` @ `0x6CACEC4` (8 bytes)
+- `FUN_06cacecc` @ `0x6CACECC` (4 bytes)
+- `FUN_06caced0` @ `0x6CACED0` (8 bytes)
+- `FUN_06caced8` @ `0x6CACED8` (8 bytes)
+- `FUN_06cacee0` @ `0x6CACEE0` (8 bytes)
+- `FUN_06cacee8` @ `0x6CACEE8` (8 bytes)
+- `FUN_06cacef0` @ `0x6CACEF0` (8 bytes)
+- `FUN_06cacef8` @ `0x6CACEF8` (8 bytes)
+- `FUN_06cdace0` @ `0x6CDACE0` (60 bytes)
+- `FUN_06d4ace0` @ `0x6D4ACE0` (160 bytes)
+- `FUN_06d6ace8` @ `0x6D6ACE8` (8 bytes)
+- `FUN_06d7ace8` @ `0x6D7ACE8` (8 bytes)
+- `FUN_06dace20` @ `0x6DACE20` (92 bytes)
+- `FUN_06dace7c` @ `0x6DACE7C` (76 bytes)
+- `FUN_06dacec8` @ `0x6DACEC8` (76 bytes)
+- `FUN_06e2ace4` @ `0x6E2ACE4` (8 bytes)
+- `FUN_06e2acec` @ `0x6E2ACEC` (8 bytes)
+- `FUN_06e4ace8` @ `0x6E4ACE8` (12 bytes)
+- `FUN_06eaace0` @ `0x6EAACE0` (32 bytes)
+- `FUN_06eace90` @ `0x6EACE90` (12 bytes)
+- `FUN_06eace9c` @ `0x6EACE9C` (160 bytes)
+- `FUN_0701ace0` @ `0x701ACE0` (84 bytes)
+- `FUN_0705acec` @ `0x705ACEC` (76 bytes)
+- `FUN_070aace0` @ `0x70AACE0` (20 bytes)
+- `FUN_070ace70` @ `0x70ACE70` (76 bytes)
+- `FUN_070eacec` @ `0x70EACEC` (84 bytes)
+- `FUN_0711ace0` @ `0x711ACE0` (8 bytes)
+- `FUN_0711ace8` @ `0x711ACE8` (8 bytes)
+- `FUN_0713acec` @ `0x713ACEC` (76 bytes)
+- `FUN_0719ace0` @ `0x719ACE0` (60 bytes)
+- `FUN_071ace00` @ `0x71ACE00` (112 bytes)
+- `FUN_071ace70` @ `0x71ACE70` (8 bytes)
+- `FUN_071ace78` @ `0x71ACE78` (92 bytes)
+- `FUN_071aced4` @ `0x71ACED4` (76 bytes)
+- `FUN_0729ace4` @ `0x729ACE4` (8 bytes)
+- `FUN_0729acec` @ `0x729ACEC` (172 bytes)
+- `FUN_072acedc` @ `0x72ACEDC` (308 bytes)
+- `FUN_0739ace4` @ `0x739ACE4` (220 bytes)
+- `FUN_073aace4` @ `0x73AACE4` (212 bytes)
+- `FUN_073ace10` @ `0x73ACE10` (620 bytes)
+- `FUN_0778ace0` @ `0x778ACE0` (8 bytes)
+- `FUN_0778ace8` @ `0x778ACE8` (148 bytes)
+- `FUN_077dace4` @ `0x77DACE4` (248 bytes)
+- `FUN_078ace00` @ `0x78ACE00` (4 bytes)
+
+## AC Strings with Code References
+
+- `Java_com_epicgames_ue4_GameActivity_nativeVirtualKeyboardSendKey` @ 0x2EC8A88 -> refs: 
+- `_ZSt9terminatev` @ 0x2EC8B58 -> refs: 
+- `__cxa_atexit` @ 0x2EC8B68 -> refs: 
+- `__cxa_guard_abort` @ 0x2EC8B87 -> refs: 
+- `__cxa_guard_acquire` @ 0x2EC8B99 -> refs: 
+- `__cxa_guard_release` @ 0x2EC8BAD -> refs: 
+- `dlopen` @ 0x2EC8C0D -> refs: 
+- `dlsym` @ 0x2EC8C14 -> refs: 
+- `AInputQueue_preDispatchEvent` @ 0x2EC8FC9 -> refs: 
+- `abort` @ 0x2EC91CA -> refs: 
+- `AnoSDKGetReportData2` @ 0x2EC925E -> refs: 
+- `_ZNSt8__detail15_List_node_base7_M_hookEPS0_` @ 0x2EC92A8 -> refs: 
+- `_ZNSt8__detail15_List_node_base9_M_unhookEv` @ 0x2EC92D5 -> refs: 
+- `AnoSDKIoctlOld` @ 0x2EC93F8 -> refs: 
+- `exit` @ 0x2EC950E -> refs: 
+- `isspace` @ 0x2EC9564 -> refs: 
+- `_ZSt11_Hash_bytesPKvmm` @ 0x2EC9756 -> refs: 
+- `send` @ 0x2EC98A1 -> refs: 
+- `_ZN3UQM8UQMCrash16SetCrashObserverEPNS_16UQMCrashObserverE` @ 0x2EC98DE -> refs: 
+- `_ZN3UQM8UQMCrash18ReportExceptionPRVEiRKNS_9UQMStringES3_S3_RKNS_9UQMVectorINS_9` @ 0x2EC9919 -> refs: 
+- `_ZN3UQM8UQMCrash19SetCrashLogObserverEPNS_19UQMCrashLogObserverE` @ 0x2EC9980 -> refs: 
+- `AnoSDKDelReportData` @ 0x2EC9A73 -> refs: 
+- `AnoSDKGetReportData` @ 0x2EC9A87 -> refs: 
+- `AnoSDKInit` @ 0x2EC9A9B -> refs: 
+- `AnoSDKIoctl` @ 0x2EC9AA6 -> refs: 
+- `AnoSDKOnPause` @ 0x2EC9AB2 -> refs: 
+- `AnoSDKOnRecvData` @ 0x2EC9AC0 -> refs: 
+- `AnoSDKOnRecvSignature` @ 0x2EC9AD1 -> refs: 
+- `AnoSDKOnResume` @ 0x2EC9AE7 -> refs: 
+- `AnoSDKSetUserInfo` @ 0x2EC9AF6 -> refs: 
+- `Java_com_epicgames_ue4_BatteryReceiver_dispatchEvent` @ 0x2ECA8B1 -> refs: 
+- `Java_com_epicgames_ue4_GameActivity_nativeCallbackOnUiThread` @ 0x2ECA8E6 -> refs: 
+- `_Unwind_Backtrace` @ 0x2ECAA02 -> refs: 
+- `_exit` @ 0x2ECAA6C -> refs: 
+- `mmap` @ 0x2ECAADA -> refs: 
+- `mprotect` @ 0x2ECAADF -> refs: 
+- `pthread_exit` @ 0x2ECAB18 -> refs: 
+- `sscanf` @ 0x2ECABFA -> refs: 
+- `Java_com_epicgames_ue4_GameActivity_nativeSetSurfaceViewInfo` @ 0x2ECAE02 -> refs: 
+- `sendto` @ 0x2ECAEE8 -> refs: 
+- `eglCreatePbufferSurface` @ 0x2ECAF70 -> refs: 
+- `eglCreateWindowSurface` @ 0x2ECAF88 -> refs: 
+- `eglDestroySurface` @ 0x2ECAFB1 -> refs: 
+- `eglQuerySurface` @ 0x2ECB043 -> refs: 
+- `eglSurfaceAttrib` @ 0x2ECB053 -> refs: 
+- `eglTerminate` @ 0x2ECB073 -> refs: 
+- `glCheckFramebufferStatus` @ 0x2ECB131 -> refs: 
+- `glCullFace` @ 0x2ECB1C9 -> refs: 
+- `Java_com_blue_studio_globalization_ue4_UploaderHelper_onUplaodProgress` @ 0x2ECB6D2 -> refs: 
+- `Java_com_blue_studio_globalization_ue4_UploaderHelper_onUploadComplete` @ 0x2ECB719 -> refs: 
+- `__stack_chk_guard` @ 0x2ECBF3A -> refs: 
+- `sem_post` @ 0x2ECBFD8 -> refs: 
+- `kill` @ 0x2ECC0BB -> refs: 
+- `_ZN3aaa8CrashKit19CrashKitMobileAgent19ConfigCrashReporterEi` @ 0x2ECC2D8 -> refs: 
+- `_ZN3aaa8CrashKit19CrashKitMobileAgent13ReportLogInfoEPKcS3_` @ 0x2ECC37B -> refs: 
+- `Java_com_helpshift_HelpshiftBridge_helpshiftSessionBegan` @ 0x2ECC5E5 -> refs: 
+- `Java_com_helpshift_HelpshiftBridge_helpshiftSessionEnded` @ 0x2ECC61E -> refs: 
+- `Java_com_blue_studio_download_GCBGDownloadService_PostGameStatusToTMFP` @ 0x2ECC692 -> refs: 
+- `Java_com_blue_studio_mtr_NetTrace_onTraceCallback` @ 0x2ECC719 -> refs: 
+- `Java_com_epicgames_ue4_GameActivity_nativeOnLocationCallback` @ 0x2ECC7FF -> refs: 
+- `Java_com_epicgames_ue4_GameActivity_onFileSelectedCallback` @ 0x2ECC879 -> refs: 
+- `Java_com_epicgames_ue4_GameActivity_onTouchTransmissionCallback` @ 0x2ECC8B4 -> refs: 
+- `libanogs.so` @ 0x2ECC973 -> refs: 
+- `libandroid.so` @ 0x2ECC9C7 -> refs: 
+- `libAntsVoice.so` @ 0x2ECCA12 -> refs: 
+- `__cxa_atexit` @ 0x2ECCA3F -> refs: 
+- `stub_decrypt_elf` @ 0x2ECCAAE -> refs: 
+- `stub_mmap` @ 0x2ECCADF -> refs: 
+- `stub_dlsym` @ 0x2ECCAF5 -> refs: 
+- `stub_send` @ 0x2ECCB46 -> refs: 
+- `ELF_HOOK_BRIDGE_MetadataCache_Register` @ 0x2ECCBBB -> refs: 
+- `ELF_HOOK_MetadataCache_Register` @ 0x2ECCBE2 -> refs: 
+- `ELF_HOOK_BRIDGE_InitializeMethodMetadata` @ 0x2ECCC02 -> refs: 
+- `ELF_HOOK_InitializeMethodMetadata` @ 0x2ECCC2B -> refs: 
+- `ELF_HOOK_BRIDGE_InitializeAllMethodMetadata` @ 0x2ECCC4D -> refs: 
+- `ELF_HOOK_InitializeAllMethodMetadata` @ 0x2ECCC79 -> refs: 
+- `ELF_HOOK_BRIDGE_LoadMetadataFile` @ 0x2ECCC9E -> refs: 
+- `ELF_HOOK_LoadMetadataFile` @ 0x2ECCCBF -> refs: 
+- `ELF_HOOK_BRIDGE_InitializeRuntimeMetadata` @ 0x2ECCCD9 -> refs: 
+- `ELF_HOOK_InitializeRuntimeMetadata` @ 0x2ECCD03 -> refs: 
+- `ELF_HOOK_BRIDGE_il2cpp_init` @ 0x2ECCD32 -> refs: 
+- `ELF_HOOK_il2cpp_init` @ 0x2ECCD4E -> refs: 
+- `ELF_HOOK_BRIDGE_il2cpp_runtime_invoke` @ 0x2ECCD63 -> refs: 
+- `ELF_HOOK_il2cpp_runtime_invoke` @ 0x2ECCD89 -> refs: 
+- `ELF_HOOK_BRIDGE_JNI_OnLoad` @ 0x2ECCDA8 -> refs: 
+- `ELF_HOOK_JNI_OnLoad` @ 0x2ECCDC3 -> refs: 
+- `ELF_HOOK_BRIDGE_Java_com_epicgames_ue4_VolumeReceiver_volumeChanged` @ 0x2ECCDD7 -> refs: 
+- `ELF_HOOK_Java_com_epicgames_ue4_VolumeReceiver_volumeChanged` @ 0x2ECCE1B -> refs: 
+- `ELF_HOOK_BRIDGE_UE4_FPakInfo_Serialize` @ 0x2ECCE58 -> refs: 
+- `ELF_HOOK_UE4_FPakInfo_Serialize` @ 0x2ECCE7F -> refs: 
+- `ELF_HOOK_BRIDGE_unity_fileaccessor_read` @ 0x2ECCE9F -> refs: 
+- `ELF_HOOK_unity_fileaccessor_read` @ 0x2ECCEC7 -> refs: 
+- `ELF_HOOK_BRIDGE_unity_fileaccessor_read_before2020` @ 0x2ECCEE8 -> refs: 
+- `ELF_HOOK_unity_fileaccessor_read_before2020` @ 0x2ECCF1B -> refs: 
+- `ELF_HOOK_BRIDGE_cocos2d_JNI_OnLoad` @ 0x2ECCF47 -> refs: 
+- `ELF_HOOK_cocos2d_JNI_OnLoad` @ 0x2ECCF6A -> refs: 
+- `mprotect` @ 0x2ECCF92 -> refs: 
+- `libanort.so` @ 0x2ECCFC2 -> refs: 
+- `WeaponFoeduceAdj` @ 0x357F580 -> refs: 0x6A78130
+- `STExtraMyStickTrDropEffegleReplatHeadAud` @ 0x3586EE0 -> refs: 0x614DC44
+- `u sure e::OnMeshwnAnimPoanceBase` @ 0x358B600 -> refs: 0x67DDE7C, 0x67DD3E8, 0x5BA3100, 0x678F840, 0x5B786B0
+- `-DebugGa "whitesSTATGROUParser.Ol` @ 0x358C5F0 -> refs: 0x8461B20
+- `FacebookgeSettinateTablefilenameImagePatRPCClienor/BP_ChFindOcclAnimalMoehicleNe` @ 0x35908B0 -> refs: 0x755D038
+- `NewObject with empty name can't be used to create default subobjects (inside of ` @ 0x3599346 -> refs: 0x65FAE9C, 0xC3F90E4, 0x65F99FC, 0x65F9A58, 0x65F95E0
+- `ShouldDestoryParachuteAnimAsset: World is null` @ 0x3599C6A -> refs: 0x57BE94C
+- `UAnimInstanceMotorDriverBase:: MotorBikeDriverLeaningAnim or MotorBikeDriverLean` @ 0x3599CD6 -> refs: 0x585DE40
+- `ULobbyPawnAnimInstance::UpdateWeaponIdleAnimation LobbyCharacter is not Valid ` @ 0x3599E4E -> refs: 0x5802208
+- `UWeaponAnimInstanceBase::Montage_Play, Skip bolt on %s` @ 0x359A334 -> refs: 0x58716F4
+- `UWeaponAnimInstanceBase::PlayBackToIdleAnim !CanPlaySwitchWeaponAnim` @ 0x359A3A2 -> refs: 0x5872634
+- `Particle Notify: MeshComp '%s' is invisible when try to spawn particle. Anim: '%` @ 0x359A42C -> refs: 0x58739E4, 0x9E52E50
+- `UAnimNotifyState_SubActorAnim::NotifyTick DestroyAnimationIns Owner:%s` @ 0x359A5D6 -> refs: 0x587BD5C
+- `UAnimNotifyState_TimedAudio::NotifyTick Start %d %f` @ 0x359A664 -> refs: 0x58806C0
+- `UCharacterEffect_AdditionEffect::ApplyEffect Character mesh is null` @ 0x359A904 -> refs: 0x58AD510
+- `UCharacterEffect_Fairy::OnAsyncLoadEffectAssetsCompleted Failed to load skmesh: ` @ 0x359A9CA -> refs: 0x58DD608
+- `%s::LoadAvatarMeshData SkeletalMesh UseDefaultMesh: SlotID=[%d], Item=[%d], Owne` @ 0x359AC68 -> refs: 0x5908B44
+- `%s::PostProcessAfterLoadMesh OnAvatarAllMeshLoaded, OwnerRole:%d, Name:%s` @ 0x359AD2C -> refs: 0x59105C0
+- `---UVehicleAvatarComponent::OverrideVehiclePhysX, WheelClass null!!` @ 0x359AF30 -> refs: 0x5928504
+- `---UVehicleAdvanceAvatarComponent::OverrideVehiclePhysX, WheelHubClass null!!` @ 0x359B012 -> refs: 0x5953720
+- `WingmanMesh` @ 0x359B0AE -> refs: 0x614D64C
+- `weapon.EnableLaserVehicleCheck` @ 0x359B1C4 -> refs: 0x59AA0BC
+- `UBackpackUAVHandle::TryEnterVehicle ASTExtraUAVVehicleBase!!` @ 0x359B430 -> refs: 0x59B8DD8
+- `UBackpackUtilsClassical::SetCustomAccessories WeaponItemID = %d, Index = %d, Ite` @ 0x359B656 -> refs: 0x59CAC90
+- `UEmoteAction_ChangeMesh GetNeedLoadSoftPath TargetMesh: %s` @ 0x359B90E -> refs: 0x5A1F4CC
+- `UEmoteAction_MeshAnim GetNeedLoadSoftPath Path Invalid...` @ 0x359B9D4 -> refs: 0x5A2A1B8
+- `UEmoteAction_SpawnStaticMesh GetNeedLoadSoftPath Path Invalid...` @ 0x359BA48 -> refs: 0x5A2C674
+- `UEmoteAction_WeaponSwitchShow::WeaponPlayBackToIdle` @ 0x359BACA -> refs: 0x5A30CD8
+- `UEmoteAction_WeaponSwitchShow::WeaponPlayIdleToBack !AnimIns.IsValid()` @ 0x359BB32 -> refs: 0x5A30E84
+- `SwitchScopeMeshAnim !USkeletalMeshComponent::StaticClass !StaticMesh` @ 0x359BEAC -> refs: 0x5A79340
+- `SimpleDamageRepData` @ 0x359BFB4 -> refs: 0x6EBFDE0
+- `DSSpeedModifierForReplay` @ 0x359D0D6 -> refs: 0x5B921B0
+- `SwitchPoseStateServer request to PostNetReceive is Offline, PoseState=%d ClientS` @ 0x359D146 -> refs: 0x5B98F54
+- `PreCalcKillData for killer=%s instigator=%x causerpawn=%s` @ 0x359D28A -> refs: 0x5BAF294
+- `PreCalcKillData for killer=%s instigator=%x causerpawn=NULL` @ 0x359D2FE -> refs: 0x5BAF300
+- `DebugMoveInput ASTExtraBaseCharacter::AddMovementInput Role:%d, FrameCount:%lld,` @ 0x359D4B6 -> refs: 0x5BD03E4
+- `--Skill ASTExtraBaseCharacter::PreTriggerEvent OwnerRole=%d for owner=%x` @ 0x359D7E6 -> refs: 0x5BE83B8, 0x5BE8320
+- `AttrModifyDebug RegisterModifiedAttributes PlayerName:%s, Role:%d` @ 0x359D8A6 -> refs: 0x5BEA684
+- `ASTExtraBaseCharacter::DetachedFromVehicle SetViewTarget To Character` @ 0x359DA54 -> refs: 0x5BFDA8C
+- `[RealtimeVerify] Trigger verification [Player:%s] [PlayerKey:%u] [Interval:%.2f]` @ 0x359DAFC -> refs: 0x5BA3CB4
+- `Ready to broadcast shoot type change` @ 0x359DE36 -> refs: 0x5C52588
+- `StartFire is not allowed currently!.` @ 0x359DE80 -> refs: 0x6ACFF1C
+- `SwitchWeaponCheck Failed GetWeaponManager null!` @ 0x359DECA -> refs: 0x5C5AAC0
+- `============>>>>>>>>>ASTExtraBaseCharacter::LocalSwitchWeapon,Player %s, Role:%d` @ 0x359DF2A -> refs: 0x5C5397C
+- `%s ASTExtraBaseCharacter::CheckStateDifference(%d):: RealLeaveState: %s (%s), Re` @ 0x359E010 -> refs: 0x5C603A0
+- `ASTExtraSimpleCharacter::Tick Character:%s NewControlRotYaw:%.4f, RotationCache.` @ 0x359E1C0 -> refs: 0x5C6EB80
+- `ASTExtraSimpleCharacter TakeDamage PlayerName:%s DamageReduceScaleExtra:%f` @ 0x359E2C0 -> refs: 0x5C71CF4
+- `ASTExtraSimpleCharacter::HandleVehicleHit_Implementation, [%s]:[%s] Hit by [%s],` @ 0x359E3DE -> refs: 0x5C7ACF4
+- `ASTExtraSimpleCharacter::CheckLaunchAirState, CharacterMovementComponent nullptr` @ 0x359E4B6 -> refs: 0x5C7B3AC
+- `SWPS_VehicleWeapon` @ 0x359E560 -> refs: 0xC665B98
+- `ShootVerifyEx::Failed ReplayStartFireInfo = [%s] ` @ 0x359E586 -> refs: 0x5C9A3EC
+- `DefaultRoot` @ 0x359E67E -> refs: 0x5CBFBA4, 0xC252460
+- `ServerEnterStateTime` @ 0x359E72E -> refs: 0x5CF9284
+- `AHardPointActor::OnPlayerRealExit[%s] InHardPointPlayers.RemoveAt[%d]` @ 0x359E816 -> refs: 0x5D02C20
+- `UAirAttackLocatorComponent::CheckPointPassWall failed! ray intersect with world ` @ 0x359EDB0 -> refs: 0x5D6B9F0
+- `UCharacterMaterialComponent::GetAffectWeaponMeshComponents, Owner IsNotValid` @ 0x359EFF4 -> refs: 0x5DE19C8
+- `UPlayEmoteComponent EmoteLog (%d) Error ReqStartPlayEmoteWithRand ServerCheckEmo` @ 0x359F3F2 -> refs: 0x5DF0CDC
+- `UPlayEmoteComponent EmoteLog (%d) IsCanPlayEmote EmoteID: %d IsFalling==true ` @ 0x359F4E6 -> refs: 0x5DEC6B0
+- `UPlayEmoteComponent EmoteLog (%d) IsCanPlayEmote EmoteID: %d, is FinishedState, ` @ 0x359F582 -> refs: 0x5DEC784
+- `UPlayEmoteComponent EmoteLog (%d) IsCanPlayEmote EmoteID: %d IsCanPlayEmoteLua f` @ 0x359F63C -> refs: 0x5DEC9B0
+- `UPlayEmoteComponent::CamreaSetting PlayerKey:%u, StartFreeCamera` @ 0x359F6E8 -> refs: 0x5DED5FC
+- `UPlayEmoteComponent::OnPlayEmoteStop ShowWeaponWhenPlayIngame = false, but Weapo` @ 0x359F76A -> refs: 0x5DF05C0
+- `[Diving|Region] UpdateSpecificRegion CharaterMovement=nullptr Player=%s Role=%d` @ 0x359F992 -> refs: 0x5E38CF0
+- `UPlayerMantleComponent %s::StartCooperationVault, Player: %s, Calling ServerRPC_` @ 0x359FFC0 -> refs: 0x5ECC338
+- `%s::CheckClimberPositionValid, Line: %d, Invalid PlayerCharacter` @ 0x35A0174 -> refs: 0x5ECE2C8
+- `p.RespawnQuitPlayerState` @ 0x35A0298 -> refs: 0x5F31A70
+- `USpectatorComponent::ReportSpectateException CVarReportSpectateException disable` @ 0x35A06C0 -> refs: 0x5F3B658
+- `HandleServerPlaceBuildingSuccess(AI) SUCCESS` @ 0x35A0848 -> refs: 0x5F41BE4
+- `VerifyStartLocation` @ 0x35A0C16 -> refs: 0x5FD3220
+- `UItemDropMgrComponent::GetDropItemCfgList DropConfigID Replace %d to %d` @ 0x35A0C54 -> refs: 0x5FDA9EC
+- `UMonsterRagDollComponent::EnableRagDoll_Implementation, Mesh invalid!` @ 0x35A0CE4 -> refs: 0x5FE0430
+- `ASTExtraGameStateBase::InitSkills Init CurGameMode:%d, GameModeState: %s` @ 0x35A0E7C -> refs: 0x6001678
+- `ExtraTimeBank: %5.2f, %5.2f (ds)` @ 0x35A0F36 -> refs: 0x600EA7C
+- `FPlaybackHelper::GetInDemoTime InDemoTime[%f] InServerWorldTime[%f] InClientWorl` @ 0x35A53F6 -> refs: 0x649C508
+- `FPlaybackHelper::EncryptNumberWithCharTable Table length:%d, Result:%s` @ 0x35A54AA -> refs: 0x649CB3C
+- `[SecurityLog OnCharacterShootTarget NeedSendSecurity == false, FullName:%s, Shoo` @ 0x35A5940 -> refs: 0x650B6EC
+- `UVehicleWeaponACComp::_VerifyVehicleWeaponDirection: Muzzle direction bad t2 %s ` @ 0x35A5A3A -> refs: 0x6510D50
+- `Hasthrown then -------> skill ignore skill event=%s` @ 0x35A5C76 -> refs: 0x651A130
+- `  Detected as CLICK gesture` @ 0x35A637E -> refs: 0x65E2EE8
+- `USTExtraBlueprintFunctionLibrary::CheckPhysMaterialValid PhysMaterial is %s` @ 0x35A664E -> refs: 0x66DB380
+- `Teleport vehicle %s from %s to %s, Hit.Actor: %s` @ 0x35A6AE4 -> refs: 0x6753814
+- `%s::%s::ServerTransform, Line: %d, Role: %s, not controlled` @ 0x35A6E2A -> refs: 0x67DA024
+- `USurfBoardComp UpdateMovement: curSpeed(%f) > MaxSpeed(%f), kickoff` @ 0x35A7028 -> refs: 0x67F0ED8
+- `%s::FSTExtraVehicleSfxLoop::UpdateLoop, Stop AkEvent: %s` @ 0x35A723C -> refs: 0x6813E9C
+- `ReplicatedServerLastTransformUpdateTimeStamp` @ 0x35A73B2 -> refs: 0x9EF2B2C, 0x7EBF19C, 0x683C304, 0x680CD74, 0x800A598
+- `%s::IsActorInEnterVehicleRange, Line: %d, Role: %s, InActor is invalid` @ 0x35A7610 -> refs: 0x683B914
+- `%s::UpdateVehicleHealthState, HealthState: %s` @ 0x35A76EA -> refs: 0x685C614, 0x685C3FC
+- `%s::PostNetReceivePhysicState: bPhysicsHit Loc: %s, Rot: %s, LinVel: %s, AngVel:` @ 0x35A7768 -> refs: 0x683D3A4
+- `%s::CanFreezeVehiclePhysics, Role: %s, vehicle alive` @ 0x35A78B4 -> refs: 0x68811A0
+- `%s::%s::TickApplyServerMovement, Line: %d, No Valid Server Movement` @ 0x35A7CB0 -> refs: 0x68CEC04
+- `ASTExtraUAVVehicleBase : OnRep_UAVVehicleState  UAVVehicleState = %d` @ 0x35A7D38 -> refs: 0x68D3D38, 0x68D3C4C
+- `%s::%s, Role: %s, Line: %d, Vehicle hit widnow, handle broken through driver: %s` @ 0x35A7E46 -> refs: 0x6900E30
+- `%s::%s::CalVehicleDamage, Role: %s, Line: %d, OtherActor: %s, Vehicle is Protect` @ 0x35A7EE8 -> refs: 0x6902BE8
+- `%s::%s, Role: %s, Line: %d, VehiclePos: %s|%s, After SetActorLocation` @ 0x35A80BA -> refs: 0x6912980
+- `%s, Line: %d, VehicleMusicID %d is Playing` @ 0x35A8146 -> refs: 0x69191D0, 0x691A7E8
+- `%s::%s::BeginPlay, Line: %d, bCheckLeaveLocationSpace: %s` @ 0x35A81DC -> refs: 0x691DE34
+- `VehicleAttachments` @ 0x35A8250 -> refs: 0x691ED20
+- `%s::UVehicleSeatComponent::DetachCharacterFromSeat, Character: %s, SeatType: %s,` @ 0x35A8276 -> refs: 0x6922050
+- `Vehicle.UpdateCameraConfigIgnoreLast` @ 0x35A83B6 -> refs: 0x69937B4
+- `%s::%s::UpdateCameraConfig, Line: %d` @ 0x35A8400 -> refs: 0x694B1DC
+- `%s::%s::SendClientMoveToServer_DoWork, Line: %d, Failed, vehicle becomed trailer` @ 0x35A84E0 -> refs: 0x69608DC
+- `DebugVehicleDrag %s::%s::ServerMoveExecute_Vehicle4W, Line: %d, DistanceCheck Fa` @ 0x35A8582 -> refs: 0x695863C
