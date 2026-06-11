@@ -820,4 +820,113 @@ PATCH_LIB("libUE4.so", "0x650EB18", "1F 20 03 D5");  // FVerifySwitch::Check_Fai
 PATCH_LIB("libUE4.so", "0x650ECD4", "1F 20 03 D5");  // FVerifySwitch::Check_FailedCnt: Ret=%d (Punish=%d, %u >
 
 
-#endif // FINAL_BYPASS_H
+
+// ======================================================================
+// libUE4.so — ADDITIONAL VERIFIED PATCHES (Deep Scan Round 2)
+// ======================================================================
+
+// --- VehicleWeaponAC (Vehicle weapon anti-cheat verification) ---
+PATCH_LIB("libUE4.so", "0X6510D50", "1F 20 03 D5");  // NOP: UVehicleWeaponACComp::_VerifyVehicleWeaponDirection: Mu
+PATCH_LIB("libUE4.so", "0X6512D7C", "1F 20 03 D5");  // NOP: UVehicleWeaponACComp::_Verify_Projectile_ShootDir: Fail
+PATCH_LIB("libUE4.so", "0X65112D4", "1F 20 03 D5");  // NOP: UVehicleWeaponACComp::_VerifyVehicleDistance: Invalid w
+PATCH_LIB("libUE4.so", "0X65100C4", "1F 20 03 D5");  // NOP: UVehicleWeaponACComp::_Verify_ProjImpac_ClientFlyInfo: 
+PATCH_LIB("libUE4.so", "0X6511F0C", "1F 20 03 D5");  // NOP: UVehicleWeaponACComp::_VerifyVehicleDistance: Vehicle d
+PATCH_LIB("libUE4.so", "0X65133A8", "1F 20 03 D5");  // NOP: UVehicleWeaponACComp::VerifyServerShootProjectileBullet
+PATCH_LIB("libUE4.so", "0X65138F8", "1F 20 03 D5");  // NOP: UVehicleWeaponACComp::VerifyDecryptedShootTimeInfo: Veh
+PATCH_LIB("libUE4.so", "0X650EF80", "1F 20 03 D5");  // NOP: UVehicleWeaponACComp::_Verify_Projectile_ShootPos: No v
+PATCH_LIB("libUE4.so", "0X6511180", "1F 20 03 D5");  // NOP: UVehicleWeaponACComp::_VerifyVehicleMuzzleBoxRange: Muz
+PATCH_LIB("libUE4.so", "0X6512FE4", "1F 20 03 D5");  // NOP: UVehicleWeaponACComp::VerifyDecryptedShootTimeInfo: Sco
+PATCH_LIB("libUE4.so", "0X650FFBC", "1F 20 03 D5");  // NOP: UVehicleWeaponACComp::_Verify_ProjImpac_ClientFlyInfo: 
+PATCH_LIB("libUE4.so", "0X6510148", "1F 20 03 D5");  // NOP: UVehicleWeaponACComp::_Verify_ProjImpac_ClientFlyInfo: 
+PATCH_LIB("libUE4.so", "0X651077C", "1F 20 03 D5");  // NOP: UVehicleWeaponACComp::_VerifyVehicleWeaponDirection: So
+PATCH_LIB("libUE4.so", "0X6510DE4", "1F 20 03 D5");  // NOP: UVehicleWeaponACComp::_VerifyVehicleWeaponDirection: Fa
+PATCH_LIB("libUE4.so", "0X650FBA8", "1F 20 03 D5");  // NOP: UVehicleWeaponACComp::_Verify_Projectile_ShootPos: Fail
+PATCH_LIB("libUE4.so", "0X6513068", "1F 20 03 D5");  // NOP: UVehicleWeaponACComp::VerifyDecryptedShootTimeInfo: Dat
+PATCH_LIB("libUE4.so", "0X6510C68", "1F 20 03 D5");  // NOP: UVehicleWeaponACComp::_VerifyVehicleWeaponDirection: Mu
+PATCH_LIB("libUE4.so", "0X6512554", "1F 20 03 D5");  // NOP: UVehicleWeaponACComp::_Verify_Projectile_ShootInterval:
+PATCH_LIB("libUE4.so", "0X6513780", "1F 20 03 D5");  // NOP: UVehicleWeaponACComp::VerifyDecryptedShootTimeInfo: Is 
+PATCH_LIB("libUE4.so", "0X6510318", "1F 20 03 D5");  // NOP: UVehicleWeaponACComp::_Verify_ProjImpac_ClientFlyInfo: 
+PATCH_LIB("libUE4.so", "0X6510510", "1F 20 03 D5");  // NOP: UVehicleWeaponACComp::_VerifyVehicleWeaponDirection: In
+PATCH_LIB("libUE4.so", "0X6512F9C", "1F 20 03 D5");  // NOP: UVehicleWeaponACComp::VerifyDecryptedShootTimeInfo: Cou
+PATCH_LIB("libUE4.so", "0X65101E8", "1F 20 03 D5");  // NOP: UVehicleWeaponACComp::_Verify_ProjImpac_ClientFlyInfo: 
+
+// --- ShootVerify Extended (additional shoot verification) ---
+PATCH_LIB("libUE4.so", "0X5ABEE94", "1F 20 03 D5");  // NOP: MuzzlePos= %s, GunTailPos= %s, ShootPos= %s, ShootHeadP
+PATCH_LIB("libUE4.so", "0X69C151C", "1F 20 03 D5");  // NOP: RPC_Server_ShootProjectileBullet_Implementation VerifyD
+PATCH_LIB("libUE4.so", "0X6F02494", "1F 20 03 D5");  // NOP: ShootTimeInfo_NetQuantize
+PATCH_LIB("libUE4.so", "0X6F28550", "1F 20 03 D5");  // NOP: TraceShootData
+
+// --- Reporting (spectator/cheat reporting) ---
+PATCH_LIB("libUE4.so", "0X5F3B658", "1F 20 03 D5");  // NOP: USpectatorComponent::ReportSpectateException CVarReport
+PATCH_LIB("libUE4.so", "0X74DCB70", "1F 20 03 D5");  // NOP: TMFPStartRichTap[fileName:%s]
+PATCH_LIB("libUE4.so", "0X74DC28C", "1F 20 03 D5");  // NOP: TMFPSwitchRichTapMode[mode:%s]
+PATCH_LIB("libUE4.so", "0X5F3CFDC", "1F 20 03 D5");  // NOP: USpectatorComponent::ReportSpectateExceptionInter Reaso
+PATCH_LIB("libUE4.so", "0X5F3CBEC", "1F 20 03 D5");  // NOP: USpectatorComponent::DelayReportSpectateException IsSpe
+PATCH_LIB("libUE4.so", "0X5F3CAF0", "1F 20 03 D5");  // NOP: USpectatorComponent::DelayReportSpectateException
+PATCH_LIB("libUE4.so", "0X6C93308", "1F 20 03 D5");  // NOP: ClientReplayDataReporter
+PATCH_LIB("libUE4.so", "0X6C933C8", "1F 20 03 D5");  // NOP: ClientReplayDataReporter
+PATCH_LIB("libUE4.so", "0X74DC82C", "1F 20 03 D5");  // NOP: TMFPStartRichTapWithData[InKey:%s]
+PATCH_LIB("libUE4.so", "0X5F3CEB8", "1F 20 03 D5");  // NOP: USpectatorComponent::DelayReportSpectateException CurPl
+PATCH_LIB("libUE4.so", "0X62FA224", "1F 20 03 D5");  // NOP: %s::%s::ReportExceptionData, Vehicle: %s Exception: %s
+PATCH_LIB("libUE4.so", "0X5F3CEF4", "1F 20 03 D5");  // NOP: USpectatorComponent::DelayReportSpectateException bTeam
+PATCH_LIB("libUE4.so", "0X685F078", "1F 20 03 D5");  // NOP: %s::%s::ReportExceptionData, Exception: %s
+
+// --- TableGuard / HiggsBoson Security Module ---
+PATCH_LIB("libUE4.so", "0X7B9A8A4", "1F 20 03 D5");  // NOP: TableGuard tamper detected
+PATCH_LIB("libUE4.so", "0X7BCBCCC", "1F 20 03 D5");  // NOP: F:\Release4.4.0\AS\Survive\Source\Security\HiggsBoson\P
+PATCH_LIB("libUE4.so", "0X7BCBC50", "1F 20 03 D5");  // NOP: F:\Release4.4.0\AS\Survive\Source\Security\HiggsBoson\P
+PATCH_LIB("libUE4.so", "0X7B9BA80", "1F 20 03 D5");  // NOP: F:\Release4.4.0\AS\Survive\Source\Security\HiggsBoson\P
+PATCH_LIB("libUE4.so", "0X7B99250", "1F 20 03 D5");  // NOP: F:\Release4.4.0\AS\Survive\Source\Security\HiggsBoson\P
+PATCH_LIB("libUE4.so", "0X7B99420", "1F 20 03 D5");  // NOP: F:\Release4.4.0\AS\Survive\Source\Security\HiggsBoson\P
+PATCH_LIB("libUE4.so", "0X7B9B0B0", "1F 20 03 D5");  // NOP: F:\Release4.4.0\AS\Survive\Source\Security\HiggsBoson\P
+PATCH_LIB("libUE4.so", "0X7B9B0FC", "1F 20 03 D5");  // NOP: F:\Release4.4.0\AS\Survive\Source\Security\HiggsBoson\P
+PATCH_LIB("libUE4.so", "0XAFAACE8", "1F 20 03 D5");  // NOP: GMCheatHiggs
+PATCH_LIB("libUE4.so", "0XAF43804", "1F 20 03 D5");  // NOP: TestGMCheatHiggs : %d, %d
+
+// --- MoveAntiCheat (movement cheat detection) ---
+PATCH_LIB("libUE4.so", "0X6E22D58", "1F 20 03 D5");  // NOP: MoveCheatAntiStrategy
+
+// --- AntiCheat General (cheat detection, GM cheat) ---
+PATCH_LIB("libUE4.so", "0XAF72070", "1F 20 03 D5");  // NOP: UGMCheatOther::GMTestSpectateException Channel
+PATCH_LIB("libUE4.so", "0XAF720E0", "1F 20 03 D5");  // NOP: UGMCheatOther::GMTestSpectateException Reset
+PATCH_LIB("libUE4.so", "0XAF72000", "1F 20 03 D5");  // NOP: UGMCheatOther::GMTestSpectateException Connection
+PATCH_LIB("libUE4.so", "0XAF43800", "1F 20 03 D5");  // NOP: F:\Release4.4.0\AS\Survive\Source\Development\GMCheat\G
+
+// --- SpectatorAC (spectator anti-cheat) ---
+PATCH_LIB("libUE4.so", "0X5F3B658", "1F 20 03 D5");  // NOP: USpectatorComponent::ReportSpectateException CVarReport
+PATCH_LIB("libUE4.so", "0X5F3CFDC", "1F 20 03 D5");  // NOP: USpectatorComponent::ReportSpectateExceptionInter Reaso
+PATCH_LIB("libUE4.so", "0XAF72070", "1F 20 03 D5");  // NOP: UGMCheatOther::GMTestSpectateException Channel
+PATCH_LIB("libUE4.so", "0XAF720E0", "1F 20 03 D5");  // NOP: UGMCheatOther::GMTestSpectateException Reset
+PATCH_LIB("libUE4.so", "0X5F3CBEC", "1F 20 03 D5");  // NOP: USpectatorComponent::DelayReportSpectateException IsSpe
+PATCH_LIB("libUE4.so", "0X5F3CAF0", "1F 20 03 D5");  // NOP: USpectatorComponent::DelayReportSpectateException
+PATCH_LIB("libUE4.so", "0X5F3CEB8", "1F 20 03 D5");  // NOP: USpectatorComponent::DelayReportSpectateException CurPl
+PATCH_LIB("libUE4.so", "0X5F3CEF4", "1F 20 03 D5");  // NOP: USpectatorComponent::DelayReportSpectateException bTeam
+PATCH_LIB("libUE4.so", "0XAF72000", "1F 20 03 D5");  // NOP: UGMCheatOther::GMTestSpectateException Connection
+
+// --- Verification (generic verification failures) ---
+
+// ======================================================================
+// libhdmpve.so — ADDITIONAL VERIFIED PATCHES (Deep Scan Round 2)
+// ======================================================================
+
+// --- Network Sniffer (cluster/lobby reporting) ---
+PATCH_LIB("libhdmpve.so", "0x3f521c", "C0 03 5F D6");  // RET: apollo_net_sniffer_PingCluster
+PATCH_LIB("libhdmpve.so", "0x3f4ea8", "C0 03 5F D6");  // RET: apollo_net_sniffer_SetZSD
+PATCH_LIB("libhdmpve.so", "0x3f4fcc", "C0 03 5F D6");  // RET: apollo_net_sniffer_SetupCluster
+PATCH_LIB("libhdmpve.so", "0x3f512c", "C0 03 5F D6");  // RET: apollo_net_sniffer_SetupLobbyCluster
+
+// --- Gromelink (network telemetry channel) ---
+PATCH_LIB("libhdmpve.so", "0x3d95b8", "C0 03 5F D6");  // RET: hdmpve_gromelink_send
+PATCH_LIB("libhdmpve.so", "0x3d95f0", "C0 03 5F D6");  // RET: hdmpve_gromelink_recv
+PATCH_LIB("libhdmpve.so", "0x3d955c", "C0 03 5F D6");  // RET: hdmpve_gromelink_connect
+PATCH_LIB("libhdmpve.so", "0x3d94d8", "C0 03 5F D6");  // RET: hdmpve_gromelink_createSocket
+PATCH_LIB("libhdmpve.so", "0x3d9590", "C0 03 5F D6");  // RET: hdmpve_gromelink_updateCookie
+
+// --- Logging/Signature (telemetry + APK verification) ---
+PATCH_LIB("libhdmpve.so", "0x10e0c8", "C0 03 5F D6");  // RET: hdmpve_setApolloLogger
+PATCH_LIB("libhdmpve.so", "0x10e078", "C0 03 5F D6");  // RET: hdmpve_setLogLevel
+PATCH_LIB("libhdmpve.so", "0x2e9b90", "C0 03 5F D6");  // RET: CheckAppUpdate
+PATCH_LIB("libhdmpve.so", "0x1b3ac0", "C0 03 5F D6");  // RET: ChannelInfoUtil::isV2Signature
+PATCH_LIB("libhdmpve.so", "0x1b411c", "C0 03 5F D6");  // RET: ChannelInfoUtil::isV2Signature2
+
+#endif  // FINAL_BYPASS_H
