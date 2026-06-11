@@ -1,0 +1,338 @@
+name: Ghidra Deep Analysis - libUE4.so
+
+on:
+  workflow_dispatch:
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Install Ghidra
+        run: |
+          cd /tmp
+          wget -q "https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_11.3.1_build/ghidra_11.3.1_PUBLIC_20250219.zip" -O ghidra.zip
+          sudo unzip -q ghidra.zip -d /opt/
+          sudo mv /opt/ghidra_* /opt/ghidra
+          echo "Ghidra installed at /opt/ghidra"
+
+      - name: Verify libUE4.so
+        run: |
+          ls -la binaries/arm64-v8a/libUE4.so
+          file binaries/arm64-v8a/libUE4.so
+          echo "Size: $(stat -c%s binaries/arm64-v8a/libUE4.so) bytes"
+
+      - name: Create Ghidra Analysis Script
+        run: |
+          cat > /tmp/analyze_ue4.py << 'SCRIPT'
+          # @category Analysis
+          # Deep analysis of libUE4.so for BGMI 4.4.0 bypass
+          
+          import json
+          import os
+          import re
+          
+          from ghidra.app.decompiler import DecompInterface
+          from ghidra.program.model.symbol import SymbolType
+          from ghidra.program.model.listing import CodeUnit
+          
+          output_dir = os.environ.get("GITHUB_WORKSPACE", "/tmp") + "/true_bypass"
+          os.makedirs(output_dir, exist_ok=True)
+          
+          output_file = output_dir + "/analysis_libUE4_ghidra.json"
+          
+          print("[*] Starting libUE4.so deep analysis...")
+          print("[*] Output: " + output_file)
+          
+          # Initialize decompiler
+          decomp = DecompInterface()
+          decomp.openProgram(currentProgram)
+          decomp.setSimplificationStyle("decompile")
+          
+          results = {
+              "binary": "libUE4.so",
+              "arch": "ARM64 (AARCH64)",
+              "size": currentProgram.getMemory().getSize(),
+              "exports": [],
+              "imports": [],
+              "strings_anticheat": [],
+              "strings_all_count": 0,
+              "functions_total": 0,
+              "functions_anticheat": [],
+              "functions_large": [],
+              "jni_functions": [],
+              "ac_dispatcher_candidates": [],
+              "decompiled_ac_functions": [],
+              "xrefs_map": {}
+          }
+          
+          # ================================================================
+          # 1. EXPORTS
+          # ================================================================
+          print("[*] Extracting exports...")
+          symbolTable = currentProgram.getSymbolTable()
+          export_count = 0
+          for sym in symbolTable.getAllSymbols(True):
+              if sym.isExternal():
+                  continue
+              if sym.getSymbolType() == SymbolType.FUNCTION:
+                  name = sym.getName()
+                  if not name.startswith("FUN_"):
+                      addr = sym.getAddress()
+                      results["exports"].append({
+                          "name": name,
+                          "offset": "0x{:X}".format(addr.getOffset())
+                      })
+                      export_count += 1
+          print("[+] Found {} exports".format(export_count))
+          
+          # ================================================================
+          # 2. IMPORTS
+          # ================================================================
+          print("[*] Extracting imports...")
+          for sym in symbolTable.getExternalSymbols():
+              results["imports"].append({
+                  "name": sym.getName(),
+                  "library": str(sym.getParentNamespace())
+              })
+          print("[+] Found {} imports".format(len(results["imports"])))
+          
+          # ================================================================
+          # 3. STRINGS - Anti-Cheat Related
+          # ================================================================
+          print("[*] Extracting strings...")
+          ac_keywords = [
+              "anticheat", "anti_cheat", "cheat", "hack", "inject", "hook",
+              "frida", "xposed", "magisk", "substrate", "cydia",
+              "TracerPid", "ptrace", "/proc/self", "/proc/", 
+              "debugger", "debug", "gdb",
+              "emulator", "bluestack", "nox", "memu", "gameloop", "ldplayer",
+              "root", "/su", "busybox", "supersu", "magiskd",
+              "integrity", "signature", "certificate", "verify",
+              "report", "Report", "REPORT", "ban", "kick", "violation",
+              "scan", "Scan", "memory", "tamper",
+              "dispatch", "Dispatch", "guard", "Guard",
+              "AnoSDK", "TSS", "tss_", "ACE", "anogs",
+              "detect", "Detect", "check", "Check",
+              "inline_hook", "got_hook", "plt_hook",
+              "mmap", "mprotect", "dlopen", "dlsym",
+              "GameStatus", "game_status", "ChkSet",
+              "encrypt", "decrypt", "obfuscate",
+              "callback", "listener", "monitor", "watcher",
+              "kill", "exit", "abort", "terminate",
+              "server", "upload", "send", "post", "http",
+              "token", "session", "auth",
+              "UFunction", "UObject", "GWorld", "GEngine", "GNames",
+              "ProcessEvent", "PostRender", "Tick",
+              "APlayerController", "ACharacter", "APawn",
+              "FName", "FString", "TArray",
+              "Recoil", "recoil", "Spread", "spread", "Sway", "sway",
+              "Damage", "damage", "Health", "health", "Speed", "speed",
+              "AimAssist", "aim", "Aim", "FOV", "fov",
+              "Bone", "bone", "Mesh", "mesh", "Skeletal",
+              "Camera", "camera", "ViewTarget",
+              "Weapon", "weapon", "Fire", "fire", "Shoot",
+              "Vehicle", "vehicle", "Parachute",
+              "ESP", "Wallhack", "Aimbot", "NoRecoil",
+              "FPS", "fps", "FrameRate", "frame_rate"
+          ]
+          
+          listing = currentProgram.getListing()
+          dataIterator = listing.getDefinedData(True)
+          string_count = 0
+          for data in dataIterator:
+              if data.hasStringValue():
+                  string_count += 1
+                  val = str(data.getValue())
+                  if len(val) > 3:
+                      val_check = val.lower()
+                      for kw in ac_keywords:
+                          if kw.lower() in val_check:
+                              addr = data.getAddress()
+                              entry = {
+                                  "offset": "0x{:X}".format(addr.getOffset()),
+                                  "value": val[:200],
+                                  "matched_keyword": kw
+                              }
+                              # Get xrefs to this string
+                              refs = []
+                              refIter = currentProgram.getReferenceManager().getReferencesTo(addr)
+                              for ref in refIter:
+                                  fromAddr = ref.getFromAddress()
+                                  refs.append("0x{:X}".format(fromAddr.getOffset()))
+                              if refs:
+                                  entry["referenced_from"] = refs[:20]
+                              results["strings_anticheat"].append(entry)
+                              break
+          
+          results["strings_all_count"] = string_count
+          print("[+] Found {} total strings, {} AC-related".format(
+              string_count, len(results["strings_anticheat"])))
+          
+          # ================================================================
+          # 4. FUNCTIONS - Find AC Dispatchers and large functions
+          # ================================================================
+          print("[*] Analyzing functions...")
+          fm = currentProgram.getFunctionManager()
+          funcs = fm.getFunctions(True)
+          func_count = 0
+          decompiled = 0
+          
+          ac_func_keywords = [
+              "anticheat", "cheat", "hack", "detect", "scan", "report",
+              "guard", "dispatch", "monitor", "check", "verify", "integrity",
+              "ban", "kick", "violation", "tamper", "hook", "inject",
+              "AnoSDK", "TSS", "ACE", "security",
+              "ProcessEvent", "Tick", "PostRender", "BeginPlay",
+              "Recoil", "Spread", "Damage", "Health", "Speed", "Aim",
+              "Camera", "Bone", "Weapon", "Fire", "Vehicle"
+          ]
+          
+          for func in funcs:
+              func_count += 1
+              name = func.getName()
+              addr = func.getEntryPoint()
+              size = func.getBody().getNumAddresses()
+              
+              name_lower = name.lower()
+              is_ac = any(kw.lower() in name_lower for kw in ac_func_keywords)
+              is_jni = name.startswith("Java_") or name == "JNI_OnLoad"
+              is_large = size > 1000
+              
+              # Functions with many xrefs TO them = likely dispatchers
+              ref_count = currentProgram.getReferenceManager().getReferenceCountTo(addr)
+              is_dispatcher = ref_count > 15
+              
+              if is_ac or is_jni or is_large or is_dispatcher:
+                  func_info = {
+                      "name": name,
+                      "offset": "0x{:X}".format(addr.getOffset()),
+                      "size": size,
+                      "xref_count": ref_count,
+                      "is_ac": is_ac,
+                      "is_large": is_large,
+                      "is_dispatcher": is_dispatcher
+                  }
+                  
+                  # Decompile AC functions and dispatchers (limit 500)
+                  if (is_ac or is_dispatcher or is_jni) and decompiled < 500:
+                      try:
+                          dec_result = decomp.decompileFunction(func, 120, monitor)
+                          if dec_result and dec_result.decompileCompleted():
+                              c_code = dec_result.getDecompiledFunction().getC()
+                              func_info["decompiled"] = c_code
+                              decompiled += 1
+                              results["decompiled_ac_functions"].append(func_info)
+                      except Exception as e:
+                          func_info["decompile_error"] = str(e)
+                  
+                  if is_jni:
+                      results["jni_functions"].append(func_info)
+                  if is_dispatcher:
+                      results["ac_dispatcher_candidates"].append(func_info)
+                  if is_ac:
+                      results["functions_anticheat"].append(func_info)
+                  if is_large and size > 5000:
+                      results["functions_large"].append(func_info)
+          
+          results["functions_total"] = func_count
+          print("[+] {} total functions, {} decompiled".format(func_count, decompiled))
+          print("[+] {} AC functions, {} dispatchers, {} JNI, {} large".format(
+              len(results["functions_anticheat"]),
+              len(results["ac_dispatcher_candidates"]),
+              len(results["jni_functions"]),
+              len(results["functions_large"])))
+          
+          # ================================================================
+          # 5. Write output
+          # ================================================================
+          print("[*] Writing results...")
+          with open(output_file, 'w') as f:
+              json.dump(results, f, indent=2, default=str)
+          
+          # Also write a summary
+          summary_file = output_dir + "/UE4_ANALYSIS_SUMMARY.md"
+          with open(summary_file, 'w') as f:
+              f.write("# libUE4.so Deep Analysis (Ghidra)\n\n")
+              f.write("## Stats\n")
+              f.write("- Total functions: {}\n".format(func_count))
+              f.write("- Decompiled: {}\n".format(decompiled))
+              f.write("- AC-related functions: {}\n".format(len(results["functions_anticheat"])))
+              f.write("- Dispatcher candidates (>15 xrefs): {}\n".format(len(results["ac_dispatcher_candidates"])))
+              f.write("- JNI functions: {}\n".format(len(results["jni_functions"])))
+              f.write("- Large functions (>5000 bytes): {}\n".format(len(results["functions_large"])))
+              f.write("- AC strings: {}\n".format(len(results["strings_anticheat"])))
+              f.write("- Total strings: {}\n\n".format(string_count))
+              
+              f.write("## Top AC Dispatcher Candidates (most called)\n\n")
+              dispatchers = sorted(results["ac_dispatcher_candidates"], 
+                                   key=lambda x: x["xref_count"], reverse=True)[:50]
+              for d in dispatchers:
+                  f.write("- `{}` @ `{}` ({}x called, {} bytes)\n".format(
+                      d["name"], d["offset"], d["xref_count"], d["size"]))
+              
+              f.write("\n## AC-Related Functions\n\n")
+              for func in results["functions_anticheat"][:100]:
+                  f.write("- `{}` @ `{}` ({} bytes)\n".format(
+                      func["name"], func["offset"], func["size"]))
+              
+              f.write("\n## AC Strings with Code References\n\n")
+              for s in results["strings_anticheat"][:200]:
+                  refs = s.get("referenced_from", [])
+                  f.write("- `{}` @ {} → refs: {}\n".format(
+                      s["value"][:80], s["offset"], ", ".join(refs[:5])))
+          
+          print("[+] DONE! Output: " + output_file)
+          print("[+] Summary: " + summary_file)
+          SCRIPT
+
+      - name: Run Ghidra Headless Analysis
+        run: |
+          mkdir -p /tmp/ghidra_project
+          /opt/ghidra/support/analyzeHeadless /tmp/ghidra_project UE4_Analysis \
+            -import binaries/arm64-v8a/libUE4.so \
+            -scriptPath /tmp \
+            -postScript analyze_ue4.py \
+            -processor AARCH64:LE:64:v8A \
+            2>&1 | tee ghidra_output.log
+          
+          echo "=== Analysis Complete ==="
+          ls -la true_bypass/analysis_libUE4_ghidra.json true_bypass/UE4_ANALYSIS_SUMMARY.md 2>/dev/null
+
+      - name: Upload Analysis Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: ue4-ghidra-analysis
+          path: |
+            true_bypass/analysis_libUE4_ghidra.json
+            true_bypass/UE4_ANALYSIS_SUMMARY.md
+            ghidra_output.log
+          retention-days: 30
+
+      - name: Commit results to repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if [ -f true_bypass/analysis_libUE4_ghidra.json ]; then
+            git add true_bypass/analysis_libUE4_ghidra.json true_bypass/UE4_ANALYSIS_SUMMARY.md
+            git commit -m "🔬 Ghidra deep analysis of libUE4.so (234MB) - automated
+
+            - All exports, imports, strings extracted
+            - AC-related functions identified and decompiled
+            - Dispatcher candidates found (high xref count)
+            - String cross-references mapped
+            - Large functions cataloged" || echo "Nothing to commit"
+            git push || echo "Push failed"
+          fi
