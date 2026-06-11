@@ -1,57 +1,70 @@
 #!/bin/bash
 set -e
 
-echo "[*] Building libbypass.so (ARM64)"
+# Find cross-compiler
+CC=""
+CXX=""
 
-cd "$(dirname "$0")"
-
-# Clean previous build
-rm -rf build_arm64 libs
-mkdir -p build_arm64 libs/arm64-v8a
-
-# Compile with aarch64-linux-gnu cross compiler
-# Using direct compilation (no cmake needed for single file)
-# Build fully static (no external dependencies except bionic which is always there)
-# All C++ stdlib linked statically so no .so.6 dependencies
-aarch64-linux-gnu-g++ \
-    -shared \
-    -o libs/arm64-v8a/libbypass.so \
-    main.cpp \
-    -I. \
-    -std=c++17 \
-    -O2 \
-    -fPIC \
-    -fvisibility=hidden \
-    -fno-rtti \
-    -fno-exceptions \
-    -DANDROID \
-    -D__ANDROID__ \
-    -D__LP64__ \
-    -Wall \
-    -Wno-unused-variable \
-    -Wno-unused-function \
-    -Wno-format \
-    -s \
-    -Wl,--gc-sections \
-    -Wl,--hash-style=sysv \
-    -static-libstdc++ \
-    -static-libgcc \
-    -Wl,-Bstatic -lstdc++ -lgcc -Wl,-Bdynamic \
-    -lm -ldl -lpthread -lc
-
-# Post-process: patch SONAME and fix library names for Android compatibility  
-# The .so will be loaded via dlopen on Android where bionic provides libc/libm/libdl
-# On Android these are just libc.so, libm.so, libdl.so (no .6 suffix)
-# Use patchelf if available, otherwise the Zygisk loader handles this
-if command -v patchelf &> /dev/null; then
-    patchelf --replace-needed libm.so.6 libm.so libs/arm64-v8a/libbypass.so 2>/dev/null || true
-    patchelf --replace-needed libc.so.6 libc.so libs/arm64-v8a/libbypass.so 2>/dev/null || true
-    patchelf --replace-needed libdl.so.2 libdl.so libs/arm64-v8a/libbypass.so 2>/dev/null || true
-    patchelf --replace-needed libpthread.so.0 libc.so libs/arm64-v8a/libbypass.so 2>/dev/null || true
-    patchelf --remove-needed ld-linux-aarch64.so.1 libs/arm64-v8a/libbypass.so 2>/dev/null || true
+if which aarch64-linux-gnu-g++ >/dev/null 2>&1; then
+    CC="aarch64-linux-gnu-gcc"
+    CXX="aarch64-linux-gnu-g++"
+elif which aarch64-linux-android31-clang++ >/dev/null 2>&1; then
+    CC="aarch64-linux-android31-clang"
+    CXX="aarch64-linux-android31-clang++"
+else
+    echo "[*] No cross-compiler found, searching NDK..."
+    NDK_PATH=$(find /opt /usr/local -name "aarch64-linux-android*-clang++" 2>/dev/null | head -1)
+    if [ -n "$NDK_PATH" ]; then
+        CXX="$NDK_PATH"
+        CC="${NDK_PATH/clang++/clang}"
+    fi
 fi
 
-echo "[+] Build successful!"
-echo "[+] Output: libs/arm64-v8a/libbypass.so"
-ls -la libs/arm64-v8a/libbypass.so
+if [ -z "$CXX" ]; then
+    echo "[!] No ARM64 cross-compiler found, trying system clang with target"
+    CC="clang"
+    CXX="clang++"
+    EXTRA_FLAGS="--target=aarch64-linux-android26 --sysroot=/dev/null"
+    
+    # Last resort: use g++ if it can target ARM64
+    if ! $CXX --target=aarch64-linux-android26 -x c++ -c /dev/null -o /dev/null 2>/dev/null; then
+        echo "[*] Trying aarch64-linux-gnu-g++..."
+        CXX="aarch64-linux-gnu-g++"
+        CC="aarch64-linux-gnu-gcc"
+        EXTRA_FLAGS="-static-libgcc -static-libstdc++"
+    fi
+fi
+
+echo "[*] Using compiler: $CXX"
+
+mkdir -p libs/arm64-v8a
+
+$CXX -std=c++17 \
+    -O2 -fPIC -shared \
+    -fvisibility=hidden \
+    -fno-rtti -fno-exceptions \
+    -DANDROID -D__ANDROID__ \
+    $EXTRA_FLAGS \
+    -I. \
+    -o libs/arm64-v8a/libbypass.so \
+    main.cpp \
+    -llog -ldl 2>&1 || {
+    
+    # If linking -llog -ldl fails (cross-compile without Android sysroot),
+    # compile without linking those (they'll resolve at runtime)
+    echo "[*] Retrying without explicit -llog -ldl..."
+    $CXX -std=c++17 \
+        -O2 -fPIC -shared \
+        -fvisibility=hidden \
+        -fno-rtti -fno-exceptions \
+        -DANDROID -D__ANDROID__ \
+        $EXTRA_FLAGS \
+        -I. \
+        -Wl,--unresolved-symbols=ignore-all \
+        -o libs/arm64-v8a/libbypass.so \
+        main.cpp
+}
+
+echo "[+] Built: libs/arm64-v8a/libbypass.so"
 file libs/arm64-v8a/libbypass.so
+ls -la libs/arm64-v8a/libbypass.so
