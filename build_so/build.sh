@@ -1,62 +1,57 @@
 #!/bin/bash
 set -e
 
-echo "=== Building libbypass.so (ARM64) ==="
+echo "[*] Building libbypass.so (ARM64)"
 
-# Find NDK
-NDK=""
-for path in /opt/android-ndk /opt/android-ndk-* /usr/local/android-ndk* $ANDROID_NDK_HOME $NDK_HOME; do
-    if [ -d "$path" ] && [ -f "$path/build/cmake/android.toolchain.cmake" ]; then
-        NDK="$path"
-        break
-    fi
-done
+cd "$(dirname "$0")"
 
-if [ -n "$NDK" ]; then
-    echo "Using NDK at: $NDK"
-    mkdir -p build && cd build
-    cmake .. \
-        -DCMAKE_TOOLCHAIN_FILE=$NDK/build/cmake/android.toolchain.cmake \
-        -DANDROID_ABI=arm64-v8a \
-        -DANDROID_PLATFORM=android-26 \
-        -DANDROID_STL=c++_static \
-        -DCMAKE_BUILD_TYPE=Release
-    make -j$(nproc)
-    mkdir -p ../libs/arm64-v8a
-    cp libbypass.so ../libs/arm64-v8a/
-    echo "✅ Built with NDK: ../libs/arm64-v8a/libbypass.so"
-else
-    echo "No Android NDK found. Using aarch64-linux-gnu cross-compiler..."
-    
-    # Check for cross compiler
-    if ! command -v aarch64-linux-gnu-g++ &>/dev/null; then
-        echo "ERROR: No aarch64-linux-gnu-g++ found. Install with:"
-        echo "  sudo apt-get install g++-aarch64-linux-gnu"
-        exit 1
-    fi
-    
-    mkdir -p libs/arm64-v8a
-    
-    # Compile with cross-compiler
-    # Note: Without NDK we don't have Android headers, so we use stub JNI headers
-    aarch64-linux-gnu-g++ \
-        -shared -fPIC \
-        -O2 \
-        -std=c++17 \
-        -fvisibility=hidden \
-        -ffunction-sections -fdata-sections \
-        -Wl,--gc-sections \
-        -Wl,--strip-all \
-        -DANDROID \
-        -I./stubs \
-        -o libs/arm64-v8a/libbypass.so \
-        main.cpp \
-        -ldl -lpthread \
-        2>&1
-    
-    echo "✅ Built with cross-compiler: libs/arm64-v8a/libbypass.so"
+# Clean previous build
+rm -rf build_arm64 libs
+mkdir -p build_arm64 libs/arm64-v8a
+
+# Compile with aarch64-linux-gnu cross compiler
+# Using direct compilation (no cmake needed for single file)
+# Build fully static (no external dependencies except bionic which is always there)
+# All C++ stdlib linked statically so no .so.6 dependencies
+aarch64-linux-gnu-g++ \
+    -shared \
+    -o libs/arm64-v8a/libbypass.so \
+    main.cpp \
+    -I. \
+    -std=c++17 \
+    -O2 \
+    -fPIC \
+    -fvisibility=hidden \
+    -fno-rtti \
+    -fno-exceptions \
+    -DANDROID \
+    -D__ANDROID__ \
+    -D__LP64__ \
+    -Wall \
+    -Wno-unused-variable \
+    -Wno-unused-function \
+    -Wno-format \
+    -s \
+    -Wl,--gc-sections \
+    -Wl,--hash-style=sysv \
+    -static-libstdc++ \
+    -static-libgcc \
+    -Wl,-Bstatic -lstdc++ -lgcc -Wl,-Bdynamic \
+    -lm -ldl -lpthread -lc
+
+# Post-process: patch SONAME and fix library names for Android compatibility  
+# The .so will be loaded via dlopen on Android where bionic provides libc/libm/libdl
+# On Android these are just libc.so, libm.so, libdl.so (no .6 suffix)
+# Use patchelf if available, otherwise the Zygisk loader handles this
+if command -v patchelf &> /dev/null; then
+    patchelf --replace-needed libm.so.6 libm.so libs/arm64-v8a/libbypass.so 2>/dev/null || true
+    patchelf --replace-needed libc.so.6 libc.so libs/arm64-v8a/libbypass.so 2>/dev/null || true
+    patchelf --replace-needed libdl.so.2 libdl.so libs/arm64-v8a/libbypass.so 2>/dev/null || true
+    patchelf --replace-needed libpthread.so.0 libc.so libs/arm64-v8a/libbypass.so 2>/dev/null || true
+    patchelf --remove-needed ld-linux-aarch64.so.1 libs/arm64-v8a/libbypass.so 2>/dev/null || true
 fi
 
+echo "[+] Build successful!"
+echo "[+] Output: libs/arm64-v8a/libbypass.so"
 ls -la libs/arm64-v8a/libbypass.so
 file libs/arm64-v8a/libbypass.so
-echo "=== Done ==="

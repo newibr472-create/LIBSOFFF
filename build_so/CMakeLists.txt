@@ -1,22 +1,39 @@
 cmake_minimum_required(VERSION 3.10)
-project(bypass LANGUAGES CXX)
+project(bgmi_bypass CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Optimization and security flags
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -fPIC -fvisibility=hidden -ffunction-sections -fdata-sections")
-set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--gc-sections -Wl,--strip-all")
+# ARM64 cross compilation
+set(CMAKE_SYSTEM_NAME Linux)
+set(CMAKE_SYSTEM_PROCESSOR aarch64)
 
 add_library(bypass SHARED main.cpp)
 
-# Link Android system libraries
-target_link_libraries(bypass
-    log     # Android logging
-    dl      # dlopen/dlsym
+target_compile_options(bypass PRIVATE
+    -O2
+    -fPIC
+    -fvisibility=hidden
+    -fno-rtti
+    -fno-exceptions
+    -DANDROID
+    -D__ANDROID__
+    -D__LP64__
+    -Wall
+    -Wno-unused-variable
+    -Wno-unused-function
 )
 
-# Strip symbols in release
-if(CMAKE_BUILD_TYPE STREQUAL "Release")
-    set_target_properties(bypass PROPERTIES LINK_FLAGS "-s")
-endif()
+target_link_options(bypass PRIVATE
+    -s
+    -Wl,--gc-sections
+    -Wl,-z,noexecstack
+    -nostdlib++
+)
+
+target_link_libraries(bypass
+    log
+    dl
+    c
+    m
+)

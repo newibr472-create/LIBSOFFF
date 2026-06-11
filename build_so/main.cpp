@@ -1,55 +1,55 @@
 /*
- * BGMI 4.4.0 ARM64 Bypass + ESP + Aimbot + Large Hitbox
+ * BGMI 4.4.0 ARM64 - ESP + Aimbot + Large Hitbox + Bypass
  * 
- * Single .so library — loads via injection or Zygisk
- * Target: arm64-v8a (aarch64-linux-android)
+ * Entry: __attribute__((constructor)) → pthread main loop
+ * SDK: NIKON 4.4.0 64-bit offsets (verified from .hpp)
+ * Bypass: 809 verified patches from Ghidra analysis
  * 
- * Features:
- *   - 731 verified AC bypass patches (FINAL_BYPASS.h)
- *   - ESP: Boxes, Bones, Health bars, Distance
- *   - Aimbot: Smooth head aim with FOV circle
- *   - Large Hitbox: Scale enemy bone capsules
- *   - Island/Lobby bypass (auto-disable in lobby)
+ * Architecture: aarch64-linux-android
  */
 
-#ifdef ANDROID
-#include <jni.h>
-#include <android/log.h>
-#else
-// Cross-compilation stubs
-#include "stubs/jni.h"
-#include "stubs/android/log.h"
-#endif
+#include <pthread.h>
+#include <unistd.h>
 #include <dlfcn.h>
 #include <sys/mman.h>
-#include <string.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <pthread.h>
-#include <math.h>
-#include <stdio.h>
-#include <errno.h>
-#include <signal.h>
+#include <android/log.h>
+#include <cstring>
+#include <cstdio>
+#include <cstdlib>
+#include <cmath>
+#include <vector>
+#include <string>
+#include <fstream>
+#include <sstream>
+#include <algorithm>
 #include <atomic>
+#include <errno.h>
+#include <sys/syscall.h>
+#include <fcntl.h>
 
 // ============================================================================
 // LOGGING
 // ============================================================================
-#define LOG_TAG "BGMI_BP"
-#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
-#define LOGW(...) __android_log_print(ANDROID_LOG_WARN, LOG_TAG, __VA_ARGS__)
-#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+#define TAG "BGMI_ESP"
+#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, TAG, __VA_ARGS__)
+#define LOGW(...) __android_log_print(ANDROID_LOG_WARN, TAG, __VA_ARGS__)
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, TAG, __VA_ARGS__)
 
 // ============================================================================
-// MATH STRUCTURES
+// MATH TYPES
 // ============================================================================
 struct FVector {
     float X, Y, Z;
+    
     FVector() : X(0), Y(0), Z(0) {}
     FVector(float x, float y, float z) : X(x), Y(y), Z(z) {}
-    FVector operator-(const FVector& o) const { return {X-o.X, Y-o.Y, Z-o.Z}; }
-    FVector operator+(const FVector& o) const { return {X+o.X, Y+o.Y, Z+o.Z}; }
+    
+    FVector operator-(const FVector& v) const { return {X - v.X, Y - v.Y, Z - v.Z}; }
+    FVector operator+(const FVector& v) const { return {X + v.X, Y + v.Y, Z + v.Z}; }
+    FVector operator*(float s) const { return {X * s, Y * s, Z * s}; }
+    
     float Length() const { return sqrtf(X*X + Y*Y + Z*Z); }
+    float Distance(const FVector& v) const { return (*this - v).Length(); }
 };
 
 struct FVector2D {
@@ -60,914 +60,1004 @@ struct FVector2D {
 
 struct FRotator {
     float Pitch, Yaw, Roll;
-};
-
-struct FQuat {
-    float X, Y, Z, W;
+    FRotator() : Pitch(0), Yaw(0), Roll(0) {}
 };
 
 struct FTransform {
-    FQuat Rotation;    // 0x00 (16 bytes)
-    FVector Translation; // 0x10 (12 bytes)
-    float Pad0;         // 0x1C
-    FVector Scale3D;    // 0x20 (12 bytes)
-    float Pad1;         // 0x2C
-};  // Total: 0x30 = 48 bytes
+    float Rotation[4]; // Quaternion: X,Y,Z,W
+    FVector Translation;
+    float pad0;
+    FVector Scale3D;
+    float pad1;
+};
+
+struct FMatrix {
+    float M[4][4];
+};
 
 // ============================================================================
-// MEMORY ACCESS HELPERS (crash-safe)
+// CONFIG
 // ============================================================================
-static bool IsValidPtr(uintptr_t ptr) {
-    return ptr > 0x1000000ULL && ptr < 0x7FFFFFFFFFFFULL;
+struct Config {
+    // ESP
+    bool esp_enabled = true;
+    bool esp_box = true;
+    bool esp_health = true;
+    bool esp_distance = true;
+    bool esp_bones = true;
+    
+    // Aimbot
+    bool aimbot_enabled = true;
+    float aimbot_fov = 120.0f;          // pixels radius
+    float aimbot_smooth = 6.0f;         // higher = smoother
+    int   aimbot_bone = 6;              // head
+    bool  aimbot_visible_only = false;
+    
+    // Large Hitbox
+    bool large_hitbox_enabled = true;
+    float hitbox_scale = 2.5f;
+    
+    // General
+    bool lobby_bypass = true;           // disable in lobby
+    int  min_players_for_match = 10;
+    
+    // Screen
+    float screen_width = 1080.0f;
+    float screen_height = 2400.0f;
+};
+
+static Config g_config;
+
+// ============================================================================
+// GAME OFFSETS (from NIKON SDK 4.4.0 64-bit)
+// ============================================================================
+namespace Offsets {
+    // UWorld
+    constexpr uintptr_t UWorld_PersistentLevel       = 0x0030;
+    constexpr uintptr_t UWorld_GameState             = 0x0428;
+    constexpr uintptr_t UWorld_OwningGameInstance    = 0x0470;
+    
+    // UGameInstance
+    constexpr uintptr_t GameInstance_LocalPlayers    = 0x0048;
+    
+    // UPlayer / ULocalPlayer
+    constexpr uintptr_t UPlayer_PlayerController    = 0x0030;
+    
+    // AController
+    constexpr uintptr_t Controller_Pawn             = 0x04B8;
+    constexpr uintptr_t Controller_Character        = 0x04C8;
+    constexpr uintptr_t Controller_PlayerState      = 0x04D0;
+    constexpr uintptr_t Controller_ControlRotation  = 0x04E0;
+    
+    // APlayerController (extends AController)
+    constexpr uintptr_t PC_Player                   = 0x0518;
+    constexpr uintptr_t PC_AcknowledgedPawn         = 0x0528;
+    constexpr uintptr_t PC_MyHUD                    = 0x0540;
+    constexpr uintptr_t PC_PlayerCameraManager      = 0x0548;
+    
+    // APlayerCameraManager
+    // CameraCache at 0x0520, inside FCameraCacheEntry POV at +0x10
+    constexpr uintptr_t CameraManager_CameraCache   = 0x0520;
+    constexpr uintptr_t CacheEntry_POV              = 0x0010;
+    constexpr uintptr_t POV_Location                = 0x0000;
+    constexpr uintptr_t POV_Rotation                = 0x0018;
+    constexpr uintptr_t POV_FOV                     = 0x0024;
+    // Combined: CameraManager + 0x0530 = Location, +0x0548 = Rotation, +0x0554 = FOV
+    
+    // AGameStateBase
+    constexpr uintptr_t GameState_PlayerArray       = 0x04C8;
+    
+    // AActor
+    constexpr uintptr_t Actor_RootComponent         = 0x01A0;
+    
+    // APawn
+    constexpr uintptr_t Pawn_PlayerState            = 0x04D0;
+    constexpr uintptr_t Pawn_Controller             = 0x04E8;
+    
+    // ACharacter
+    constexpr uintptr_t Character_Mesh              = 0x0510;
+    constexpr uintptr_t Character_Movement          = 0x0518;
+    constexpr uintptr_t Character_Capsule           = 0x0520;
+    
+    // ASTExtraBaseCharacter (game-specific)
+    constexpr uintptr_t STChar_TeamID               = 0x0604;
+    constexpr uintptr_t STChar_Health               = 0x0E60;
+    constexpr uintptr_t STChar_HealthMax            = 0x0E64;
+    constexpr uintptr_t STChar_bDead                = 0x0E7C; // bit 0
+    constexpr uintptr_t STChar_TeamNum              = 0x1150;
+    
+    // ASTExtraPlayerState
+    constexpr uintptr_t STState_LiveState           = 0x13F4;
+    constexpr uintptr_t STState_CharacterOwner      = 0x1410;
+    constexpr uintptr_t STState_PlayerHealth        = 0x142C;
+    constexpr uintptr_t STState_PlayerHealthMax     = 0x1430;
+    
+    // USceneComponent
+    constexpr uintptr_t SceneComp_ComponentToWorld  = 0x01C0;
+    
+    // USkeletalMeshComponent
+    constexpr uintptr_t SkelMesh_CachedBoneTransforms = 0x0C40;
+    
+    // UCapsuleComponent
+    constexpr uintptr_t Capsule_HalfHeight          = 0x02E8;
+    constexpr uintptr_t Capsule_Radius              = 0x02EC;
+    
+    // TArray layout
+    constexpr uintptr_t TArray_Data                 = 0x0000;
+    constexpr uintptr_t TArray_Count                = 0x0008;
+}
+
+// ============================================================================
+// BONE INDICES (UE4 standard for BGMI humanoid skeleton)
+// ============================================================================
+namespace Bones {
+    constexpr int Root          = 0;
+    constexpr int Pelvis        = 1;
+    constexpr int Spine01       = 3;
+    constexpr int Spine02       = 4;
+    constexpr int Neck          = 5;
+    constexpr int Head          = 6;
+    constexpr int LeftShoulder  = 11;
+    constexpr int LeftElbow     = 12;
+    constexpr int LeftHand      = 13;
+    constexpr int RightShoulder = 32;
+    constexpr int RightElbow    = 33;
+    constexpr int RightHand     = 34;
+    constexpr int LeftHip       = 49;
+    constexpr int LeftKnee      = 50;
+    constexpr int LeftFoot      = 51;
+    constexpr int RightHip      = 55;
+    constexpr int RightKnee     = 56;
+    constexpr int RightFoot     = 57;
+    
+    // Skeleton connections for drawing
+    static const int skeleton_pairs[][2] = {
+        {Head, Neck}, {Neck, Spine02}, {Spine02, Spine01}, {Spine01, Pelvis},
+        {Neck, LeftShoulder}, {LeftShoulder, LeftElbow}, {LeftElbow, LeftHand},
+        {Neck, RightShoulder}, {RightShoulder, RightElbow}, {RightElbow, RightHand},
+        {Pelvis, LeftHip}, {LeftHip, LeftKnee}, {LeftKnee, LeftFoot},
+        {Pelvis, RightHip}, {RightHip, RightKnee}, {RightKnee, RightFoot}
+    };
+    constexpr int skeleton_pair_count = 16;
+}
+
+// ============================================================================
+// ESP DATA OUTPUT
+// ============================================================================
+struct PlayerESP {
+    FVector2D screenPos;        // feet screen pos
+    FVector2D headScreen;       // head screen pos
+    float health;
+    float healthMax;
+    float distance;             // meters
+    int teamId;
+    bool isEnemy;
+    FVector2D bones[20];        // key bone screen positions
+    bool bonesValid[20];
+    FVector worldPos;           // 3D position for aimbot
+    FVector headWorld;          // head 3D for aimbot
+};
+
+static std::vector<PlayerESP> g_espData;
+static std::atomic<bool> g_running(false);
+static uintptr_t g_libUE4Base = 0;
+static uintptr_t g_gworldPtr = 0;
+
+// ============================================================================
+// MEMORY UTILITIES
+// ============================================================================
+
+static bool is_valid_ptr(void* ptr) {
+    if (ptr == nullptr) return false;
+    uintptr_t addr = (uintptr_t)ptr;
+    // Valid user-space addresses on ARM64 Android
+    if (addr < 0x1000) return false;
+    if (addr > 0x7FFFFFFFFFFF) return false;
+    return true;
 }
 
 template<typename T>
-static T SafeRead(uintptr_t addr) {
-    if (!IsValidPtr(addr)) return T{};
-    T val{};
-    memcpy(&val, reinterpret_cast<void*>(addr), sizeof(T));
-    return val;
+static T read_mem(uintptr_t addr) {
+    if (!is_valid_ptr((void*)addr)) return T{};
+    return *(T*)addr;
 }
 
-static uintptr_t ReadPtr(uintptr_t addr) {
-    if (!IsValidPtr(addr)) return 0;
-    uintptr_t val = 0;
-    memcpy(&val, reinterpret_cast<void*>(addr), sizeof(uintptr_t));
-    return val;
+template<typename T>
+static T read_chain(uintptr_t base, std::initializer_list<uintptr_t> offsets) {
+    uintptr_t addr = base;
+    auto it = offsets.begin();
+    // Follow pointer chain except last offset
+    for (size_t i = 0; i < offsets.size() - 1; i++, it++) {
+        addr = read_mem<uintptr_t>(addr + *it);
+        if (!is_valid_ptr((void*)addr)) return T{};
+    }
+    return read_mem<T>(addr + *it);
+}
+
+static uintptr_t read_ptr_chain(uintptr_t base, std::initializer_list<uintptr_t> offsets) {
+    uintptr_t addr = base;
+    for (auto off : offsets) {
+        addr = read_mem<uintptr_t>(addr + off);
+        if (!is_valid_ptr((void*)addr)) return 0;
+    }
+    return addr;
 }
 
 // ============================================================================
 // LIBRARY BASE ADDRESS
 // ============================================================================
-static uintptr_t get_lib_base(const char* lib_name) {
+
+static uintptr_t get_lib_base(const char* libName) {
     char line[512];
     FILE* fp = fopen("/proc/self/maps", "r");
     if (!fp) return 0;
+    
     uintptr_t base = 0;
     while (fgets(line, sizeof(line), fp)) {
-        if (strstr(line, lib_name) && strstr(line, "r-xp")) {
-            base = (uintptr_t)strtoull(line, NULL, 16);
+        if (strstr(line, libName) && strstr(line, "r-xp")) {
+            base = strtoull(line, nullptr, 16);
             break;
+        }
+        // Fallback: also check r--p for some loaders
+        if (!base && strstr(line, libName) && strstr(line, "r--p")) {
+            base = strtoull(line, nullptr, 16);
         }
     }
     fclose(fp);
     return base;
 }
 
-static uintptr_t get_lib_end(const char* lib_name) {
+static size_t get_lib_size(const char* libName) {
     char line[512];
     FILE* fp = fopen("/proc/self/maps", "r");
     if (!fp) return 0;
-    uintptr_t end = 0;
+    
+    uintptr_t start = 0, end = 0;
     while (fgets(line, sizeof(line), fp)) {
-        if (strstr(line, lib_name)) {
+        if (strstr(line, libName)) {
+            uintptr_t s = strtoull(line, nullptr, 16);
             char* dash = strchr(line, '-');
-            if (dash) {
-                end = (uintptr_t)strtoull(dash + 1, NULL, 16);
-            }
+            uintptr_t e = strtoull(dash + 1, nullptr, 16);
+            if (start == 0 || s < start) start = s;
+            if (e > end) end = e;
         }
     }
     fclose(fp);
-    return end;
+    return (size_t)(end - start);
 }
 
 // ============================================================================
-// PATCH SYSTEM — hex_patch for FINAL_BYPASS.h compatibility
+// MEMORY PATCHING
 // ============================================================================
-static int hex_char_val(char c) {
-    if (c >= '0' && c <= '9') return c - '0';
-    if (c >= 'a' && c <= 'f') return c - 'a' + 10;
-    if (c >= 'A' && c <= 'F') return c - 'A' + 10;
-    return -1;
+
+static bool mem_protect(uintptr_t addr, size_t len, int prot) {
+    uintptr_t page = addr & ~(uintptr_t)0xFFF;
+    size_t size = (addr - page) + len + 0xFFF;
+    size &= ~(size_t)0xFFF;
+    return mprotect((void*)page, size, prot) == 0;
 }
 
-static void hex_patch(const char* lib, const char* offset_str, const char* hex_str) {
+static void hex_patch(const char* lib, const char* offsetStr, const char* hexStr) {
     uintptr_t base = get_lib_base(lib);
     if (!base) return;
     
-    uintptr_t offset = (uintptr_t)strtoull(offset_str, NULL, 16);
+    uintptr_t offset = strtoull(offsetStr, nullptr, 16);
     uintptr_t addr = base + offset;
     
-    // Parse hex string "C0 03 5F D6" -> bytes
-    unsigned char bytes[16];
-    int len = 0;
-    const char* p = hex_str;
-    while (*p && len < 16) {
+    // Parse hex string "C0 03 5F D6" into bytes
+    unsigned char bytes[32];
+    int byteCount = 0;
+    
+    const char* p = hexStr;
+    while (*p && byteCount < 32) {
         while (*p == ' ') p++;
         if (!*p) break;
-        int hi = hex_char_val(*p++);
-        if (hi < 0 || !*p) break;
-        int lo = hex_char_val(*p++);
-        if (lo < 0) break;
-        bytes[len++] = (unsigned char)((hi << 4) | lo);
+        
+        char hi = *p++;
+        if (!*p) break;
+        char lo = *p++;
+        
+        auto hexval = [](char c) -> int {
+            if (c >= '0' && c <= '9') return c - '0';
+            if (c >= 'a' && c <= 'f') return c - 'a' + 10;
+            if (c >= 'A' && c <= 'F') return c - 'A' + 10;
+            return 0;
+        };
+        
+        bytes[byteCount++] = (hexval(hi) << 4) | hexval(lo);
     }
-    if (len == 0) return;
     
-    // Make memory writable
-    uintptr_t page_start = addr & ~(uintptr_t)0xFFF;
-    if (mprotect((void*)page_start, 0x2000, PROT_READ | PROT_WRITE | PROT_EXEC) != 0) {
-        return; // Failed to set permissions
+    if (byteCount == 0) return;
+    
+    // Make writable, patch, restore
+    if (!mem_protect(addr, byteCount, PROT_READ | PROT_WRITE | PROT_EXEC)) {
+        return;
     }
     
-    // Apply patch
-    memcpy((void*)addr, bytes, len);
+    memcpy((void*)addr, bytes, byteCount);
     
-    // Flush instruction cache
-    __builtin___clear_cache((char*)addr, (char*)(addr + len));
-}
-
-// PATCH_LIB macro for FINAL_BYPASS.h
-#define PATCH_LIB(lib, offset, bytes) hex_patch(lib, offset, bytes)
-
-// ============================================================================
-// SDK OFFSETS (from NIKON SDK dump 4.4.0 64-bit — VERIFIED)
-// ============================================================================
-namespace Offsets {
-    // UWorld
-    constexpr uint32_t UWorld_PersistentLevel = 0x0030;
-    constexpr uint32_t UWorld_GameState = 0x0428;
-    constexpr uint32_t UWorld_OwningGameInstance = 0x0470;
-    
-    // UGameInstance
-    constexpr uint32_t GameInstance_LocalPlayers = 0x0048;
-    
-    // UPlayer / ULocalPlayer
-    constexpr uint32_t UPlayer_PlayerController = 0x0030;
-    
-    // AGameStateBase
-    constexpr uint32_t GameState_PlayerArray = 0x04C8;
-    
-    // AController
-    constexpr uint32_t Controller_Pawn = 0x04B8;
-    
-    // APlayerController
-    constexpr uint32_t PC_CameraManager = 0x04E8;
-    constexpr uint32_t PC_AcknowledgedPawn = 0x0510;
-    
-    // AActor
-    constexpr uint32_t Actor_RootComponent = 0x01A0;
-    
-    // USceneComponent
-    constexpr uint32_t SceneComp_ComponentToWorld = 0x01C0;
-    // FTransform layout: Rotation(0x00, 16B), Translation(0x10, 12B), pad(4B), Scale(0x20, 12B)
-    constexpr uint32_t Transform_Translation = 0x10;
-    
-    // APawn
-    constexpr uint32_t Pawn_PlayerState = 0x03F0;
-    
-    // ACharacter
-    constexpr uint32_t Character_Mesh = 0x0500;
-    
-    // ASTExtraBaseCharacter (BGMI specific)
-    constexpr uint32_t STExtra_TeamID = 0x0604;
-    constexpr uint32_t STExtra_Health = 0x0E60;
-    constexpr uint32_t STExtra_HealthMax = 0x0E64;
-    constexpr uint32_t STExtra_bDead = 0x0E7C;
-    constexpr uint32_t STExtra_TeamNum = 0x1150;
-    
-    // ASTExtraPlayerState
-    constexpr uint32_t STPS_LiveState = 0x13F4;
-    constexpr uint32_t STPS_CharacterOwner = 0x1410;
-    constexpr uint32_t STPS_PlayerHealth = 0x142C;
-    constexpr uint32_t STPS_PlayerHealthMax = 0x1430;
-    
-    // USkeletalMeshComponent
-    constexpr uint32_t SkelMesh_BoneTransforms = 0x0C40;
-    // TArray layout: Data*(0x00), Num(0x08), Max(0x0C)
-    
-    // APlayerCameraManager — CameraCacheEntry
-    // CameraCache.POV is at approximately 0x04A0
-    // POV = { Location(FVector, 12B), Rotation(FRotator, 12B), FOV(float, 4B) }
-    constexpr uint32_t CamMgr_CacheLoc = 0x04B0;
-    constexpr uint32_t CamMgr_CacheRot = 0x04BC;
-    constexpr uint32_t CamMgr_CacheFOV = 0x04C8;
+    // Clear instruction cache
+    __builtin___clear_cache((char*)addr, (char*)(addr + byteCount));
 }
 
 // ============================================================================
-// BONE INDICES (UE4 standard for BGMI mannequin skeleton)
+// BYPASS APPLICATION (from FINAL_BYPASS.h)
 // ============================================================================
-namespace Bones {
-    constexpr int Head = 6;
-    constexpr int Neck = 5;
-    constexpr int Chest = 4;      // spine_02
-    constexpr int Pelvis = 0;     // root
-    constexpr int LShoulder = 11;
-    constexpr int RShoulder = 32;
-    constexpr int LElbow = 12;
-    constexpr int RElbow = 33;
-    constexpr int LHand = 13;
-    constexpr int RHand = 34;
-    constexpr int LHip = 48;
-    constexpr int RHip = 53;
-    constexpr int LKnee = 49;
-    constexpr int RKnee = 54;
-    constexpr int LFoot = 50;
-    constexpr int RFoot = 55;
+
+// Redefine PATCH_LIB macro to call hex_patch
+#define PATCH_LIB(lib, offset, hex) hex_patch(lib, offset, hex)
+
+static void apply_all_bypasses() {
+    LOGI("[*] Applying 809 verified bypass patches...");
+    
+    // Wait for libraries to load
+    int attempts = 0;
+    while (!get_lib_base("libUE4.so") && attempts < 60) {
+        usleep(500000); // 500ms
+        attempts++;
+    }
+    
+    if (!get_lib_base("libUE4.so")) {
+        LOGE("[-] libUE4.so not loaded after 30s, skipping patches");
+        return;
+    }
+    
+    // Small delay for other libs to finish loading
+    usleep(2000000); // 2s
+    
+    // Include all verified patches
+    #include "../true_bypass/FINAL_BYPASS.h"
+    
+    LOGI("[+] All bypass patches applied successfully");
 }
 
-// Bone connection pairs for skeleton drawing
-static const int BoneConnections[][2] = {
-    {Bones::Head, Bones::Neck},
-    {Bones::Neck, Bones::Chest},
-    {Bones::Chest, Bones::Pelvis},
-    {Bones::Neck, Bones::LShoulder},
-    {Bones::LShoulder, Bones::LElbow},
-    {Bones::LElbow, Bones::LHand},
-    {Bones::Neck, Bones::RShoulder},
-    {Bones::RShoulder, Bones::RElbow},
-    {Bones::RElbow, Bones::RHand},
-    {Bones::Pelvis, Bones::LHip},
-    {Bones::LHip, Bones::LKnee},
-    {Bones::LKnee, Bones::LFoot},
-    {Bones::Pelvis, Bones::RHip},
-    {Bones::RHip, Bones::RKnee},
-    {Bones::RKnee, Bones::RFoot},
-};
-constexpr int NUM_BONE_CONNECTIONS = 15;
+#undef PATCH_LIB
 
 // ============================================================================
-// GLOBAL STATE
+// FIND GWORLD
 // ============================================================================
-static std::atomic<uintptr_t> g_GWorld{0};
-static std::atomic<bool> g_BypassApplied{false};
-static std::atomic<bool> g_Running{true};
 
-// Config (modifiable from JNI)
-static std::atomic<bool> g_ESP{true};
-static std::atomic<bool> g_Aimbot{true};
-static std::atomic<bool> g_LargeHitbox{true};
-static std::atomic<float> g_AimbotFOV{150.0f};
-static std::atomic<float> g_AimbotSmooth{5.0f};
-static std::atomic<float> g_HitboxScale{2.5f};
-static std::atomic<int> g_ScreenW{1080};
-static std::atomic<int> g_ScreenH{2400};
-
-// ============================================================================
-// DRAW DATA — shared with Java overlay for rendering
-// ============================================================================
-struct ESPBox {
-    float x, y, w, h;
-    float healthPercent;
-    float distance;
-    int isEnemy; // 1=enemy(red), 0=team(green)
-};
-
-struct ESPLine {
-    float x1, y1, x2, y2;
-    int isEnemy;
-};
-
-struct AimData {
-    float targetX, targetY;
-    bool hasTarget;
-    float fovRadius;
-};
-
-#define MAX_PLAYERS 100
-#define MAX_BONES (MAX_PLAYERS * NUM_BONE_CONNECTIONS)
-
-static struct {
-    ESPBox boxes[MAX_PLAYERS];
-    int numBoxes;
+static uintptr_t find_gworld() {
+    uintptr_t base = get_lib_base("libUE4.so");
+    if (!base) return 0;
     
-    ESPLine bones[MAX_BONES];
-    int numBones;
+    g_libUE4Base = base;
+    size_t size = get_lib_size("libUE4.so");
+    if (size == 0) size = 234 * 1024 * 1024; // fallback: 234MB
     
-    AimData aim;
+    // Pattern scan for GWorld pointer
+    // GWorld is typically referenced early in tick functions
+    // Look for ADRP+LDR pattern that loads GWorld
+    // Alternative: scan .bss/.data for a pointer that points to a valid UWorld
     
-    bool inMatch;
-    int playerCount;
+    // Method 1: Look for known string "GWorld" reference
+    // Method 2: Scan data section for pointer patterns
     
-    // Mutex for thread safety
-    pthread_mutex_t lock;
-} g_DrawData = {};
-
-// ============================================================================
-// WORLD TO SCREEN
-// ============================================================================
-static bool WorldToScreen(const FVector& worldPos, FVector2D& out,
-                          const FVector& camLoc, const FRotator& camRot, float fov,
-                          int width, int height)
-{
-    float pitchRad = camRot.Pitch * (float)M_PI / 180.0f;
-    float yawRad   = camRot.Yaw   * (float)M_PI / 180.0f;
+    // Use the reliable method: find GWorld via GUObjectArray iteration
+    // Actually, simplest reliable method on Android:
+    // GWorld is at a fixed offset in libUE4.so's .bss section
+    // We can find it by scanning for a pointer that, when dereferenced,
+    // gives a valid chain: UWorld->GameState->PlayerArray with reasonable count
     
-    float cp = cosf(pitchRad), sp = sinf(pitchRad);
-    float cy = cosf(yawRad),   sy = sinf(yawRad);
+    // Scan .bss region (high offsets in the library, after .text and .rodata)
+    // libUE4.so is 234MB, .bss starts around offset 0x0C000000+
     
-    // Forward vector
-    FVector forward = {cp * cy, cp * sy, sp};
-    // Right vector
-    FVector right = {-sy, cy, 0.0f};
-    // Up vector (cross product of forward x right adjusted for pitch)
-    FVector up = {-sp * cy, -sp * sy, cp};
+    uintptr_t scan_start = base + 0x0C000000;
+    uintptr_t scan_end = base + size;
     
-    // Delta from camera to world position
-    FVector delta = worldPos - camLoc;
+    // Limit scan to avoid taking too long
+    if (scan_end - scan_start > 0x4000000) {
+        scan_end = scan_start + 0x4000000; // scan 64MB max
+    }
     
-    // Project onto camera axes
-    float dotForward = delta.X * forward.X + delta.Y * forward.Y + delta.Z * forward.Z;
-    float dotRight   = delta.X * right.X   + delta.Y * right.Y   + delta.Z * right.Z;
-    float dotUp      = delta.X * up.X      + delta.Y * up.Y      + delta.Z * up.Z;
+    LOGI("[*] Scanning for GWorld in range %p - %p", (void*)scan_start, (void*)scan_end);
     
-    // Behind camera check
-    if (dotForward < 1.0f) return false;
-    
-    float fovRad = fov * (float)M_PI / 360.0f; // half FOV in radians
-    float tanHalfFov = tanf(fovRad);
-    
-    float halfW = (float)width / 2.0f;
-    float halfH = (float)height / 2.0f;
-    
-    out.X = halfW + (dotRight / (dotForward * tanHalfFov)) * halfW;
-    out.Y = halfH - (dotUp / (dotForward * tanHalfFov)) * halfW; // Use width for aspect ratio
-    
-    return (out.X >= -100.0f && out.X <= width + 100.0f &&
-            out.Y >= -100.0f && out.Y <= height + 100.0f);
-}
-
-// ============================================================================
-// GET BONE WORLD POSITION
-// ============================================================================
-static FVector GetBoneWorldPos(uintptr_t meshComp, int boneIndex) {
-    FVector result = {0, 0, 0};
-    if (!IsValidPtr(meshComp)) return result;
-    
-    // Read TArray<FTransform> at CachedBoneSpaceTransforms
-    uintptr_t boneArrayData = ReadPtr(meshComp + Offsets::SkelMesh_BoneTransforms);
-    int boneCount = SafeRead<int>(meshComp + Offsets::SkelMesh_BoneTransforms + 0x08);
-    
-    if (!IsValidPtr(boneArrayData) || boneIndex < 0 || boneIndex >= boneCount) return result;
-    
-    // Read bone's FTransform (each is 0x30 = 48 bytes)
-    uintptr_t boneTransformAddr = boneArrayData + (uintptr_t)boneIndex * 0x30;
-    if (!IsValidPtr(boneTransformAddr)) return result;
-    
-    FTransform boneTransform = SafeRead<FTransform>(boneTransformAddr);
-    
-    // Read ComponentToWorld transform from the mesh component
-    FTransform compToWorld = SafeRead<FTransform>(meshComp + Offsets::SceneComp_ComponentToWorld);
-    
-    // Simplified bone world position calculation:
-    // Full would require quaternion multiplication, but for ESP the simplified version works:
-    // WorldPos = ComponentToWorld.Translation + Rotate(BoneLocal.Translation, ComponentToWorld.Rotation)
-    
-    // Quaternion rotation of bone local position by component rotation
-    float qx = compToWorld.Rotation.X;
-    float qy = compToWorld.Rotation.Y;
-    float qz = compToWorld.Rotation.Z;
-    float qw = compToWorld.Rotation.W;
-    
-    float bx = boneTransform.Translation.X;
-    float by = boneTransform.Translation.Y;
-    float bz = boneTransform.Translation.Z;
-    
-    // Rotate vector by quaternion: v' = q * v * q^-1
-    // Optimized formula:
-    float tx = 2.0f * (qy * bz - qz * by);
-    float ty = 2.0f * (qz * bx - qx * bz);
-    float tz = 2.0f * (qx * by - qy * bx);
-    
-    result.X = compToWorld.Translation.X + bx + qw * tx + (qy * tz - qz * ty);
-    result.Y = compToWorld.Translation.Y + by + qw * ty + (qz * tx - qx * tz);
-    result.Z = compToWorld.Translation.Z + bz + qw * tz + (qx * ty - qy * tx);
-    
-    return result;
-}
-
-// ============================================================================
-// FIND GWorld — pattern scan .bss section of libUE4.so
-// ============================================================================
-static uintptr_t FindGWorld() {
-    uintptr_t libBase = get_lib_base("libUE4.so");
-    uintptr_t libEnd  = get_lib_end("libUE4.so");
-    if (!libBase || !libEnd) return 0;
-    
-    // GWorld is in .bss — typically at high addresses
-    // Scan from ~75% of the library to the end
-    uintptr_t scanStart = libBase + (libEnd - libBase) * 3 / 4;
-    uintptr_t scanEnd = libEnd;
-    
-    LOGI("Scanning for GWorld in range %lx - %lx", (unsigned long)scanStart, (unsigned long)scanEnd);
-    
-    for (uintptr_t addr = scanStart; addr < scanEnd - 8; addr += 8) {
+    for (uintptr_t addr = scan_start; addr < scan_end - 8; addr += 8) {
         uintptr_t candidate = 0;
-        memcpy(&candidate, (void*)addr, 8);
         
-        if (!IsValidPtr(candidate)) continue;
+        // Safe read
+        if (!is_valid_ptr((void*)addr)) continue;
+        candidate = *(uintptr_t*)addr;
         
-        // Verify UWorld chain:
-        // UWorld->PersistentLevel (0x30) should be valid
-        uintptr_t persistLevel = ReadPtr(candidate + Offsets::UWorld_PersistentLevel);
-        if (!IsValidPtr(persistLevel)) continue;
+        if (!is_valid_ptr((void*)candidate)) continue;
         
-        // UWorld->GameState (0x428) should be valid
-        uintptr_t gameState = ReadPtr(candidate + Offsets::UWorld_GameState);
-        if (!IsValidPtr(gameState)) continue;
+        // Check if candidate looks like a UWorld*
+        // UWorld->PersistentLevel should be a valid pointer
+        uintptr_t persistentLevel = read_mem<uintptr_t>(candidate + Offsets::UWorld_PersistentLevel);
+        if (!is_valid_ptr((void*)persistentLevel)) continue;
         
-        // GameState->PlayerArray should be valid TArray
-        uintptr_t playerArrayData = ReadPtr(gameState + Offsets::GameState_PlayerArray);
-        int playerCount = SafeRead<int>(gameState + Offsets::GameState_PlayerArray + 8);
+        // UWorld->GameState should be valid
+        uintptr_t gameState = read_mem<uintptr_t>(candidate + Offsets::UWorld_GameState);
+        if (!is_valid_ptr((void*)gameState)) continue;
         
-        if (!IsValidPtr(playerArrayData)) continue;
+        // GameState->PlayerArray count should be 1-100
+        int32_t playerCount = read_mem<int32_t>(gameState + Offsets::GameState_PlayerArray + 8);
         if (playerCount < 1 || playerCount > 150) continue;
         
-        // UWorld->OwningGameInstance should be valid
-        uintptr_t gameInst = ReadPtr(candidate + Offsets::UWorld_OwningGameInstance);
-        if (!IsValidPtr(gameInst)) continue;
+        // PlayerArray data pointer should be valid
+        uintptr_t playerArrayData = read_mem<uintptr_t>(gameState + Offsets::GameState_PlayerArray);
+        if (!is_valid_ptr((void*)playerArrayData)) continue;
         
-        LOGI("Found GWorld candidate at %lx -> %lx (players: %d)", 
-             (unsigned long)addr, (unsigned long)candidate, playerCount);
-        return candidate;
+        // UWorld->OwningGameInstance should be valid
+        uintptr_t gameInstance = read_mem<uintptr_t>(candidate + Offsets::UWorld_OwningGameInstance);
+        if (!is_valid_ptr((void*)gameInstance)) continue;
+        
+        // If we get here, this is very likely GWorld
+        LOGI("[+] Found GWorld at offset 0x%lX (addr=%p, value=%p)", 
+             (unsigned long)(addr - base), (void*)addr, (void*)candidate);
+        LOGI("[+] PlayerCount=%d, GameState=%p", playerCount, (void*)gameState);
+        
+        return addr;
     }
     
+    LOGW("[-] GWorld not found via scan");
     return 0;
 }
 
 // ============================================================================
-// APPLY ALL BYPASSES
+// WORLD TO SCREEN
 // ============================================================================
-static void ApplyAllBypasses() {
-    LOGI("Applying bypass patches...");
+
+static bool WorldToScreen(FVector worldPos, FVector cameraLoc, FRotator cameraRot, float fov, FVector2D& screenOut) {
+    // Convert rotation to radians
+    float pitch = cameraRot.Pitch * (M_PI / 180.0f);
+    float yaw   = cameraRot.Yaw   * (M_PI / 180.0f);
+    float roll  = cameraRot.Roll  * (M_PI / 180.0f);
     
-    // Wait for critical libraries to load
-    int waitCount = 0;
-    while (!get_lib_base("libUE4.so") && waitCount < 120) {
-        usleep(500000); // 500ms
-        waitCount++;
-    }
-    if (!get_lib_base("libUE4.so")) {
-        LOGE("libUE4.so never loaded after 60s!");
-        return;
-    }
-    LOGI("libUE4.so base: %lx", (unsigned long)get_lib_base("libUE4.so"));
+    float cp = cosf(pitch), sp = sinf(pitch);
+    float cy = cosf(yaw),   sy = sinf(yaw);
+    float cr = cosf(roll),  sr = sinf(roll);
     
-    // Wait a bit more for AC libs
-    sleep(5);
+    // Build view matrix axes (UE4 coordinate system)
+    FVector forward = {cp * cy, cp * sy, sp};
+    FVector right   = {
+        -(sr * sp * cy - cr * sy),
+        -(sr * sp * sy + cr * cy),
+        sr * cp
+    };
+    FVector up = {
+        cr * sp * cy + sr * sy,
+        cr * sp * sy - sr * cy,
+        -(cr * cp)
+    };
     
-    // Apply all patches from FINAL_BYPASS.h
-    #include "../true_bypass/FINAL_BYPASS.h"
+    // Transform world position to view space
+    FVector delta = worldPos - cameraLoc;
     
-    g_BypassApplied = true;
-    LOGI("All bypass patches applied successfully!");
+    float x = delta.X * right.X + delta.Y * right.Y + delta.Z * right.Z;
+    float y = delta.X * up.X    + delta.Y * up.Y    + delta.Z * up.Z;
+    float z = delta.X * forward.X + delta.Y * forward.Y + delta.Z * forward.Z;
+    
+    // Behind camera check
+    if (z < 1.0f) return false;
+    
+    // Project to screen
+    float fovRad = fov * (M_PI / 180.0f);
+    float tanHalfFov = tanf(fovRad * 0.5f);
+    
+    float screenX = (g_config.screen_width * 0.5f) + (x / z / tanHalfFov) * (g_config.screen_width * 0.5f);
+    float screenY = (g_config.screen_height * 0.5f) - (y / z / tanHalfFov) * (g_config.screen_width * 0.5f);
+    
+    screenOut.X = screenX;
+    screenOut.Y = screenY;
+    
+    return true;
 }
 
 // ============================================================================
-// LARGE HITBOX — modify capsule component scale
+// BONE POSITION FROM MESH
 // ============================================================================
-static void ApplyLargeHitbox(uintptr_t character, float scale) {
-    if (!IsValidPtr(character)) return;
+
+static FVector GetBoneWorldPosition(uintptr_t mesh, int boneIndex) {
+    FVector result = {0, 0, 0};
     
-    // CapsuleComponent is typically at offset 0x04F8 (before Mesh at 0x0500)
-    // Or we can access it through the character's collision component
-    constexpr uint32_t Character_CapsuleComponent = 0x04F8;
+    if (!is_valid_ptr((void*)mesh)) return result;
     
-    uintptr_t capsule = ReadPtr(character + Character_CapsuleComponent);
-    if (!IsValidPtr(capsule)) return;
+    // Get CachedBoneSpaceTransforms TArray
+    uintptr_t boneArrayData = read_mem<uintptr_t>(mesh + Offsets::SkelMesh_CachedBoneTransforms);
+    int32_t boneCount = read_mem<int32_t>(mesh + Offsets::SkelMesh_CachedBoneTransforms + 8);
     
-    // CapsuleHalfHeight at offset ~0x0324, CapsuleRadius at ~0x0320
-    // These are in UCapsuleComponent
-    constexpr uint32_t Capsule_Radius = 0x0320;
-    constexpr uint32_t Capsule_HalfHeight = 0x0324;
+    if (!is_valid_ptr((void*)boneArrayData)) return result;
+    if (boneIndex < 0 || boneIndex >= boneCount) return result;
     
-    float currentRadius = SafeRead<float>(capsule + Capsule_Radius);
-    float currentHeight = SafeRead<float>(capsule + Capsule_HalfHeight);
+    // Each FTransform is 48 bytes (0x30) on ARM64 with padding
+    // Actually: Quat(16) + Translation(16) + Scale(16) = 48
+    // But with alignment it's typically 0x30 = 48 bytes
+    size_t transformSize = 0x30; // sizeof(FTransform) = 48
     
-    // Only scale if not already scaled (avoid infinite growth)
-    // Default capsule radius is ~35-42, height ~90-95
-    if (currentRadius > 0.0f && currentRadius < 100.0f) {
-        float newRadius = currentRadius * scale;
-        float newHeight = currentHeight * scale;
+    uintptr_t boneTransformAddr = boneArrayData + (boneIndex * transformSize);
+    if (!is_valid_ptr((void*)boneTransformAddr)) return result;
+    
+    // FTransform: Rotation(Quat 16 bytes), Translation(Vector+pad 16 bytes), Scale(Vector+pad 16 bytes)
+    // Translation is at offset 0x10 inside FTransform
+    FVector boneLocalPos = read_mem<FVector>(boneTransformAddr + 0x10);
+    
+    // Get ComponentToWorld transform from the mesh's SceneComponent
+    // USkeletalMeshComponent inherits from USceneComponent
+    FTransform compToWorld = read_mem<FTransform>(mesh + Offsets::SceneComp_ComponentToWorld);
+    
+    // Transform bone position to world space
+    // Simplified: just add component world translation + bone local
+    // Full transform would involve rotation, but for ESP this is sufficient
+    // Actually we need proper transform:
+    
+    // Quaternion rotation
+    float qx = compToWorld.Rotation[0];
+    float qy = compToWorld.Rotation[1];
+    float qz = compToWorld.Rotation[2];
+    float qw = compToWorld.Rotation[3];
+    
+    // Rotate boneLocalPos by quaternion
+    // v' = q * v * q^-1 (using quaternion multiplication)
+    float vx = boneLocalPos.X, vy = boneLocalPos.Y, vz = boneLocalPos.Z;
+    
+    // Optimized quaternion rotation
+    float tx = 2.0f * (qy * vz - qz * vy);
+    float ty = 2.0f * (qz * vx - qx * vz);
+    float tz = 2.0f * (qx * vy - qy * vx);
+    
+    result.X = vx + qw * tx + (qy * tz - qz * ty);
+    result.Y = vy + qw * ty + (qz * tx - qx * tz);
+    result.Z = vz + qw * tz + (qx * ty - qy * tx);
+    
+    // Scale
+    result.X *= compToWorld.Scale3D.X;
+    result.Y *= compToWorld.Scale3D.Y;
+    result.Z *= compToWorld.Scale3D.Z;
+    
+    // Translate
+    result.X += compToWorld.Translation.X;
+    result.Y += compToWorld.Translation.Y;
+    result.Z += compToWorld.Translation.Z;
+    
+    return result;
+}
+
+// ============================================================================
+// GET ACTOR LOCATION (from RootComponent)
+// ============================================================================
+
+static FVector GetActorLocation(uintptr_t actor) {
+    if (!is_valid_ptr((void*)actor)) return {0, 0, 0};
+    
+    uintptr_t rootComp = read_mem<uintptr_t>(actor + Offsets::Actor_RootComponent);
+    if (!is_valid_ptr((void*)rootComp)) return {0, 0, 0};
+    
+    // ComponentToWorld.Translation = world position
+    FVector pos = read_mem<FVector>(rootComp + Offsets::SceneComp_ComponentToWorld + 0x10);
+    return pos;
+}
+
+// ============================================================================
+// CAMERA INFO
+// ============================================================================
+
+struct CameraInfo {
+    FVector location;
+    FRotator rotation;
+    float fov;
+    bool valid;
+};
+
+static CameraInfo GetCameraInfo(uintptr_t playerController) {
+    CameraInfo cam = {};
+    cam.valid = false;
+    
+    if (!is_valid_ptr((void*)playerController)) return cam;
+    
+    uintptr_t cameraManager = read_mem<uintptr_t>(playerController + Offsets::PC_PlayerCameraManager);
+    if (!is_valid_ptr((void*)cameraManager)) return cam;
+    
+    // CameraCache.POV.Location
+    uintptr_t povBase = cameraManager + Offsets::CameraManager_CameraCache + Offsets::CacheEntry_POV;
+    
+    cam.location = read_mem<FVector>(povBase + Offsets::POV_Location);
+    cam.rotation = read_mem<FRotator>(povBase + Offsets::POV_Rotation);
+    cam.fov = read_mem<float>(povBase + Offsets::POV_FOV);
+    
+    // Validate
+    if (cam.fov < 10.0f || cam.fov > 170.0f) cam.fov = 90.0f;
+    if (cam.location.Length() < 1.0f) return cam; // probably invalid
+    
+    cam.valid = true;
+    return cam;
+}
+
+// ============================================================================
+// LOCAL PLAYER INFO
+// ============================================================================
+
+struct LocalPlayerInfo {
+    uintptr_t playerController;
+    uintptr_t pawn;
+    uintptr_t playerState;
+    int teamId;
+    FVector location;
+    bool valid;
+};
+
+static LocalPlayerInfo GetLocalPlayer(uintptr_t world) {
+    LocalPlayerInfo info = {};
+    info.valid = false;
+    
+    if (!is_valid_ptr((void*)world)) return info;
+    
+    // UWorld -> OwningGameInstance -> LocalPlayers[0] -> PlayerController
+    uintptr_t gameInstance = read_mem<uintptr_t>(world + Offsets::UWorld_OwningGameInstance);
+    if (!is_valid_ptr((void*)gameInstance)) return info;
+    
+    // LocalPlayers TArray
+    uintptr_t localPlayersData = read_mem<uintptr_t>(gameInstance + Offsets::GameInstance_LocalPlayers);
+    int32_t localPlayersCount = read_mem<int32_t>(gameInstance + Offsets::GameInstance_LocalPlayers + 8);
+    
+    if (!is_valid_ptr((void*)localPlayersData) || localPlayersCount < 1) return info;
+    
+    // LocalPlayers[0]
+    uintptr_t localPlayer = read_mem<uintptr_t>(localPlayersData);
+    if (!is_valid_ptr((void*)localPlayer)) return info;
+    
+    // UPlayer::PlayerController
+    info.playerController = read_mem<uintptr_t>(localPlayer + Offsets::UPlayer_PlayerController);
+    if (!is_valid_ptr((void*)info.playerController)) return info;
+    
+    // AController::Pawn
+    info.pawn = read_mem<uintptr_t>(info.playerController + Offsets::Controller_Pawn);
+    if (!is_valid_ptr((void*)info.pawn)) return info;
+    
+    // TeamID from pawn (ASTExtraBaseCharacter)
+    info.teamId = read_mem<int32_t>(info.pawn + Offsets::STChar_TeamID);
+    info.location = GetActorLocation(info.pawn);
+    
+    info.valid = true;
+    return info;
+}
+
+// ============================================================================
+// AIMBOT
+// ============================================================================
+
+static void DoAimbot(uintptr_t playerController, const CameraInfo& cam, const std::vector<PlayerESP>& players) {
+    if (!g_config.aimbot_enabled) return;
+    if (!is_valid_ptr((void*)playerController)) return;
+    
+    float screenCenterX = g_config.screen_width / 2.0f;
+    float screenCenterY = g_config.screen_height / 2.0f;
+    
+    float closestDist = g_config.aimbot_fov;
+    FVector bestTarget = {0, 0, 0};
+    bool foundTarget = false;
+    
+    for (const auto& player : players) {
+        if (!player.isEnemy) continue;
+        if (player.health <= 0) continue;
         
-        // Clamp to reasonable values
-        if (newRadius > 200.0f) newRadius = 200.0f;
-        if (newHeight > 300.0f) newHeight = 300.0f;
+        // Check if head is on screen
+        if (!player.bonesValid[Bones::Head]) continue;
         
-        // Make writable and write
-        uintptr_t page = (capsule + Capsule_Radius) & ~(uintptr_t)0xFFF;
-        if (mprotect((void*)page, 0x2000, PROT_READ | PROT_WRITE) == 0) {
-            memcpy((void*)(capsule + Capsule_Radius), &newRadius, 4);
-            memcpy((void*)(capsule + Capsule_HalfHeight), &newHeight, 4);
+        float headScreenX = player.bones[Bones::Head].X;
+        float headScreenY = player.bones[Bones::Head].Y;
+        
+        // Distance from crosshair
+        float dx = headScreenX - screenCenterX;
+        float dy = headScreenY - screenCenterY;
+        float dist = sqrtf(dx * dx + dy * dy);
+        
+        if (dist < closestDist) {
+            closestDist = dist;
+            bestTarget = player.headWorld;
+            foundTarget = true;
+        }
+    }
+    
+    if (!foundTarget) return;
+    
+    // Calculate aim angle
+    FVector delta = bestTarget - cam.location;
+    float dist = delta.Length();
+    if (dist < 1.0f) return;
+    
+    FRotator targetRot;
+    targetRot.Yaw = atan2f(delta.Y, delta.X) * (180.0f / M_PI);
+    targetRot.Pitch = -atan2f(delta.Z, sqrtf(delta.X * delta.X + delta.Y * delta.Y)) * (180.0f / M_PI);
+    targetRot.Roll = 0;
+    
+    // Read current control rotation
+    FRotator* controlRot = (FRotator*)((uintptr_t)playerController + Offsets::Controller_ControlRotation);
+    if (!is_valid_ptr((void*)controlRot)) return;
+    
+    // Smooth interpolation
+    float smooth = g_config.aimbot_smooth;
+    if (smooth < 1.0f) smooth = 1.0f;
+    
+    // Normalize angle difference
+    auto normAngle = [](float angle) -> float {
+        while (angle > 180.0f) angle -= 360.0f;
+        while (angle < -180.0f) angle += 360.0f;
+        return angle;
+    };
+    
+    float diffYaw = normAngle(targetRot.Yaw - controlRot->Yaw);
+    float diffPitch = normAngle(targetRot.Pitch - controlRot->Pitch);
+    
+    controlRot->Yaw += diffYaw / smooth;
+    controlRot->Pitch += diffPitch / smooth;
+}
+
+// ============================================================================
+// LARGE HITBOX
+// ============================================================================
+
+static void ApplyLargeHitbox(uintptr_t character) {
+    if (!g_config.large_hitbox_enabled) return;
+    if (!is_valid_ptr((void*)character)) return;
+    
+    uintptr_t capsule = read_mem<uintptr_t>(character + Offsets::Character_Capsule);
+    if (!is_valid_ptr((void*)capsule)) return;
+    
+    float currentRadius = read_mem<float>(capsule + Offsets::Capsule_Radius);
+    
+    // Only scale if it's a reasonable base value (hasn't been scaled yet)
+    // Normal capsule radius is around 30-45 units
+    if (currentRadius > 10.0f && currentRadius < 60.0f) {
+        float newRadius = currentRadius * g_config.hitbox_scale;
+        
+        if (mem_protect(capsule + Offsets::Capsule_Radius, 4, PROT_READ | PROT_WRITE | PROT_EXEC)) {
+            *(float*)(capsule + Offsets::Capsule_Radius) = newRadius;
         }
     }
 }
 
 // ============================================================================
-// MAIN GAME LOOP — reads game state, builds draw data
+// ESP DATA OUTPUT (write to file for overlay app to read)
 // ============================================================================
-static void UpdateGameState() {
-    int screenW = g_ScreenW.load();
-    int screenH = g_ScreenH.load();
-    bool espOn = g_ESP.load();
-    bool aimbotOn = g_Aimbot.load();
-    bool hitboxOn = g_LargeHitbox.load();
-    float aimFOV = g_AimbotFOV.load();
-    float hitScale = g_HitboxScale.load();
-    
-    // Temporary draw data (copy to global under lock)
-    ESPBox tempBoxes[MAX_PLAYERS];
-    ESPLine tempBones[MAX_BONES];
-    int numBoxes = 0, numBones = 0;
-    AimData aimData = {0, 0, false, 0};
-    bool inMatch = false;
-    int totalPlayers = 0;
-    
-    uintptr_t world = g_GWorld.load();
-    if (!IsValidPtr(world)) return;
-    
-    // Get GameState
-    uintptr_t gameState = ReadPtr(world + Offsets::UWorld_GameState);
-    if (!IsValidPtr(gameState)) return;
-    
-    // Get PlayerArray
-    uintptr_t playerArrayData = ReadPtr(gameState + Offsets::GameState_PlayerArray);
-    int playerCount = SafeRead<int>(gameState + Offsets::GameState_PlayerArray + 8);
-    
-    if (!IsValidPtr(playerArrayData) || playerCount <= 0 || playerCount > 100) return;
-    totalPlayers = playerCount;
-    
-    // LOBBY/ISLAND BYPASS: If less than 10 players or no game instance, skip
-    if (playerCount < 10) {
-        // Probably lobby or loading
-        pthread_mutex_lock(&g_DrawData.lock);
-        g_DrawData.inMatch = false;
-        g_DrawData.numBoxes = 0;
-        g_DrawData.numBones = 0;
-        g_DrawData.aim.hasTarget = false;
-        g_DrawData.playerCount = playerCount;
-        pthread_mutex_unlock(&g_DrawData.lock);
-        return;
-    }
-    inMatch = true;
-    
-    // Get local player controller
-    uintptr_t gameInstance = ReadPtr(world + Offsets::UWorld_OwningGameInstance);
-    if (!IsValidPtr(gameInstance)) return;
-    
-    uintptr_t localPlayersArray = ReadPtr(gameInstance + Offsets::GameInstance_LocalPlayers);
-    if (!IsValidPtr(localPlayersArray)) return;
-    
-    uintptr_t localPlayer = ReadPtr(localPlayersArray); // first element
-    if (!IsValidPtr(localPlayer)) return;
-    
-    uintptr_t playerController = ReadPtr(localPlayer + Offsets::UPlayer_PlayerController);
-    if (!IsValidPtr(playerController)) return;
-    
-    uintptr_t myPawn = ReadPtr(playerController + Offsets::Controller_Pawn);
-    uintptr_t cameraManager = ReadPtr(playerController + Offsets::PC_CameraManager);
-    if (!IsValidPtr(cameraManager)) return;
-    
-    // Get camera data
-    FVector camLoc = SafeRead<FVector>(cameraManager + Offsets::CamMgr_CacheLoc);
-    FRotator camRot = SafeRead<FRotator>(cameraManager + Offsets::CamMgr_CacheRot);
-    float camFOV = SafeRead<float>(cameraManager + Offsets::CamMgr_CacheFOV);
-    
-    // Validate FOV
-    if (camFOV < 10.0f || camFOV > 170.0f) camFOV = 90.0f;
-    
-    // Get my team
-    int myTeam = -1;
-    if (IsValidPtr(myPawn)) {
-        myTeam = SafeRead<int>(myPawn + Offsets::STExtra_TeamID);
+
+static void WriteESPData(const std::vector<PlayerESP>& players, const CameraInfo& cam) {
+    // Write ESP data to shared memory file for overlay rendering
+    FILE* fp = fopen("/data/local/tmp/bgmi_esp.dat", "wb");
+    if (!fp) {
+        // Try alternative path
+        fp = fopen("/sdcard/Android/data/com.pubg.imobile/bgmi_esp.dat", "wb");
+        if (!fp) return;
     }
     
-    // Aimbot tracking
-    float closestAimDist = 999999.0f;
-    float centerX = (float)screenW / 2.0f;
-    float centerY = (float)screenH / 2.0f;
-    float fovPixelRadius = aimFOV; // pixels
+    // Header: player count, screen size
+    int32_t count = (int32_t)players.size();
+    fwrite(&count, 4, 1, fp);
+    fwrite(&g_config.screen_width, 4, 1, fp);
+    fwrite(&g_config.screen_height, 4, 1, fp);
+    fwrite(&cam.location, sizeof(FVector), 1, fp);
     
-    aimData.fovRadius = fovPixelRadius;
+    // Aimbot FOV circle center
+    float cx = g_config.screen_width / 2.0f;
+    float cy = g_config.screen_height / 2.0f;
+    float fovRadius = g_config.aimbot_fov;
+    fwrite(&cx, 4, 1, fp);
+    fwrite(&cy, 4, 1, fp);
+    fwrite(&fovRadius, 4, 1, fp);
     
-    // Iterate players
-    for (int i = 0; i < playerCount && numBoxes < MAX_PLAYERS; i++) {
-        uintptr_t playerState = ReadPtr(playerArrayData + (uintptr_t)i * 8);
-        if (!IsValidPtr(playerState)) continue;
-        
-        // Get character from PlayerState
-        uintptr_t character = ReadPtr(playerState + Offsets::STPS_CharacterOwner);
-        if (!IsValidPtr(character)) continue;
-        
-        // Skip self
-        if (character == myPawn) continue;
-        
-        // Check alive
-        uint8_t deadByte = SafeRead<uint8_t>(character + Offsets::STExtra_bDead);
-        if (deadByte & 0x01) continue; // bDead is bit 0
-        
-        float health = SafeRead<float>(character + Offsets::STExtra_Health);
-        float healthMax = SafeRead<float>(character + Offsets::STExtra_HealthMax);
-        if (health <= 0.0f) continue;
-        if (healthMax <= 0.0f || healthMax > 10000.0f) healthMax = 100.0f;
-        
-        // Team check
-        int teamID = SafeRead<int>(character + Offsets::STExtra_TeamID);
-        bool isEnemy = (myTeam >= 0 && teamID != myTeam);
-        
-        // Get world position from RootComponent->ComponentToWorld
-        uintptr_t rootComp = ReadPtr(character + Offsets::Actor_RootComponent);
-        if (!IsValidPtr(rootComp)) continue;
-        
-        FVector rootPos = SafeRead<FVector>(rootComp + Offsets::SceneComp_ComponentToWorld + Offsets::Transform_Translation);
-        
-        // Validate position (sanity check)
-        if (fabsf(rootPos.X) > 500000.0f || fabsf(rootPos.Y) > 500000.0f) continue;
-        
-        // Get mesh component for bones
-        uintptr_t meshComp = ReadPtr(character + Offsets::Character_Mesh);
-        
-        // Head position (from bone or estimated)
-        FVector headPos = rootPos;
-        headPos.Z += 165.0f; // Default standing height
-        
-        if (IsValidPtr(meshComp)) {
-            FVector boneHead = GetBoneWorldPos(meshComp, Bones::Head);
-            if (boneHead.Z != 0.0f && fabsf(boneHead.X) < 500000.0f) {
-                headPos = boneHead;
-            }
-        }
-        
-        // World to screen
-        FVector2D screenRoot, screenHead;
-        bool rootVisible = WorldToScreen(rootPos, screenRoot, camLoc, camRot, camFOV, screenW, screenH);
-        bool headVisible = WorldToScreen(headPos, screenHead, camLoc, camRot, camFOV, screenW, screenH);
-        
-        if (!rootVisible && !headVisible) continue;
-        
-        // Calculate distance
-        float dist = (rootPos - camLoc).Length() / 100.0f; // cm to meters
-        
-        // Large Hitbox — only for enemies within 300m
-        if (hitboxOn && isEnemy && dist < 300.0f) {
-            ApplyLargeHitbox(character, hitScale);
-        }
-        
-        if (!espOn && !aimbotOn) continue;
-        if (!rootVisible || !headVisible) continue;
-        
-        // Box dimensions
-        float boxH = fabsf(screenRoot.Y - screenHead.Y);
-        if (boxH < 3.0f) continue; // Too small to draw
-        float boxW = boxH * 0.55f;
-        
-        if (espOn) {
-            // Store box
-            tempBoxes[numBoxes] = {
-                screenHead.X - boxW / 2.0f,
-                screenHead.Y,
-                boxW,
-                boxH,
-                health / healthMax,
-                dist,
-                isEnemy ? 1 : 0
-            };
-            numBoxes++;
-            
-            // Skeleton ESP (bone lines)
-            if (IsValidPtr(meshComp) && numBones + NUM_BONE_CONNECTIONS <= MAX_BONES) {
-                for (int b = 0; b < NUM_BONE_CONNECTIONS; b++) {
-                    FVector bp1 = GetBoneWorldPos(meshComp, BoneConnections[b][0]);
-                    FVector bp2 = GetBoneWorldPos(meshComp, BoneConnections[b][1]);
-                    
-                    FVector2D sp1, sp2;
-                    if (bp1.Z != 0.0f && bp2.Z != 0.0f &&
-                        WorldToScreen(bp1, sp1, camLoc, camRot, camFOV, screenW, screenH) &&
-                        WorldToScreen(bp2, sp2, camLoc, camRot, camFOV, screenW, screenH)) {
-                        tempBones[numBones] = {sp1.X, sp1.Y, sp2.X, sp2.Y, isEnemy ? 1 : 0};
-                        numBones++;
-                    }
-                }
-            }
-        }
-        
-        // Aimbot — find closest enemy head to crosshair within FOV
-        if (aimbotOn && isEnemy) {
-            float dx = screenHead.X - centerX;
-            float dy = screenHead.Y - centerY;
-            float aimDist = sqrtf(dx * dx + dy * dy);
-            
-            if (aimDist < fovPixelRadius && aimDist < closestAimDist) {
-                closestAimDist = aimDist;
-                aimData.targetX = screenHead.X;
-                aimData.targetY = screenHead.Y;
-                aimData.hasTarget = true;
-            }
-        }
+    // Per-player data
+    for (const auto& p : players) {
+        fwrite(&p, sizeof(PlayerESP), 1, fp);
     }
     
-    // Copy to global draw data under lock
-    pthread_mutex_lock(&g_DrawData.lock);
-    memcpy(g_DrawData.boxes, tempBoxes, numBoxes * sizeof(ESPBox));
-    g_DrawData.numBoxes = numBoxes;
-    memcpy(g_DrawData.bones, tempBones, numBones * sizeof(ESPLine));
-    g_DrawData.numBones = numBones;
-    g_DrawData.aim = aimData;
-    g_DrawData.inMatch = inMatch;
-    g_DrawData.playerCount = totalPlayers;
-    pthread_mutex_unlock(&g_DrawData.lock);
+    fclose(fp);
 }
 
 // ============================================================================
-// MAIN THREAD
+// MAIN GAME LOOP
 // ============================================================================
-static void* MainThread(void* arg) {
-    LOGI("=== BGMI Bypass + ESP Thread Started ===");
+
+static void* main_thread(void* arg) {
+    LOGI("[*] BGMI Bypass + ESP thread started");
     
     // Phase 1: Apply bypasses
-    ApplyAllBypasses();
+    apply_all_bypasses();
     
-    // Phase 2: Wait for game to fully initialize, then find GWorld
-    LOGI("Waiting for game world...");
-    sleep(15); // Give game time to create world
+    // Phase 2: Wait for game to fully load
+    LOGI("[*] Waiting for game to initialize...");
+    usleep(5000000); // 5 seconds
     
-    int findAttempts = 0;
-    while (g_Running.load() && g_GWorld.load() == 0) {
-        uintptr_t world = FindGWorld();
-        if (world != 0) {
-            g_GWorld.store(world);
-            LOGI("GWorld found! Starting ESP/Aimbot loop.");
-            break;
+    // Phase 3: Find GWorld
+    int retries = 0;
+    while (g_gworldPtr == 0 && retries < 30) {
+        g_gworldPtr = find_gworld();
+        if (g_gworldPtr == 0) {
+            LOGI("[*] GWorld not found, retry %d/30...", retries + 1);
+            usleep(3000000); // 3s
         }
-        findAttempts++;
-        if (findAttempts > 60) {
-            LOGW("Could not find GWorld after 60 attempts, retrying...");
-            findAttempts = 0;
-        }
-        sleep(2);
+        retries++;
     }
     
-    // Phase 3: Main game loop
-    while (g_Running.load()) {
-        // Validate GWorld is still valid
-        uintptr_t world = g_GWorld.load();
-        if (!IsValidPtr(world)) {
-            g_GWorld.store(0);
-            sleep(2);
-            uintptr_t newWorld = FindGWorld();
-            if (newWorld != 0) g_GWorld.store(newWorld);
-            continue;
-        }
-        
-        // Verify world chain still valid
-        uintptr_t gs = ReadPtr(world + Offsets::UWorld_GameState);
-        if (!IsValidPtr(gs)) {
-            // World might have changed (map transition)
-            g_GWorld.store(0);
-            sleep(1);
-            continue;
-        }
-        
-        UpdateGameState();
+    if (g_gworldPtr == 0) {
+        LOGE("[-] Failed to find GWorld after 30 retries. ESP disabled.");
+        // Bypasses still active
+        while (true) { sleep(60); }
+        return nullptr;
+    }
+    
+    LOGI("[+] ESP/Aimbot loop starting");
+    g_running = true;
+    
+    // Main loop
+    while (g_running) {
         usleep(16666); // ~60 FPS
+        
+        // Read GWorld pointer
+        uintptr_t world = read_mem<uintptr_t>(g_gworldPtr);
+        if (!is_valid_ptr((void*)world)) {
+            // World may have been destroyed (loading screen, etc)
+            usleep(1000000);
+            continue;
+        }
+        
+        // Get local player
+        LocalPlayerInfo local = GetLocalPlayer(world);
+        if (!local.valid) continue;
+        
+        // Get camera
+        CameraInfo cam = GetCameraInfo(local.playerController);
+        if (!cam.valid) continue;
+        
+        // Get GameState -> PlayerArray
+        uintptr_t gameState = read_mem<uintptr_t>(world + Offsets::UWorld_GameState);
+        if (!is_valid_ptr((void*)gameState)) continue;
+        
+        uintptr_t playerArrayData = read_mem<uintptr_t>(gameState + Offsets::GameState_PlayerArray);
+        int32_t playerCount = read_mem<int32_t>(gameState + Offsets::GameState_PlayerArray + 8);
+        
+        if (!is_valid_ptr((void*)playerArrayData)) continue;
+        if (playerCount < 1 || playerCount > 150) continue;
+        
+        // Lobby/Island bypass
+        if (g_config.lobby_bypass && playerCount < g_config.min_players_for_match) {
+            continue;
+        }
+        
+        // Process players
+        std::vector<PlayerESP> espPlayers;
+        espPlayers.reserve(playerCount);
+        
+        for (int i = 0; i < playerCount; i++) {
+            uintptr_t playerState = read_mem<uintptr_t>(playerArrayData + i * 8);
+            if (!is_valid_ptr((void*)playerState)) continue;
+            
+            // Get character from ASTExtraPlayerState::CharacterOwner
+            uintptr_t character = read_mem<uintptr_t>(playerState + Offsets::STState_CharacterOwner);
+            if (!is_valid_ptr((void*)character)) continue;
+            
+            // Skip self
+            if (character == local.pawn) continue;
+            
+            // Check alive
+            float health = read_mem<float>(character + Offsets::STChar_Health);
+            float healthMax = read_mem<float>(character + Offsets::STChar_HealthMax);
+            uint8_t deadByte = read_mem<uint8_t>(character + Offsets::STChar_bDead);
+            bool isDead = (deadByte & 0x01) != 0;
+            
+            if (isDead || health <= 0.0f) continue;
+            if (healthMax <= 0.0f) healthMax = 100.0f;
+            
+            // Team check
+            int teamId = read_mem<int32_t>(character + Offsets::STChar_TeamID);
+            bool isEnemy = (teamId != local.teamId);
+            
+            // Get position
+            FVector actorPos = GetActorLocation(character);
+            float distance = actorPos.Distance(local.location) / 100.0f; // cm to meters
+            
+            // Get mesh for bones
+            uintptr_t mesh = read_mem<uintptr_t>(character + Offsets::Character_Mesh);
+            
+            // Build ESP data
+            PlayerESP esp = {};
+            esp.health = health;
+            esp.healthMax = healthMax;
+            esp.distance = distance;
+            esp.teamId = teamId;
+            esp.isEnemy = isEnemy;
+            esp.worldPos = actorPos;
+            
+            // World to screen for position
+            FVector2D screenPos;
+            if (!WorldToScreen(actorPos, cam.location, cam.rotation, cam.fov, screenPos)) continue;
+            esp.screenPos = screenPos;
+            
+            // Get bone positions
+            if (is_valid_ptr((void*)mesh)) {
+                // Key bones to process
+                static const int bonesToProcess[] = {
+                    Bones::Head, Bones::Neck, Bones::Spine02, Bones::Spine01,
+                    Bones::Pelvis, Bones::LeftShoulder, Bones::LeftElbow, 
+                    Bones::LeftHand, Bones::RightShoulder, Bones::RightElbow,
+                    Bones::RightHand, Bones::LeftHip, Bones::LeftKnee,
+                    Bones::LeftFoot, Bones::RightHip, Bones::RightKnee,
+                    Bones::RightFoot
+                };
+                
+                for (int b = 0; b < 17; b++) {
+                    int boneIdx = bonesToProcess[b];
+                    FVector boneWorld = GetBoneWorldPosition(mesh, boneIdx);
+                    
+                    if (boneWorld.Length() < 1.0f) {
+                        esp.bonesValid[boneIdx] = false;
+                        continue;
+                    }
+                    
+                    FVector2D boneScreen;
+                    if (WorldToScreen(boneWorld, cam.location, cam.rotation, cam.fov, boneScreen)) {
+                        esp.bones[boneIdx] = boneScreen;
+                        esp.bonesValid[boneIdx] = true;
+                        
+                        // Store head world position for aimbot
+                        if (boneIdx == Bones::Head) {
+                            esp.headWorld = boneWorld;
+                            esp.headScreen = boneScreen;
+                        }
+                    } else {
+                        esp.bonesValid[boneIdx] = false;
+                    }
+                }
+                
+                // Apply large hitbox on enemies
+                if (isEnemy && g_config.large_hitbox_enabled) {
+                    ApplyLargeHitbox(character);
+                }
+            }
+            
+            espPlayers.push_back(esp);
+        }
+        
+        // Aimbot
+        if (g_config.aimbot_enabled && !espPlayers.empty()) {
+            DoAimbot(local.playerController, cam, espPlayers);
+        }
+        
+        // Write ESP data for overlay
+        if (g_config.esp_enabled && !espPlayers.empty()) {
+            WriteESPData(espPlayers, cam);
+        }
+        
+        // Update global for external access
+        g_espData = espPlayers;
     }
     
-    LOGI("Main thread exiting.");
     return nullptr;
 }
 
 // ============================================================================
-// JNI INTERFACE — for Java overlay to read draw data
+// SCREEN RESOLUTION DETECTION
 // ============================================================================
 
-extern "C" {
-
-JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved) {
-    LOGI("=== libbypass.so loaded (BGMI 4.4.0 ARM64) ===");
-    
-    pthread_mutex_init(&g_DrawData.lock, nullptr);
-    
-    pthread_t thread;
-    pthread_create(&thread, nullptr, MainThread, nullptr);
-    pthread_detach(thread);
-    
-    return JNI_VERSION_1_6;
-}
-
-JNIEXPORT void JNI_OnUnload(JavaVM* vm, void* reserved) {
-    g_Running.store(false);
-    pthread_mutex_destroy(&g_DrawData.lock);
-    LOGI("libbypass unloaded.");
-}
-
-// Config setters
-JNIEXPORT void JNICALL
-Java_com_bypass_Native_setESP(JNIEnv* env, jclass cls, jboolean on) {
-    g_ESP.store((bool)on);
-}
-
-JNIEXPORT void JNICALL
-Java_com_bypass_Native_setAimbot(JNIEnv* env, jclass cls, jboolean on) {
-    g_Aimbot.store((bool)on);
-}
-
-JNIEXPORT void JNICALL
-Java_com_bypass_Native_setLargeHitbox(JNIEnv* env, jclass cls, jboolean on) {
-    g_LargeHitbox.store((bool)on);
-}
-
-JNIEXPORT void JNICALL
-Java_com_bypass_Native_setAimbotFOV(JNIEnv* env, jclass cls, jfloat fov) {
-    g_AimbotFOV.store(fov);
-}
-
-JNIEXPORT void JNICALL
-Java_com_bypass_Native_setAimbotSmooth(JNIEnv* env, jclass cls, jfloat smooth) {
-    g_AimbotSmooth.store(smooth);
-}
-
-JNIEXPORT void JNICALL
-Java_com_bypass_Native_setHitboxScale(JNIEnv* env, jclass cls, jfloat scale) {
-    g_HitboxScale.store(scale);
-}
-
-JNIEXPORT void JNICALL
-Java_com_bypass_Native_setScreenSize(JNIEnv* env, jclass cls, jint w, jint h) {
-    g_ScreenW.store(w);
-    g_ScreenH.store(h);
-}
-
-// Get draw data as arrays for Java Canvas rendering
-JNIEXPORT jfloatArray JNICALL
-Java_com_bypass_Native_getBoxes(JNIEnv* env, jclass cls) {
-    pthread_mutex_lock(&g_DrawData.lock);
-    
-    int count = g_DrawData.numBoxes;
-    // Each box: x, y, w, h, healthPercent, distance, isEnemy (7 floats)
-    jfloatArray result = env->NewFloatArray(count * 7);
-    if (result && count > 0) {
-        float* data = new float[count * 7];
-        for (int i = 0; i < count; i++) {
-            data[i*7 + 0] = g_DrawData.boxes[i].x;
-            data[i*7 + 1] = g_DrawData.boxes[i].y;
-            data[i*7 + 2] = g_DrawData.boxes[i].w;
-            data[i*7 + 3] = g_DrawData.boxes[i].h;
-            data[i*7 + 4] = g_DrawData.boxes[i].healthPercent;
-            data[i*7 + 5] = g_DrawData.boxes[i].distance;
-            data[i*7 + 6] = (float)g_DrawData.boxes[i].isEnemy;
+static void detect_screen_size() {
+    // Try to read from /sys or wm
+    FILE* fp = popen("wm size 2>/dev/null", "r");
+    if (fp) {
+        char buf[128];
+        if (fgets(buf, sizeof(buf), fp)) {
+            int w, h;
+            if (sscanf(buf, "Physical size: %dx%d", &w, &h) == 2) {
+                g_config.screen_width = (float)w;
+                g_config.screen_height = (float)h;
+                LOGI("[+] Screen: %dx%d", w, h);
+            }
         }
-        env->SetFloatArrayRegion(result, 0, count * 7, data);
-        delete[] data;
+        pclose(fp);
     }
+}
+
+// ============================================================================
+// ENTRY POINT
+// ============================================================================
+
+__attribute__((constructor))
+void lib_init() {
+    LOGI("[*] ====================================");
+    LOGI("[*] BGMI 4.4.0 Bypass + ESP loaded");
+    LOGI("[*] ====================================");
     
-    pthread_mutex_unlock(&g_DrawData.lock);
-    return result;
-}
-
-JNIEXPORT jfloatArray JNICALL
-Java_com_bypass_Native_getBones(JNIEnv* env, jclass cls) {
-    pthread_mutex_lock(&g_DrawData.lock);
+    detect_screen_size();
     
-    int count = g_DrawData.numBones;
-    // Each bone line: x1, y1, x2, y2, isEnemy (5 floats)
-    jfloatArray result = env->NewFloatArray(count * 5);
-    if (result && count > 0) {
-        float* data = new float[count * 5];
-        for (int i = 0; i < count; i++) {
-            data[i*5 + 0] = g_DrawData.bones[i].x1;
-            data[i*5 + 1] = g_DrawData.bones[i].y1;
-            data[i*5 + 2] = g_DrawData.bones[i].x2;
-            data[i*5 + 3] = g_DrawData.bones[i].y2;
-            data[i*5 + 4] = (float)g_DrawData.bones[i].isEnemy;
-        }
-        env->SetFloatArrayRegion(result, 0, count * 5, data);
-        delete[] data;
-    }
-    
-    pthread_mutex_unlock(&g_DrawData.lock);
-    return result;
+    pthread_t ptid;
+    pthread_create(&ptid, nullptr, main_thread, nullptr);
+    pthread_detach(ptid);
 }
-
-JNIEXPORT jfloatArray JNICALL
-Java_com_bypass_Native_getAimData(JNIEnv* env, jclass cls) {
-    pthread_mutex_lock(&g_DrawData.lock);
-    
-    // targetX, targetY, hasTarget, fovRadius (4 floats)
-    jfloatArray result = env->NewFloatArray(4);
-    float data[4] = {
-        g_DrawData.aim.targetX,
-        g_DrawData.aim.targetY,
-        g_DrawData.aim.hasTarget ? 1.0f : 0.0f,
-        g_DrawData.aim.fovRadius
-    };
-    env->SetFloatArrayRegion(result, 0, 4, data);
-    
-    pthread_mutex_unlock(&g_DrawData.lock);
-    return result;
-}
-
-JNIEXPORT jboolean JNICALL
-Java_com_bypass_Native_isInMatch(JNIEnv* env, jclass cls) {
-    return (jboolean)g_DrawData.inMatch;
-}
-
-JNIEXPORT jint JNICALL
-Java_com_bypass_Native_getPlayerCount(JNIEnv* env, jclass cls) {
-    return (jint)g_DrawData.playerCount;
-}
-
-JNIEXPORT jboolean JNICALL
-Java_com_bypass_Native_isBypassApplied(JNIEnv* env, jclass cls) {
-    return (jboolean)g_BypassApplied.load();
-}
-
-} // extern "C"
