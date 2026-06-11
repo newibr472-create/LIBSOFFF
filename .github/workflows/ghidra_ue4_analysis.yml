@@ -6,7 +6,7 @@ on:
 jobs:
   analyze:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 360
 
     steps:
       - name: Checkout repo
@@ -37,6 +37,7 @@ jobs:
       - name: Create Ghidra Analysis Script
         run: |
           cat > /tmp/analyze_ue4.py << 'SCRIPT'
+          # coding=ascii
           # @category Analysis
           # Deep analysis of libUE4.so for BGMI 4.4.0 bypass
           
@@ -291,7 +292,7 @@ jobs:
               f.write("\n## AC Strings with Code References\n\n")
               for s in results["strings_anticheat"][:200]:
                   refs = s.get("referenced_from", [])
-                  f.write("- `{}` @ {} → refs: {}\n".format(
+                  f.write("- `{}` @ {} -> refs: {}\n".format(
                       s["value"][:80], s["offset"], ", ".join(refs[:5])))
           
           print("[+] DONE! Output: " + output_file)
@@ -300,6 +301,7 @@ jobs:
 
       - name: Run Ghidra Headless Analysis
         run: |
+          set +e
           mkdir -p /tmp/ghidra_project
           /opt/ghidra/support/analyzeHeadless /tmp/ghidra_project UE4_Analysis \
             -import binaries/arm64-v8a/libUE4.so \
@@ -307,9 +309,11 @@ jobs:
             -postScript analyze_ue4.py \
             -processor AARCH64:LE:64:v8A \
             2>&1 | tee ghidra_output.log
-          
+          GHIDRA_EXIT=$?
+          echo "Ghidra exit code: $GHIDRA_EXIT"
           echo "=== Analysis Complete ==="
-          ls -la true_bypass/analysis_libUE4_ghidra.json true_bypass/UE4_ANALYSIS_SUMMARY.md 2>/dev/null
+          ls -la true_bypass/analysis_libUE4_ghidra.json true_bypass/UE4_ANALYSIS_SUMMARY.md 2>/dev/null || echo "Output files not found - script may have failed"
+          exit 0
 
       - name: Upload Analysis Results
         uses: actions/upload-artifact@v4
@@ -327,7 +331,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           if [ -f true_bypass/analysis_libUE4_ghidra.json ]; then
             git add true_bypass/analysis_libUE4_ghidra.json true_bypass/UE4_ANALYSIS_SUMMARY.md
-            git commit -m "🔬 Ghidra deep analysis of libUE4.so (234MB) - automated
+            git commit -m "Ghidra deep analysis of libUE4.so (234MB) - automated
 
             - All exports, imports, strings extracted
             - AC-related functions identified and decompiled
