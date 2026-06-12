@@ -279,7 +279,7 @@ static void *worker_thread(void *) {
 // IBox Loader / APK injection loads this .so → constructor runs
 // ============================================================================
 __attribute__((constructor))
-static void entry() {
+void __attribute__((used)) entry() {
     pthread_t tid;
     pthread_attr_t attr;
     pthread_attr_init(&attr);
