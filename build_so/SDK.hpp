@@ -1,3 +1,5 @@
+#define __forceinline inline __attribute__((always_inline))
+#include <cmath>
 #pragma once
 
 // ------------------------------------------------
@@ -8,6 +10,9 @@
  
 // ------------------------------------------------
 #include <set>
+#include <cstring>
+#include <locale>
+#include <codecvt>
 #include <string>
 
 #include "SDK/NIKON_Basic.hpp"

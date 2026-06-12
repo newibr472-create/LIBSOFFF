@@ -1,26 +1,23 @@
 #pragma once
-#include <sys/mman.h>
-#include <cstring>
 #include <cstdint>
+#include <cstring>
+#include <sys/mman.h>
+#include <unistd.h>
 
-static inline bool MemProtect(uintptr_t addr, size_t len, int prot) {
-    uintptr_t page = addr & ~0xFFF;
-    size_t size = (addr - page) + len;
-    size = (size + 0xFFF) & ~0xFFF;
-    return mprotect((void*)page, size, prot) == 0;
-}
-
-static inline bool WriteAddr(void* addr, void* value, size_t size) {
-        return false;
+static void WriteAddr(void *addr, void *value, size_t size) {
+    uintptr_t page = (uintptr_t)addr & ~(sysconf(_SC_PAGESIZE) - 1);
+    mprotect((void*)page, sysconf(_SC_PAGESIZE) * 2, PROT_READ | PROT_WRITE | PROT_EXEC);
     memcpy(addr, value, size);
-    __builtin___clear_cache((char*)addr, (char*)addr + size);
-    return true;
 }
 
 template<typename T>
-static inline T ReadMem(uintptr_t addr) { return *(T*)addr; }
+static void Write(uintptr_t addr, T value) {
+    WriteAddr((void*)addr, &value, sizeof(T));
+}
 
 template<typename T>
-static inline void WriteMem(uintptr_t addr, T value) {
-    WriteAddr((void*)addr, &value, sizeof(T));
+static T Read(uintptr_t addr) {
+    T val{};
+    memcpy(&val, (void*)addr, sizeof(T));
+    return val;
 }

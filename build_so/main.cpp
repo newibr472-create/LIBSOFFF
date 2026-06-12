@@ -6,7 +6,7 @@
  * SDK: NIKON 4.4.0 compiled (GNames, GUObjectArray, ProcessEvent)
  */
 
-#include "Offset/SDK.hpp"
+#include "SDK.hpp"
 using namespace SDK;
 using namespace std;
 
