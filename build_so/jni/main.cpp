@@ -2295,12 +2295,13 @@ FixGameCrash();// JOIN = TG >> @JKVIPOWNER
         sleep(1);
     }
 
-    // === PHASE 1: anogs bypass IMMEDIATELY ===
-    while (!Tools::GetBaseAddress("libanogs.so")) sleep(1);
-    while (!Tools::GetBaseAddress("libanort.so")) sleep(1);
-    sleep(3); // let constructors finish
+    // === PHASE 1: anogs bypass after 55 sec (non-blocking) ===
+    while (!Tools::GetBaseAddress("libanogs.so")) usleep(500000);
+    while (!Tools::GetBaseAddress("libanort.so")) usleep(500000);
+    // 55 sec non-blocking wait
+    for (int _w = 0; _w < 550; _w++) usleep(100000);
     ApplyAnogs();
-    LOGI("[BYPASS] Phase 1: anogs DONE");
+    LOGI("[BYPASS] Phase 1: anogs DONE (55s delay)");
 
     while (!g_App) {
         g_App = *(android_app * *)(UE4 + GNativeAndroidApp_Offset);
