@@ -7,11 +7,7 @@ LOCAL_CPPFLAGS  := -std=c++17 -fno-rtti -fno-exceptions -fvisibility=hidden
 LOCAL_LDFLAGS   := -Wl,-z,now,-z,relro
 LOCAL_ARM_MODE  := arm
 
-LOCAL_SRC_FILES := \
-    main.cpp \
-    core/memory.cpp \
-    core/bypass.cpp \
-    core/syscalls.S
+LOCAL_SRC_FILES := main.cpp core/memory.cpp core/bypass.cpp core/syscalls.S
 
 LOCAL_LDLIBS := -llog -landroid -lz
 
