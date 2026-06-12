@@ -1,485 +1,364 @@
-// BGMI 4.4.0 — v6: Reference-based ESP + Aimbot + 808 bypass patches
-// Uses ProcessEvent for K2_DrawLine, GetActorArray function call, VTable hook
+// BGMI 4.4.0 — v7: Stealth Engine + Phased Bypass + ESP/Aimbot
+// Custom bypass engine — randomized, staggered, page-cloaked, logged
+// NO sleep() blocking. Non-blocking polling + usleep micro-waits.
 #include "sdk.h"
+#include "stealth.h"
+#include "bypass_patches.h"
 #include "Main/Tools.h"
-#include "Main/KittyMemory/KittyMemory.h"
 #include "Main/KittyMemory/MemoryPatch.h"
-#include <android/log.h>
-// android_app forward declaration
-struct android_app {
-    void* userData;
-    void* activity; // ANativeActivity*
-    // ... we only need the pointer
-};
 #include <pthread.h>
 #include <unistd.h>
-#include <dlfcn.h>
 #include <sys/mman.h>
 #include <cmath>
 #include <atomic>
 #include <vector>
-#include <algorithm>
+#include <android/log.h>
 
-#define TAG "BGMI"
+#undef TAG
+#undef LOGI
+#undef LOGE
+#define TAG "V7"
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, TAG, __VA_ARGS__)
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, TAG, __VA_ARGS__)
 
-// ===================== GLOBALS =====================
-static android_app* g_App = nullptr;
-static APlayerController* g_PlayerController = nullptr;
-static ASTExtraPlayerCharacter* g_LocalPlayer = nullptr;
-static int screenWidth = 0, screenHeight = 0;
+// Globals
+static APlayerController* g_PC = nullptr;
+static std::atomic<bool> g_Ready{false};
+static stealth::Engine g_Engine;
 
-// ===================== BYPASS =====================
-static void ApplyBypass() {
-    // Wait for all AC libraries
-    while (!Tools::GetBaseAddress("libanogs.so")) usleep(300000);
-    while (!Tools::GetBaseAddress("libUE4.so")) usleep(300000);
-    for(int i=0;i<20;i++){if(Tools::GetBaseAddress("libhdmpvecore.so"))break;usleep(300000);}
-    for(int i=0;i<10;i++){if(Tools::GetBaseAddress("libhdmpve.so"))break;usleep(300000);}
-    for(int i=0;i<10;i++){if(Tools::GetBaseAddress("libTBlueData.so"))break;usleep(300000);}
-    for(int i=0;i<10;i++){if(Tools::GetBaseAddress("libsigner.so"))break;usleep(300000);}
-    sleep(5);
-
-    auto patch = [](const char* lib, uintptr_t off, const std::string& hex) {
-        auto p = MemoryPatch::createWithHex(lib, off, hex);
-        if (p.isValid()) p.Modify();
-    };
-
-    // === libanogs.so + libsigner.so (20) ===
-    patch("libanogs.so", 0x1d7938, "00 00 80 52 C0 03 5F D6");
-    patch("libanogs.so", 0x1d551c, "00 00 80 52 C0 03 5F D6");
-    patch("libanogs.so", 0x1d624c, "C0 03 5F D6");
-    patch("libanogs.so", 0x1d6598, "00 00 80 52 C0 03 5F D6");
-    patch("libanogs.so", 0x1d6ea8, "00 00 80 52 C0 03 5F D6");
-    patch("libanogs.so", 0x1d79a4, "C0 03 5F D6");
-    patch("libanogs.so", 0x1d7fc4, "00 00 80 52 C0 03 5F D6");
-    patch("libanogs.so", 0x1d88ec, "C0 03 5F D6");
-    patch("libanogs.so", 0x1d417c, "C0 03 5F D6");
-    patch("libanogs.so", 0x1d5a88, "C0 03 5F D6");
-    patch("libanogs.so", 0x1d82cc, "C0 03 5F D6");
-    patch("libanogs.so", 0x1d4580, "C0 03 5F D6");
-    patch("libanogs.so", 0x1d7398, "C0 03 5F D6");
-    patch("libanogs.so", 0x1d9024, "C0 03 5F D6");
-    patch("libanogs.so", 0x1d4c0c, "C0 03 5F D6");
-    patch("libanogs.so", 0x1d5030, "C0 03 5F D6");
-    patch("libanogs.so", 0x1d78cc, "00 00 80 52 C0 03 5F D6");
-    patch("libanogs.so", 0x1d8c74, "C0 03 5F D6");
-    patch("libsigner.so", 0x9a088, "C0 03 5F D6");
-    patch("libsigner.so", 0x9afc0, "C0 03 5F D6");
-    LOGI("[+] anogs+signer: 20");
-
-    // === libhdmpvecore.so — include from header ===
-    #define HPATCH(off, hex) patch("libhdmpvecore.so", off, hex)
-    if (Tools::GetBaseAddress("libhdmpvecore.so")) {
-        #include "bypass_hdmpvecore.h"
-        LOGI("[+] hdmpvecore done");
+// Non-blocking wait for library
+static uintptr_t waitLib(const char* name, int maxMs) {
+    uintptr_t base = 0;
+    for (int i = 0; i < maxMs/50; i++) {
+        base = stealth::GetLib(name);
+        if (base) return base;
+        usleep(50000); // 50ms polls, NOT seconds
     }
-    #undef HPATCH
-
-    // === libUE4.so (NOP only) ===
-    #define UPATCH(off, hex) patch("libUE4.so", off, hex)
-    #include "bypass_ue4.h"
-    LOGI("[+] UE4 done");
-    #undef UPATCH
-
-    // === libTBlueData.so ===
-    #define TPATCH(off, hex) patch("libTBlueData.so", off, hex)
-    if (Tools::GetBaseAddress("libTBlueData.so")) {
-        #include "bypass_tblue.h"
-        LOGI("[+] TBlueData done");
-    }
-    #undef TPATCH
-
-    // === libhdmpve.so ===
-    #define MPATCH(off, hex) patch("libhdmpve.so", off, hex)
-    if (Tools::GetBaseAddress("libhdmpve.so")) {
-        #include "bypass_hdmpve.h"
-        LOGI("[+] hdmpve done");
-    }
-    #undef MPATCH
-
-    LOGI("[+] ALL BYPASS DONE (808 patches)");
+    return 0;
 }
 
-// ===================== WORLD ACCESS =====================
-static UWorld* GetFullWorld() {
-    static int GWorldIdx = 0;
-    auto& objs = UObject::GetGlobalObjects();
+// ===================== PHASED BYPASS =====================
+// Phase 1: Critical AC libs (before login screen)
+static void BypassPhase1() {
+    LOGI("=== PHASE 1: AC CORE ===");
     
-    if (GWorldIdx == 0) {
-        for (int i = 0; i < objs.Num(); i++) {
-            auto obj = objs.GetByIndex(i);
-            if (!obj || !Tools::IsPtrValid(obj)) continue;
-            if (obj->IsA(UEngine::StaticClass())) {
-                auto engine = (UEngine*)obj;
-                if (!engine || !Tools::IsPtrValid(engine)) continue;
-                // GameViewport at dynamic offset — use FindObject instead
-                auto vp = UObject::FindObject<UGameViewportClient>(
-                    "GameViewportClient Transient.UAEGameEngine_1.GameViewportClient_1");
-                if (vp && Tools::IsPtrValid(vp)) {
-                    GWorldIdx = i;
-                    // World is at a specific offset in UGameViewportClient
-                    // Read it from the viewport's World member
-                    uintptr_t vpAddr = (uintptr_t)vp;
-                    UWorld* w = nullptr;
-                    Tools::PVM_ReadAddr((void*)(vpAddr + 0x78), &w, sizeof(w));
-                    return w;
-                }
-            }
-        }
-    } else {
-        auto engine = (UEngine*)objs.GetByIndex(GWorldIdx);
-        if (engine && Tools::IsPtrValid(engine)) {
-            auto vp = UObject::FindObject<UGameViewportClient>(
-                "GameViewportClient Transient.UAEGameEngine_1.GameViewportClient_1");
-            if (vp && Tools::IsPtrValid(vp)) {
-                uintptr_t vpAddr = (uintptr_t)vp;
-                UWorld* w = nullptr;
-                Tools::PVM_ReadAddr((void*)(vpAddr + 0x78), &w, sizeof(w));
-                return w;
-            }
-        }
+    // anogs MUST be patched first
+    if (!waitLib("libanogs.so", 60000)) { LOGE("anogs not found!"); return; }
+    
+    std::vector<stealth::Patch> anogs(patches_anogs, patches_anogs + 18);
+    int ok = g_Engine.applyGroup(anogs, 0, 500, 3000);
+    LOGI("[P1] anogs: %d/18", ok);
+    
+    // signer
+    if (waitLib("libsigner.so", 5000)) {
+        std::vector<stealth::Patch> signer(patches_signer, patches_signer + 2);
+        ok = g_Engine.applyGroup(signer, 18, 200, 1000);
+        LOGI("[P1] signer: %d/2", ok);
     }
-    return nullptr;
+    
+    LOGI("=== PHASE 1 DONE: %d total ===", g_Engine.total());
 }
 
-// Get actors using function call at UE4+GetActorArray
-struct ActorArray {
-    uintptr_t base;
-    int32_t count;
-    int32_t max;
+// Phase 2: Analytics/telemetry (after libs loaded, before match)
+static void BypassPhase2() {
+    LOGI("=== PHASE 2: TELEMETRY ===");
+    
+    if (waitLib("libhdmpvecore.so", 30000)) {
+        std::vector<stealth::Patch> hdcore(patches_hdmpvecore, patches_hdmpvecore + 381);
+        int ok = g_Engine.applyGroup(hdcore, 20, 100, 800);
+        LOGI("[P2] hdmpvecore: %d/381", ok);
+    }
+    
+    if (waitLib("libhdmpve.so", 10000)) {
+        std::vector<stealth::Patch> hdm(patches_hdmpve, patches_hdmpve + 27);
+        int ok = g_Engine.applyGroup(hdm, 781, 200, 1500);
+        LOGI("[P2] hdmpve: %d/27", ok);
+    }
+    
+    if (waitLib("libTBlueData.so", 10000)) {
+        std::vector<stealth::Patch> tblue(patches_TBlueData, patches_TBlueData + 36);
+        int ok = g_Engine.applyGroup(tblue, 745, 200, 1500);
+        LOGI("[P2] TBlueData: %d/36", ok);
+    }
+    
+    LOGI("=== PHASE 2 DONE: %d total ===", g_Engine.total());
+}
+
+// Phase 3: Game engine AC (INSIDE match, after world loads)
+static void BypassPhase3() {
+    LOGI("=== PHASE 3: UE4 AC ===");
+    
+    if (!waitLib("libUE4.so", 10000)) { LOGE("UE4 not found!"); return; }
+    
+    std::vector<stealth::Patch> ue4(patches_UE4, patches_UE4 + 344);
+    int ok = g_Engine.applyGroup(ue4, 401, 50, 500); // Fast — UE4 patches are NOPs
+    LOGI("[P3] UE4: %d/344", ok);
+    
+    LOGI("=== PHASE 3 DONE: %d total, %d failed ===", g_Engine.total(), g_Engine.failed());
+}
+
+// ===================== ESP/AIMBOT =====================
+struct FTransformLocal {
+    float Rotation[4], Translation[4], Scale3D[4];
 };
 
-static std::vector<UObject*> GetActors() {
-    std::vector<UObject*> result;
-    auto World = GetFullWorld();
-    if (!World || !Tools::IsPtrValid(World)) return result;
-    
-    ULevel* level = nullptr;
-    Tools::PVM_ReadAddr((void*)((uintptr_t)World + 0x30), &level, sizeof(level));
-    if (!level || !Tools::IsPtrValid(level)) return result;
-    
-    // Call GetActorArray function
-    typedef ActorArray*(*GetActorArrayFn)(uintptr_t);
-    auto fn = (GetActorArrayFn)(UE4 + Off::GetActorArray);
-    ActorArray* arr = fn((uintptr_t)level);
-    if (!arr || arr->count <= 0 || arr->count > 50000) return result;
-    
-    for (int i = 0; i < arr->count && i < 500; i++) {
-        uintptr_t actor = 0;
-        Tools::PVM_ReadAddr((void*)(arr->base + i * sizeof(uintptr_t)), &actor, sizeof(actor));
-        if (actor && Tools::IsPtrValid((void*)actor))
-            result.push_back((UObject*)actor);
-    }
-    return result;
-}
-
-// ===================== DRAW HELPERS =====================
-static void DrawLine(UCanvas* Canvas, FVector2D from, FVector2D to, float thickness, FLinearColor color) {
-    if (!Canvas) return;
-    Canvas->K2_DrawLine(from, to, thickness, color);
-}
-
-static void DrawBox(UCanvas* Canvas, float x, float y, float w, float h, FLinearColor color, float th=1.5f) {
-    float cl = h * 0.15f;
-    // Top-left
-    DrawLine(Canvas, {x,y}, {x+cl,y}, th, color);
-    DrawLine(Canvas, {x,y}, {x,y+cl}, th, color);
-    // Top-right
-    DrawLine(Canvas, {x+w-cl,y}, {x+w,y}, th, color);
-    DrawLine(Canvas, {x+w,y}, {x+w,y+cl}, th, color);
-    // Bottom-left
-    DrawLine(Canvas, {x,y+h-cl}, {x,y+h}, th, color);
-    DrawLine(Canvas, {x,y+h}, {x+cl,y+h}, th, color);
-    // Bottom-right
-    DrawLine(Canvas, {x+w,y+h-cl}, {x+w,y+h}, th, color);
-    DrawLine(Canvas, {x+w-cl,y+h}, {x+w,y+h}, th, color);
-}
-
-// ===================== BONE READING =====================
-struct FTransform {
-    float Rotation[4];
-    float Translation[4];
-    float Scale3D[4];
-};
-
-static FVector GetBoneWorldPos(uintptr_t mesh, int boneIdx) {
-    FVector zero{};
-    if (!mesh || !Tools::IsPtrValid((void*)mesh)) return zero;
-    
-    // BoneArray at mesh + 0x600 (TArray<FTransform>)
-    struct { FTransform* Data; int32_t Count; int32_t Max; } bones{};
+static FVector GetBoneWorld(uintptr_t mesh, int idx) {
+    FVector z{};
+    if (!mesh || !Tools::IsPtrValid((void*)mesh)) return z;
+    struct { FTransformLocal* Data; int32_t Count; int32_t Max; } bones{};
     Tools::PVM_ReadAddr((void*)(mesh + 0x600), &bones, sizeof(bones));
-    if (!bones.Data || bones.Count <= 0 || boneIdx >= bones.Count || boneIdx < 0) return zero;
-    if (!Tools::IsPtrValid(bones.Data)) return zero;
-    
-    FTransform bone{}, comp{};
-    Tools::PVM_ReadAddr(&bones.Data[boneIdx], &bone, sizeof(bone));
-    // ComponentToWorld at mesh + 0x1D0
+    if (!bones.Data || bones.Count <= 0 || idx >= bones.Count || idx < 0) return z;
+    if (!Tools::IsPtrValid(bones.Data)) return z;
+    FTransformLocal bone{}, comp{};
+    Tools::PVM_ReadAddr(&bones.Data[idx], &bone, sizeof(bone));
     Tools::PVM_ReadAddr((void*)(mesh + 0x1D0), &comp, sizeof(comp));
-    
-    FVector result;
-    result.X = comp.Translation[0] + bone.Translation[0];
-    result.Y = comp.Translation[1] + bone.Translation[1];
-    result.Z = comp.Translation[2] + bone.Translation[2];
-    
-    if (fabsf(result.X) > 500000) return zero;
-    return result;
+    FVector r{comp.Translation[0]+bone.Translation[0], comp.Translation[1]+bone.Translation[1], comp.Translation[2]+bone.Translation[2]};
+    if (fabsf(r.X)>500000) return z;
+    return r;
 }
 
-// ===================== ESP RENDER =====================
-static float normAngle(float a) { while(a>180)a-=360; while(a<-180)a+=360; return a; }
+static float normA(float a){while(a>180)a-=360;while(a<-180)a+=360;return a;}
 
 static void RenderESP(UCanvas* Canvas, int SW, int SH) {
-    if (!g_PlayerController || !Tools::IsPtrValid(g_PlayerController)) return;
-    
-    // Get camera info
-    uintptr_t camMgr = 0;
-    Tools::PVM_ReadAddr((void*)((uintptr_t)g_PlayerController + 0x548), &camMgr, sizeof(camMgr));
+    if (!g_PC || !Tools::IsPtrValid(g_PC)) return;
+
+    uintptr_t camMgr=0;
+    Tools::PVM_ReadAddr((void*)((uintptr_t)g_PC + 0x548), &camMgr, sizeof(camMgr));
     if (!camMgr || !Tools::IsPtrValid((void*)camMgr)) return;
-    
+
     FMinimalViewInfo pov{};
     Tools::PVM_ReadAddr((void*)(camMgr + 0x530), &pov, sizeof(pov));
     if (pov.FOV <= 0 || pov.FOV > 170) pov.FOV = 90.f;
-    
-    // Get local pawn
-    uintptr_t myPawn = 0;
-    Tools::PVM_ReadAddr((void*)((uintptr_t)g_PlayerController + 0x528), &myPawn, sizeof(myPawn));
+
+    uintptr_t myPawn=0;
+    Tools::PVM_ReadAddr((void*)((uintptr_t)g_PC + 0x528), &myPawn, sizeof(myPawn));
     if (!myPawn || !Tools::IsPtrValid((void*)myPawn)) return;
-    
-    int32_t myTeam = -1;
+
+    int32_t myTeam=-1;
     Tools::PVM_ReadAddr((void*)(myPawn + 0x998), &myTeam, sizeof(myTeam));
-    
-    // Get actors
-    auto actors = GetActors();
-    
-    FLinearColor red{1,0.3f,0.3f,1}, white{1,1,1,0.8f}, green{0,1,0,1};
-    float bestAngle = 100.f;
-    FVector bestTarget{};
-    bool hasTarget = false;
-    
-    for (auto* actor : actors) {
-        if ((uintptr_t)actor == myPawn) continue;
-        if (!Tools::IsPtrValid(actor)) continue;
-        
-        // TeamID
-        int32_t team = -1;
-        Tools::PVM_ReadAddr((void*)((uintptr_t)actor + 0x998), &team, sizeof(team));
-        if (team < 0 || team > 200 || team == myTeam) continue;
-        
-        // Dead check
-        uint8_t dead = 0;
-        Tools::PVM_ReadAddr((void*)((uintptr_t)actor + 0x0E7C), &dead, 1);
+
+    // Get world + actors
+    auto World = GetFullWorld();
+    if (!World || !Tools::IsPtrValid(World)) return;
+
+    ULevel* level=nullptr;
+    Tools::PVM_ReadAddr((void*)((uintptr_t)World + 0x30), &level, sizeof(level));
+    if (!level || !Tools::IsPtrValid(level)) return;
+
+    // Call GetActorArray
+    typedef struct { uintptr_t base; int32_t count; int32_t max; } ActorArr;
+    typedef ActorArr*(*GetActorsFn)(uintptr_t);
+    auto fn = (GetActorsFn)(UE4 + Off::GetActorArray);
+    ActorArr* arr = fn((uintptr_t)level);
+    if (!arr || arr->count <= 0 || arr->count > 50000) return;
+
+    FLinearColor red{1,0.3f,0.3f,1}, white{1,1,1,0.8f};
+    float bestAng=100; FVector bestTgt{}; bool hasTgt=false;
+    int scan = arr->count < 300 ? arr->count : 300;
+
+    for (int i = 0; i < scan; i++) {
+        uintptr_t actor=0;
+        Tools::PVM_ReadAddr((void*)(arr->base + i*8), &actor, sizeof(actor));
+        if (!actor || actor == myPawn || !Tools::IsPtrValid((void*)actor)) continue;
+
+        int32_t team=-1;
+        Tools::PVM_ReadAddr((void*)(actor + 0x998), &team, sizeof(team));
+        if (team<0||team>200||team==myTeam) continue;
+
+        uint8_t dead=0;
+        Tools::PVM_ReadAddr((void*)(actor + 0x0E7C), &dead, 1);
         if (dead) continue;
-        
-        // Health
-        float hp = 0;
-        Tools::PVM_ReadAddr((void*)((uintptr_t)actor + 0x0E60), &hp, sizeof(hp));
+
+        float hp=0;
+        Tools::PVM_ReadAddr((void*)(actor + 0x0E60), &hp, sizeof(hp));
         if (hp <= 0) continue;
-        
-        // Mesh
-        uintptr_t mesh = 0;
-        Tools::PVM_ReadAddr((void*)((uintptr_t)actor + 0x510), &mesh, sizeof(mesh));
+
+        uintptr_t mesh=0;
+        Tools::PVM_ReadAddr((void*)(actor + 0x510), &mesh, sizeof(mesh));
         if (!mesh || !Tools::IsPtrValid((void*)mesh)) continue;
-        
-        // Head and root bones
-        FVector head = GetBoneWorldPos(mesh, 6);
-        FVector root = GetBoneWorldPos(mesh, 0);
-        if (head.Size() < 1 || root.Size() < 1) continue;
-        
-        // W2S
-        FVector2D headScreen{}, rootScreen{};
-        if (!g_PlayerController->ProjectWorldLocationToScreen(head, true, headScreen)) continue;
-        if (!g_PlayerController->ProjectWorldLocationToScreen(root, true, rootScreen)) continue;
-        
-        float boxH = rootScreen.Y - headScreen.Y;
-        if (boxH < 5 || boxH > 2000) continue;
-        float boxW = boxH * 0.45f;
-        float cx = (headScreen.X + rootScreen.X) * 0.5f;
-        
+
+        FVector head = GetBoneWorld(mesh, 6);
+        FVector root = GetBoneWorld(mesh, 0);
+        if (head.Size()<1 || root.Size()<1) continue;
+
+        FVector2D hs{}, rs{};
+        if (!g_PC->ProjectWorldLocationToScreen(head, true, hs)) continue;
+        if (!g_PC->ProjectWorldLocationToScreen(root, true, rs)) continue;
+
+        float bH = rs.Y - hs.Y;
+        if (bH<5||bH>2000) continue;
+        float bW = bH*0.45f, cx = (hs.X+rs.X)*0.5f;
+        float cl = bH*0.15f;
+        float L=cx-bW/2, R=cx+bW/2;
+
         // Corner box
-        DrawBox(Canvas, cx - boxW/2, headScreen.Y, boxW, boxH, red, 1.5f);
-        
+        Canvas->K2_DrawLine({L,hs.Y},{L+cl,hs.Y},1.5f,red);
+        Canvas->K2_DrawLine({L,hs.Y},{L,hs.Y+cl},1.5f,red);
+        Canvas->K2_DrawLine({R-cl,hs.Y},{R,hs.Y},1.5f,red);
+        Canvas->K2_DrawLine({R,hs.Y},{R,hs.Y+cl},1.5f,red);
+        Canvas->K2_DrawLine({L,rs.Y-cl},{L,rs.Y},1.5f,red);
+        Canvas->K2_DrawLine({L,rs.Y},{L+cl,rs.Y},1.5f,red);
+        Canvas->K2_DrawLine({R,rs.Y-cl},{R,rs.Y},1.5f,red);
+        Canvas->K2_DrawLine({R-cl,rs.Y},{R,rs.Y},1.5f,red);
+
         // Skeleton
-        int skelPairs[][2] = {
-            {6,5},{5,4},{4,2},{2,0},  // head-spine
-            {5,11},{11,12},{12,13},   // left arm
-            {5,32},{32,33},{33,34},   // right arm
-            {0,48},{48,49},{49,50},   // left leg
-            {0,53},{53,54},{54,55}    // right leg
-        };
-        for (auto& p : skelPairs) {
-            FVector ba = GetBoneWorldPos(mesh, p[0]);
-            FVector bb = GetBoneWorldPos(mesh, p[1]);
-            if (ba.Size() < 1 || bb.Size() < 1) continue;
-            FVector2D sa{}, sb{};
-            if (g_PlayerController->ProjectWorldLocationToScreen(ba, true, sa) &&
-                g_PlayerController->ProjectWorldLocationToScreen(bb, true, sb)) {
-                DrawLine(Canvas, sa, sb, 1.0f, white);
-            }
+        int bones[][2]={{6,5},{5,4},{4,2},{2,0},{5,11},{11,12},{12,13},{5,32},{32,33},{33,34},{0,48},{48,49},{49,50},{0,53},{53,54},{54,55}};
+        for (auto& b : bones) {
+            FVector ba=GetBoneWorld(mesh,b[0]), bb=GetBoneWorld(mesh,b[1]);
+            if(ba.Size()<1||bb.Size()<1) continue;
+            FVector2D sa{},sb{};
+            if(g_PC->ProjectWorldLocationToScreen(ba,true,sa) && g_PC->ProjectWorldLocationToScreen(bb,true,sb))
+                Canvas->K2_DrawLine(sa,sb,1.0f,white);
         }
-        
+
         // Health bar
-        float hpMax = 0;
-        Tools::PVM_ReadAddr((void*)((uintptr_t)actor + 0x0E64), &hpMax, sizeof(hpMax));
-        if (hpMax > 0) {
-            float ratio = hp / hpMax; if (ratio > 1) ratio = 1;
-            float barX = cx - boxW/2 - 5;
-            DrawLine(Canvas, {barX, headScreen.Y}, {barX, rootScreen.Y}, 3.f, {0.1f,0.1f,0.1f,0.6f});
-            float filled = headScreen.Y + boxH * (1.f - ratio);
-            FLinearColor hpColor{1.f-ratio, ratio, 0, 1};
-            DrawLine(Canvas, {barX, filled}, {barX, rootScreen.Y}, 2.f, hpColor);
+        float hpMax=0;
+        Tools::PVM_ReadAddr((void*)(actor+0x0E64),&hpMax,sizeof(hpMax));
+        if(hpMax>0){
+            float ratio=hp/hpMax; if(ratio>1)ratio=1;
+            float barX=L-5;
+            Canvas->K2_DrawLine({barX,hs.Y},{barX,rs.Y},3.f,{0.1f,0.1f,0.1f,0.6f});
+            float filled=hs.Y+bH*(1.f-ratio);
+            Canvas->K2_DrawLine({barX,filled},{barX,rs.Y},2.f,{1-ratio,ratio,0,1});
         }
-        
-        // Aimbot target
-        FVector d = head - pov.Location;
-        float hz = sqrtf(d.X*d.X + d.Y*d.Y);
-        float yaw = atan2f(d.Y, d.X) * 57.2957795f;
-        float pitch = atan2f(d.Z, hz) * 57.2957795f;
-        float dY = normAngle(yaw - pov.Rotation.Yaw);
-        float dP = normAngle(pitch - pov.Rotation.Pitch);
-        float angle = sqrtf(dY*dY + dP*dP);
-        if (angle < bestAngle) {
-            bestAngle = angle;
-            bestTarget = head;
-            hasTarget = true;
-        }
+
+        // Aimbot scoring
+        FVector d=head-pov.Location;
+        float hz=sqrtf(d.X*d.X+d.Y*d.Y);
+        float yaw=atan2f(d.Y,d.X)*57.2957795f;
+        float pitch=atan2f(d.Z,hz)*57.2957795f;
+        float ang=sqrtf(normA(yaw-pov.Rotation.Yaw)*normA(yaw-pov.Rotation.Yaw)+normA(pitch-pov.Rotation.Pitch)*normA(pitch-pov.Rotation.Pitch));
+        if(ang<bestAng){bestAng=ang;bestTgt=head;hasTgt=true;}
     }
-    
+
     // FOV circle
-    float cx2 = SW/2.f, cy2 = SH/2.f, r = 100.f;
-    for (int i = 0; i < 36; i++) {
-        float a1 = 6.2832f*i/36, a2 = 6.2832f*(i+1)/36;
-        DrawLine(Canvas, {cx2+cosf(a1)*r, cy2+sinf(a1)*r}, {cx2+cosf(a2)*r, cy2+sinf(a2)*r}, 0.5f, {1,1,1,0.3f});
+    float cx2=SW/2.f,cy2=SH/2.f,r=100.f;
+    for(int i=0;i<36;i++){
+        float a1=6.2832f*i/36,a2=6.2832f*(i+1)/36;
+        Canvas->K2_DrawLine({cx2+cosf(a1)*r,cy2+sinf(a1)*r},{cx2+cosf(a2)*r,cy2+sinf(a2)*r},0.5f,{1,1,1,0.3f});
     }
-    
-    // Aimbot apply
-    if (hasTarget && bestAngle < 15.f) {
+
+    // Aimbot
+    if(hasTgt && bestAng<15.f){
         FRotator cur{};
-        Tools::PVM_ReadAddr((void*)((uintptr_t)g_PlayerController + 0x4E0), &cur, sizeof(cur));
-        FVector d = bestTarget - pov.Location;
-        float hz = sqrtf(d.X*d.X + d.Y*d.Y);
-        float dP = normAngle(atan2f(d.Z, hz)*57.2957795f - cur.Pitch);
-        float dY = normAngle(atan2f(d.Y, d.X)*57.2957795f - cur.Yaw);
-        float err = sqrtf(dP*dP + dY*dY);
-        if (err > 0.1f) {
-            float sm = 6.f;
+        Tools::PVM_ReadAddr((void*)((uintptr_t)g_PC+0x4E0),&cur,sizeof(cur));
+        FVector d=bestTgt-pov.Location;
+        float hz=sqrtf(d.X*d.X+d.Y*d.Y);
+        float dP=normA(atan2f(d.Z,hz)*57.2957795f-cur.Pitch);
+        float dY=normA(atan2f(d.Y,d.X)*57.2957795f-cur.Yaw);
+        float err=sqrtf(dP*dP+dY*dY);
+        if(err>0.1f){
+            float sm=5.f+(err<10?3.f:0.f);
             FRotator nr;
-            nr.Pitch = normAngle(cur.Pitch + dP/sm);
-            nr.Yaw = normAngle(cur.Yaw + dY/sm);
-            nr.Roll = 0;
-            if (nr.Pitch > 89) nr.Pitch = 89;
-            if (nr.Pitch < -89) nr.Pitch = -89;
-            Tools::PVM_WriteAddr((void*)((uintptr_t)g_PlayerController + 0x4E0), &nr, sizeof(nr));
+            nr.Pitch=normA(cur.Pitch+dP/sm);
+            nr.Yaw=normA(cur.Yaw+dY/sm);
+            nr.Roll=0;
+            if(nr.Pitch>89)nr.Pitch=89; if(nr.Pitch<-89)nr.Pitch=-89;
+            Tools::PVM_WriteAddr((void*)((uintptr_t)g_PC+0x4E0),&nr,sizeof(nr));
         }
     }
 }
 
 // ===================== POSTRENDER HOOK =====================
-void* (*orig_PostRender)(UGameViewportClient*, UCanvas*);
-void* new_PostRender(UGameViewportClient* ViewportClient, UCanvas* Canvas) {
-    if (ViewportClient && Canvas && Tools::IsPtrValid(Canvas)) {
-        if (Canvas->SizeX > 0 && Canvas->SizeY > 0) {
-            screenWidth = Canvas->SizeX;
-            screenHeight = Canvas->SizeY;
-            RenderESP(Canvas, screenWidth, screenHeight);
-        }
+void*(*orig_PR)(UGameViewportClient*,UCanvas*);
+void* hook_PR(UGameViewportClient* vp, UCanvas* canvas) {
+    if (canvas && Tools::IsPtrValid(canvas) && g_Ready.load()) {
+        if (canvas->SizeX > 0 && canvas->SizeY > 0)
+            RenderESP(canvas, canvas->SizeX, canvas->SizeY);
     }
-    return orig_PostRender(ViewportClient, Canvas);
+    return orig_PR(vp, canvas);
 }
 
-static int GetPostRenderIndex() { return 134; }
-
-static void HookPostRender() {
-    auto GViewport = UObject::FindObject<UGameViewportClient>(
+static bool HookPostRender() {
+    auto gvp = UObject::FindObject<UGameViewportClient>(
         "GameViewportClient Transient.UAEGameEngine_1.GameViewportClient_1");
-    if (!GViewport || !Tools::IsPtrValid(GViewport)) return;
-    
-    void** VTable = *(void***)GViewport;
-    if (!VTable || !Tools::IsPtrValid(VTable)) return;
-    
-    int idx = GetPostRenderIndex();
-    orig_PostRender = (void*(*)(UGameViewportClient*, UCanvas*))VTable[idx];
-    
-    // mprotect + swap
-    unsigned long page_size = sysconf(_SC_PAGESIZE);
-    void* page = (void*)((uintptr_t)&VTable[idx] & ~(page_size - 1));
-    mprotect(page, page_size * 2, PROT_READ | PROT_WRITE | PROT_EXEC);
-    __atomic_store_n(&VTable[idx], (void*)new_PostRender, __ATOMIC_SEQ_CST);
-    
-    LOGI("[+] PostRender hooked at VTable[%d]", idx);
+    if (!gvp || !Tools::IsPtrValid(gvp)) return false;
+
+    void** VT = *(void***)gvp;
+    if (!VT || !Tools::IsPtrValid(VT)) return false;
+
+    int idx = 134;
+    orig_PR = (void*(*)(UGameViewportClient*,UCanvas*))VT[idx];
+
+    size_t ps = sysconf(_SC_PAGESIZE);
+    void* page = (void*)((uintptr_t)&VT[idx] & ~(ps-1));
+    stealth::raw_mprotect(page, ps*2, PROT_READ|PROT_WRITE|PROT_EXEC);
+    __atomic_store_n(&VT[idx], (void*)hook_PR, __ATOMIC_SEQ_CST);
+    stealth::raw_mprotect(page, ps*2, PROT_READ|PROT_EXEC);
+
+    LOGI("[+] PostRender VT[134] hooked");
+    return true;
 }
 
-// ===================== MAIN THREAD =====================
+// ===================== MAIN =====================
 static void* MainThread(void*) {
-    LOGI("[*] v6 starting");
-    
-    // Wait for UE4
-    while (!Tools::GetBaseAddress("libUE4.so")) sleep(1);
-    UE4 = Tools::GetBaseAddress("libUE4.so");
-    LOGI("[+] UE4 = 0x%lx", (unsigned long)UE4);
-    
-    // Get android_app
-    while (!g_App) {
-        g_App = *(android_app**)(UE4 + Off::GNativeAndroidApp);
-        sleep(1);
-    }
-    LOGI("[+] g_App OK");
-    
-    // Init GNames
+    LOGI("[*] v7 — stealth engine init");
+    g_Engine.init();
+
+    // === Wait for UE4 (non-blocking) ===
+    UE4 = waitLib("libUE4.so", 120000);
+    if (!UE4) { LOGE("UE4 timeout"); return nullptr; }
+    LOGI("[+] UE4=0x%lx", (unsigned long)UE4);
+
+    // === PHASE 1: AC core (immediate) ===
+    BypassPhase1();
+
+    // === Init SDK ===
     GetGNamesFunc = (TNameEntryArray*(*)())(UE4 + Off::GNames);
-    while (!UObject::GNames) {
+    for (int i=0; i<60; i++) {
         UObject::GNames = GetGNamesFunc();
-        sleep(1);
+        if (UObject::GNames) break;
+        usleep(500000);
     }
+    if (!UObject::GNames) { LOGE("GNames fail"); return nullptr; }
     LOGI("[+] GNames OK");
-    
-    // Init GUObjectArray
+
     UObject::GUObjectArray = (FUObjectArray*)(UE4 + Off::GUObjectArray);
     LOGI("[+] GUObjectArray OK");
-    
-    // Apply bypass
-    ApplyBypass();
-    
-    // Wait for game to fully load
-    sleep(55);
-    
-    // Find local player and controller
-    for (int i = 0; i < 30; i++) {
-        auto World = GetFullWorld();
-        if (!World) { sleep(2); continue; }
-        
-        uintptr_t gi = 0;
-        Tools::PVM_ReadAddr((void*)((uintptr_t)World + 0x470), &gi, sizeof(gi));
-        if (!gi || !Tools::IsPtrValid((void*)gi)) { sleep(2); continue; }
-        
-        struct { UObject** Data; int32_t Count; int32_t Max; } lp{};
-        Tools::PVM_ReadAddr((void*)(gi + 0x48), &lp, sizeof(lp));
-        if (!lp.Data || lp.Count <= 0) { sleep(2); continue; }
-        
-        UObject* localPlayer = nullptr;
-        Tools::PVM_ReadAddr(&lp.Data[0], &localPlayer, sizeof(localPlayer));
-        if (!localPlayer || !Tools::IsPtrValid(localPlayer)) { sleep(2); continue; }
-        
-        // PlayerController at ULocalPlayer + 0x30
-        Tools::PVM_ReadAddr((void*)((uintptr_t)localPlayer + 0x30), &g_PlayerController, sizeof(g_PlayerController));
-        if (g_PlayerController && Tools::IsPtrValid(g_PlayerController)) {
-            LOGI("[+] PlayerController found");
-            break;
-        }
-        sleep(2);
+
+    // === PHASE 2: Telemetry (after engine up) ===
+    BypassPhase2();
+
+    // === Wait for World (non-blocking, polls every 2s) ===
+    UWorld* world = nullptr;
+    for (int i=0; i<90; i++) {
+        world = GetFullWorld();
+        if (world && Tools::IsPtrValid(world)) break;
+        usleep(2000000);
     }
-    
-    if (!g_PlayerController) {
-        LOGE("[-] No PlayerController, aborting");
-        return nullptr;
+    if (!world) { LOGE("World timeout"); return nullptr; }
+    LOGI("[+] World OK");
+
+    // === PHASE 3: UE4 AC (in-game) ===
+    BypassPhase3();
+
+    // === Find PlayerController ===
+    for (int i=0; i<30; i++) {
+        world = GetFullWorld();
+        if (!world) { usleep(2000000); continue; }
+        uintptr_t gi=0;
+        Tools::PVM_ReadAddr((void*)((uintptr_t)world+0x470),&gi,sizeof(gi));
+        if(!gi||!Tools::IsPtrValid((void*)gi)){usleep(2000000);continue;}
+        struct{UObject**Data;int32_t Count;int32_t Max;}lp{};
+        Tools::PVM_ReadAddr((void*)(gi+0x48),&lp,sizeof(lp));
+        if(!lp.Data||lp.Count<=0){usleep(2000000);continue;}
+        UObject* localP=nullptr;
+        Tools::PVM_ReadAddr(&lp.Data[0],&localP,sizeof(localP));
+        if(!localP||!Tools::IsPtrValid(localP)){usleep(2000000);continue;}
+        Tools::PVM_ReadAddr((void*)((uintptr_t)localP+0x30),&g_PC,sizeof(g_PC));
+        if(g_PC&&Tools::IsPtrValid(g_PC)){LOGI("[+] PC found");break;}
+        usleep(2000000);
     }
-    
-    // Hook PostRender
-    HookPostRender();
-    
-    LOGI("[+] v6 ACTIVE!");
+    if(!g_PC){LOGE("PC fail");return nullptr;}
+
+    // === Hook PostRender ===
+    for (int i=0; i<20; i++) {
+        if (HookPostRender()) break;
+        usleep(3000000);
+    }
+
+    g_Ready.store(true);
+    LOGI("[+] v7 ACTIVE — %d patches, %d fails", g_Engine.total(), g_Engine.failed());
     return nullptr;
 }
 

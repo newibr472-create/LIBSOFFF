@@ -324,6 +324,9 @@ public:
 extern uintptr_t UE4;
 extern TNameEntryArray* (*GetGNamesFunc)();
 
+// World access
+UWorld* GetFullWorld();
+
 // Offsets
 namespace Off {
     constexpr uintptr_t GNames = 0x8394964;

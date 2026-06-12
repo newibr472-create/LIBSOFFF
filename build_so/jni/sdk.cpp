@@ -101,3 +101,33 @@ FVector ASTExtraPlayerCharacter::GetBonePos(const char* BoneName, FVector Defaul
     // We'll implement this via raw memory in the ESP function
     return DefaultPos;
 }
+
+// GetFullWorld — iterate GUObjectArray for UEngine, get GameViewport->World
+UWorld* GetFullWorld() {
+    static int cachedIdx = 0;
+    auto& objs = UObject::GetGlobalObjects();
+    
+    auto tryIdx = [&](int i) -> UWorld* {
+        auto obj = objs.GetByIndex(i);
+        if (!obj || !Tools::IsPtrValid(obj)) return nullptr;
+        // Check if it's UEngine by finding GameViewport
+        auto vp = UObject::FindObject<UGameViewportClient>(
+            "GameViewportClient Transient.UAEGameEngine_1.GameViewportClient_1");
+        if (!vp || !Tools::IsPtrValid(vp)) return nullptr;
+        UWorld* w = nullptr;
+        // UGameViewportClient::World at offset 0x78
+        Tools::PVM_ReadAddr((void*)((uintptr_t)vp + 0x78), &w, sizeof(w));
+        return (w && Tools::IsPtrValid(w)) ? w : nullptr;
+    };
+    
+    if (cachedIdx > 0) {
+        auto w = tryIdx(cachedIdx);
+        if (w) return w;
+    }
+    
+    for (int i = 0; i < objs.Num() && i < 100000; i++) {
+        auto w = tryIdx(i);
+        if (w) { cachedIdx = i; return w; }
+    }
+    return nullptr;
+}
