@@ -1,349 +1,271 @@
-/*
- * BGMI 4.4.0 ARM64 — Modern Minimal Library v2.1
- * 
- * CRASH FIX: Match loading crash
- * - PostRender hook now has world-transition detection
- * - K2_DrawLine wrapped with signal safety
- * - Frame skip during map transitions
- * - ESP only activates when match is FULLY loaded
- */
-
+// BGMI 4.4.0 ARM64 — v2.2 (Crash-safe: No direct function calls)
+// ESP drawing DISABLED until stable. Only bypass + aimbot (memory writes only)
 #include <pthread.h>
 #include <unistd.h>
 #include <android/log.h>
 #include <cstring>
 #include <cstdlib>
-#include <signal.h>
-#include <setjmp.h>
-
+#include <cmath>
 #include "core/memory.h"
 #include "core/bypass.h"
 #include "sdk/types.h"
-#include "features/esp.h"
-#include "features/aimbot.h"
 
 #define TAG "M"
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, TAG, __VA_ARGS__)
-#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, TAG, __VA_ARGS__)
 
-// ============================================================================
-// Global state
-// ============================================================================
 static uintptr_t g_UE4 = 0;
-static void    **g_ShadowVTable = nullptr;
-static bool      g_Hooked = false;
+static bool g_Active = false;
 
-// Safety: track world pointer to detect map transitions
-static uintptr_t g_LastWorld = 0;
-static int       g_FramesSinceWorldChange = 0;
-static int       g_TotalFrames = 0;
+// Aimbot config
+static struct {
+    bool enabled = true;
+    float fov = 100.0f;
+    float smooth = 6.0f;
+    float jitter = 0.3f;
+} AimCfg;
 
-// Crash recovery
-static volatile bool g_CrashInHook = false;
-static sigjmp_buf g_JmpBuf;
-
-// ============================================================================
-// Signal handler for crash recovery inside hook
-// If our ESP code crashes, we recover and disable ESP instead of killing game
-// ============================================================================
-static struct sigaction g_OldSigsegv;
-static struct sigaction g_OldSigbus;
-
-static void crash_handler(int sig, siginfo_t *info, void *ctx) {
-    if (g_CrashInHook) {
-        // We crashed inside our hook — recover
-        g_CrashInHook = false;
-        esp::cfg.enabled = false; // Disable ESP permanently
-        siglongjmp(g_JmpBuf, 1);
-    }
-    // Not our crash — pass to original handler
-    if (sig == SIGSEGV && g_OldSigsegv.sa_sigaction) {
-        g_OldSigsegv.sa_sigaction(sig, info, ctx);
-    } else if (sig == SIGBUS && g_OldSigbus.sa_sigaction) {
-        g_OldSigbus.sa_sigaction(sig, info, ctx);
-    }
+// Simple PRNG for jitter
+static uint32_t g_Seed = 0xDEAD;
+static float RandF(float mn, float mx) {
+    g_Seed ^= g_Seed << 13; g_Seed ^= g_Seed >> 17; g_Seed ^= g_Seed << 5;
+    return mn + ((float)(g_Seed & 0xFFFF) / 65535.0f) * (mx - mn);
 }
 
-static void install_crash_guard() {
-    struct sigaction sa{};
-    sa.sa_sigaction = crash_handler;
-    sa.sa_flags = SA_SIGINFO;
-    sigemptyset(&sa.sa_mask);
-    sigaction(SIGSEGV, &sa, &g_OldSigsegv);
-    sigaction(SIGBUS, &sa, &g_OldSigbus);
+static float NormAngle(float a) {
+    while (a > 180.f) a -= 360.f;
+    while (a < -180.f) a += 360.f;
+    return a;
 }
 
-// ============================================================================
-// PostRender hook — SAFE version
-// ============================================================================
-typedef void *(*PostRender_t)(void *viewport, void *canvas);
-static PostRender_t g_OrigPostRender = nullptr;
-
-static void *hook_PostRender(void *viewport, void *canvas) {
-    g_TotalFrames++;
-    
-    // Skip first 60 frames after hook install (let rendering stabilize)
-    if (g_TotalFrames < 60) goto call_original;
-    
-    // Check if canvas is valid
-    if (!canvas || !mem::IsValid(canvas)) goto call_original;
-    
-    // Check world stability (detect map transitions)
-    {
-        uintptr_t curWorld = 0;
-        mem::Read((void *)(g_UE4 + Off::GWorld), &curWorld, sizeof(uintptr_t));
-        
-        if (curWorld != g_LastWorld) {
-            // World changed! Map transition happening
-            g_LastWorld = curWorld;
-            g_FramesSinceWorldChange = 0;
-            goto call_original; // Don't render during transition
-        }
-        
-        g_FramesSinceWorldChange++;
-        
-        // Wait 300 frames (~5 seconds at 60fps) after world change before rendering
-        // This ensures match is FULLY loaded
-        if (g_FramesSinceWorldChange < 300) goto call_original;
-        
-        // World must be valid
-        if (!curWorld || !mem::IsValid((void *)curWorld)) goto call_original;
-    }
-    
-    // ESP rendering with crash guard
-    if (esp::cfg.enabled || aimbot::cfg.enabled) {
-        g_CrashInHook = true;
-        if (sigsetjmp(g_JmpBuf, 1) == 0) {
-            // Normal path — render ESP
-            esp::Render((uintptr_t)canvas, g_UE4);
-            
-            // Aimbot (uses data from ESP)
-            if (aimbot::cfg.enabled && aimbot::g_ClosestTarget) {
-                uintptr_t pWorld = 0;
-                mem::Read((void *)(g_UE4 + Off::GWorld), &pWorld, sizeof(uintptr_t));
-                if (pWorld && mem::IsValid((void *)pWorld)) {
-                    uintptr_t gi = 0;
-                    mem::Read((void *)(pWorld + Off::OwningGameInstance), &gi, sizeof(uintptr_t));
-                    if (gi && mem::IsValid((void *)gi)) {
-                        TArray<uintptr_t> lp;
-                        mem::Read((void *)(gi + Off::LocalPlayers), &lp, sizeof(lp));
-                        if (lp.IsValid()) {
-                            uintptr_t localP = 0;
-                            mem::Read(&lp.Data[0], &localP, sizeof(uintptr_t));
-                            if (localP && mem::IsValid((void *)localP)) {
-                                uintptr_t myPC = 0;
-                                mem::Read((void *)(localP + Off::PlayerController), &myPC, sizeof(uintptr_t));
-                                if (myPC && mem::IsValid((void *)myPC)) {
-                                    uintptr_t camMgr = 0;
-                                    mem::Read((void *)(myPC + Off::PlayerCameraMgr), &camMgr, sizeof(uintptr_t));
-                                    if (camMgr && mem::IsValid((void *)camMgr)) {
-                                        aimbot::Apply(myPC, camMgr, g_UE4);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        } else {
-            // Crash recovered — ESP disabled
-            LOGE("[!] Crash in ESP — disabled permanently");
-        }
-        g_CrashInHook = false;
-    }
-
-call_original:
-    if (g_OrigPostRender) return g_OrigPostRender(viewport, canvas);
-    return nullptr;
+// Bone world position
+static FVector GetBoneWorld(uintptr_t mesh, int idx) {
+    FVector z{};
+    if (!mesh || !mem::IsValid((void*)mesh)) return z;
+    TArray<FTransform> bones;
+    if (!mem::Read((void*)(mesh + Off::BoneArray), &bones, sizeof(bones))) return z;
+    if (!bones.IsValid() || idx >= bones.Count || idx < 0) return z;
+    if (!mem::IsValid(bones.Data)) return z;
+    FTransform t;
+    if (!mem::Read(&bones.Data[idx], &t, sizeof(t))) return z;
+    FTransform c2w;
+    if (!mem::Read((void*)(mesh + Off::ComponentToWorld), &c2w, sizeof(c2w))) return z;
+    FVector r = c2w.GetLocation() + t.GetLocation();
+    if (fabsf(r.X) > 500000 || fabsf(r.Y) > 500000) return z;
+    return r;
 }
 
-// ============================================================================
-// Shadow VTable hook
-// ============================================================================
-static bool InstallPostRenderHook() {
-    uintptr_t pWorld = 0;
-    mem::Read((void *)(g_UE4 + Off::GWorld), &pWorld, sizeof(uintptr_t));
-    if (!pWorld || !mem::IsValid((void *)pWorld)) return false;
+// Aimbot thread — runs independently, reads game state, writes ControlRotation
+static void *aim_thread(void *) {
+    LOGI("[*] Aim thread waiting for activation");
+    while (!g_Active) sleep(1);
+    LOGI("[*] Aim thread active");
     
-    uintptr_t gameInst = 0;
-    mem::Read((void *)(pWorld + Off::OwningGameInstance), &gameInst, sizeof(uintptr_t));
-    if (!gameInst || !mem::IsValid((void *)gameInst)) return false;
-    
-    TArray<uintptr_t> localPlayers;
-    mem::Read((void *)(gameInst + Off::LocalPlayers), &localPlayers, sizeof(localPlayers));
-    if (!localPlayers.IsValid()) return false;
-    
-    uintptr_t localPlayer = 0;
-    mem::Read(&localPlayers.Data[0], &localPlayer, sizeof(uintptr_t));
-    if (!localPlayer || !mem::IsValid((void *)localPlayer)) return false;
-    
-    // ULocalPlayer::ViewportClient — try multiple offsets
-    uintptr_t viewportClient = 0;
-    const uint32_t vpOffsets[] = {0x0078, 0x0070, 0x0080, 0x0068};
-    for (uint32_t off : vpOffsets) {
-        uintptr_t tmp = 0;
-        mem::Read((void *)(localPlayer + off), &tmp, sizeof(uintptr_t));
-        if (tmp && mem::IsValid((void *)tmp)) {
-            // Verify it has a vtable
-            void **vt = nullptr;
-            mem::Read((void *)tmp, &vt, sizeof(void **));
-            if (vt && mem::IsValid(vt)) {
-                viewportClient = tmp;
-                LOGI("[+] ViewportClient at offset 0x%x = 0x%lx", off, (unsigned long)tmp);
-                break;
-            }
-        }
-    }
-    
-    if (!viewportClient) return false;
-    
-    // Read original VTable pointer
-    void **origVTable = nullptr;
-    mem::Read((void *)viewportClient, &origVTable, sizeof(void **));
-    if (!origVTable || !mem::IsValid(origVTable)) return false;
-    
-    // Verify vtable entry at index 134 looks like a function pointer
-    void *postRenderFunc = nullptr;
-    mem::Read(&origVTable[134], &postRenderFunc, sizeof(void *));
-    if (!postRenderFunc || !mem::IsValid(postRenderFunc)) {
-        LOGE("[-] VTable[134] invalid, trying nearby indices...");
-        // Try nearby indices (version differences)
-        for (int idx = 130; idx <= 140; idx++) {
-            mem::Read(&origVTable[idx], &postRenderFunc, sizeof(void *));
-            if (postRenderFunc && mem::IsValid(postRenderFunc)) {
-                LOGI("[?] VTable[%d] valid: %p", idx, postRenderFunc);
-            }
-        }
-        return false;
-    }
-    
-    // Clone VTable (256 entries)
-    g_ShadowVTable = mem::CloneVTable(origVTable, 256);
-    if (!g_ShadowVTable) return false;
-    
-    // Hook PostRender on shadow
-    g_OrigPostRender = (PostRender_t)g_ShadowVTable[134];
-    g_ShadowVTable[134] = (void *)hook_PostRender;
-    
-    // Point object to shadow vtable
-    mem::SwapVTable((void *)viewportClient, g_ShadowVTable);
-    
-    // Record initial world
-    g_LastWorld = pWorld;
-    g_FramesSinceWorldChange = 0;
-    
-    LOGI("[+] PostRender shadow-hooked at [134], orig=%p", (void *)g_OrigPostRender);
-    return true;
-}
-
-// ============================================================================
-// Main worker thread
-// ============================================================================
-static void *worker_thread(void *) {
-    LOGI("[*] Worker started");
-    
-    // Install crash guard
-    install_crash_guard();
-    
-    // Phase 1: Wait for ALL critical libraries
-    int waitCount = 0;
-    while (!mem::GetBase("libUE4.so")) {
-        usleep(500000);
-        if (++waitCount > 120) { LOGE("[-] libUE4 timeout"); return nullptr; }
-    }
-    g_UE4 = mem::GetBase("libUE4.so");
-    LOGI("[+] libUE4 = 0x%lx", (unsigned long)g_UE4);
-    
-    waitCount = 0;
-    while (!mem::GetBase("libanogs.so")) {
-        usleep(500000);
-        if (++waitCount > 60) { LOGE("[-] libanogs timeout"); return nullptr; }
-    }
-    LOGI("[+] libanogs found");
-    
-    // libanort — optional
-    for (int i = 0; i < 10; i++) {
-        if (mem::GetBase("libanort.so")) { LOGI("[+] libanort found"); break; }
-        usleep(500000);
-    }
-    
-    // Phase 2: Let libraries fully initialize
-    sleep(12);
-    LOGI("[*] Post-init delay done");
-    
-    // Phase 3: Apply bypasses
-    bypass::Apply();
-    LOGI("[+] Bypasses active");
-    
-    // Phase 4: Wait for game world to be ready
-    waitCount = 0;
-    while (waitCount < 180) { // Max 3 minutes
+    while (true) {
+        usleep(16000); // ~60hz
+        if (!AimCfg.enabled || !g_UE4) continue;
+        
+        // Read world
         uintptr_t pWorld = 0;
-        mem::Read((void *)(g_UE4 + Off::GWorld), &pWorld, sizeof(uintptr_t));
-        if (pWorld && mem::IsValid((void *)pWorld)) {
-            LOGI("[+] GWorld valid = 0x%lx", (unsigned long)pWorld);
-            break;
-        }
-        sleep(1);
-        waitCount++;
-    }
-    
-    // Phase 5: Wait for LocalPlayer to exist (means we're in lobby)
-    sleep(30); // Minimum wait
-    
-    waitCount = 0;
-    while (waitCount < 60) {
-        uintptr_t pWorld = 0;
-        mem::Read((void *)(g_UE4 + Off::GWorld), &pWorld, sizeof(uintptr_t));
-        if (!pWorld || !mem::IsValid((void *)pWorld)) { sleep(2); waitCount++; continue; }
+        mem::Read((void*)(g_UE4 + Off::GWorld), &pWorld, sizeof(uintptr_t));
+        if (!pWorld || !mem::IsValid((void*)pWorld)) continue;
         
+        // GameInstance → LocalPlayers[0] → PC
         uintptr_t gi = 0;
-        mem::Read((void *)(pWorld + Off::OwningGameInstance), &gi, sizeof(uintptr_t));
-        if (!gi || !mem::IsValid((void *)gi)) { sleep(2); waitCount++; continue; }
+        mem::Read((void*)(pWorld + Off::OwningGameInstance), &gi, sizeof(uintptr_t));
+        if (!gi || !mem::IsValid((void*)gi)) continue;
         
         TArray<uintptr_t> lp;
-        mem::Read((void *)(gi + Off::LocalPlayers), &lp, sizeof(lp));
-        if (lp.IsValid() && lp.Count > 0) {
-            LOGI("[+] LocalPlayer ready (waited %d extra sec)", waitCount * 2);
-            break;
+        mem::Read((void*)(gi + Off::LocalPlayers), &lp, sizeof(lp));
+        if (!lp.IsValid()) continue;
+        
+        uintptr_t localP = 0;
+        mem::Read(&lp.Data[0], &localP, sizeof(uintptr_t));
+        if (!localP || !mem::IsValid((void*)localP)) continue;
+        
+        uintptr_t myPC = 0;
+        mem::Read((void*)(localP + Off::PlayerController), &myPC, sizeof(uintptr_t));
+        if (!myPC || !mem::IsValid((void*)myPC)) continue;
+        
+        uintptr_t camMgr = 0;
+        mem::Read((void*)(myPC + Off::PlayerCameraMgr), &camMgr, sizeof(uintptr_t));
+        if (!camMgr || !mem::IsValid((void*)camMgr)) continue;
+        
+        uintptr_t myPawn = 0;
+        mem::Read((void*)(myPC + Off::AcknowledgedPawn), &myPawn, sizeof(uintptr_t));
+        if (!myPawn || !mem::IsValid((void*)myPawn)) continue;
+        
+        // Camera
+        FMinimalViewInfo pov;
+        mem::Read((void*)(camMgr + Off::CameraCachePOV), &pov, sizeof(pov));
+        if (pov.FOV <= 0 || pov.FOV > 170) continue;
+        
+        FRotator curRot;
+        mem::Read((void*)(myPC + Off::ControlRotation), &curRot, sizeof(FRotator));
+        
+        // My team & position
+        int32_t myTeam = -1;
+        mem::Read((void*)(myPawn + Off::TeamID), &myTeam, sizeof(int32_t));
+        
+        FVector myLoc{};
+        uintptr_t myRoot = 0;
+        mem::Read((void*)(myPawn + Off::RootComponent), &myRoot, sizeof(uintptr_t));
+        if (myRoot && mem::IsValid((void*)myRoot))
+            mem::Read((void*)(myRoot + Off::RelativeLocation), &myLoc, sizeof(FVector));
+        
+        // Actors
+        uintptr_t level = 0;
+        mem::Read((void*)(pWorld + Off::PersistentLevel), &level, sizeof(uintptr_t));
+        if (!level || !mem::IsValid((void*)level)) continue;
+        
+        TArray<uintptr_t> actors;
+        mem::Read((void*)(level + Off::Actors), &actors, sizeof(actors));
+        if (!actors.IsValid() || actors.Count > 50000 || actors.Count < 1) continue;
+        if (!mem::IsValid(actors.Data)) continue;
+        
+        // Find closest enemy head
+        float bestScreenDist = AimCfg.fov;
+        FVector bestHead{};
+        bool found = false;
+        
+        int maxScan = actors.Count < 200 ? actors.Count : 200;
+        for (int i = 0; i < maxScan; i++) {
+            uintptr_t actor = 0;
+            mem::Read(&actors.Data[i], &actor, sizeof(uintptr_t));
+            if (!actor || !mem::IsValid((void*)actor)) continue;
+            
+            int32_t team = -1;
+            mem::Read((void*)(actor + Off::TeamID), &team, sizeof(int32_t));
+            if (team < 0 || team > 200 || team == myTeam) continue;
+            
+            uint8_t dead = 0;
+            mem::Read((void*)(actor + Off::bDead), &dead, sizeof(uint8_t));
+            if (dead) continue;
+            
+            float hp = 0;
+            mem::Read((void*)(actor + Off::Health), &hp, sizeof(float));
+            if (hp <= 0) continue;
+            
+            uintptr_t mesh = 0;
+            mem::Read((void*)(actor + Off::Mesh), &mesh, sizeof(uintptr_t));
+            if (!mesh || !mem::IsValid((void*)mesh)) continue;
+            
+            FVector head = GetBoneWorld(mesh, 6); // Head bone
+            if (head.Length() < 1.0f) continue;
+            
+            float dist = (head - myLoc).Length() / 100.0f;
+            if (dist > 350.0f || dist < 0.5f) continue;
+            
+            // Calculate screen distance (angular)
+            FVector d = head - pov.Location;
+            float h = sqrtf(d.X*d.X + d.Y*d.Y);
+            float yaw = atan2f(d.Y, d.X) * 57.2957795f;
+            float pitch = atan2f(d.Z, h) * 57.2957795f;
+            float dY = NormAngle(yaw - curRot.Yaw);
+            float dP = NormAngle(pitch - curRot.Pitch);
+            float angDist = sqrtf(dY*dY + dP*dP);
+            
+            if (angDist < bestScreenDist) {
+                bestScreenDist = angDist;
+                bestHead = head;
+                found = true;
+            }
         }
-        sleep(2);
-        waitCount++;
+        
+        if (!found) continue;
+        
+        // Smooth aim
+        FVector d = bestHead - pov.Location;
+        float h = sqrtf(d.X*d.X + d.Y*d.Y);
+        float desYaw = atan2f(d.Y, d.X) * 57.2957795f;
+        float desPitch = atan2f(d.Z, h) * 57.2957795f;
+        
+        float dP = NormAngle(desPitch - curRot.Pitch);
+        float dY = NormAngle(desYaw - curRot.Yaw);
+        
+        if (fabsf(dP) < 0.1f && fabsf(dY) < 0.1f) continue; // Dead zone
+        
+        // Humanized smooth (acceleration curve)
+        float totalErr = sqrtf(dP*dP + dY*dY);
+        float factor = 1.0f - powf(1.0f - (totalErr > 30.f ? 1.f : totalErr/30.f), 2.5f);
+        float smooth = AimCfg.smooth * (0.3f + 0.7f * (1.0f - factor));
+        if (smooth < 1.5f) smooth = 1.5f;
+        
+        FRotator newRot;
+        newRot.Pitch = curRot.Pitch + dP / smooth + RandF(-AimCfg.jitter, AimCfg.jitter);
+        newRot.Yaw = curRot.Yaw + dY / smooth + RandF(-AimCfg.jitter, AimCfg.jitter);
+        newRot.Roll = 0;
+        newRot.Pitch = NormAngle(newRot.Pitch);
+        newRot.Yaw = NormAngle(newRot.Yaw);
+        if (newRot.Pitch > 89.f) newRot.Pitch = 89.f;
+        if (newRot.Pitch < -89.f) newRot.Pitch = -89.f;
+        
+        // Write rotation (memory write only — no function call)
+        mem::Write((void*)(myPC + Off::ControlRotation), &newRot, sizeof(FRotator));
     }
-    
-    // Extra stability wait
-    sleep(5);
-    
-    // Phase 6: Install PostRender hook
-    int hookAttempts = 0;
-    while (!g_Hooked && hookAttempts < 20) {
-        if (InstallPostRenderHook()) {
-            g_Hooked = true;
-            LOGI("[+] ===== HOOK ACTIVE =====");
-        } else {
-            LOGI("[.] Hook attempt %d failed, retrying...", hookAttempts + 1);
-            sleep(3);
-            hookAttempts++;
-        }
-    }
-    
-    if (!g_Hooked) {
-        LOGE("[-] Hook failed after %d attempts", hookAttempts);
-    }
-    
-    LOGI("[*] Worker done");
     return nullptr;
 }
 
-// ============================================================================
-// ENTRY
-// ============================================================================
+// Main init thread
+static void *worker_thread(void *) {
+    LOGI("[*] Init started");
+    
+    // Wait libs
+    while (!mem::GetBase("libUE4.so")) usleep(500000);
+    g_UE4 = mem::GetBase("libUE4.so");
+    LOGI("[+] UE4=0x%lx", (unsigned long)g_UE4);
+    
+    while (!mem::GetBase("libanogs.so")) usleep(500000);
+    LOGI("[+] anogs found");
+    
+    for (int i = 0; i < 10; i++) {
+        if (mem::GetBase("libanort.so")) break;
+        usleep(500000);
+    }
+    
+    // Let libs init
+    sleep(12);
+    
+    // Apply bypass
+    bypass::Apply();
+    LOGI("[+] Bypass done");
+    
+    // Wait for match (GWorld valid + LocalPlayer exists)
+    LOGI("[*] Waiting for match...");
+    for (int i = 0; i < 300; i++) { // 5 min max
+        uintptr_t pw = 0;
+        mem::Read((void*)(g_UE4 + Off::GWorld), &pw, sizeof(uintptr_t));
+        if (pw && mem::IsValid((void*)pw)) {
+            uintptr_t gi = 0;
+            mem::Read((void*)(pw + Off::OwningGameInstance), &gi, sizeof(uintptr_t));
+            if (gi && mem::IsValid((void*)gi)) {
+                TArray<uintptr_t> lp;
+                mem::Read((void*)(gi + Off::LocalPlayers), &lp, sizeof(lp));
+                if (lp.IsValid()) {
+                    LOGI("[+] Game ready at %d sec", i);
+                    break;
+                }
+            }
+        }
+        sleep(1);
+    }
+    
+    // Extra wait for stability
+    sleep(10);
+    
+    // Activate aimbot
+    g_Active = true;
+    LOGI("[+] ACTIVE");
+    
+    return nullptr;
+}
+
 __attribute__((constructor))
 void __attribute__((used)) entry() {
-    pthread_t tid;
+    pthread_t t1, t2;
     pthread_attr_t attr;
     pthread_attr_init(&attr);
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
-    pthread_create(&tid, &attr, worker_thread, nullptr);
+    pthread_create(&t1, &attr, worker_thread, nullptr);
+    pthread_create(&t2, &attr, aim_thread, nullptr);
     pthread_attr_destroy(&attr);
 }

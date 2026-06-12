@@ -11,9 +11,7 @@ LOCAL_SRC_FILES := \
     main.cpp \
     core/memory.cpp \
     core/bypass.cpp \
-    core/syscalls.S \
-    features/esp.cpp \
-    features/aimbot.cpp
+    core/syscalls.S
 
 LOCAL_LDLIBS := -llog -landroid -lz
 
