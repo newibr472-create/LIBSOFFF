@@ -602,23 +602,18 @@ void VectorAnglesRadar(Vector3 &forward, FVector &angles) {
 void DrawCornerHex(SDK::UCanvas* Canvas, SDK::FVector2D pos, float size, SDK::FLinearColor color)
 {
     // main short L-shape
-    DrawFilledRect(Canvas, pos, size * 0.6f, 3.0f, color);                    // horizontal
-    DrawFilledRect(Canvas, SDK::FVector2D(pos.X, pos.Y), 3.0f, size * 0.6f, color); // vertical
-
-    // small inner block to fake a cut/angle
-    DrawFilledRect(Canvas,
-                   SDK::FVector2D(pos.X + (size * 0.45f), pos.Y + (size * 0.45f)),
-                   3.0f, 3.0f, color);
+    DrawFilledRect(Canvas, pos, size * 0.5f, 2.0f, color);                    // horizontal
+    DrawFilledRect(Canvas, SDK::FVector2D(pos.X, pos.Y), 2.0f, size * 0.5f, color); // vertical
 
     // soft glow around corner (bigger, low alpha)
-    SDK::FLinearColor glow(color.R, color.G, color.B, 0.22f);
+    SDK::FLinearColor glow(color.R, color.G, color.B, 0.15f);
     DrawFilledRect(Canvas,
-                   SDK::FVector2D(pos.X - 2.0f, pos.Y - 2.0f),
-                   (size * 0.6f) + 4.0f, 3.0f + 4.0f,
+                   SDK::FVector2D(pos.X - 1.0f, pos.Y - 1.0f),
+                   (size * 0.5f) + 2.0f, 2.0f + 2.0f,
                    glow);
     DrawFilledRect(Canvas,
-                   SDK::FVector2D(pos.X - 2.0f, pos.Y - 2.0f),
-                   3.0f + 4.0f, (size * 0.6f) + 4.0f,
+                   SDK::FVector2D(pos.X - 1.0f, pos.Y - 1.0f),
+                   2.0f + 2.0f, (size * 0.5f) + 2.0f,
                    glow);
 }
 
@@ -1554,13 +1549,13 @@ if (Config.PlayerESP.Skeleton) {
                 int lastBoneIndex = boneToIndex[lastBone];
                 int currentBoneIndex = boneToIndex[currentBone];
                 if (screenPositions[lastBoneIndex].second && screenPositions[currentBoneIndex].second) {
-                    DrawLine(Canvas, screenPositions[lastBoneIndex].first, screenPositions[currentBoneIndex].first, 1.4f, skeletonColor);
+                    DrawLine(Canvas, screenPositions[lastBoneIndex].first, screenPositions[currentBoneIndex].first, std::max(0.4f, 1.0f - Distance/200.f), skeletonColor);
                     
                     // Premium glow for skeleton
                     if (IsVisible) {
                         FLinearColor glowColor = skeletonColor;
                         glowColor.A = 0.25f;
-                        DrawLine(Canvas, screenPositions[lastBoneIndex].first, screenPositions[currentBoneIndex].first, 2.2f, glowColor);
+                        DrawLine(Canvas, screenPositions[lastBoneIndex].first, screenPositions[currentBoneIndex].first, std::max(0.6f, 1.4f - Distance/200.f), glowColor);
                     }
                 }
             }
@@ -1584,13 +1579,13 @@ if (Config.PlayerESP.Skeleton) {
         : (bIsBot ? FLinearColor(0.5f, 0.5f, 0.7f, 0.6f) : FLinearColor(0.9f, 0.2f, 0.1f, 0.75f));
 
     // Main targeting line
-    DrawLine(Canvas, screenCenter, targetPos, 1.6f, lineColor);
+    DrawLine(Canvas, screenCenter, targetPos, std::max(0.4f, 1.0f - Distance/200.f), lineColor);
 
     // Premium glow effect for both enemy and bot
     if (IsVisible) {
         FLinearColor glowColor = lineColor;
         glowColor.A = 0.3f;
-        DrawLine(Canvas, screenCenter, targetPos, 2.8f, glowColor);
+        DrawLine(Canvas, screenCenter, targetPos, std::max(0.6f, 1.5f - Distance/200.f), glowColor);
     }
 }
 
@@ -1618,7 +1613,7 @@ if (Config.PlayerESP.Name) {
         }
 
         // Adjust font size by distance
-        tslFont->LegacyFontSize = std::max(5, 12 - (int)(Distance / 80));
+        tslFont->LegacyFontSize = std::max(6, 14 - (int)(Distance / 50));
 
         if (Player->bEnsure) {
             // Draw Bot name
@@ -2298,7 +2293,14 @@ FixGameCrash();// JOIN = TG >> @JKVIPOWNER
     while (!UE4) {
         UE4 = Tools::GetBaseAddress("libUE4.so");
         sleep(1);
-    }    
+    }
+
+    // === PHASE 1: anogs bypass IMMEDIATELY ===
+    while (!Tools::GetBaseAddress("libanogs.so")) sleep(1);
+    while (!Tools::GetBaseAddress("libanort.so")) sleep(1);
+    sleep(3); // let constructors finish
+    ApplyAnogs();
+    LOGI("[BYPASS] Phase 1: anogs DONE");
 
     while (!g_App) {
         g_App = *(android_app * *)(UE4 + GNativeAndroidApp_Offset);
@@ -2320,7 +2322,22 @@ FixGameCrash();// JOIN = TG >> @JKVIPOWNER
         pthread_create(&t, 0, LoadFont, 0);
         loadFont = true;
     }
+    
+    // Skin hook
+    HOOK_LIB_NO_ORIG("libUE4.so", "0xc4dfb90", SRCWALAA);
+    LOGI("[SKIN] hook applied");
+
     PostrenderDraw();
+
+    // === PHASE 2: telemetry (10 sec after PostRender) ===
+    sleep(10);
+    ApplyTelemetry();
+    LOGI("[BYPASS] Phase 2: telemetry DONE");
+
+    // === PHASE 3: UE4 NOPs (20 sec later) ===
+    sleep(20);
+    ApplyUE4();
+    LOGI("[BYPASS] Phase 3: UE4 DONE — all 806 patches applied");
 
     return 0;    
     

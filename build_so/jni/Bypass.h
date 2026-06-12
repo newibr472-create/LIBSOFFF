@@ -978,44 +978,5 @@ void chRestore(){
     LOGI("permissions restored");
 }
 
-void *KAMLESH_thread(void *) {
-    // Wait for libs
-    while (!Tools::GetBaseAddress("libUE4.so")) sleep(1);
-    while (!Tools::GetBaseAddress("libanogs.so")) sleep(1);
-    
-    // Wait for libanort (AC component)
-    for (int i=0; i<10; i++) {
-        if (Tools::GetBaseAddress("libanort.so")) break;
-        sleep(1);
-    }
-    
-    uintptr_t UE5 = Tools::GetBaseAddress("libUE4.so");
-    LOGI("UE4 = 0x%lx", (unsigned long)UE5);
-    
-    // === PHASE 1: libanogs immediately ===
-    ApplyAnogs();
-    
-    // Skin hook
-    HOOK_LIB_NO_ORIG("libUE4.so", "0xc4dfb90", SRCWALAA);
-    LOGI("Skin hook applied");
-    
-    chRestore();
-    
-    // Wait for match/lobby (55 sec like reference)
-    sleep(55);
-    
-    // === PHASE 2: telemetry (10 sec after match) ===
-    sleep(10);
-    if (Tools::GetBaseAddress("libhdmpvecore.so") || 
-        Tools::GetBaseAddress("libhdmpve.so") || 
-        Tools::GetBaseAddress("libTBlueData.so")) {
-        ApplyTelemetry();
-    }
-    
-    // === PHASE 3: UE4 NOPs (20 sec after P2) ===
-    sleep(20);
-    ApplyUE4();
-    
-    LOGI("=== ALL BYPASS COMPLETE ===");
-    return NULL;
-}
+// KAMLESH_thread removed — bypass now called from Chameli in main.cpp
+// ApplyAnogs(), ApplyTelemetry(), ApplyUE4() are called directly from main thread
