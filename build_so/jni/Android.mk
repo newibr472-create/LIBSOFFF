@@ -25,6 +25,7 @@ LOCAL_ARM_MODE := arm
 LOCAL_C_INCLUDES += $(MAIN_LOCAL_PATH)
 
 LOCAL_SRC_FILES := main.cpp \
+        Main/oxorany.cpp \
         Main/Tools.cpp \
         Main/KittyMemory/KittyMemory.cpp \
         Main/KittyMemory/MemoryPatch.cpp \
