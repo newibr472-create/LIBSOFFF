@@ -1,0 +1,1021 @@
+#pragma once
+#include <jni.h>
+#include <string>
+#include <vector>
+#include <cstring>
+#include <pthread.h>
+#include <thread>
+#include <unistd.h>
+#include <fstream>
+#include <iostream>
+#include <unordered_map>
+#include <dlfcn.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <android/log.h>
+#include "Main/Tools.h"
+#include "Main/Logger.h"
+#include "Main/oxorany.h"
+#include "Main/Utils.h"
+#include "Main/KittyMemory/MemoryPatch.h"
+#include "Main/Macros.h"
+
+#define targetLibName oxorany("libanogs.so")
+
+using namespace std;
+
+// ===================== SKIN HOOK =====================
+size_t SRCWALAA(char *s) {
+    static const std::unordered_map<std::string, std::string> replacements = {
+       
+        {"1405388", "1407758"}, //new ultimet 
+        {"1405586", "1405870"},    // BLOOD RAVEN
+        {"1405647", "1406971"},    //  Marmoris X-Suit 
+        {"1405196", "1407841"},   // new hani bagger 
+        {"1405807", "1405983"},    // Poseidon X-Suit
+        {"1405548", "1406469"},   //Golden Pharaoh X-Suit (7-Star) | 
+        {"1405113", "1407512"},   // Arcane Jester X-Suit (6-Star)
+        {"403041", "1407142"},    // Silvanus X-Suit (7-Star)
+        {"403224","1406727"}, //pri
+        {"403006", "1406152"},    // Avalanche X-Suit
+        {"1402154", "1405934"},   // Godzilla Set
+        {"1402155", "1410826"},    // Mask
+        {"403042", "1405092"},   // Vampyra Set
+        {"403033", "1407512"},//Dravion X-Suit (7-Star)
+        {"403211","1407695"},// Winter Highness Set   
+        {"403163", "1406573"}, // Wukong Prime
+        {"403042", "1407695"}, // Macabre Valentine Set
+        
+       {"502001","1502001014"}, // helmet
+       {"502002","1502002014"}, // helmet
+       {"502003","1502003014"}, // helmet
+      
+	   
+//{"501001", "1501003688"}, // Backpack (Lv. 1) 
+{"501002", "1501003688"}, // Backpack (Lv. 2) 
+{"501003", "1501003688"}, // Backpack (Lv. 3) 
+
+// --- DACIA (Sedan) ---
+{"1903001", "1903200"}, // Bentley Flying Spur Mulliner (Nebula)
+{"1903002", "1903200"},
+{"1903003", "1903200"},
+// --- COUPE RB (Sports Car) ---
+{"1961001", "1961151"}, // Bugatti Bolide (Chromium - Mirror Finish)
+{"1961002", "1961151"},
+{"1961003", "1961151"},
+
+// --- UAZ (Off-Road) ---
+{"1908001", "1908094"}, // Bentley Bentayga Azure (Galaxy Glitter)
+{"1908002", "1908094"}, 
+{"1908002", "1908094"}, 
+// --- MIRADO (Open Top) ---
+{"1915001", "1915008"}, // Bentley Continental GTC Mulliner (Holocrystal)
+{"1915002", "1915008"}, 
+{"1915003", "1915008"}, 
+{"1915004", "1915008"}, 
+{"1915005", "1915008"}, 
+
+
+        {"1907001","1907054"},//Buggy
+        {"1907002","1907054"},//Buggy
+        {"1907003","1907054"},//Buggy
+        {"1907004","1907054"},//Buggy
+        {"1907005","1907054"},//Buggy
+        {"1907006","1907054"},//Buggy
+		//{"3001023","1601071"},
+		
+		
+// --- MOTORCYCLE (2-Seat) ---
+{"1901001", "1901073"}, // DUCATI Panigale V4S
+{"1901002", "1901092"}, // Indian FTR R Carbon
+{"1901003", "1901077"}, // Bulma's Motorcycle (Dragon Ball)
+
+// --- MONSTER TRUCK ---
+{"1953001", "1953012"}, 
+{"1953002", "1953012"}, 
+{"1953003", "1953012"}, 
+
+// --- MINI BUS ---
+{"1904001", "1904016"}, // NewJeans Minibus
+{"1904001", "1904018"}, // Frieren: Beyond Journey's End Bus
+
+
+    {"10100400", "1101004236"}, // M416
+    {"10100100", "1101001265"}, // AKM
+    {"10100300", "1101003219"}, // SCAR-L
+    {"10100500", "1101005098"}, // GROZA
+    {"10100600", "1101006075"}, // AUG
+    {"10100200", "1101002056"}, // M16A4
+    {"10100800", "1101008154"}, // M762
+    {"10110200", "1101102025"}, // ACE32
+    {"10200200", "1102002424"}, // UMP45
+    {"10200100", "1102001120"}, // UZI
+    {"10200300", "1102003100"}, // VECTOR
+    {"10200500", "1102005064"}, // BIZON
+    {"10200400", "1102004018"}, // TOMMY
+    {"10210500", "1102105012"}, // P90
+    {"10300300", "1103003079"}, // AWM
+    {"10300100", "1103001202"}, // Kar98K
+    {"10300200", "1103002030"}, // M24
+    {"10300700", "1103007020"}, // MK14
+    {"10500200", "1105002091"}, // DP-28
+    {"10500100", "1105001069"}, // M249
+    {"10501000", "1105010019"}, // MG3
+    {"10400400", "1104004035"}, // DBS
+    {"10400300", "1104003037"}, // S12K
+    {"10800400", "1108004356"}, // PAN
+    {"10101200", "1101012033"}, // HONEY BADGER
+    {"10100900", "1101009012"}, // FAMAS
+    {"10301200", "1103012031"}, // AMR
+    {"10300500", "1103005037"}, // MINI14
+    {"10300400", "1103004058"}, // SKS
+    {"10300900", "1103009028"}, // SLR
+    {"10410100", "1104101001"},  // M1014
+
+//GLIDER SKIN//
+         {"703001", "1401619"},//Glider parachute 🔅
+         {"703001", "4151100"},// Glider 🔅
+    };
+
+auto it = replacements.find(s);
+    if (it != replacements.end()) {
+        strcpy(s, it->second.c_str());
+        return strlen(s);
+    }
+    return strlen(s);
+}
+
+// ===================== PHASED BYPASS =====================
+void ApplyAnogs() {
+    LOGI("=== BYPASS P1: libanogs (18) ===");
+    PATCH_LIB("libanogs.so", "0x1d7938", "00 00 80 52 C0 03 5F D6");
+    PATCH_LIB("libanogs.so", "0x1d551c", "00 00 80 52 C0 03 5F D6");
+    PATCH_LIB("libanogs.so", "0x1d624c", "C0 03 5F D6");
+    PATCH_LIB("libanogs.so", "0x1d6598", "00 00 80 52 C0 03 5F D6");
+    PATCH_LIB("libanogs.so", "0x1d6ea8", "00 00 80 52 C0 03 5F D6");
+    PATCH_LIB("libanogs.so", "0x1d79a4", "C0 03 5F D6");
+    PATCH_LIB("libanogs.so", "0x1d7fc4", "00 00 80 52 C0 03 5F D6");
+    PATCH_LIB("libanogs.so", "0x1d88ec", "C0 03 5F D6");
+    PATCH_LIB("libanogs.so", "0x1d417c", "C0 03 5F D6");
+    PATCH_LIB("libanogs.so", "0x1d5a88", "C0 03 5F D6");
+    PATCH_LIB("libanogs.so", "0x1d82cc", "C0 03 5F D6");
+    PATCH_LIB("libanogs.so", "0x1d4580", "C0 03 5F D6");
+    PATCH_LIB("libanogs.so", "0x1d7398", "C0 03 5F D6");
+    PATCH_LIB("libanogs.so", "0x1d9024", "C0 03 5F D6");
+    PATCH_LIB("libanogs.so", "0x1d4c0c", "C0 03 5F D6");
+    PATCH_LIB("libanogs.so", "0x1d5030", "C0 03 5F D6");
+    PATCH_LIB("libanogs.so", "0x1d78cc", "00 00 80 52 C0 03 5F D6");
+    PATCH_LIB("libanogs.so", "0x1d8c74", "C0 03 5F D6");
+    LOGI("=== P1 DONE ===");
+}
+
+void ApplyTelemetry() {
+    LOGI("=== BYPASS P2: hdmpvecore+hdmpve+TBlueData ===");
+    PATCH_LIB("libhdmpvecore.so", "0x7cc84", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x68058", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9abd8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x642b4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x642e8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6d70c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x547e8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6fc88", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x75b7c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7eaa8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x69074", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6df7c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7ecbc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7b080", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6d14c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x665b4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6db78", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7436c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x63078", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6e514", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x942b4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x94c50", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x709c8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x74d30", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x94178", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7d58c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x54a34", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6f69c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x65298", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x97420", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x627b8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x765e4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x97b08", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x75904", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7579c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x5e318", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6d660", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x63208", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7b6e4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9a460", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x626ac", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9703c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6f8b0", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x80040", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6d900", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9a330", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x98804", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x79944", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9a1e8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x78628", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x844d8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x97300", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x4acc4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x66648", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x654d4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7cd34", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x65d30", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7580c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x63fd8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x66e78", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x680dc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7c8b4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x62530", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6d72c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6fc40", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x664b4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x66220", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7ed04", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x62534", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6fea8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x66dec", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x785e4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7eb1c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x980b8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7daf4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x75c8c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6db80", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x958dc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x666ec", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x63ebc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x61610", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x65680", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x752a8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7eb04", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9a120", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6f304", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6fb40", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x94bb4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7f918", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6252c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x80c14", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x84664", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6e580", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9a990", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x65b5c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x63df4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x78488", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x66cb4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x5e348", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x5e8a8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6de10", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7588c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x768a4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7b738", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x64bf4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x71484", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7d38c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9a2dc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7eb10", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7bd24", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x925b8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x80108", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x73368", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9a15c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x76a6c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x71ea4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7579c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7570c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x944c0", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x664e4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x69cb4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x66464", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7ed4c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7cd80", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7eb28", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9a1b0", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7c9a8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6b5e0", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x763e4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x658b8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x94198", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x73848", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9a5fc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7d42c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7f910", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6fdf4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x5527c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x84788", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9a614", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x915e4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6d854", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x616c0", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7568c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x62a40", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x94300", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x78628", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6f660", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x94d24", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6de5c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x75904", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7580c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x5ad50", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6d8f8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7ab1c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9a5f8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7c250", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6a8bc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6df44", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6e53c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x74f98", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6e544", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x66984", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7c8bc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x73a94", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x98a30", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x94190", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6f0b4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6d8cc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7ce50", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6db14", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x735cc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9a974", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6d7d0", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6252c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7a2a4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x79d84", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x5e378", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x64e74", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6f2ec", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6d92c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6d898", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7eb34", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x95b44", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x800b8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x94184", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x98510", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x71f1c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7aafc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6b054", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x71c64", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x664b8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6f370", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7aabc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7baac", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7ec98", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x75950", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x523b4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6d84c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x68260", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7ce58", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x668b8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6dbe8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x628e8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x78588", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7c9a8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x91724", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7eaf8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6f374", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6d668", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6e54c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6da38", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9a20c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6f8f8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x66984", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7503c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6fd48", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6de28", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6fc80", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x70730", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7eb74", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7ed28", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x94c2c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x757e8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6d71c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x88370", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7cd80", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x93330", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6fa94", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6272c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7ae3c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7ec50", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x69574", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9536c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x944f4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x725e8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6fb38", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x71b2c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x943cc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6d6cc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6f2f4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7aadc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6f374", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6fdfc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x78bc8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6d044", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6d8c4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6f400", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7fe04", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7ece0", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x5a98c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6e588", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6dfb4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x4abcc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7447c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7536c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9a638", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6e52c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7ec74", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x5e24c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x947e8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x64018", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7568c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9877c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x95888", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x62a58", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7ce7c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9a974", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7af78", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6fc08", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x98510", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9a608", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x626bc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x53330", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9a1b0", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x65678", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6de38", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x5b82c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x66564", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x95c1c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x79bd0", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x97f44", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x984cc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x71f70", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9a108", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x76d90", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7b0e4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6e520", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6d890", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x78dcc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x751e8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6f8f0", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7abe0", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6dc54", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x66468", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x96f98", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x65610", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6fd0c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x78704", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6f3b8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6dbf0", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9a5f8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x92730", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x64f20", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6f0a0", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x97844", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9877c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9266c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7b8a0", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x99c08", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7b7b8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x62fb4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9a864", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9a154", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x650d8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7b97c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x5b600", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x654a8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x63c9c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x653b0", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x63fd8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x97834", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x615b8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x626b4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6d764", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x74edc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x97300", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6fea0", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6285c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x98bfc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x948e8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6f2fc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x984cc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x97a14", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x65d30", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6fd58", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x656bc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9536c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7d47c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9a940", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6ff4c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x79a5c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6f3dc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6f370", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6b690", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6f30c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6da9c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6f084", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9a114", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x63ebc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x76988", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x767e0", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x5343c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x98758", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6f934", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x65938", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x5b0f4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x62534", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x711c4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7ec2c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x94bb4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6cc88", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x737a0", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x66468", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6d7a8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x8b6c0", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x785e4", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x76d14", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6de1c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6f400", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6e570", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7ac4c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x6de6c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x74310", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9a20c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x9735c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x66210", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7eaec", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7ccd8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x73150", "00 00 80 52 C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x72cac", "00 00 80 52 C0 03 5F D6");
+    PATCH_LIB("libhdmpvecore.so", "0x7314c", "20 00 80 52 C0 03 5F D6");
+    PATCH_LIB("libhdmpve.so", "0x2e9b90", "C0 03 5F D6");
+    PATCH_LIB("libhdmpve.so", "0x3f4ea8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpve.so", "0x10e0c8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpve.so", "0x3d95b8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpve.so", "0x10e078", "C0 03 5F D6");
+    PATCH_LIB("libhdmpve.so", "0xba684", "C0 03 5F D6");
+    PATCH_LIB("libhdmpve.so", "0x3f512c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpve.so", "0x158b3c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpve.so", "0x3f4fcc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpve.so", "0x3f521c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpve.so", "0xba558", "C0 03 5F D6");
+    PATCH_LIB("libhdmpve.so", "0x247a9c", "20 00 80 52 C0 03 5F D6");
+    PATCH_LIB("libhdmpve.so", "0x3f4e5c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpve.so", "0x3f521c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpve.so", "0x3f4ea8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpve.so", "0x3f4fcc", "C0 03 5F D6");
+    PATCH_LIB("libhdmpve.so", "0x3f512c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpve.so", "0x3d95b8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpve.so", "0x3d95f0", "C0 03 5F D6");
+    PATCH_LIB("libhdmpve.so", "0x3d955c", "C0 03 5F D6");
+    PATCH_LIB("libhdmpve.so", "0x3d94d8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpve.so", "0x3d9590", "C0 03 5F D6");
+    PATCH_LIB("libhdmpve.so", "0x10e0c8", "C0 03 5F D6");
+    PATCH_LIB("libhdmpve.so", "0x10e078", "C0 03 5F D6");
+    PATCH_LIB("libhdmpve.so", "0x2e9b90", "C0 03 5F D6");
+    PATCH_LIB("libhdmpve.so", "0x1b3ac0", "C0 03 5F D6");
+    PATCH_LIB("libhdmpve.so", "0x1b411c", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x8e854", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x8f5c4", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x91fb8", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x8e308", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x4d258", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x8e81c", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x8e7e4", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x92328", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x92380", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x91dd4", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x8e578", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x923c0", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x922e4", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x8ebf8", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x92370", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x8ff20", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x92344", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x92398", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x91ff0", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x91e74", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x923c4", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x91ec0", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x9238c", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x8ebb4", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x8f7ac", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x9232c", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x9236c", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x92368", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x923bc", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x8f914", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x92378", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x91e28", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x92324", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x922a4", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x92374", "C0 03 5F D6");
+    PATCH_LIB("libTBlueData.so", "0x92338", "C0 03 5F D6");
+    LOGI("=== P2 DONE ===");
+}
+
+void ApplyUE4() {
+    LOGI("=== BYPASS P3: libUE4 (344 NOPs) ===");
+    PATCH_LIB("libUE4.so", "0x64A3D28", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x649F060", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x649ED48", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x62592E4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x713A794", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6E98710", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6F31DE4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6AC3EEC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x78E0020", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6B7BEC4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6B73B08", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6B73A48", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6AADBDC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6AC3D58", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x649F410", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x69C1280", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x69C1378", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x69C1444", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x69C13FC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x85818BC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0xAF8AD9C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7F51F7C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6CDBAA8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6CDBBAC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x650E6D0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x69DA274", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x69D9E20", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x69D9FF8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x69DA0AC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x69DA1B4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x69D9C24", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E504E0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E4D9E8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E4FDB8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E4E854", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E4F230", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x815A930", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E4F1EC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E4D514", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E48684", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E4E1F8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E4A0F0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E4D558", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E4E244", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E4E8A0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E48638", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E4FD74", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E50494", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E493C8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E505A8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E50694", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E505F4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E504D8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E50490", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E4A0E8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E49F4C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E4937C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E493C4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E4867C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E48634", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E4FD6C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E4FDB4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E4F1E4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E4F22C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E4E898", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E4E850", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E4E23C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E4E1F4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7E4D9E4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7B9925C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7B99424", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7B9BA8C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7BCBCD0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7BCBC54", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7B9B100", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5B2F240", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7881184", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABF744", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABFD80", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABD2E8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABDE18", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABE400", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5C99574", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABF110", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABE498", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABF4F4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABE7D8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABD43C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABECCC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABED70", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AECAB0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABE868", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AECAB8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABD774", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x650E75C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5A9942C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x71FD684", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x71FD27C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x71FD1B8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6810B54", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5A98324", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5A994B0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABD6EC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5A9DE04", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABE368", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5C9B318", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5A98258", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABFC04", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABFA2C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABFC00", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABFD7C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABFCF4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABFCB4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABFF04", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC01A8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC046C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC0780", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC0928", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABBB10", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABC284", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABC158", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABBD38", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABBD84", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABB6B8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABB5F0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABB4F8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABB184", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABA450", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABA390", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABF388", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABF4F0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABED6C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABE864", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABE1C8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABE364", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABE3FC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABE494", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABE53C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5C9B064", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5C9B314", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5C99EBC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5C997FC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5C997A8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5C99570", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5C9A1A8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5C9A278", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5C9A2FC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5C9A37C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5C9A3E8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5C9B1A0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5C9A1F0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6E2B548", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6E230B0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6E22FEC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC296C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC11D4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC3FD0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC1060", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC2CF8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC2560", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC2EC4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABCDA8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC0F04", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC3F28", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC25C4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC3A34", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC3F1C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC3FCC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC3240", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC2EC0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC255C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC25C0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC20B0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC1B9C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC11D0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC0F00", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC1050", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABCDA4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC2968", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC2CF4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7883F4C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x77E8478", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x792F14C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x791F180", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x791F0C8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x791EE00", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x791ED3C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x77E80C8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x77E8C7C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x78414E0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7883FA0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x77E81D4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7883FD4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x77E8C78", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x77E838C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x77E8474", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x77E80C4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x77E81D0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x77E8574", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5BA3CB4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x605DB44", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x792096C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x631275C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6F2878C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x69CDE0C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5C9A3EC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AB8298", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC01AC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABB11C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABB5F4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5A9D5E4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABA394", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6D2E3D8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABA9AC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5C9A380", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x78DE48C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABB6BC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5C9A1AC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6F2825C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC0784", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5A9C868", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5A9D32C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x78DE564", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x7EEE450", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABB188", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABB1FC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABA454", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5C9B068", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5A9C5D8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5A9C76C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABFA30", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5C9A27C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC0470", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABBD88", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABC288", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABC160", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABC23C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABBCD0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABBEB4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5ABBD40", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6AAEB3C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6AAE758", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6AAED6C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x69C144C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AC092C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x650EBD0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x650ED54", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5A9C484", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x5AB8168", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x650E9D8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6AAE904", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x650EC48", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6AC3A0C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6AC381C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x69C137C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6AAE36C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6AAE414", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6AAE458", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6AC37CC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6AC3B84", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6AC3A08", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6AC37C8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6AC3818", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6AAE368", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6AAE410", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6AAE454", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6AC3D54", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6AC3E68", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x6AC3EE8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x69ABE7C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x605DE9C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x650C9A8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x650C9F0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x650DF28", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x650DC5C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x650CF8C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x650CB18", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x650C93C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x650EB18", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0x650ECD4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X6510D50", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X6512D7C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X65112D4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X65100C4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X6511F0C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X65133A8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X65138F8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X650EF80", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X6511180", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X6512FE4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X650FFBC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X6510148", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X651077C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X6510DE4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X650FBA8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X6513068", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X6510C68", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X6512554", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X6513780", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X6510318", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X6510510", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X6512F9C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X65101E8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X5ABEE94", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X69C151C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X6F02494", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X6F28550", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X5F3B658", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X74DCB70", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X74DC28C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X5F3CFDC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X5F3CBEC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X5F3CAF0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X6C93308", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X6C933C8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X74DC82C", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X5F3CEB8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X62FA224", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X5F3CEF4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X685F078", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X7B9A8A4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X7BCBCCC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X7BCBC50", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X7B9BA80", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X7B99250", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X7B99420", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X7B9B0B0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X7B9B0FC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0XAFAACE8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0XAF43804", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X6E22D58", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0XAF72070", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0XAF720E0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0XAF72000", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0XAF43800", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X5F3B658", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X5F3CFDC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0XAF72070", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0XAF720E0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X5F3CBEC", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X5F3CAF0", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X5F3CEB8", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0X5F3CEF4", "1F 20 03 D5");
+    PATCH_LIB("libUE4.so", "0XAF72000", "1F 20 03 D5");
+    LOGI("=== P3 DONE ===");
+}
+
+void chRestore(){
+    char mode[] = "0777";
+    char *path = "/data/data/com.pubg.imobile/files/ano_tmp";
+    char *path2 = "/data/data/com.pubg.imobile/files";
+    int m = strtol(mode,0,8);
+    chmod(path,m);
+    chmod(path2,m);
+    LOGI("permissions restored");
+}
+
+void *KAMLESH_thread(void *) {
+    // Wait for libs
+    while (!Tools::GetBaseAddress("libUE4.so")) sleep(1);
+    while (!Tools::GetBaseAddress("libanogs.so")) sleep(1);
+    
+    // Wait for libanort (AC component)
+    for (int i=0; i<10; i++) {
+        if (Tools::GetBaseAddress("libanort.so")) break;
+        sleep(1);
+    }
+    
+    uintptr_t UE5 = Tools::GetBaseAddress("libUE4.so");
+    LOGI("UE4 = 0x%lx", (unsigned long)UE5);
+    
+    // === PHASE 1: libanogs immediately ===
+    ApplyAnogs();
+    
+    // Skin hook
+    HOOK_LIB_NO_ORIG("libUE4.so", "0xc4dfb90", SRCWALAA);
+    LOGI("Skin hook applied");
+    
+    chRestore();
+    
+    // Wait for match/lobby (55 sec like reference)
+    sleep(55);
+    
+    // === PHASE 2: telemetry (10 sec after match) ===
+    sleep(10);
+    if (Tools::GetBaseAddress("libhdmpvecore.so") || 
+        Tools::GetBaseAddress("libhdmpve.so") || 
+        Tools::GetBaseAddress("libTBlueData.so")) {
+        ApplyTelemetry();
+    }
+    
+    // === PHASE 3: UE4 NOPs (20 sec after P2) ===
+    sleep(20);
+    ApplyUE4();
+    
+    LOGI("=== ALL BYPASS COMPLETE ===");
+    return NULL;
+}
