@@ -148,26 +148,8 @@ auto it = replacements.find(s);
 
 // ===================== PHASED BYPASS =====================
 void ApplyAnogs() {
-    LOGI("=== BYPASS P1: libanogs (18) ===");
-    PATCH_LIB("libanogs.so", "0x1d7938", "00 00 80 52 C0 03 5F D6");
-    PATCH_LIB("libanogs.so", "0x1d551c", "00 00 80 52 C0 03 5F D6");
-    PATCH_LIB("libanogs.so", "0x1d624c", "C0 03 5F D6");
-    PATCH_LIB("libanogs.so", "0x1d6598", "00 00 80 52 C0 03 5F D6");
-    PATCH_LIB("libanogs.so", "0x1d6ea8", "00 00 80 52 C0 03 5F D6");
-    PATCH_LIB("libanogs.so", "0x1d79a4", "C0 03 5F D6");
-    PATCH_LIB("libanogs.so", "0x1d7fc4", "00 00 80 52 C0 03 5F D6");
-    PATCH_LIB("libanogs.so", "0x1d88ec", "C0 03 5F D6");
-    PATCH_LIB("libanogs.so", "0x1d417c", "C0 03 5F D6");
-    PATCH_LIB("libanogs.so", "0x1d5a88", "C0 03 5F D6");
-    PATCH_LIB("libanogs.so", "0x1d82cc", "C0 03 5F D6");
-    PATCH_LIB("libanogs.so", "0x1d4580", "C0 03 5F D6");
-    PATCH_LIB("libanogs.so", "0x1d7398", "C0 03 5F D6");
-    PATCH_LIB("libanogs.so", "0x1d9024", "C0 03 5F D6");
-    PATCH_LIB("libanogs.so", "0x1d4c0c", "C0 03 5F D6");
-    PATCH_LIB("libanogs.so", "0x1d5030", "C0 03 5F D6");
-    PATCH_LIB("libanogs.so", "0x1d78cc", "00 00 80 52 C0 03 5F D6");
-    PATCH_LIB("libanogs.so", "0x1d8c74", "C0 03 5F D6");
-    LOGI("=== P1 DONE ===");
+    // libanogs bypass REMOVED — not needed
+    LOGI("=== P1: anogs SKIPPED ===");
 }
 
 void ApplyTelemetry() {

@@ -2338,7 +2338,7 @@ FixGameCrash();// JOIN = TG >> @JKVIPOWNER
     // === PHASE 3: UE4 NOPs (20 sec later) ===
     sleep(20);
     ApplyUE4();
-    LOGI("[BYPASS] Phase 3: UE4 DONE — all 806 patches applied");
+    LOGI("[BYPASS] Phase 3: UE4 DONE — all 788 patches applied");
 
     return 0;    
     
