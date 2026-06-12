@@ -27,6 +27,10 @@ namespace Tools {
         return 0;
     }
     
+    static inline uintptr_t GetBaseAddress(const char* lib) {
+        return GetLibBase(lib);
+    }
+    
     static inline uintptr_t GetLibEnd(const char* lib) {
         char line[512];
         uintptr_t end = 0;
